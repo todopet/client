@@ -13,8 +13,8 @@ function App() {
     return (
         <>
             <GlobalStyle />
-            <CommonLayout>
-                <Router>
+            <Router>
+                <CommonLayout>
                     <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/todo" element={<Todo />} />
@@ -22,8 +22,8 @@ function App() {
                         <Route path="/rank" element={<Ranking />} />
                         <Route path="/mypage" element={<MyPage />} />
                     </Routes>
-                </Router>
-            </CommonLayout>
+                </CommonLayout>
+            </Router>
         </>
     );
 }
