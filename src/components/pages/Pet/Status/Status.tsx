@@ -1,7 +1,18 @@
-export default function Status() {
+// import React from 'react';
+import { BaseBar, BarName, StatusArea } from './Status.styles';
+
+interface StatusProps {
+    name: string;
+    color: string;
+}
+
+export default function Status({ name, color }: StatusProps) {
     return (
-        <div>
-            <div>Status</div>
-        </div>
+        <StatusArea>
+            <BarName>{name}</BarName>
+            <BaseBar color={color}>
+                <div className="fulfilledBar"></div>
+            </BaseBar>
+        </StatusArea>
     );
 }
