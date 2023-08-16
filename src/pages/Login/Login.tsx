@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import mainImage from "@/assets/images/main.png";
-import ToggleButton from "@/components/ToggleButton/ToggleButton";
+
 export default function Login() {
     return (
         <Container>
@@ -10,7 +10,6 @@ export default function Login() {
             <div> 할 일을 완료하며, 펫과 함께 성장하세요.</div>
 
             <button>구글 아이디로 로그인</button>
-            <ToggleButton />
         </Container>
     );
 }
