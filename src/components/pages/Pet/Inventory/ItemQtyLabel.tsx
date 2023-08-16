@@ -15,6 +15,9 @@ export default function ItemQtyLabel({ count }: ItemQtyLabelProps) {
 }
 
 const ItemCount = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
     width: 46px;
     height: 24px;
     border-radius: 25px;
@@ -24,7 +27,8 @@ const ItemCount = styled.div`
     color: #545353;
 
     & > span:nth-child(1) {
-        font-size: 13px;
+        font-size: 16px;
+        margin-right: 1px;
     }
     & > span:nth-child(2) {
         font-weight: 600;

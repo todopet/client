@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Starts from "@/components/pages/Pet/Stars/Stars";
+import InventoryModal from "@/components/pages/Pet/Inventory/InventoryModal";
 
 import mainImage from "@/assets/images/main.png";
 
@@ -11,7 +11,7 @@ export default function Login() {
             <div> 할 일을 완료하며, 펫과 함께 성장하세요.</div>
 
             <button>구글 아이디로 로그인</button>
-            <Starts level={1} />
+            <InventoryModal />
         </Container>
     );
 }
