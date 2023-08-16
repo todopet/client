@@ -5,8 +5,8 @@ import Header from "@/components/layout/Header/Header";
 interface CommonLayoutProps extends PropsWithChildren {}
 const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
     const location = useLocation();
-    const isWithHeader = location.pathname === "/";
-    const isWithFooter = location.pathname === "/";
+    const isWithHeader = location.pathname !== "/";
+    const isWithFooter = location.pathname !== "/";
     return (
         <>
             {isWithHeader && <Header />}
