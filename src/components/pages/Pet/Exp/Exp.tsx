@@ -1,7 +1,10 @@
+// import React from 'react';
+import BaseBar from './Exp.styles';
+
 export default function Exp() {
     return (
-        <div>
-            <div>Exp</div>
-        </div>
+        <BaseBar>
+            <div className="fulfilledBar"></div>
+        </BaseBar>
     );
 }
