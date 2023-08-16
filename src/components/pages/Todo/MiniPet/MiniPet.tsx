@@ -1,7 +1,13 @@
-export default function Header() {
+import { MiniPetStyle } from "./MiniPet.styles";
+import { ReactComponent as PetSvg } from "@/assets/images/move1.svg";
+
+export default function MiniPet() {
     return (
         <div>
-            <div>나는 Todo Header</div>
+            <MiniPetStyle>
+                MiniPet Area
+                <PetSvg />
+            </MiniPetStyle>
         </div>
     );
 }
