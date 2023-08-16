@@ -1,7 +1,17 @@
-export default function ToggleButton() {
+import React, { useState } from "react";
+import { ToggleWrapper, Switch } from "./ToggleButton.styles";
+
+function ToggleButton() {
+    const [isToggled, setIsToggled] = useState(false);
+
     return (
-        <div>
-            <div>ToggleButton</div>
-        </div>
+        <ToggleWrapper
+            active={isToggled}
+            onClick={() => setIsToggled(!isToggled)}
+        >
+            <Switch>{isToggled ? "주" : "월"}</Switch>
+        </ToggleWrapper>
     );
 }
+
+export default ToggleButton;
