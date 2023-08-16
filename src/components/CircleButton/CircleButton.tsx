@@ -1,7 +1,8 @@
-export default function CircleButton() {
-    return (
-        <div>
-            <div>CircleButton</div>
-        </div>
-    );
+// import React from 'react';
+import BaseButton from './CircleButton.styles';
+
+export default function CircleButton({...props}) {
+	return (
+		<BaseButton {...props}></BaseButton>
+	);
 }
