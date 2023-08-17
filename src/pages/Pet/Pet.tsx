@@ -1,7 +1,9 @@
+import PetArea from '@/components/pages/Pet/PetArea/PetArea';
+
 export default function Pet() {
     return (
-        <div>
-            <div>Pet</div>
-        </div>
+        // <Header></Header>
+        <PetArea></PetArea>
+        // <Footer></Footer>
     );
 }
