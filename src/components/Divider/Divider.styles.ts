@@ -1,19 +1,5 @@
-import React from "react";
 import styled from "styled-components";
 
-interface DividerProps {
-    category: string;
-}
-
-export default function Divider({ category }: DividerProps) {
-    return (
-        <DividerWrap>
-            <Line></Line>
-            <div>{category}</div>
-            <Line></Line>
-        </DividerWrap>
-    );
-}
 const DividerWrap = styled.div`
     width: 100%;
     display: flex;
@@ -23,6 +9,7 @@ const DividerWrap = styled.div`
 
     & > div {
         font-size: 12px;
+        color: #b1aeae;
     }
 `;
 const Line = styled.div`
@@ -30,3 +17,5 @@ const Line = styled.div`
     height: 1px;
     background-color: #dfdfdf;
 `;
+
+export { DividerWrap, Line };
