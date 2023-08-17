@@ -9,7 +9,7 @@ import Pet from "@/pages/Pet/Pet";
 import MyPage from "@/pages/MyPage/MyPage";
 // import NotFound from "@/pages/NotFound";
 
-function App() {
+const App: React.FC = () => {
     return (
         <>
             <GlobalStyle />
@@ -26,6 +26,6 @@ function App() {
             </Router>
         </>
     );
-}
+};
 
 export default App;
