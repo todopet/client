@@ -7,9 +7,10 @@ import CommonLayout from "./components/layout/CommonLayout";
 import Ranking from "@/pages/Ranking/Ranking";
 import Pet from "@/pages/Pet/Pet";
 import MyPage from "@/pages/MyPage/MyPage";
+import Category from "@/pages/Category/Category";
 // import NotFound from "@/pages/NotFound";
 
-function App() {
+const App: React.FC = () => {
     return (
         <>
             <GlobalStyle />
@@ -17,6 +18,7 @@ function App() {
                 <CommonLayout>
                     <Routes>
                         <Route path="/" element={<Login />} />
+                        <Route path="/category" element={<Category />} />
                         <Route path="/todo" element={<Todo />} />
                         <Route path="/pet" element={<Pet />} />
                         <Route path="/rank" element={<Ranking />} />
@@ -26,6 +28,6 @@ function App() {
             </Router>
         </>
     );
-}
+};
 
 export default App;
