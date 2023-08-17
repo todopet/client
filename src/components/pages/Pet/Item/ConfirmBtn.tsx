@@ -1,12 +1,9 @@
-import styled from "styled-components";
-
 import Button from "@/components/Button/Button";
-import { ReactComponent as TrashIcon } from "@/assets/images/trash.svg";
+import { ButtonWrap } from "./ConfirmBtn.styles";
 
 interface ConfirmBtnProps {
-    modalType: "useModal" | "discardModal";;
+    modalType: "useModal" | "discardModal";
 }
-
 
 export default function ConfirmBtn({ modalType }: ConfirmBtnProps) {
     return (
@@ -17,14 +14,3 @@ export default function ConfirmBtn({ modalType }: ConfirmBtnProps) {
         </ButtonWrap>
     );
 }
-
-const ButtonWrap = styled.div<ConfirmBtnProps>`
-    width: 204px;
-    height: 62px;
-    background-color: ${(props) =>
-        props.modalType === "useModal" ? "#aaeea8" : "#d9d9d9"};
-
-    & > button {
-        border: none;
-    }
-`;
