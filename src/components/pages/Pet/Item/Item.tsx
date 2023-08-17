@@ -27,9 +27,11 @@ export default function Item() {
 
 const ItemInfo = styled.div``;
 const ItemWrap = styled.div`
+    box-sizing: border-box;
     width: 100%;
     height: 124px;
-    padding: 21px 24px;
+    padding: 0 24px;
+    margin: 20px 0;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -56,9 +58,11 @@ const StyledCakeIcon = styled(cakeIcon)`
 
 const ItemName = styled.div`
     font-size: 20px;
+    color: #545353;
 `;
 const Itemdescription = styled.div`
     font-size: 15px;
+    color: #545353;
 `;
 const ThrowBtnStyled = styled.div`
     align-self: flex-start;
