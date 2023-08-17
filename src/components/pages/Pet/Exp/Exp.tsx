@@ -1,4 +1,3 @@
-// import React from 'react';
 import BaseBar from './Exp.styles';
 
 export default function Exp() {
