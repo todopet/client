@@ -9,12 +9,10 @@ import {
     GoogleImage,
     LoginContent
 } from "@/pages/Login/Login.styles";
-import Toast from "@/components/Toast/Toast";
 
 export default function Login() {
     return (
         <Container>
-            <Toast />
             <Main>
                 <MainImage></MainImage>
                 <TitleGroup>
