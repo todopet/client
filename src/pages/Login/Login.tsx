@@ -11,7 +11,6 @@ export default function Login() {
             <div> 할 일을 완료하며, 펫과 함께 성장하세요.</div>
 
             <button>구글 아이디로 로그인</button>
-            <InventoryModal />
         </Container>
     );
 }
