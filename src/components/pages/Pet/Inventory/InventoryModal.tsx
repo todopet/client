@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Item from "@/components/pages/Pet/Item/Item";
 import Divider from "@/components/Divider/Divider";
+import Category from "@/components/pages/Pet/Inventory/Nav";
 
 export default function InventoryModal() {
     return (
@@ -11,7 +12,7 @@ export default function InventoryModal() {
                 <Title>도구</Title>
                 <Count>{"수량"}/50</Count>
             </Header>
-            <div>인벤토리 카테고리</div>
+            <Category />
             <Divider category={"먹이"} />
             <div>
                 <Item />
