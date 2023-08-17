@@ -1,4 +1,3 @@
-// import React from 'react';
 import { BaseBar, BarName, StatusArea } from './Status.styles';
 
 interface StatusProps {
