@@ -5,8 +5,11 @@ import { ReactComponent as TrashIcon } from "@/assets/images/trash.svg";
 
 export default function ThrowBtn() {
     return (
-        <Button>
+        <ButtonStyled>
             <TrashIcon />
-        </Button>
+        </ButtonStyled>
     );
 }
+const ButtonStyled = styled(Button)`
+    padding: 0;
+`;

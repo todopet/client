@@ -25,6 +25,11 @@ const NavWrap = styled.div`
     gap: 22px;
     justify-content: center;
     margin-bottom: 26px;
+    svg:hover {
+        & > circle {
+            stroke: #aaeea8;
+        }
+    }
 `;
 
 const StyledFeedIcon = styled(FeedIcon)``;
