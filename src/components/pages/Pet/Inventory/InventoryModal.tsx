@@ -14,7 +14,7 @@ import Category from "@/components/pages/Pet/Inventory/Nav";
 
 export default function InventoryModal() {
     //인벤토리버튼 클릭 시 openModal을 true로 설정해주기(셋팅 후 주석 지워주세요!)
-    const [openModal, setOpenModal] = useState<boolean>(false);
+    const [openModal, setOpenModal] = useState<boolean>(true);
     return (
         <>
             {openModal && (
