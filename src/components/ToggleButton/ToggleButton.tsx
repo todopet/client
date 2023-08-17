@@ -9,7 +9,7 @@ function ToggleButton() {
             active={isToggled}
             onClick={() => setIsToggled(!isToggled)}
         >
-            <Switch>{isToggled ? "주" : "월"}</Switch>
+            <Switch active={isToggled}>{isToggled ? "월" : "주"}</Switch>
         </ToggleWrapper>
     );
 }

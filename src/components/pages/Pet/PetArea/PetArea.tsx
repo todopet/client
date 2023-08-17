@@ -1,10 +1,10 @@
-import React from 'react';
 import ranking from '@/assets/images/ranking.svg'
 import inventory from '@/assets/images/inventory.svg';
-import { PageArea, MainFooter, MainArea, MainHeader, StatusInfo, MainBody } from './PetArea.styles';
+import { PageArea, MainFooter, MainArea, PetImg, MainHeader, StatusInfo, MainBody, LevelInfo } from './PetArea.styles';
 import CircleButton from '@/components/CircleButton/CircleButton';
 import Exp from '@/components/pages/Pet/Exp/Exp';
 import Status from '@/components/pages/Pet/Status/Status';
+import Stars from '@/components/pages/Pet/Stars/Stars';
 
 export default function PetArea() {
 	return (
@@ -18,9 +18,9 @@ export default function PetArea() {
 						<Status name="컨디션" color="#45E397"></Status>
 						<Status name="청결도" color="#0190FE"></Status>
 					</StatusInfo>
-					{/* <Star></Star> */}
+					<LevelInfo><Stars level={2}></Stars></LevelInfo>
 				</MainHeader>
-				<MainBody></MainBody>
+				<MainBody><PetImg></PetImg></MainBody>
 				<MainFooter>
 					<CircleButton url={ranking} color="#56ABF9" border="1px"></CircleButton>
 					<CircleButton url={inventory} color="#F7CF68" border="1px"></CircleButton>

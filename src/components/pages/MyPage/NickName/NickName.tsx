@@ -1,7 +1,14 @@
-export default function NickName() {
+import { UserNameInfo, UserName, NimText } from './NickName.styles';
+
+interface nametype {
+    name: string;
+}
+
+export default function NickName({ name }: nametype) {
     return (
-        <div>
-            <div>NickName</div>
-        </div>
+        <UserNameInfo>
+            <UserName>{name}</UserName>
+            <NimText>님</NimText>
+        </UserNameInfo>
     );
 }
