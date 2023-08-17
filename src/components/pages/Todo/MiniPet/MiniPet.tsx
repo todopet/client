@@ -1,13 +1,10 @@
 import { MiniPetStyle } from "./MiniPet.styles";
-import { ReactComponent as PetSvg } from "@/assets/images/move1.svg";
+import background from "@/assets/images/miniPetBackground.png";
 
 export default function MiniPet() {
     return (
-        <div>
-            <MiniPetStyle>
-                MiniPet Area
-                <PetSvg />
-            </MiniPetStyle>
-        </div>
+        <MiniPetStyle>
+            <img src={background} alt="background" />
+        </MiniPetStyle>
     );
 }
