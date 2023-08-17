@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import InventoryModal from "@/components/pages/Pet/Inventory/InventoryModal";
 
 import mainImage from "@/assets/images/main.png";
 
