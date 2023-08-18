@@ -7,7 +7,8 @@ import CommonLayout from "./components/layout/CommonLayout";
 import Ranking from "@/pages/Ranking/Ranking";
 import Pet from "@/pages/Pet/Pet";
 import MyPage from "@/pages/MyPage/MyPage";
-import Category from "@/pages/Category/Category";
+import CategoryList from "@/pages/Category/CategoryList/CategoryList";
+import CategoryPost from "@/pages/Category/CategoryPost/CategoryPost";
 // import NotFound from "@/pages/NotFound";
 
 const App: React.FC = () => {
@@ -18,7 +19,8 @@ const App: React.FC = () => {
                 <CommonLayout>
                     <Routes>
                         <Route path="/" element={<Login />} />
-                        <Route path="/category" element={<Category />} />
+                        <Route path="/category/list" element={<CategoryList />} />
+                        <Route path="/category/post" element={<CategoryPost />} />
                         <Route path="/todo" element={<Todo />} />
                         <Route path="/pet" element={<Pet />} />
                         <Route path="/rank" element={<Ranking />} />

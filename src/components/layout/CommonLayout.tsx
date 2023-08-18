@@ -5,7 +5,7 @@ import Header from "@/components/layout/Header/Header";
 interface CommonLayoutProps extends PropsWithChildren {}
 const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
     const location = useLocation();
-    const exceptLocation: string[] = ["/", "/category"];
+    const exceptLocation: string[] = ["/", "/category/list", "/category/post"];
 
     const isWithHeader = !exceptLocation.includes(location.pathname);
     const isWithFooter = !exceptLocation.includes(location.pathname);
