@@ -1,7 +1,11 @@
+import TodoItem from '../TodoItem/TodoItem';
+import { TodoListStyles } from './TodoList.styles';
+
 export default function TodoList() {
     return (
-        <div>
-            <div>나는 TodoList</div>
-        </div>
+        <TodoListStyles>
+            <TodoItem />
+            <TodoItem />
+        </TodoListStyles>
     );
 }
