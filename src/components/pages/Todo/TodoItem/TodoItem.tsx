@@ -1,7 +1,12 @@
+import Category from '../Category/Category';
+import Todos from '../Todos/Todos';
+import { TodoItemStyles } from './TodoItem.styles';
+
 export default function TodoItem() {
     return (
-        <div>
-            <div>나는 TodoItem</div>
-        </div>
+        <TodoItemStyles>
+            <Category />
+            <Todos />
+        </TodoItemStyles>
     );
 }
