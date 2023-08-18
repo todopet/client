@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import background from '@/assets/images/background.svg'
 import pet from '@/assets/images/pet.svg'
+import { FooterButton, MainModalBackdrop } from './PetArea';
 
 const PageArea = styled.div`
 	width: 100%;
@@ -55,5 +56,25 @@ const MainFooter = styled.div`
 	padding: 0 25px;
 `
 
+const MainFooterButton = styled(FooterButton)`
+	cursor: pointer;
+	&:hover {
+		filter: brightness(110%);
+	}
+`
 
-export { PageArea, MainArea, PetImg, MainHeader, StatusInfo, LevelInfo, MainBody, MainFooter };
+const AchModalBackdrop = styled(MainModalBackdrop)`
+
+`
+
+const AchModal = styled.div`
+	position: absolute;
+	top: 150px;
+	width: 100%;
+	height: 80%;
+	border-radius: 20px 20px 0 0;
+	background-color: white;
+`
+
+
+export { PageArea, MainArea, PetImg, MainHeader, StatusInfo, LevelInfo, MainBody, MainFooter, MainFooterButton, AchModalBackdrop, AchModal };

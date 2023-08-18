@@ -1,4 +1,4 @@
-import PetArea from '@/components/pages/Pet/PetArea/PetArea';
+import { PetArea } from '@/components/pages/Pet/PetArea/PetArea';
 
 export default function Pet() {
     return (

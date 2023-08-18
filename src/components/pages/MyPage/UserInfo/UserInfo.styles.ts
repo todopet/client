@@ -51,7 +51,7 @@ const UpdateIcon = styled(Icon)`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    width: 25px;
+    width: 20px;
     height: 25px;
     cursor: pointer;
 
@@ -107,7 +107,7 @@ const DeleteButton = styled(ModalButton)`
 	background-color: #AAEEA8;
     border: none; 
     cursor: pointer;
-	width: 40px;
+	width: 45px;
 	height: 35px;
     border-radius: 15px;
     color: #28B666;
