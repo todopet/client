@@ -19,14 +19,17 @@ const ModalWrap = styled.div`
     bottom: 0;
     z-index: 10;
 `;
+
 const Title = styled.div`
     font-size: 12px;
 `;
+
 const Count = styled.div`
     font-size: 12px;
     padding: 4px 4px;
     border-bottom: 1.7px solid;
 `;
+
 const Header = styled.div`
     display: flex;
     flex-direction: column;
@@ -36,6 +39,7 @@ const Header = styled.div`
     padding-bottom: 27px;
     font-weight: 500;
 `;
+
 const ItemList = styled.div`
     display: flex;
     flex-direction: column;
