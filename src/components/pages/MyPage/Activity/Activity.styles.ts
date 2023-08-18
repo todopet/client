@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import heart from '@/assets/images/heart.svg';
+import heart from '@/assets/images/mypage_heart.svg';
 import calendar from '@/assets/images/calendar.svg';
 import check from '@/assets/images/check.svg';
 
