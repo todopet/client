@@ -8,6 +8,7 @@ const WeekStyle = styled.div`
 const Day = styled.span`
     margin: 5px 13px;
     font-size: 14px;
+    font-family: Pretendard;
 `;
 
 const CellWrapper = styled.div`
@@ -25,10 +26,12 @@ const Cell = styled.div`
 const Date = styled.span`
     margin: 5px 17px;
     font-size: 14px;
+    font-family: Pretendard;
 `;
 
 const Title = styled.span`
     margin: 4px 20px;
+    font-family: Pretendard;
 `;
 
 export { WeekStyle, Day, CellWrapper, Cell, Date, Title };
