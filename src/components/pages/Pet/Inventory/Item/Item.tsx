@@ -6,11 +6,11 @@ import {
     StyledCakeIcon,
     ItemName,
     Itemdescription,
-    ThrowBtnStyled
+    DiscardBtnStyled
 } from "./Item.styles";
 
-import ItemQtyLabel from "@/components/pages/Pet/Inventory/ItemQtyLabel";
-import ThrowBtn from "./ThrowBtn";
+import ItemQtyLabel from "@/components/pages/Pet/Inventory/Item/ItemQtyLavel/ItemQtyLabel";
+import DiscardBtn from "@/components/pages/Pet/Inventory/Item/DiscardBtn/DiscardBtn";
 
 export default function Item() {
     return (
@@ -22,9 +22,9 @@ export default function Item() {
             <ItemInfo>
                 <ItemInfoRow>
                     <ItemName>케이크</ItemName>
-                    <ThrowBtnStyled>
-                        <ThrowBtn />
-                    </ThrowBtnStyled>
+                    <DiscardBtnStyled>
+                        <DiscardBtn />
+                    </DiscardBtnStyled>
                 </ItemInfoRow>
                 <Itemdescription>
                     사과설명사과설명사과설명사과설명사과설명사과설명사과설명사과설명

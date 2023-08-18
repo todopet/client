@@ -44,7 +44,7 @@ const Itemdescription = styled.div`
     font-size: 15px;
     color: #545353;
 `;
-const ThrowBtnStyled = styled.div`
+const DiscardBtnStyled = styled.div`
     align-self: center;
     & > button {
         border: 0;
@@ -58,5 +58,5 @@ export {
     StyledCakeIcon,
     ItemName,
     Itemdescription,
-    ThrowBtnStyled
+    DiscardBtnStyled
 };
