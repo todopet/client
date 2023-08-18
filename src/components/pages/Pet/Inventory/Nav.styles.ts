@@ -13,12 +13,14 @@ const NavWrap = styled.div`
     gap: 22px;
     justify-content: center;
     margin-bottom: 26px;
+    //hover가 아니고 클릭해야 색이 바뀌는 오류가 있음
     svg:hover {
         & > circle {
             stroke: #aaeea8;
         }
     }
 `;
+
 const ButtonStyled = styled(Button)`
     padding: 0;
     border: none;
@@ -30,6 +32,7 @@ const StyledHeartIcon = styled(HeartIcon)``;
 const StyledRestIcon = styled(RestIcon)``;
 const StyledWashIcon = styled(WashIcon)``;
 const StyledHiddenIcon = styled(HiddenIcon)``;
+
 export {
     NavWrap,
     StyledFeedIcon,
