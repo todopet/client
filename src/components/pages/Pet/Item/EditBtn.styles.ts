@@ -32,7 +32,7 @@ const ButtonWrap = styled.div<EditBtnProps>`
             ? "#ffffff"
             : props.modalType === "useModal"
             ? "#aaeea8"
-            : "#adadad"};
+            : "#d9d9d9"};
 `;
 
 export { ButtonStyled, ButtonWrap };
