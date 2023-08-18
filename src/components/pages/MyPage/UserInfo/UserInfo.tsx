@@ -9,7 +9,6 @@ interface userinfoType {
 
 export function UserInfo({ name, date }: userinfoType) {
     const [state, setState] = useState(false);
-    console.log(state);
     const clickHandler = () => {
         setState(!state);
     }
@@ -20,7 +19,8 @@ export function UserInfo({ name, date }: userinfoType) {
                 <UserName>
                     <NickName name={name}></NickName>
                     <UpdateIcon className={""} onClick={clickHandler}></UpdateIcon>
-                    { state && 
+                    { 
+                        state && 
                         <ModalBackdrop>
                             <Modal>
                                 <ModalTitle>닉네임 변경하기</ModalTitle>
@@ -30,7 +30,8 @@ export function UserInfo({ name, date }: userinfoType) {
                                     <UpdateButton className={""} onClick={clickHandler}>닉네임 변경</UpdateButton>
                                 </ModalButtonArea>
                             </Modal>
-                        </ModalBackdrop> }
+                        </ModalBackdrop> 
+                    }
                 </UserName>
                 <JoinDate>가입일 : {date}</JoinDate>
             </UserInfoArea>
