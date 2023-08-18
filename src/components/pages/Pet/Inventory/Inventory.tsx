@@ -6,7 +6,7 @@ import {
     Count,
     Header,
     ItemList
-} from "./InventoryModal.styles";
+} from "./Inventory.styles";
 
 import Item from "@/components/pages/Pet/Inventory/Item/Item";
 import Divider from "@/components/Divider/Divider";
