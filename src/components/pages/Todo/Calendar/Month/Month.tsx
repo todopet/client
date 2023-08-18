@@ -5,6 +5,10 @@ import { ReactComponent as DropdownSvg } from "@/assets/images/dropdownButton.sv
 import ArrowButton from "../Button/ArrowButton";
 import { useState } from "react";
 
+/* 
+ * 월간 캘린더는 아직입니다...!
+ */
+
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 const date1 = [1, 2, 3, 4, 5, 6, 7];
 const date2 = [1, 2, 3, 4, 5, 6, 7];
@@ -13,14 +17,13 @@ const date4 = [1, 2, 3, 4, 5, 6, 7];
 const date5 = [1, 2, 3, 4, 5, 6, 7];
 
 export default function Month() {
-    const today = new Date();
-    const [currentDay, setCurrentDay] = useState(today.getDay());
+    const [currentDay, setCurrentDay] = useState(new Date());
 
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth() + 1;
-    const currentDate = today.getDate();
+    const currentYear = currentDay.getFullYear();
+    const currentMonth = currentDay.getMonth() + 1;
+    const currentDate = currentDay.getDate();
 
-    const firstDayOfWeek = new Date(currentYear, currentMonth, currentDate - currentDay);
+    //const firstDayOfWeek = new Date(currentYear, currentMonth, currentDate - currentDay);
 
     return (
         <Styles.MonthStyle>
