@@ -6,13 +6,9 @@ const WeekStyle = styled.div`
 `;
 
 const Day = styled.span`
-    margin: 5px 13px;
+    margin: 5px 17px;
     font-size: 14px;
     font-family: Pretendard;
-`;
-
-const CellWrapper = styled.div`
-    display: flex;
 `;
 
 const Cell = styled.div`
@@ -20,7 +16,7 @@ const Cell = styled.div`
     height: 22px;
     border-radius: 3px;
     background-color: lightgray;
-    margin: 4px 10px;
+    margin: 4px 12px;
 `;
 
 const Date = styled.span`
@@ -30,8 +26,45 @@ const Date = styled.span`
 `;
 
 const Title = styled.span`
-    margin: 4px 20px;
+    margin: 4px 18px 4px 26px;
     font-family: Pretendard;
 `;
 
-export { WeekStyle, Day, CellWrapper, Cell, Date, Title };
+const TitleWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const DayWrap = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+`;
+
+const CellWrap = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+`;
+
+const DateWrap = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+`;
+
+export {
+    WeekStyle,
+    Day,
+    CellWrap,
+    Cell,
+    Date,
+    Title,
+    TitleWrap,
+    DayWrap,
+    DateWrap,
+};
