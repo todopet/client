@@ -8,9 +8,9 @@ import {
     ItemList
 } from "./InventoryModal.styles";
 
-import Item from "@/components/pages/Pet/Item/Item";
+import Item from "@/components/pages/Pet/Inventory/Item/Item";
 import Divider from "@/components/Divider/Divider";
-import Category from "@/components/pages/Pet/Inventory/Nav";
+import Nav from "@/components/pages/Pet/Inventory/Nav/Nav";
 
 export default function InventoryModal() {
     //인벤토리버튼 클릭 시 openModal을 true로 설정해주기(셋팅 후 주석 지워주세요!)
@@ -25,7 +25,7 @@ export default function InventoryModal() {
                             <Title>도구</Title>
                             <Count>{20} / 50</Count>
                         </Header>
-                        <Category />
+                        <Nav />
                         <Divider category={"먹이"} />
                         <ItemList>
                             <Item />
