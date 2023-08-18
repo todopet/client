@@ -7,8 +7,8 @@ import {
     BtnWrap
 } from "./ActionModal.styles";
 
-import EditBtn from "@/components/pages/Pet/Item/EditBtn";
-import ChangeQtyBtn from "@/components/pages/Pet/Item/ChangeQtyBtn";
+import EditBtn from "@/components/pages/Pet/Inventory/Item/Action/EditBtn/EditBtn";
+import ChangeQtyBtn from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn/ChangeQtyBtn";
 
 interface modalTypeProps {
     modalType: "useModal" | "discardModal";
