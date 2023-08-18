@@ -4,6 +4,12 @@ import { ReactComponent as RightSvg } from "@/assets/images/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
 import { useState } from "react";
 
+/*
+ * 주간 캘린더는 연, 월, 날짜는 잘 나오는데
+ * "N주차" 텍스트 표시에 문제가 있습니다 (캘린더 헤더? 부분)
+ * ArrowButton 클릭 시 N주차도 변경하고 싶은데 어떻게 해야할 지 잘 모르겠습니다...
+ */
+
 const today = new Date();
 const todayYear = today.getFullYear();
 const todayMonth = today.getMonth();
@@ -48,8 +54,6 @@ export default function Week() {
     // 일주일 날짜를 담는 배열 weekDate
     // 버튼을 누를 때마다 baseDate를 변경해서 7개씩 불러옴
     const weekDate: number[] = [];
-
-    // ======================================================================================================================
 
     function getWeekDate() {
         const lastDateOfMonth = new Date(
