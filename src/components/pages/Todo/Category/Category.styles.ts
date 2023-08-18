@@ -8,7 +8,7 @@ const CategoryStyles = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 12px;
+    padding-left: 14px;
 `;
 
 const Text = styled.span`
@@ -24,8 +24,8 @@ const PlusButton = styled.button`
     width: 20px;
     height: 20px;
     padding: 4px 0px;
-    margin-left: 16px;
-    margin-right: 6px;
+    margin-left: 18px;
+    margin-right: 8px;
 `;
 
 export { CategoryStyles, Text, PlusButton };
