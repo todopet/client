@@ -14,11 +14,10 @@ const todayDay = today.getDay();     // 요일 기준으로 몇번째 칸부터 
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 const firstDateOfMonth = new Date(todayYear, todayMonth, 1);
 
-// 1일~말일까지의 날짜를 넣을 숫자 배열
-const date: number[] = [];
-
 export default function Month() {
     const [baseDate, setBaseDate] = useState(firstDateOfMonth);
+    // 1일~말일까지의 날짜를 넣을 숫자 배열
+    const date: number[] = [];
 
     function getDate() {
         const lastDateOfMonth = new Date(
@@ -26,11 +25,11 @@ export default function Month() {
             baseDate.getMonth() + 1,
             0
         ).getDate();
-        
+
         for (let i = 1; i <= lastDateOfMonth; ++i) {
             date.push(i);
         }
-        console.log(date)
+        console.log(date);
     }
     getDate();
 
