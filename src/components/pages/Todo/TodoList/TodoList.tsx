@@ -1,11 +1,39 @@
-import TodoItem from '../TodoItem/TodoItem';
-import { TodoListStyles } from './TodoList.styles';
+//react hook
+import { useState, useEffect } from "react";
+//api, interface
+import axiosRequest from "@/api/index";
+import { res, category } from "@/@types/index";
+//components
+import TodoItem from "../TodoItem/TodoItem";
+//styles
+import { TodoListStyles } from "./TodoList.styles";
 
 export default function TodoList() {
+    //전체 목표카테고리 get 요청 ->api작업완료시 (전체) -> (날짜)기준으로 바꾸기
+    async function getCategory() {
+        try {
+            const response: res<category[]> = await axiosRequest.requestAxios<
+                res<category[]>
+            >("get", "/todoCategory");
+            // console.log("category", response);
+            setCategories(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    //불러온 카테고리 상태관리
+    const [categories, setCategories] = useState<category[]>();
+
+    useEffect(() => {
+        getCategory();
+    }, []);
+
     return (
         <TodoListStyles>
-            <TodoItem />
-            <TodoItem />
+            {categories?.map((category) => {
+                return <TodoItem category={category} />;
+            })}
         </TodoListStyles>
     );
 }

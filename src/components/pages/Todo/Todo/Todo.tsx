@@ -1,3 +1,6 @@
+//icons
+import { ReactComponent as MenuSvg } from "@/assets/images/meatballsMenu.svg";
+//styles
 import {
     StyledTodo,
     TodoDiv,
@@ -5,14 +8,16 @@ import {
     Text,
     MenuButton
 } from "./Todo.styles";
-import { ReactComponent as MenuSvg } from "@/assets/images/meatballsMenu.svg";
 
-export default function Todo() {
+interface TodoProps {
+    content: string;
+}
+export default function Todo({ content }: TodoProps) {
     return (
         <StyledTodo>
             <TodoDiv>
                 <StyledCheckbox type="checkbox"></StyledCheckbox>
-                <Text>오늘의 할 일</Text>
+                <Text>{content}</Text>
             </TodoDiv>
             <MenuButton>
                 <MenuSvg />

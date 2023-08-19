@@ -1,10 +1,15 @@
-import Todo from '../Todo/Todo';
+import Todo from "../Todo/Todo";
+import { todo } from "@/@types/index";
 
-export default function Todos() {
+interface TodosProps {
+    todos: todo[];
+}
+export default function Todos({ todos }: TodosProps) {
     return (
-            <div>
-                <Todo></Todo>
-                <Todo></Todo>
-            </div>
+        <div>
+            {todos.map((todo) => {
+                return <Todo content={todo.todo} />;
+            })}
+        </div>
     );
 }

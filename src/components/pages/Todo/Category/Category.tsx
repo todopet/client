@@ -1,13 +1,16 @@
 import { ReactComponent as PlusSvg } from "@/assets/images/plusButton.svg";
-import { CategoryStyles, Text, PlusButton } from './Category.styles';
+import { CategoryStyles, Text, PlusButton } from "./Category.styles";
 
-export default function Category() {
+interface CategoryProps {
+    category: string;
+}
+export default function Category({ category }: CategoryProps) {
     return (
-            <CategoryStyles>
-                <Text>카테고리</Text>
-                <PlusButton>
-                    <PlusSvg />
-                </PlusButton>
-            </CategoryStyles>
+        <CategoryStyles>
+            <Text>{category}</Text>
+            <PlusButton>
+                <PlusSvg />
+            </PlusButton>
+        </CategoryStyles>
     );
 }

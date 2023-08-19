@@ -19,13 +19,16 @@ export default function TodoItem() {
             const response: res<category[]> = await axiosRequest.requestAxios<
                 res<category[]>
             >("get", "/todoCategory");
-            console.log(response);
+            console.log("category", response);
             setCategory(response.data);
         } catch (error) {
             console.error(error);
         }
     }
+
+    //불러온 카테고리 상태관리
     const [category, setCategory] = useState<category[]>();
+
     useEffect(() => {
         getCategory();
     }, []);
