@@ -5,25 +5,34 @@ import { ReactComponent as DropdownSvg } from "@/assets/images/dropdownButton.sv
 import ArrowButton from "../Button/ArrowButton";
 import { useState } from "react";
 
-/* 
- * 월간 캘린더는 아직입니다...!
- */
-
+// 오늘을 기준으로 연,월,일,요일을 구함
+// day=요일 date=날짜
+const today = new Date();
+const todayYear = today.getFullYear();
+const todayMonth = today.getMonth();
+const todayDay = today.getDay();     // 요일 기준으로 몇번째 칸부터 그릴지 결정
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
-const date1 = [1, 2, 3, 4, 5, 6, 7];
-const date2 = [1, 2, 3, 4, 5, 6, 7];
-const date3 = [1, 2, 3, 4, 5, 6, 7];
-const date4 = [1, 2, 3, 4, 5, 6, 7];
-const date5 = [1, 2, 3, 4, 5, 6, 7];
+const firstDateOfMonth = new Date(todayYear, todayMonth, 1);
+
+// 1일~말일까지의 날짜를 넣을 숫자 배열
+const date: number[] = [];
 
 export default function Month() {
-    const [currentDay, setCurrentDay] = useState(new Date());
+    const [baseDate, setBaseDate] = useState(firstDateOfMonth);
 
-    const currentYear = currentDay.getFullYear();
-    const currentMonth = currentDay.getMonth() + 1;
-    const currentDate = currentDay.getDate();
-
-    //const firstDayOfWeek = new Date(currentYear, currentMonth, currentDate - currentDay);
+    function getDate() {
+        const lastDateOfMonth = new Date(
+            baseDate.getFullYear(),
+            baseDate.getMonth() + 1,
+            0
+        ).getDate();
+        
+        for (let i = 1; i <= lastDateOfMonth; ++i) {
+            date.push(i);
+        }
+        console.log(date)
+    }
+    getDate();
 
     return (
         <Styles.MonthStyle>
@@ -31,7 +40,7 @@ export default function Month() {
                 <LeftSvg />
             </ArrowButton>
             <Styles.Title>
-                {currentYear}년 {currentMonth}월
+                {baseDate.getFullYear()}년 {baseDate.getMonth() + 1}월
                 <DropdownSvg width="10px" height="10px" />
             </Styles.Title>
             <ArrowButton>
@@ -42,46 +51,14 @@ export default function Month() {
                     <Styles.Day>{day}</Styles.Day>
                 ))}
             </div>
-            <Styles.CellWrapper>
-                {date1.map((day, i) => (
-                    <Styles.Cell></Styles.Cell>
+            <Styles.DateCellWrap>
+                {date.map((date, i) => (
+                    <Styles.DateCell>
+                        <Styles.Cell></Styles.Cell>
+                        <Styles.Date>{date}</Styles.Date>
+                    </Styles.DateCell>
                 ))}
-            </Styles.CellWrapper>
-            {date1.map((date, i) => (
-                <Styles.Date>{date}</Styles.Date>
-            ))}
-            <Styles.CellWrapper>
-                {date2.map((day, i) => (
-                    <Styles.Cell></Styles.Cell>
-                ))}
-            </Styles.CellWrapper>
-            {date2.map((date, i) => (
-                <Styles.Date>{date}</Styles.Date>
-            ))}
-            <Styles.CellWrapper>
-                {date3.map((day, i) => (
-                    <Styles.Cell></Styles.Cell>
-                ))}
-            </Styles.CellWrapper>
-            {date3.map((date, i) => (
-                <Styles.Date>{date}</Styles.Date>
-            ))}
-            <Styles.CellWrapper>
-                {date4.map((day, i) => (
-                    <Styles.Cell></Styles.Cell>
-                ))}
-            </Styles.CellWrapper>
-            {date4.map((date, i) => (
-                <Styles.Date>{date}</Styles.Date>
-            ))}
-            <Styles.CellWrapper>
-                {date5.map((day, i) => (
-                    <Styles.Cell></Styles.Cell>
-                ))}
-            </Styles.CellWrapper>
-            {date5.map((date, i) => (
-                <Styles.Date>{date}</Styles.Date>
-            ))}
+            </Styles.DateCellWrap>
         </Styles.MonthStyle>
     );
 }
