@@ -31,6 +31,22 @@ export const FooterItemWrapper = styled.div<{ active: boolean }>`
     &:hover {
         color: black;
     }
+
+    svg {
+        stroke: ${(props) =>
+            props.active ? "black" : "#ADADAD"}; // 기본 색상 설정
+    }
+
+    &:hover {
+        color: black;
+
+        svg {
+            & > path {
+                fill: black;
+            }
+            stroke: black; // 호버 시 색상 설정
+        }
+    }
 `;
 
 export const FooterText = styled.span`
