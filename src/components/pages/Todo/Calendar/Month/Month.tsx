@@ -45,11 +45,11 @@ export default function Month() {
             <ArrowButton>
                 <RightSvg />
             </ArrowButton>
-            <div>
+            <Styles.DayWrap>
                 {dayText.map((day, i) => (
                     <Styles.Day>{day}</Styles.Day>
                 ))}
-            </div>
+            </Styles.DayWrap>
             <Styles.DateCellWrap>
                 {date.map((date, i) => (
                     <Styles.DateCell>
