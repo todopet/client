@@ -2,13 +2,7 @@ import styled from 'styled-components';
 import background from '@/assets/images/background.svg'
 import pet from '@/assets/images/pet.svg'
 import { FooterButton, MainModalBackdrop } from './PetArea';
-
-const PageArea = styled.div`
-	width: 100%;
-	heigth: 100%;
-	display: flex;
-	flex-direction: column;
-`
+import { ModalTitle } from '@/components/pages/MyPage/UserInfo/UserInfo.styles';
 
 const MainArea = styled.main`
     height: 77.5vh;
@@ -67,14 +61,42 @@ const AchModalBackdrop = styled(MainModalBackdrop)`
 
 `
 
-const AchModal = styled.div`
+// ${props => props.on === true ? "" : "top: 100%"};
+const AchModal = styled.div<{on: boolean}>`
 	position: absolute;
-	top: 150px;
+	bottom: 0; left: 0;
 	width: 100%;
-	height: 80%;
+	height: ${props => props.on === true ? "80" : 0}%;
 	border-radius: 20px 20px 0 0;
 	background-color: white;
+	display: flex;
+	flex-direction: column;
+	z-index: 1;
+	transition: all .5s;
+`
+
+const AchModalTitle = styled(ModalTitle)`
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 10%;
+	margin: 0;
+`
+
+const AchArea = styled.div`
+	width: 100%;
+	height: 90%;
+	overflow-y: auto;
+`
+
+const AchWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
 `
 
 
-export { PageArea, MainArea, PetImg, MainHeader, StatusInfo, LevelInfo, MainBody, MainFooter, MainFooterButton, AchModalBackdrop, AchModal };
+export { MainArea, PetImg, MainHeader, StatusInfo, LevelInfo, MainBody, MainFooter, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper };
