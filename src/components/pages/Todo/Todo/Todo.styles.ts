@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { styled } from "styled-components";
 import img from "@/assets/images/checkboxChecked.svg";
 
 const StyledTodo = styled.div`
@@ -31,16 +31,22 @@ const StyledCheckbox = styled.input`
         background-color: #baabb5;
     }
 `;
+interface TextProps {
+    status: boolean;
+}
 
-const Text = styled.span`
+const Text = styled.span<TextProps>`
     font-family: Pretendard;
     font-size: 16px;
+    text-decoration-line: ${(props) =>
+        props.status ? "line-through" : "none"};
+    color: ${(props) => (props.status ? "#ADADAD" : "#000000")};
 `;
 
 const MenuButton = styled.button`
-  height: 20px;
-  background-color: transparent;
-  border: none;
+    height: 20px;
+    background-color: transparent;
+    border: none;
 `;
 
 export { StyledTodo, TodoDiv, StyledCheckbox, Text, MenuButton };
