@@ -12,7 +12,7 @@ const NavWrap = styled.div`
     display: flex;
     gap: 22px;
     justify-content: center;
-    margin-bottom: 26px;
+    flex-basis: 12%;
     //hover가 아니고 클릭해야 색이 바뀌는 오류가 있음
     svg:hover {
         & > circle {

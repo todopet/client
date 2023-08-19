@@ -46,9 +46,20 @@ const Itemdescription = styled.div`
 `;
 const DiscardBtnStyled = styled.div`
     align-self: center;
+    position: relative;
+    flex-basis: 15%;
+    height: 100%;
     & > button {
+        position: absolute;
+        top: 3px; left: 5px;
         border: 0;
         background-color: transparent;
+        z-index: 2;
+
+        &:hover {
+            opacity: .5;
+            cursor: pointer;
+        }
     }
 `;
 export {
