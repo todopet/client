@@ -1,12 +1,12 @@
 import Todos from "@/components/pages/Todo/Todos/Todos";
 import Category from "@/components/pages/Todo/Category/Category";
-import TodoItem from "@/components/pages/Todo/TodoItem/TodoItem";
+import TodoList from "@/components/pages/Todo/TodoList/TodoList";
 
 export default function Todo() {
     return (
         <div>
             <div>Todo</div>
-            <TodoItem />
+            <TodoList />
         </div>
     );
 }
