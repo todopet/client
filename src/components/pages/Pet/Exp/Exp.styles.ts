@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const BaseBar = styled.div`
     width: 100%;
     height: 10px;
-    background-color: white;
+    background-color: #E3E3E3;
 
     & > .fulfilledBar {
         width: 40%;
