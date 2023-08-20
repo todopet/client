@@ -32,7 +32,9 @@ export default function TodoList() {
     return (
         <TodoListStyles>
             {categories?.map((category) => {
-                return <TodoItem category={category} />;
+                return (
+                    <TodoItem category={category} getCategory={getCategory} />
+                );
             })}
         </TodoListStyles>
     );

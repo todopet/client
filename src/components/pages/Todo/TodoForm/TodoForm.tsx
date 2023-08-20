@@ -10,8 +10,9 @@ import { Form, StyledCheckbox, Input } from "./TodoForm.styles";
 
 interface TodoFormProps {
     categoryId: string;
+    getCategory: () => void;
 }
-export default function TodoForm({ categoryId }: TodoFormProps) {
+export default function TodoForm({ categoryId, getCategory }: TodoFormProps) {
     //투두 post요청
     async function postTodo() {
         try {
@@ -28,9 +29,10 @@ export default function TodoForm({ categoryId }: TodoFormProps) {
     //input value 관리
     const [value, setValue] = useState<string>("");
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        postTodo();
+        await postTodo();
+        getCategory();
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

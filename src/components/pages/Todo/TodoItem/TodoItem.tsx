@@ -12,8 +12,9 @@ import { TodoItemStyles } from "./TodoItem.styles";
 
 interface TodoItemProps {
     category: category;
+    getCategory: () => void;
 }
-export default function TodoItem({ category }: TodoItemProps) {
+export default function TodoItem({ category, getCategory }: TodoItemProps) {
     const [openInputForm, setOpenInputForm] = useState<boolean>(false);
     const handleClick = () => {
         setOpenInputForm(!openInputForm);
@@ -27,7 +28,12 @@ export default function TodoItem({ category }: TodoItemProps) {
                     handleClick={handleClick}
                 />
                 <Todos todos={category.todos} />
-                {openInputForm && <TodoForm categoryId={category._id} />}
+                {openInputForm && (
+                    <TodoForm
+                        categoryId={category._id}
+                        getCategory={getCategory}
+                    />
+                )}
             </>
         </TodoItemStyles>
     );
