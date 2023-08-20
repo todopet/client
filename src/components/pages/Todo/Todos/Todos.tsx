@@ -8,7 +8,14 @@ export default function Todos({ todos }: TodosProps) {
     return (
         <div>
             {todos.map((todo) => {
-                return <Todo content={todo.todo} />;
+                return (
+                    <Todo
+                        content={todo.todo}
+                        status={todo.status}
+                        categoryId={todo.categoryId}
+                        contentId={todo._id}
+                    />
+                );
             })}
         </div>
     );

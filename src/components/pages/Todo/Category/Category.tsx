@@ -3,10 +3,11 @@ import { CategoryStyles, Text, PlusButton } from "./Category.styles";
 
 interface CategoryProps {
     category: string;
+    handleClick: () => void;
 }
-export default function Category({ category }: CategoryProps) {
+export default function Category({ category, handleClick }: CategoryProps) {
     return (
-        <CategoryStyles>
+        <CategoryStyles onClick={handleClick}>
             <Text>{category}</Text>
             <PlusButton>
                 <PlusSvg />

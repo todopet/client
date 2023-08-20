@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import img from "@/assets/images/checkboxChecked.svg";
 
 const StyledTodo = styled.div`
     height: 20px;
@@ -15,32 +14,27 @@ const TodoDiv = styled.div`
     align-items: center;
 `;
 
-const StyledCheckbox = styled.input`
-    appearance: none;
+interface TodoProps {
+    checked: boolean;
+}
+const StyledCheckbox = styled.div<TodoProps>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 22px;
     height: 22px;
     margin-right: 8px;
     border: none;
     border-radius: 3px;
-    background-color: #e7e8ea;
-
-    &:checked {
-        background-image: url(${img});
-        background-repeat: no-repeat;
-        background-position: center;
-        background-color: #baabb5;
-    }
+    background-color: ${(props) => (props.checked ? "#baabb5" : "#e7e8ea")};
 `;
-interface TextProps {
-    status: boolean;
-}
 
-const Text = styled.span<TextProps>`
+const Text = styled.span<TodoProps>`
     font-family: Pretendard;
     font-size: 16px;
     text-decoration-line: ${(props) =>
-        props.status ? "line-through" : "none"};
-    color: ${(props) => (props.status ? "#ADADAD" : "#000000")};
+        props.checked ? "line-through" : "none"};
+    color: ${(props) => (props.checked ? "#ADADAD" : "#000000")};
 `;
 
 const MenuButton = styled.button`

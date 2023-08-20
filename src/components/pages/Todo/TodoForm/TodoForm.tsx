@@ -25,11 +25,14 @@ export default function TodoForm({ categoryId }: TodoFormProps) {
         }
     }
 
+    //input value 관리
     const [value, setValue] = useState<string>("");
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         postTodo();
     };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     };
