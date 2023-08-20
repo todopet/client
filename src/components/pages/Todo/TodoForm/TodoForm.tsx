@@ -45,6 +45,7 @@ export default function TodoForm({ categoryId, getCategory }: TodoFormProps) {
                 placeholder="할 일 입력"
                 onChange={handleChange}
                 value={value}
+                autoFocus
             />
         </Form>
     );
