@@ -14,7 +14,9 @@ export const ToggleWrapper = styled.div<ToggleWrapperProps>`
     align-items: center;
     cursor: pointer;
     transition: background 0.3s;
-    position: relative;
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 340px;
     justify-content: ${(props) => (props.active ? "flex-end" : "flex-start")};
 `;
 

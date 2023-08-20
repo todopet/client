@@ -1,15 +1,15 @@
 import styled from 'styled-components';
+import { TotalBar, CurrentBar } from '../Achievement/Achievement.styles';
 
-const BaseBar = styled.div`
+const ExpTotalBar = styled(TotalBar)`
     width: 100%;
     height: 10px;
     background-color: #E3E3E3;
-
-    & > .fulfilledBar {
-        width: 40%;
-        height: 100%;
-        background-color: #1AAB17;
-    }
+    border-radius: 0;
 `
 
-export default BaseBar;
+const ExpCurrentBar = styled(CurrentBar)`
+    border-radius: 0;
+`
+
+export { ExpTotalBar, ExpCurrentBar };
