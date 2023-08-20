@@ -54,7 +54,7 @@ const TotalBar = styled.div`
 const CurrentBar = styled.div<{ totalCount: number; currentCount: number }>`
     width: ${props => Math.round((props.currentCount / props.totalCount) * 100)}%;
     height: 100%;
-    background-color: #1AAB17;
+    background-color: ${props => props.color};
     border-radius: 6px;
 `
 
