@@ -2,16 +2,32 @@ import styled from "styled-components";
 
 const MonthStyle = styled.div`
     width: 390px;
-    height: 390px;
+`;
+
+const DayWrap = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
 `;
 
 const Day = styled.span`
     margin: 5px 13px;
     font-size: 14px;
+    font-family: Pretendard;
 `;
 
-const CellWrapper = styled.div`
-    display: flex;
+const DateCellWrap = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+`;
+
+const DateCell = styled.div`
+    display: grid;
+    justify-items: center;
+    align-items: center;
 `;
 
 const Cell = styled.div`
@@ -19,16 +35,18 @@ const Cell = styled.div`
     height: 22px;
     border-radius: 3px;
     background-color: lightgray;
-    margin: 4px 10px;
+    margin: 4px 12px;
 `;
 
-const Date = styled.span`
-    margin: 5px 17px;
+const Date = styled.div`
+    margin: 5px 10px;
     font-size: 14px;
+    font-family: Pretendard;
 `;
 
 const Title = styled.span`
-    margin: 4px 20px;
+    margin: 4px 18px 4px 26px;
+    font-family: Pretendard;
 `;
 
-export { MonthStyle, Day, CellWrapper, Cell, Date, Title };
+export { MonthStyle, Day, DateCellWrap, DayWrap, DateCell, Cell, Date, Title };
