@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import { ToggleWrapper, Switch } from "./ToggleButton.styles";
 
-function ToggleButton() {
+// interface PropsData {
+//     props: boolean;
+//     toggleFunction: Function;
+// }
+
+interface ToggleButtonProps {
+    onToggle: (isToggled: boolean) => void;
+}
+
+const ToggleButton: FC<ToggleButtonProps> = ({ onToggle }) => {
     const [isToggled, setIsToggled] = useState(false);
 
     return (
