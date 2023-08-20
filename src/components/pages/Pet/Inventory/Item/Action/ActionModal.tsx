@@ -16,9 +16,8 @@ interface modalTypeProps {
     setState(state: boolean): void;
 }
 export default function ActionModal({ modalType, state, setState }: modalTypeProps) {
-    //퍼블리싱테스트를 위해 기본값을 true로 설정함 -> 추후 작업시 false로 변경해주세요!
     const [openModal, setOpenModal] = useState<boolean>(true);
-    // console.log(openModal);
+    
     return (
         <>
             {openModal && (
@@ -45,8 +44,11 @@ export default function ActionModal({ modalType, state, setState }: modalTypePro
                                 />
                             </Quantity>
                             <BtnWrap>
-                                <EditBtn modalType={modalType} btnType="confirm" />
-                                <EditBtn modalType={modalType} btnType="cancel" />
+                                <EditBtn modalType={modalType} btnType="confirm" onClick={() => {}} />
+                                <EditBtn modalType={modalType} btnType="cancel" onClick={() => {
+                                    setOpenModal(false);
+                                    setState(!state);
+                                }} />
                             </BtnWrap>
                         </ModalWrap>
                     </ModalBg>

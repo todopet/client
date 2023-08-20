@@ -1,7 +1,11 @@
 import { ButtonStyled, ButtonWrap } from "./EditBtn.styles";
 import type { EditBtnProps } from "./EditBtn.styles";
 
-export default function EditBtn({ modalType, btnType }: EditBtnProps) {
+interface propsType extends EditBtnProps {
+    onClick(): void;
+}
+
+export default function EditBtn({ modalType, btnType, onClick }: propsType) {
     let btnContent = "";
     if (btnType === "confirm") {
         if (modalType === "useModal") btnContent = "사용하기";
@@ -11,7 +15,7 @@ export default function EditBtn({ modalType, btnType }: EditBtnProps) {
     }
     return (
         <ButtonWrap modalType={modalType} btnType={btnType}>
-            <ButtonStyled modalType={modalType} btnType={btnType}>
+            <ButtonStyled modalType={modalType} btnType={btnType} onClick={onClick}>
                 {btnContent}
             </ButtonStyled>
         </ButtonWrap>

@@ -17,9 +17,10 @@ import ActionModal from "./Action/ActionModal";
 export default function Item() {
     const [ discard, setDiscard ] = useState(false);
     const [ use, setUse ] = useState(false);
+
     return (
         <ItemWrap>
-            <ItemInfo onClick={() =>  setUse(!use)}>
+            <ItemInfo onClick={() => setUse(!use)}>
                 <StyledCakeIcon />
                 <ItemQtyLabel count={2} />
             </ItemInfo>

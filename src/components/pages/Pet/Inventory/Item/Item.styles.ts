@@ -33,8 +33,10 @@ const StyledCakeIcon = styled(cakeIcon)`
     width: 100px;
     height: 96px;
     margin-right: 18px;
-`;
+    cursor: pointer;
 
+    &:hover { opacity: .6 }
+`;
 const ItemName = styled.div`
     font-size: 20px;
     color: #545353;
