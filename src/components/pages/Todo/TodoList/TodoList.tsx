@@ -5,6 +5,7 @@ import axiosRequest from "@/api/index";
 import { res, category } from "@/@types/index";
 //components
 import TodoItem from "../TodoItem/TodoItem";
+
 //styles
 import { TodoListStyles } from "./TodoList.styles";
 
@@ -14,8 +15,8 @@ export default function TodoList() {
         try {
             const response: res<category[]> = await axiosRequest.requestAxios<
                 res<category[]>
-            >("get", "/todoCategory");
-            // console.log("category", response);
+            >("get", "/todoContents");
+            // console.log("categories", response);
             setCategories(response.data);
         } catch (error) {
             console.error(error);
