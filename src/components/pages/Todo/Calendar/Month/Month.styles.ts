@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface DateProps {
+    isToday: boolean;
+}
+
 const MonthStyle = styled.div`
     width: 390px;
 `;
@@ -38,10 +42,16 @@ const Cell = styled.div`
     margin: 4px 12px;
 `;
 
-const Date = styled.div`
+const Date = styled.div<DateProps>`
     margin: 5px 10px;
     font-size: 14px;
     font-family: Pretendard;
+    color: ${(props) => (props.isToday ? "white" : "black")};
+    background-color: ${(props) => (props.isToday ? "black" : "")};
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    text-align: center;
 `;
 
 const Title = styled.span`
@@ -49,4 +59,29 @@ const Title = styled.span`
     font-family: Pretendard;
 `;
 
-export { MonthStyle, Day, DateCellWrap, DayWrap, DateCell, Cell, Date, Title };
+const TodayCircle = styled.div`
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background-color: black;
+`;
+
+const SelectedCircle = styled.div`
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background-color: #556fe9;
+`;
+
+export {
+    MonthStyle,
+    Day,
+    DateCellWrap,
+    DayWrap,
+    DateCell,
+    Cell,
+    Date,
+    Title,
+    TodayCircle,
+    SelectedCircle
+};
