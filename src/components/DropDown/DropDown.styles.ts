@@ -4,16 +4,10 @@ interface DropDownProps {
 }
 
 const Wrapper = styled.div`
-    margin: 100px auto;
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    color: white;
-    font-size: 19px;
-    background: gray;
-    width: 400px;
-    height: 50px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 500;
 `;
 
 const DropdownContainer = styled.div`
@@ -30,17 +24,16 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
         $isDropped: props.$isDropped
     };
 })`
-    background: gray;
     position: absolute;
-    top: 30px;
-    left: 50%;
-    width: 100px;
+    top: 25px;
+    right: 0;
+    width: 100px; //컴포넌트마다 수정하기
     text-align: center;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
+    box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
     opacity: 0;
     visibility: hidden;
-    transform: translate(-50%, -20px);
+    transform: translate(0, -20px);
     transition:
         opacity 0.4s ease,
         transform 0.4s ease,
@@ -52,18 +45,22 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
         css`
             opacity: 1;
             visibility: visible;
-            transform: translate(-50%, 0);
-            left: 50%;
+            transform: translate(0, 0);
+            right: 0;
         `};
 `;
 
 const Ul = styled.ul`
     & > li {
-        margin-bottom: 10px;
+        box-sizing: border-box;
+        padding: 8px 12px;
+        border-bottom: 1px solid #d9d9d9;
+        width: 100%;
+        line-height: 100%;
     }
 
-    & > li:first-of-type {
-        margin-top: 10px;
+    & > li:last-of-type {
+        border-bottom: none;
     }
 
     list-style-type: none;
@@ -71,10 +68,19 @@ const Ul = styled.ul`
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
 `;
 
-const Li = styled.li``;
+const Li = styled.li<{ centerContent?: boolean }>`
+    display: flex;
+    flex-direction: row;
+    justify-content: ${(props) =>
+        props.centerContent ? "space-between" : "center"};
+    align-items: center;
+`;
+const Link = styled.a`
+    text-decoration: none;
+    color: black;
+`;
 
-export { Wrapper, DropdownContainer, DropdownButton, Menu, Ul, Li };
+export { Wrapper, DropdownContainer, DropdownButton, Menu, Ul, Li, Link };
