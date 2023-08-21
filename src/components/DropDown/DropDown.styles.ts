@@ -31,6 +31,8 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
     text-align: center;
     box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.2);
     border-radius: 16px;
+    background-color: white;
+
     opacity: 0;
     visibility: hidden;
     transform: translate(0, -20px);

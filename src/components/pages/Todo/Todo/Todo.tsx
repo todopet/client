@@ -4,18 +4,12 @@ import { useState } from "react";
 import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
 //icons
-import { ReactComponent as MenuSvg } from "@/assets/images/meatballsMenu.svg";
 import { ReactComponent as CheckIcon } from "@/assets/images/checkboxChecked.svg";
-
+import { ReactComponent as MenuIcon } from "@/assets/images/meatballsMenu.svg";
 //components
+import DropDown from "@/components/DropDown/DropDown";
 //styles
-import {
-    StyledTodo,
-    TodoDiv,
-    StyledCheckbox,
-    Text,
-    MenuButton
-} from "./Todo.styles";
+import { StyledTodo, TodoDiv, StyledCheckbox, Text } from "./Todo.styles";
 
 interface TodoProps {
     content: string;
@@ -65,6 +59,19 @@ export default function Todo({
         //todo get요청
         getCategory();
     };
+
+    //DropDown의 props
+    const listItems = [
+        {
+            content: "수정",
+            handleClick: () => {
+                console.log("클릭됨");
+            }
+        },
+        {
+            content: "삭제"
+        }
+    ];
     return (
         <StyledTodo>
             <TodoDiv>
@@ -76,10 +83,9 @@ export default function Todo({
                 </StyledCheckbox>
                 <Text newCheckStatus={newCheckStatus}>{content}</Text>
             </TodoDiv>
-
-            <MenuButton>
-                <MenuSvg />
-            </MenuButton>
+            <DropDown list={listItems}>
+                <MenuIcon />
+            </DropDown>
         </StyledTodo>
     );
 }

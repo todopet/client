@@ -45,4 +45,4 @@ const MenuButton = styled.button`
     border: none;
 `;
 
-export { StyledTodo, TodoDiv, StyledCheckbox, Text, MenuButton };
+export { StyledTodo, TodoDiv, StyledCheckbox, Text };
