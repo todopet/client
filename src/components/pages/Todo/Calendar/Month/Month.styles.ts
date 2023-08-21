@@ -13,6 +13,7 @@ const DayWrap = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
+    margin-top: 20px;
 `;
 
 const Day = styled.span`
@@ -43,10 +44,10 @@ const Cell = styled.div`
 `;
 
 const Date = styled.div<DateProps>`
-    width: 18px;
-    height: 18px;
-    border-radius: 9px;
-    margin: 4px 10px 2px 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin: 2px 10px 2px 10px;
     font-size: 14px;
     font-family: Pretendard;
     color: ${(props) => (props.isToday ? "white" : "black")};
@@ -58,7 +59,7 @@ const Date = styled.div<DateProps>`
 `;
 
 const Title = styled.span`
-    margin: 4px 18px 4px 26px;
+    margin: 6px 24px 4px 26px;
     font-family: Pretendard;
 `;
 

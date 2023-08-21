@@ -15,6 +15,7 @@ interface TitleProps {
 const today = new Date();
 const todayYear = today.getFullYear();
 const todayMonth = today.getMonth();
+const todayDate = today.getDate();
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 const firstDateOfMonth = new Date(todayYear, todayMonth, 1);
 
@@ -38,12 +39,13 @@ export default function Month() {
             0
         );
         for (let i = 0; i < firstDateOfMonth.getDay(); ++i) {
-            dates.push(new Date(9999, 11, 0));
+            dates.push(new Date(9999, 11, 31));
         }
         for (let i = 0; i < lastDateOfMonth.getDate(); ++i) {
-            dates.push(new Date(baseDate.getFullYear(), baseDate.getMonth(), 1 + i));
+            dates.push(
+                new Date(baseDate.getFullYear(), baseDate.getMonth(), 1 + i)
+            );
         }
-        console.log(dates);
     }
     getMonthDate();
 
@@ -57,40 +59,42 @@ export default function Month() {
 
     return (
         <Styles.MonthStyle>
-            <ArrowButton
-                onClick={() => {
-                    setBaseDate(
-                        new Date(
-                            baseDate.getFullYear(),
-                            baseDate.getMonth() - 1,
-                            1
-                        )
-                    );
-                    setMonth(baseDate.getMonth() + 1);
-                }}
-            >
-                <LeftSvg />
-            </ArrowButton>
-            <Styles.Title>
-                <Title
-                    year={baseDate.getFullYear()}
-                    month={baseDate.getMonth() + 1}
-                />
-            </Styles.Title>
-            <ArrowButton
-                onClick={() => {
-                    setBaseDate(
-                        new Date(
-                            baseDate.getFullYear(),
-                            baseDate.getMonth() + 1,
-                            1
-                        )
-                    );
-                    setMonth(baseDate.getMonth() + 1);
-                }}
-            >
-                <RightSvg />
-            </ArrowButton>
+            <Styles.TitleWrap>
+                <ArrowButton
+                    onClick={() => {
+                        setBaseDate(
+                            new Date(
+                                baseDate.getFullYear(),
+                                baseDate.getMonth() - 1,
+                                1
+                            )
+                        );
+                        setMonth(baseDate.getMonth() + 1);
+                    }}
+                >
+                    <LeftSvg />
+                </ArrowButton>
+                <Styles.Title>
+                    <Title
+                        year={baseDate.getFullYear()}
+                        month={baseDate.getMonth() + 1}
+                    />
+                </Styles.Title>
+                <ArrowButton
+                    onClick={() => {
+                        setBaseDate(
+                            new Date(
+                                baseDate.getFullYear(),
+                                baseDate.getMonth() + 1,
+                                1
+                            )
+                        );
+                        setMonth(baseDate.getMonth() + 1);
+                    }}
+                >
+                    <RightSvg />
+                </ArrowButton>
+            </Styles.TitleWrap>
             <Styles.DayWrap>
                 {dayText.map((day, i) => (
                     <Styles.Day>{day}</Styles.Day>
@@ -103,7 +107,13 @@ export default function Month() {
                     ) : (
                         <Styles.DateCell>
                             <Styles.Cell></Styles.Cell>
-                            <Styles.Date isToday={date.getFullYear() === todayYear && date.getMonth() === todayMonth && date.getMonth() === today.getDate()}>
+                            <Styles.Date
+                                isToday={
+                                    date.getFullYear() === todayYear &&
+                                    date.getMonth() === todayMonth &&
+                                    date.getDate() === todayDate
+                                }
+                            >
                                 {date.getDate()}
                             </Styles.Date>
                         </Styles.DateCell>
