@@ -27,11 +27,12 @@ export default function TodoItem({ category, getCategory }: TodoItemProps) {
                     category={category.category}
                     handleClick={handleClick}
                 />
-                <Todos todos={category.todos} />
+                <Todos todos={category.todos} getCategory={getCategory} />
                 {openInputForm && (
                     <TodoForm
                         categoryId={category._id}
                         getCategory={getCategory}
+                        finishEdit={() => setOpenInputForm(false)}
                     />
                 )}
             </>
