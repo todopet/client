@@ -4,6 +4,12 @@ import { ReactComponent as RightSvg } from "@/assets/images/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
 import { useState, FC } from "react";
 
+interface TitleProps {
+    children?: React.ReactNode;
+    year: number;
+    month: number;
+}
+
 // 오늘을 기준으로 연,월,일,요일을 구함
 // day=요일 dates=날짜
 const today = new Date();
@@ -12,16 +18,6 @@ const todayMonth = today.getMonth();
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 const firstDateOfMonth = new Date(todayYear, todayMonth, 1);
 
-interface TitleProps {
-    children?: React.ReactNode;
-    year: number;
-    month: number;
-}
-
-interface DateProps {
-    isToday: boolean;
-}
-
 export default function Month() {
     const [baseDate, setBaseDate] = useState(firstDateOfMonth);
     const [month, setMonth] = useState(todayMonth + 1);
@@ -29,7 +25,7 @@ export default function Month() {
     // 1일~말일까지의 날짜를 넣을 숫자 배열
     const dates: Date[] = [];
 
-    function getDate() {
+    function getMonthDate() {
         const firstDateOfMonth = new Date(
             baseDate.getFullYear(),
             baseDate.getMonth(),
@@ -49,7 +45,7 @@ export default function Month() {
         }
         console.log(dates);
     }
-    getDate();
+    getMonthDate();
 
     const Title: FC<TitleProps> = (props) => {
         return (
@@ -107,7 +103,7 @@ export default function Month() {
                     ) : (
                         <Styles.DateCell>
                             <Styles.Cell></Styles.Cell>
-                            <Styles.Date isToday={date.getFullYear() === todayYear && date.getMonth() === todayMonth && date.getDate() === today.getDate()}>
+                            <Styles.Date isToday={date.getFullYear() === todayYear && date.getMonth() === todayMonth && date.getMonth() === today.getDate()}>
                                 {date.getDate()}
                             </Styles.Date>
                         </Styles.DateCell>
