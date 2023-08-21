@@ -85,7 +85,7 @@ export default function Todo({
                     getCategory={getCategory}
                     existingContent={content}
                     status={status}
-                    setIsEditig={setIsEditig}
+                    finishEdit={() => setIsEditig(false)}
                 />
             ) : (
                 <TodoDiv>

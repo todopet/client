@@ -32,6 +32,7 @@ export default function TodoItem({ category, getCategory }: TodoItemProps) {
                     <TodoForm
                         categoryId={category._id}
                         getCategory={getCategory}
+                        finishEdit={() => setOpenInputForm(false)}
                     />
                 )}
             </>

@@ -16,7 +16,7 @@ export default function TodoList() {
             const response: res<category[]> = await axiosRequest.requestAxios<
                 res<category[]>
             >("get", "/todoContents");
-            console.log("categories", response);
+            // console.log("categories", response);
             setCategories(response.data);
         } catch (error) {
             console.error(error);
