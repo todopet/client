@@ -18,9 +18,11 @@ export default function TodoForm({ categoryId, getCategory }: TodoFormProps) {
         try {
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
-            >("post", `/todoContent/${categoryId}`, {
+            >("post", `/todoContents`, {
+                categoryId: categoryId,
                 todo: value
             });
+            console.log("투두입력!");
         } catch (error) {
             console.error(error);
         }

@@ -15,7 +15,7 @@ const TodoDiv = styled.div`
 `;
 
 interface TodoProps {
-    checked: boolean;
+    newCheckStatus: string;
 }
 const StyledCheckbox = styled.div<TodoProps>`
     display: flex;
@@ -26,15 +26,17 @@ const StyledCheckbox = styled.div<TodoProps>`
     margin-right: 8px;
     border: none;
     border-radius: 3px;
-    background-color: ${(props) => (props.checked ? "#baabb5" : "#e7e8ea")};
+    background-color: ${(props) =>
+        props.newCheckStatus === "completed" ? "#baabb5" : "#e7e8ea"};
 `;
 
 const Text = styled.span<TodoProps>`
     font-family: Pretendard;
     font-size: 16px;
     text-decoration-line: ${(props) =>
-        props.checked ? "line-through" : "none"};
-    color: ${(props) => (props.checked ? "#ADADAD" : "#000000")};
+        props.newCheckStatus === "completed" ? "line-through" : "none"};
+    color: ${(props) =>
+        props.newCheckStatus === "unchecked" ? "#000000" : "#ADADAD"};
 `;
 
 const MenuButton = styled.button`
