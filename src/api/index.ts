@@ -6,6 +6,7 @@ axios.defaults.baseURL =
     process.env.REACT_APP_API_URL ?? "http://localhost:3001/api/v1";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.withCredentials = true;
 axios.defaults.timeout = 5000;
 
 // axios 인스턴스화
