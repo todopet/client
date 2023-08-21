@@ -39,18 +39,21 @@ const Cell = styled.div`
     height: 22px;
     border-radius: 3px;
     background-color: lightgray;
-    margin: 4px 12px;
+    margin: 16px 10px 2px 10px;
 `;
 
 const Date = styled.div<DateProps>`
-    margin: 5px 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    margin: 4px 10px 2px 10px;
     font-size: 14px;
     font-family: Pretendard;
     color: ${(props) => (props.isToday ? "white" : "black")};
     background-color: ${(props) => (props.isToday ? "black" : "")};
-    width: 18px;
-    height: 18px;
-    border-radius: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 `;
 
@@ -59,18 +62,10 @@ const Title = styled.span`
     font-family: Pretendard;
 `;
 
-const TodayCircle = styled.div`
-    width: 18px;
-    height: 18px;
-    border-radius: 9px;
-    background-color: black;
-`;
-
-const SelectedCircle = styled.div`
-    width: 18px;
-    height: 18px;
-    border-radius: 9px;
-    background-color: #556fe9;
+const TitleWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export {
@@ -82,6 +77,5 @@ export {
     Cell,
     Date,
     Title,
-    TodayCircle,
-    SelectedCircle
+    TitleWrap
 };
