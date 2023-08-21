@@ -39,10 +39,4 @@ const Text = styled.span<TodoProps>`
         props.newCheckStatus === "unchecked" ? "#000000" : "#ADADAD"};
 `;
 
-const MenuButton = styled.button`
-    height: 20px;
-    background-color: transparent;
-    border: none;
-`;
-
 export { StyledTodo, TodoDiv, StyledCheckbox, Text };

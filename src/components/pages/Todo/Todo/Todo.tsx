@@ -8,6 +8,8 @@ import { ReactComponent as CheckIcon } from "@/assets/images/checkboxChecked.svg
 import { ReactComponent as MenuIcon } from "@/assets/images/meatballsMenu.svg";
 //components
 import DropDown from "@/components/DropDown/DropDown";
+import TodoForm from "@/components/pages/Todo/TodoForm/TodoForm";
+
 //styles
 import { StyledTodo, TodoDiv, StyledCheckbox, Text } from "./Todo.styles";
 
@@ -65,24 +67,37 @@ export default function Todo({
         {
             content: "수정",
             handleClick: () => {
-                console.log("클릭됨");
+                setIsEditig(true);
             }
         },
         {
             content: "삭제"
         }
     ];
+
+    const [isEditing, setIsEditig] = useState<boolean>(false);
+
     return (
         <StyledTodo>
-            <TodoDiv>
-                <StyledCheckbox
-                    onClick={handleClick}
-                    newCheckStatus={newCheckStatus}
-                >
-                    {newCheckStatus === "completed" && <CheckIcon />}
-                </StyledCheckbox>
-                <Text newCheckStatus={newCheckStatus}>{content}</Text>
-            </TodoDiv>
+            {isEditing ? (
+                <TodoForm
+                    contentId={contentId}
+                    getCategory={getCategory}
+                    existingContent={content}
+                    status={status}
+                    setIsEditig={setIsEditig}
+                />
+            ) : (
+                <TodoDiv>
+                    <StyledCheckbox
+                        onClick={handleClick}
+                        newCheckStatus={newCheckStatus}
+                    >
+                        {newCheckStatus === "completed" && <CheckIcon />}
+                    </StyledCheckbox>
+                    <Text newCheckStatus={newCheckStatus}>{content}</Text>
+                </TodoDiv>
+            )}
             <DropDown list={listItems}>
                 <MenuIcon />
             </DropDown>

@@ -9,11 +9,22 @@ import { res, todo } from "@/@types/index";
 import { Form, StyledCheckbox, Input } from "./TodoForm.styles";
 
 interface TodoFormProps {
-    categoryId: string;
+    categoryId?: string;
+    contentId?: string;
     getCategory: () => void;
+    existingContent?: string;
+    status?: string;
+    setIsEditig?: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export default function TodoForm({ categoryId, getCategory }: TodoFormProps) {
-    //투두 post요청
+export default function TodoForm({
+    categoryId,
+    contentId,
+    getCategory,
+    existingContent,
+    status,
+    setIsEditig
+}: TodoFormProps) {
+    //투두 post요청(투두 생성)
     async function postTodo() {
         try {
             const response: res<todo[]> = await axiosRequest.requestAxios<
@@ -27,13 +38,35 @@ export default function TodoForm({ categoryId, getCategory }: TodoFormProps) {
             console.error(error);
         }
     }
+    //투두 patch요청(투두내용수정)
+    async function changeTodoContent() {
+        try {
+            const response: res<todo[]> = await axiosRequest.requestAxios<
+                res<todo[]>
+            >("patch", `/todoContents/${contentId}`, {
+                contentId: contentId,
+                todo: value,
+                status: status
+            });
+            console.log("투두입력!", contentId, value, status);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     //input value 관리
-    const [value, setValue] = useState<string>("");
+    const [value, setValue] = useState<string>(
+        existingContent ? existingContent : ""
+    );
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await postTodo();
+        if (existingContent) {
+            await changeTodoContent();
+            setIsEditig && setIsEditig(false);
+        } else {
+            await postTodo();
+        }
         getCategory();
     };
 
