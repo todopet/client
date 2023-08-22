@@ -10,3 +10,4 @@ export const HeaderContainer = styled.div`
 export const LogoContainer = styled.div`
     margin-right: auto;
 `;
+export const ButtonCatainer = styled.div``;

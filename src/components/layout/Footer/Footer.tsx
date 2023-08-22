@@ -8,31 +8,56 @@ import {
     FooterItemWrapper,
     FooterText
 } from "./Footer.styles";
+import { Link } from "react-router-dom";
 
 interface FooterItemProps {
+    to: string;
     icon: React.ReactElement;
     active: boolean;
     label: string;
 }
 
 export const FooterItem: React.FC<FooterItemProps> = ({
+    to,
     icon,
     active,
     label
 }) => (
-    <FooterItemWrapper active={active}>
-        {icon}
-        <FooterText>{label}</FooterText>
-    </FooterItemWrapper>
+    <Link to={to}>
+        <FooterItemWrapper active={active}>
+            {icon}
+            <FooterText>{label}</FooterText>
+        </FooterItemWrapper>
+    </Link>
 );
 
 const Footer: React.FC = () => {
     return (
         <FooterContainer>
-            <FooterItem icon={<HomeIcon />} active={true} label="피드" />
-            <FooterItem icon={<GrowIcon />} active={false} label="키우기" />
-            <FooterItem icon={<RankingIcon />} active={false} label="랭킹" />
-            <FooterItem icon={<MypageIcon />} active={false} label="My" />
+            <FooterItem
+                to="/todo"
+                icon={<HomeIcon />}
+                active={true}
+                label="피드"
+            />
+            <FooterItem
+                to="/pet"
+                icon={<GrowIcon />}
+                active={false}
+                label="키우기"
+            />
+            <FooterItem
+                to="/rank"
+                icon={<RankingIcon />}
+                active={false}
+                label="랭킹"
+            />
+            <FooterItem
+                to="/mypage"
+                icon={<MypageIcon />}
+                active={false}
+                label="My"
+            />
         </FooterContainer>
     );
 };

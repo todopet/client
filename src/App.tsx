@@ -19,8 +19,14 @@ const App: React.FC = () => {
                 <CommonLayout>
                     <Routes>
                         <Route path="/" element={<Login />} />
-                        <Route path="/category/list" element={<CategoryList />} />
-                        <Route path="/category/post" element={<CategoryPost />} />
+                        <Route
+                            path="/category/list"
+                            element={<CategoryList />}
+                        />
+                        <Route
+                            path="/category/post"
+                            element={<CategoryPost />}
+                        />
                         <Route path="/todo" element={<Todo />} />
                         <Route path="/pet" element={<Pet />} />
                         <Route path="/rank" element={<Ranking />} />
