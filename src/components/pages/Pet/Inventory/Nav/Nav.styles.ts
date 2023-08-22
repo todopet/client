@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 import Button from "@/components/Button/Button";
-import { ReactComponent as FeedIcon } from "@/assets/images/feed.svg";
-import { ReactComponent as HeartIcon } from "@/assets/images/heart.svg";
-import { ReactComponent as RestIcon } from "@/assets/images/rest.svg";
-import { ReactComponent as WashIcon } from "@/assets/images/wash.svg";
-import { ReactComponent as HiddenIcon } from "@/assets/images/hidden.svg";
+import { ReactComponent as FeedIcon } from "@/assets/icons/feed.svg";
+import { ReactComponent as HeartIcon } from "@/assets/icons/heart.svg";
+import { ReactComponent as RestIcon } from "@/assets/icons/rest.svg";
+import { ReactComponent as WashIcon } from "@/assets/icons/wash.svg";
+import { ReactComponent as HiddenIcon } from "@/assets/icons/hidden.svg";
 
 const NavWrap = styled.div`
     box-sizing: border-box;

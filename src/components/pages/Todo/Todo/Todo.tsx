@@ -4,8 +4,8 @@ import { useState } from "react";
 import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
 //icons
-import { ReactComponent as MenuSvg } from "@/assets/images/meatballsMenu.svg";
-import { ReactComponent as CheckIcon } from "@/assets/images/checkboxChecked.svg";
+import { ReactComponent as MenuSvg } from "@/assets/icons/meatballsMenu.svg";
+import { ReactComponent as CheckIcon } from "@/assets/icons/checkboxChecked.svg";
 
 //components
 import DropDown from "@/components/DropDown/DropDown";
