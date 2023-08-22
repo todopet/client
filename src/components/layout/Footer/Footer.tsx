@@ -1,8 +1,8 @@
 import React from "react";
-import { ReactComponent as HomeIcon } from "@/assets/images/home.svg";
-import { ReactComponent as GrowIcon } from "@/assets/images/footerPet.svg";
-import { ReactComponent as RankingIcon } from "@/assets/images/footerRanking.svg";
-import { ReactComponent as MypageIcon } from "@/assets/images/footerMy.svg";
+import { ReactComponent as HomeIcon } from "@/assets/icons/home.svg";
+import { ReactComponent as GrowIcon } from "@/assets/icons/footerPet.svg";
+import { ReactComponent as RankingIcon } from "@/assets/icons/footerRanking.svg";
+import { ReactComponent as MypageIcon } from "@/assets/icons/footerMy.svg";
 import {
     FooterContainer,
     FooterItemWrapper,

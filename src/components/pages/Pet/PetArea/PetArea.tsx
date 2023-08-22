@@ -1,5 +1,5 @@
-import ranking from '@/assets/images/ranking.svg'
-import inventory from '@/assets/images/inventory.svg';
+import ranking from '@/assets/icons/ranking.svg'
+import inventory from '@/assets/icons/inventory.svg';
 import { MainFooter, MainArea, PetImg, MainHeader, StatusInfo, MainBody, LevelInfo, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper } from './PetArea.styles';
 import CircleButton from '@/components/CircleButton/CircleButton';
 import Exp from '@/components/pages/Pet/Exp/Exp';

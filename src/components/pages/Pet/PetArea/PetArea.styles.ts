@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import petRoom from '@/assets/images/pet_room.svg'
-import pet from '@/assets/images/pet.svg'
+import pet from '@/assets/images/pet-example.svg'
 import { FooterButton, MainModalBackdrop } from './PetArea';
 import { ModalTitle } from '@/components/pages/MyPage/UserInfo/UserInfo.styles';
 

@@ -1,4 +1,4 @@
-import { ReactComponent as PlusSvg } from "@/assets/images/plusButton.svg";
+import { ReactComponent as PlusSvg } from "@/assets/icons/plusButton.svg";
 import { CategoryStyles, Text, PlusButton } from "./Category.styles";
 
 interface CategoryProps {

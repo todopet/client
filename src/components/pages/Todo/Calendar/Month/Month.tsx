@@ -1,6 +1,6 @@
 import * as Styles from "./Month.styles";
-import { ReactComponent as LeftSvg } from "@/assets/images/leftButton.svg";
-import { ReactComponent as RightSvg } from "@/assets/images/rightButton.svg";
+import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
+import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
 import { useState, FC } from "react";
 

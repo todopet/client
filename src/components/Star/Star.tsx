@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as StarIcon } from "@/assets/images/star.svg";
+import { ReactComponent as StarIcon } from "@/assets/icons/star.svg";
 
 const fullColor = "#FFE210";
 const emptyColor = "#F2F2F2";

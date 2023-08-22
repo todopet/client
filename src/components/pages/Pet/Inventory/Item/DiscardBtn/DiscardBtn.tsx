@@ -1,4 +1,4 @@
-import { ReactComponent as DiscardIcon } from "@/assets/images/trash.svg";
+import { ReactComponent as DiscardIcon } from "@/assets/icons/trash.svg";
 
 import { ButtonStyled } from "./DiscardBtn.styles";
 

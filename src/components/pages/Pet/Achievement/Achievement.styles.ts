@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import gift from "@/assets/images/gift.svg";
-import gift_bang from "@/assets/images/gift_bang.svg";
-import empty_gift from "@/assets/images/empty_gift.svg";
+import gift from "@/assets/icons/gift.svg";
+import gift_bang from "@/assets/icons/gift_bang.svg";
+import empty_gift from "@/assets/icons/empty_gift.svg";
 import { ModalBackdrop } from '../../MyPage/UserInfo/UserInfo.styles';
 
 const AchBox = styled.div<{ achDone: boolean }>`

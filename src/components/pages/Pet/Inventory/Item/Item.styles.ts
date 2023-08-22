@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as cakeIcon } from "@/assets/images/cake.svg"; //임시 이미지
+import { ReactComponent as cakeIcon } from "@/assets/itemImages/cake.svg"; //임시 이미지
 
 const ItemInfo = styled.div``;
 const ItemWrap = styled.div`
