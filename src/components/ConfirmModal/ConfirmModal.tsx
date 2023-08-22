@@ -8,26 +8,26 @@ import {
 } from "./ConfirmModal.styles";
 
 interface ConfirmModalProps {
-    texts: string[];
-    // onClose: () => void;
+    message: string;
+    onConfirm: () => void;
+    onCancel: () => void;
 }
 
-// 사용법
-// text 배열을 넣으면 알아서 바인딩 된다.
-// 보통 2개 요소가 위에 표시될 것이다.
-const ConfirmModal: React.FC<ConfirmModalProps> = ({ texts }) => {
+const ConfirmModal: React.FC<ConfirmModalProps> = ({
+    message,
+    onConfirm,
+    onCancel
+}) => {
     return (
         <Container>
             <ModalWrap>
-                {texts.map((text) => {
-                    return <Text>{text}</Text>;
-                })}
+                <Text>{message}</Text>
                 <ButtonWrap>
-                    <Button>
-                        <Text>아니오</Text>
+                    <Button onClick={onCancel}>
+                        <Text>취소</Text>
                     </Button>
-                    <Button>
-                        <Text>예</Text>
+                    <Button onClick={onConfirm}>
+                        <Text>확인</Text>
                     </Button>
                 </ButtonWrap>
             </ModalWrap>

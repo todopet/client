@@ -15,7 +15,7 @@ export default function CategoryList() {
         try {
             const response: res<any> = await axiosRequest.requestAxios<
                 res<any>
-            >("get", "/todoCategory");
+            >("get", "/todoCategories");
             // console.log("전체게시글", response.data);
             console.log(response);
             setCategoryList(response.data);
@@ -30,7 +30,7 @@ export default function CategoryList() {
     return (
         <>
             <CategoryHeader />
-            <CategoryContent />
+            {/* <CategoryContent category={categoryList} /> */}
         </>
     );
 }

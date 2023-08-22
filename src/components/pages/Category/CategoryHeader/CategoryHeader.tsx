@@ -59,7 +59,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
             try {
                 const response = await axiosRequest.requestAxios<ApiResponse>(
                     "get",
-                    "/todoCategory"
+                    "/todoCategories"
                 );
                 setCategories(response.data);
             } catch (error) {
