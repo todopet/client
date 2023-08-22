@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Ranker from "./Ranker";
+import Ranker from "@/components/Ranker/Ranker";
 import {
     TopThree,
     CircleIcon,

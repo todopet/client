@@ -30,6 +30,10 @@ const ModalWrap = styled.div`
 
     z-index: 100;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     visibility: visible;
     background-color: #fff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -53,6 +57,7 @@ const Text = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    white-space: pre-wrap;
 `;
 
 const ButtonWrap = styled.div`
