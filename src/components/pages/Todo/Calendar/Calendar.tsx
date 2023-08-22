@@ -1,4 +1,4 @@
-import { createContext, FC, useCallback, useContext, useState } from "react";
+import { createContext, FC, useContext, useState } from "react";
 import Week from "./Week/Week";
 import Month from "./Month/Month";
 import { CalendarStyles } from "./Calendar.styles";
@@ -23,21 +23,20 @@ interface CalendarBodyProps {
     mode?: CalendarProps["defaultMode"];
 }
 
-const CalendarDateCell = () => {
-    const { mode } = useContext(CalendarContext);
-    return (
-        <div style={{ padding: "10px", border: "1px solid black" }}>
-            CalendarDateCell: {mode}
-        </div>
-    );
-};
+// const CalendarDateCell = () => {
+//     const { mode } = useContext(CalendarContext);
+//     return (
+//         <div style={{ padding: "10px", border: "1px solid black" }}>
+//             CalendarDateCell: {mode}
+//         </div>
+//     );
+// };
 
 const CalendarBody: FC<CalendarBodyProps> = ({ mode }) => {
     return (
         <>
             {mode === "week" && <Week />}
             {mode === "month" && <Month />}
-            <CalendarDateCell />
         </>
     );
 };
