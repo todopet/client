@@ -1,4 +1,4 @@
-import Todo from "../Todo/Todo";
+import Todo from "./Todo/Todo";
 import { todo } from "@/@types/index";
 
 interface TodosProps {

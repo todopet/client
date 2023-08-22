@@ -8,7 +8,7 @@ import { ReactComponent as CheckIcon } from "@/assets/images/checkboxChecked.svg
 import { ReactComponent as MenuIcon } from "@/assets/images/meatballsMenu.svg";
 //components
 import DropDown from "@/components/DropDown/DropDown";
-import TodoForm from "@/components/pages/Todo/TodoForm/TodoForm";
+import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
 import { StyledTodo, TodoDiv, StyledCheckbox, Text } from "./Todo.styles";
