@@ -1,11 +1,12 @@
-import Todos from "@/components/pages/Todo/Todos/Todos";
-import Category from "@/components/pages/Todo/Category/Category";
+import Todos from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todos";
+import Category from "@/components/pages/Todo/TodoList/TodoItem/Category/Category";
 import TodoList from "@/components/pages/Todo/TodoList/TodoList";
+import MiniPet from "@/components/pages/Todo/MiniPet/MiniPet";
 
 export default function Todo() {
     return (
         <div>
-            <div>Todo</div>
+            <MiniPet />
             <TodoList />
         </div>
     );
