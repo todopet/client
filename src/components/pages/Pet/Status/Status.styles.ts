@@ -1,18 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TotalBar, CurrentBar } from '../Achievement/Achievement.styles';
 
-const BaseBar = styled.div`
-    flex-basis: 60%;
-    height: 25px;
-    background-color: white;
-    border-radius: 10px;
-
-    & > .fulfilledBar {
-        width: 30%;
-        height: 100%;
-        background-color: ${props => props.color};
-        border-radius: 10px;
-    }
+const StatusArea = styled.div`
+height: 40px;
+display: flex;
+gap: .4rem;
+align-items: center;
 `
 
 const BarName = styled.p`
@@ -26,11 +20,16 @@ const BarName = styled.p`
     padding-left: 6px;
 `
 
-const StatusArea = styled.div`
-    height: 40px;
-    display: flex;
-    gap: .4rem;
-    align-items: center;
+const ExpTotalBar = styled(TotalBar)`
+    width: 60%;
+    height: 25px;
+    background-color: white;
+    border-radius: 10px;
 `
 
-export { BaseBar, BarName, StatusArea };
+const ExpCurrentBar = styled(CurrentBar)`
+    border-radius: 10px;
+`
+
+
+export { BarName, StatusArea, ExpTotalBar, ExpCurrentBar };

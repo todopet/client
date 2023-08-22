@@ -1,14 +1,67 @@
+import { useEffect, useState } from 'react';
 import { PetArea } from '@/components/pages/Pet/PetArea/PetArea';
-import Header from "@/components/layout/Header/Header";
-import Footer from "@/components/layout/Footer/Footer";
-import { PetWrapper } from './Pet.styles';
+import axiosRequest from '@/api';
+import { res, myPet } from '@/@types';
 
 export default function Pet() {
+    const [petData, setPetData] = useState({
+        hungerInfo: {},
+        affectionInfo: {},
+        conditionInfo: {},
+        cleanlinessInfo: {},
+        expInfo: {},
+        levelInfo: 0, // 초기값으로 0 설정
+    });
+
+    async function receivePetData() {
+        try {
+            const response: res<myPet> = await axiosRequest.requestAxios<res<myPet>>("get", "/myPets", {});
+            console.log(response);
+            const petData = response.data.pets[0];
+            
+            
+            // 데이터를 객체로 업데이트
+            setPetData({
+                hungerInfo: {
+                    curHunger: petData.curHunger,
+                    hunger: petData.petInfo.hunger,
+                },
+                affectionInfo: {
+                    curAffection: petData.curAffection,
+                    affection: petData.petInfo.affection,
+                },
+                conditionInfo: {
+                    curCondition: petData.curCondition,
+                    condition: petData.petInfo.condition,
+                },
+                cleanlinessInfo: {
+                    curCleanliness: petData.curCleanliness,
+                    cleanliness: petData.petInfo.cleanliness,
+                },
+                expInfo: {
+                    curExp: petData.curExp,
+                    exp: petData.petInfo.exp,
+                },
+                levelInfo: petData.petInfo.level, // level 업데이트
+            });
+        } catch (error) {
+            console.error("Error fetching pet data: ", error);
+        }
+    }
+
+    useEffect(() => {
+        receivePetData();
+    }, []);
+
+    // 데이터를 모두 받은 후에 PetArea 컴포넌트를 렌더링
     return (
-        <PetWrapper>
-            <Header></Header>
-            <PetArea></PetArea>
-            <Footer></Footer>
-        </PetWrapper>
+        <PetArea
+            hungerInfo={petData.hungerInfo}
+            affectionInfo={petData.affectionInfo}
+            conditionInfo={petData.conditionInfo}
+            cleanlinessInfo={petData.cleanlinessInfo}
+            expInfo={petData.expInfo}
+            levelInfo={petData.levelInfo}
+        />
     );
 }

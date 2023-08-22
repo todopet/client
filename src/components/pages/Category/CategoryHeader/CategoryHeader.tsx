@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from "react";
-import { ReactComponent as LeftSvg } from "@/assets/images/leftButton.svg";
-import { ReactComponent as PlusSvg } from "@/assets/images/plusButton.svg";
+import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
+import { ReactComponent as PlusSvg } from "@/assets/icons/plusButton.svg";
 import {
     Container,
     Button,

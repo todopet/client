@@ -10,7 +10,16 @@ import {
     LoginContent
 } from "@/pages/Login/Login.styles";
 
-export default function Login() {
+const Login = () => {
+    const handleLoginClick = async () => {
+        // 현재 페이지가 localhost:3001 이 출처라서 구글에 잘 넘어감.
+        // 백ㅇ네드에서 리다이렉트
+
+        document.location.href = "http://localhost:3001/api/v1/login";
+        // 구글 로그인 페이지 뜨고
+        // 다 되고 나면
+        // 다시 리액트 페이지로 돌아가야함
+    };
     return (
         <Container>
             <Main>
@@ -22,8 +31,12 @@ export default function Login() {
             </Main>
             <LoginBtnGroup>
                 <GoogleImage></GoogleImage>
-                <LoginContent>구글 아이디로 로그인</LoginContent>
+                <LoginContent onClick={handleLoginClick}>
+                    구글 아이디로 로그인
+                </LoginContent>
             </LoginBtnGroup>
         </Container>
     );
-}
+};
+
+export default Login;

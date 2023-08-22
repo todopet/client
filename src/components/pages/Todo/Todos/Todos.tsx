@@ -1,10 +1,24 @@
-import Todo from '../Todo/Todo';
+import Todo from "../Todo/Todo";
+import { todo } from "@/@types/index";
 
-export default function Todos() {
+interface TodosProps {
+    todos: todo[];
+    getCategory: () => void;
+}
+export default function Todos({ todos, getCategory }: TodosProps) {
     return (
-            <div>
-                <Todo></Todo>
-                <Todo></Todo>
-            </div>
+        <div>
+            {todos &&
+                todos.map((todo) => {
+                    return (
+                        <Todo
+                            content={todo.todo}
+                            status={todo.status}
+                            contentId={todo._id}
+                            getCategory={getCategory}
+                        />
+                    );
+                })}
+        </div>
     );
 }

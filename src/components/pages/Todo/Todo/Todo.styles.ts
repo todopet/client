@@ -1,5 +1,4 @@
-import { styled } from 'styled-components';
-import img from "@/assets/images/checkboxChecked.svg";
+import { styled } from "styled-components";
 
 const StyledTodo = styled.div`
     height: 20px;
@@ -15,32 +14,29 @@ const TodoDiv = styled.div`
     align-items: center;
 `;
 
-const StyledCheckbox = styled.input`
-    appearance: none;
+interface TodoProps {
+    newCheckStatus: string;
+}
+const StyledCheckbox = styled.div<TodoProps>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 22px;
     height: 22px;
     margin-right: 8px;
     border: none;
     border-radius: 3px;
-    background-color: #e7e8ea;
-
-    &:checked {
-        background-image: url(${img});
-        background-repeat: no-repeat;
-        background-position: center;
-        background-color: #baabb5;
-    }
+    background-color: ${(props) =>
+        props.newCheckStatus === "completed" ? "#baabb5" : "#e7e8ea"};
 `;
 
-const Text = styled.span`
+const Text = styled.span<TodoProps>`
     font-family: Pretendard;
     font-size: 16px;
+    text-decoration-line: ${(props) =>
+        props.newCheckStatus === "completed" ? "line-through" : "none"};
+    color: ${(props) =>
+        props.newCheckStatus === "unchecked" ? "#000000" : "#ADADAD"};
 `;
 
-const MenuButton = styled.button`
-  height: 20px;
-  background-color: transparent;
-  border: none;
-`;
-
-export { StyledTodo, TodoDiv, StyledCheckbox, Text, MenuButton };
+export { StyledTodo, TodoDiv, StyledCheckbox, Text };

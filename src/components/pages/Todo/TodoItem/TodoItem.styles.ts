@@ -1,7 +1,7 @@
-import { styled } from 'styled-components';
+import { styled } from "styled-components";
 
 const TodoItemStyles = styled.div`
-  margin: 40px 10px;
+    margin: 40px 25px;
 `;
 
 export { TodoItemStyles };

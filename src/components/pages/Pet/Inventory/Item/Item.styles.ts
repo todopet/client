@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as cakeIcon } from "@/assets/images/cake.svg"; //임시 이미지
+import { ReactComponent as cakeIcon } from "@/assets/itemImages/cake.svg"; //임시 이미지
 
 const ItemInfo = styled.div``;
 const ItemWrap = styled.div`
@@ -33,8 +33,10 @@ const StyledCakeIcon = styled(cakeIcon)`
     width: 100px;
     height: 96px;
     margin-right: 18px;
-`;
+    cursor: pointer;
 
+    &:hover { opacity: .6 }
+`;
 const ItemName = styled.div`
     font-size: 20px;
     color: #545353;
@@ -46,9 +48,20 @@ const Itemdescription = styled.div`
 `;
 const DiscardBtnStyled = styled.div`
     align-self: center;
+    position: relative;
+    flex-basis: 15%;
+    height: 100%;
     & > button {
+        position: absolute;
+        top: 3px; left: 5px;
         border: 0;
         background-color: transparent;
+        z-index: 2;
+
+        &:hover {
+            opacity: .5;
+            cursor: pointer;
+        }
     }
 `;
 export {

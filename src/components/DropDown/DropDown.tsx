@@ -5,23 +5,44 @@ import {
     DropdownButton,
     Menu,
     Ul,
-    Li
+    Li,
+    Link
 } from "./DropDown.styles";
 
-const Dropdown = () => {
+interface ListItem {
+    content: string;
+    svg?: React.ReactNode; // React 컴포넌트 형태로 받을 수 있도록 설정
+    href?: string; //클릭시 주소이동을 원할시 사용
+    handleClick?: () => void; //클릭시 원하는 기능 적용
+}
+interface ListProps {
+    list: ListItem[];
+    children: React.ReactNode;
+}
+//사용하려는 카테고리 목록(list)을 props로 전달, 버튼으로 사용할 컴포넌트(children)를 추가해주세요.
+const Dropdown = ({ list, children }: ListProps) => {
     const [categoryIsOpen, categoryRef, categoryHandler] =
         useDetectClose(false);
+    const hasAnySvg = list.some((item) => !!item.svg);
     return (
         <Wrapper>
             <DropdownContainer>
                 <DropdownButton onClick={categoryHandler} ref={categoryRef}>
-                    Your Button Here
+                    {children}
                 </DropdownButton>
                 <Menu $isDropped={categoryIsOpen}>
                     <Ul>
-                        <Li>메뉴1</Li>
-                        <Li>메뉴2</Li>
-                        <Li>메뉴3</Li>
+                        {list.map((item) => (
+                            <Li
+                                centerContent={hasAnySvg}
+                                onClick={item.handleClick}
+                            >
+                                <Link href={item.href}>
+                                    {item.content}
+                                    {item.svg && item.svg}
+                                </Link>
+                            </Li>
+                        ))}
                     </Ul>
                 </Menu>
             </DropdownContainer>

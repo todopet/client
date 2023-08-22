@@ -15,9 +15,9 @@ import {
     RankNickname
 } from "./Ranking.styles";
 import Divider from "@/components/Divider/Divider";
-import { ReactComponent as GoldMedal } from "@/assets/images/goldmedal.svg";
-import { ReactComponent as SilverMedal } from "@/assets/images/silvermedal.svg";
-import { ReactComponent as BronzeMedal } from "@/assets/images/bronzemedal.svg";
+import { ReactComponent as GoldMedal } from "@/assets/icons/goldmedal.svg";
+import { ReactComponent as SilverMedal } from "@/assets/icons/silvermedal.svg";
+import { ReactComponent as BronzeMedal } from "@/assets/icons/bronzemedal.svg";
 
 interface User {
     id: number;
