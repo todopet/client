@@ -1,8 +1,10 @@
+import { FC, useState } from "react";
 import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import { FC, useState } from "react";
+import axiosRequest from "@/api/index";
+import { res, todo } from "@/@types/index";
 
 interface TitleProps {
     children?: React.ReactNode;
@@ -34,6 +36,18 @@ export default function Week() {
         weekCount: getWeekCount()
     });
     const dates: Date[] = [];
+
+    async function getTodos() {
+        try {
+            const response: res<todo[]> = await axiosRequest.requestAxios<
+                res<todo[]>
+            >("get", `/todoContents`);
+            console.log("response: ", response);
+        } catch (error) {
+            console.error("error: ", error);
+        }
+    }
+    getTodos();
 
     const getWeekDates = () => {
         for (let i = 0; i < 7; ++i) {
@@ -85,13 +99,10 @@ export default function Week() {
 
     const calculateMonth = () => {
         if (specialCaseOfYearEnd && isFirstDateIncluded) {
-            console.log("조건1");
             return 0;
         } else if (isFirstDateIncluded) {
-            console.log("조건2");
             return currentSunday.getMonth() + 1;
         } else {
-            console.log("조건3");
             return currentSunday.getMonth();
         }
     };
