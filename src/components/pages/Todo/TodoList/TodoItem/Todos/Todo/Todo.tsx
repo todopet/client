@@ -9,7 +9,7 @@ import { ReactComponent as CheckIcon } from "@/assets/icons/checkboxChecked.svg"
 
 //components
 import DropDown from "@/components/DropDown/DropDown";
-import TodoForm from "@/components/pages/Todo/TodoForm/TodoForm";
+import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
 import { StyledTodo, TodoDiv, StyledCheckbox, Text } from "./Todo.styles";
@@ -38,7 +38,19 @@ export default function Todo({
                 status: checkStatus
             });
 
-            console.log("클릭됨!", checkStatus);
+            // console.log("클릭됨!", checkStatus);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    //투두 delete 요청
+    async function deleteTodo() {
+        try {
+            console.log("클릭됨!", contentId);
+            const response: res<todo[]> = await axiosRequest.requestAxios<
+                res<todo[]>
+            >("delete", `/todoContents/${contentId}`);
         } catch (error) {
             console.error(error);
         }
@@ -46,7 +58,7 @@ export default function Todo({
 
     const [newCheckStatus, setNewCheckStatus] = useState<string>(status);
 
-    const handleClick = async () => {
+    const handleCheckClick = async () => {
         let checkStatus = "";
         if (status === "unchecked") {
             checkStatus = "completed";
@@ -72,10 +84,15 @@ export default function Todo({
             }
         },
         {
-            content: "삭제"
+            content: "삭제",
+            handleClick: async () => {
+                await deleteTodo();
+                getCategory();
+            }
         }
     ];
 
+    //input 상태
     const [isEditing, setIsEditig] = useState<boolean>(false);
 
     return (
@@ -91,7 +108,7 @@ export default function Todo({
             ) : (
                 <TodoDiv>
                     <StyledCheckbox
-                        onClick={handleClick}
+                        onClick={handleCheckClick}
                         newCheckStatus={newCheckStatus}
                     >
                         {newCheckStatus === "completed" && <CheckIcon />}

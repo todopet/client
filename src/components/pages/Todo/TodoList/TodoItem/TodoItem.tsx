@@ -3,9 +3,9 @@ import { useState } from "react";
 import { category } from "@/@types/index";
 
 //components
-import Category from "../Category/Category";
-import Todos from "../Todos/Todos";
-import TodoForm from "@/components/pages/Todo/TodoForm/TodoForm";
+import Category from "./Category/Category";
+import Todos from "./Todos/Todos";
+import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
 import { TodoItemStyles } from "./TodoItem.styles";

@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import axiosRequest from "@/api/index";
 import { res, category } from "@/@types/index";
 //components
-import TodoItem from "../TodoItem/TodoItem";
-
+import TodoItem from "./TodoItem/TodoItem";
 //styles
 import { TodoListStyles } from "./TodoList.styles";
 
