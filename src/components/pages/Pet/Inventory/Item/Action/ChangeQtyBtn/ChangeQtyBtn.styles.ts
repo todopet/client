@@ -13,6 +13,10 @@ const ButtonStyled = styled(CircleButton)`
                 props.modalType === "useModal" ? "#2dc770" : "#adadad"};
         }
     }
+
+    &:hover {
+        opacity: ${props => props.isCountPositiveNum ? .7 : false};
+    }
 `;
 
 export { ButtonStyled };

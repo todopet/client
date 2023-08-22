@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-// width: 100%;
-// height: 100%;
-// position: absolute;
-// top: 0;
-// background-color: rgba(0, 0, 0, 0.5);
 const ModalBg = styled.div`
     position: absolute;
     top: 0; bottom: 0;
@@ -13,18 +8,8 @@ const ModalBg = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 3;
 `;
-
-// width: 292px;
-// height: 390px;
-// border-radius: 20px;
-// background-color: #ffffff;
-// display: flex;
-// flex-direction: column;
-// justify-content: center;
-// align-items: center;
-// z-index: 10;
 const ModalWrap = styled.div`
     position: absolute;
     width: 292px;

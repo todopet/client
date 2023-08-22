@@ -79,9 +79,9 @@ export default function Pet() {
         levelInfo: 0, // 초기값으로 0 설정
     });
 
-    async function receiveData() {
+    async function receivePetData() {
         try {
-            const response: res<myPet> = await axiosRequest.requestAxios<res<myPet>>("get", "/myPet", {});
+            const response: res<myPet> = await axiosRequest.requestAxios<res<myPet>>("get", "/myPets", {});
             console.log(response);
             const petData = response.data.pets[0];
             
@@ -116,7 +116,7 @@ export default function Pet() {
     }
 
     useEffect(() => {
-        receiveData();
+        receivePetData();
     }, []);
 
     // 데이터를 모두 받은 후에 PetArea 컴포넌트를 렌더링

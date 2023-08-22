@@ -13,18 +13,22 @@ const NavWrap = styled.div`
     gap: 22px;
     justify-content: center;
     flex-basis: 12%;
-    //hover가 아니고 클릭해야 색이 바뀌는 오류가 있음
-    svg:hover {
-        & > circle {
-            stroke: #aaeea8;
-        }
-    }
 `;
 
 const ButtonStyled = styled(Button)`
     padding: 0;
     border: none;
     background-color: transparent;
+    
+    svg > circle {
+        stroke: ${props => props.on ? "#aaeea8" : false}
+    }
+
+    svg:hover {
+        &:hover {
+            opacity: ${props => props.on ? false : .5}
+        };
+    }
 `;
 
 const StyledFeedIcon = styled(FeedIcon)``;
