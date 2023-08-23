@@ -1,6 +1,6 @@
 import { useState } from "react";
 //api, interface
-import { category } from "@/@types/index";
+import { todoCategory } from "@/@types/index";
 
 //components
 import Category from "./Category/Category";
@@ -11,7 +11,7 @@ import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoF
 import { TodoItemStyles } from "./TodoItem.styles";
 
 interface TodoItemProps {
-    category: category;
+    category: todoCategory;
     getCategory: () => void;
 }
 export default function TodoItem({ category, getCategory }: TodoItemProps) {
