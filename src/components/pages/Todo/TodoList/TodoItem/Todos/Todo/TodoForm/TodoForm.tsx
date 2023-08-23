@@ -73,7 +73,6 @@ export default function TodoForm({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         submitForm();
-        finishEdit && finishEdit();
     };
 
     //input form 참조
