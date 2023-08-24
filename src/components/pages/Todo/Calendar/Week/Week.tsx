@@ -1,10 +1,9 @@
-import { FC, useState } from "react";
+import { FC, useState, useContext } from "react";
 import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import axiosRequest from "@/api/index";
-import { res, todo } from "@/@types/index";
+import { CalendarContext } from "../Calendar";
 
 interface TitleProps {
     children?: React.ReactNode;
@@ -35,19 +34,17 @@ export default function Week() {
         month: currentSunday.getMonth(),
         weekCount: getWeekCount()
     });
+    // const [startDate, setStartDate] = useState("");
+    // const [endDate, setEndDate] = useState("");
     const dates: Date[] = [];
 
-    async function getTodos() {
-        try {
-            const response: res<todo[]> = await axiosRequest.requestAxios<
-                res<todo[]>
-            >("get", `/todoContents`);
-            console.log("response: ", response);
-        } catch (error) {
-            console.error("error: ", error);
-        }
-    }
-    getTodos();
+    //     const contextValue = {
+    //     mode,
+    //     periodTodos,
+    //     dateTodos,
+    //     getAllTodos,
+    //     updateDate,
+    // };
 
     const getWeekDates = () => {
         for (let i = 0; i < 7; ++i) {
@@ -68,7 +65,7 @@ export default function Week() {
         }
 
         if (currentSunday.getMonth() === 11) {
-            if (dates.map((date) => date.getDate()).includes(31)) {
+            if (dates.map((date, i) => date.getDate()).includes(31)) {
                 if (dates[6].getDate() !== 31) {
                     specialCaseOfYearEnd = true;
                 }
@@ -76,6 +73,14 @@ export default function Week() {
         }
     };
     getWeekDates();
+
+    const updateDate = useContext(CalendarContext);
+    console.log(updateDate);
+
+    const start = dates[0].toISOString();
+    const end = dates[6].toISOString();
+    console.log(start, "///", end);
+    updateDate(start, end);
 
     function getWeekCount() {
         const firstDayOfMonth = new Date(
@@ -181,44 +186,3 @@ export default function Week() {
         </Styles.WeekStyle>
     );
 }
-
-// 아래 getWeekOfData 함수를 이용해서 아래와 같은 경우에 대해서 코드를 작성해주세요.
-//
-// 해당 Week 컴포넌트 마운트 시점 ( => getWeekOfData( new Date() ) );
-// Arrow 버튼 클릭 시 ( => getWeekOfData( new Date(현재 선택된 날짜 기준 + || - 1) ) )
-//
-// function isInvalidDate(date: Date) {
-//     return !date || typeof date !== "object" || !(date instanceof Date);
-// };
-
-// function getWeekOfData(date: Date) {
-// 매개변수로 Date객체(currentSunday)를 받아옴. getWeekOfDate(currentSunday); 이렇게 호출
-//     if (isInvalidDate(date)) return {};
-//     const firstDate = // 주의 첫날 객체(일요일)
-//         date.getDay() === 0
-//             ? date
-//             : new Date(
-//                 date.getFullYear(),
-//                 date.getMonth(),
-//                 date.getDate() - date.getDay()
-//             );
-
-//     const lastDate = new Date( // 주의 마지막날 객체(토요일)
-//         firstDate.getFullYear(),
-//         firstDate.getMonth(),
-//         firstDate.getDate() + 6
-//     );
-
-//     const startDayOfMonth = new Date( // 월의 시작 요일
-//         date.getFullYear(),
-//         date.getMonth()
-//     ).getDay();
-
-//     const weekOfMonth = Math.ceil((date.getDate() + startDayOfMonth) / 7);
-
-//     return {
-//         firstDate, // date 기준 일요일
-//         lastDate, // date 기준 토요일
-//         weekOfMonth // date 기준 주차 수 [1 ~ 6]
-//     };
-// };
