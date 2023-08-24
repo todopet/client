@@ -10,35 +10,27 @@ import {
     ButtonStyled
 } from "./Nav.styles";
 
-interface itemType {
-    feed: boolean;
-    play: boolean;
-    rest: boolean;
-    wash: boolean;
-    hidden: boolean;
-    setFeed: () => void;
-    setPlay: () => void;
-    setRest: () => void;
-    setWash: () => void;
-    setHidden: () => void;
+interface categoryType {
+    activeCategory: string;
+    setActiveCategory(categoryName: string): void;
 }
 
-export default function Nav({ feed, play, rest, wash, hidden, setFeed, setPlay, setRest, setWash, setHidden }: itemType) {
+export default function Nav({ activeCategory, setActiveCategory }: categoryType) {
     return (
         <NavWrap>
-            <ButtonStyled on={feed} onClick={setFeed}>
+            <ButtonStyled on={activeCategory === "feed"} onClick={() => {setActiveCategory("feed")}}>
                 <StyledFeedIcon />
             </ButtonStyled>
-            <ButtonStyled on={play} onClick={setPlay}>
+            <ButtonStyled on={activeCategory === "play"} onClick={() => {setActiveCategory("play")}}>
                 <StyledHeartIcon />
             </ButtonStyled>
-            <ButtonStyled on={rest} onClick={setRest}>
+            <ButtonStyled on={activeCategory === "rest"} onClick={() => {setActiveCategory("rest")}}>
                 <StyledRestIcon />
             </ButtonStyled>
-            <ButtonStyled on={wash} onClick={setWash}>
+            <ButtonStyled on={activeCategory === "wash"} onClick={() => {setActiveCategory("wash")}}>
                 <StyledWashIcon />
             </ButtonStyled>
-            <ButtonStyled on={hidden} onClick={setHidden}>
+            <ButtonStyled on={activeCategory === "hidden"} onClick={() => {setActiveCategory("hidden")}}>
                 <StyledHiddenIcon />
             </ButtonStyled>
         </NavWrap>
