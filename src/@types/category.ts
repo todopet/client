@@ -4,7 +4,10 @@ export interface category {
     _id: string;
     userId: string;
     category: string;
-    todos: todo[];
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface todoCategory extends category {
+    todos: todo[];
 }

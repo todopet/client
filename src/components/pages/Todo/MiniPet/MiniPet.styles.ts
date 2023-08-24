@@ -2,18 +2,18 @@ import styled from "styled-components";
 
 const MiniPetWrap = styled.div`
     width: 390px;
-    height: 50px;
-    background-repeat: no-repeat;
-    background-position: center;
+    height: 70px;
     position: relative;
-    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 `;
 
 const MyPet = styled.img`
-    width: 48px;
-    height: 32px;
+    max-height: 50px;
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     bottom: 5px;
 `;
 const Bg = styled.img`
@@ -21,4 +21,4 @@ const Bg = styled.img`
     height: 50px;
 `;
 
-export { MiniPetWrap, MyPet, Bg };
+export { MiniPetWrap, Bg, MyPet };
