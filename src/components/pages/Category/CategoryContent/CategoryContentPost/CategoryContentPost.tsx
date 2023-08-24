@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Input from "@/components/Input/Input";
 import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
 import {
@@ -8,23 +8,38 @@ import {
     ButtonWrap,
     ActionButtonWrap,
     ActionButton
-} from "./CategoryContent.styles";
+} from "./CategoryContentPost.styles";
 import axiosRequest from "@/api";
 import { res } from "@/@types/index";
 
-interface Category {
-    id: string;
-    name: string;
-}
+// interface Category {
+//     id: string;
+//     name: string;
+// }
 
-interface CategoryContentProps {
-    category: Category;
-}
-
-const CategoryContent: React.FC<CategoryContentProps> = ({ category }) => {
+const CategoryContentPost: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const navigate = useNavigate();
+    const [categoryList, setCategoryList] = useState<any[]>([]);
+    const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const id = searchParams.get("categoryId");
+    console.log(id);
+    async function getPostings() {
+        try {
+            const response: res<any[]> = await axiosRequest.requestAxios<
+                res<any[]>
+            >("get", "/todoCategories");
+            // console.log("전체게시글", response.data);
+            setCategoryList(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        getPostings();
+    }, []);
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -70,16 +85,7 @@ const CategoryContent: React.FC<CategoryContentProps> = ({ category }) => {
         <>
             {/* <Input value={category.name} readOnly />{" "} */}
             {/* 카테고리 이름을 보여주는 부분 */}
-            <Text>일반</Text>
-            <ButtonWrap>
-                <CircleButton>목표1</CircleButton>
-                <CircleButton>목표2</CircleButton>
-                <CircleButton>목표3</CircleButton>
-            </ButtonWrap>
-            <Text>종료된 목표</Text>
-            <ButtonWrap>
-                <CircleButton>목표4</CircleButton>
-            </ButtonWrap>
+
             <ActionButtonWrap>
                 <ActionButton onClick={handleOpenModal}>종료하기</ActionButton>
                 <ActionButton onClick={handleOpenDeleteModal}>
@@ -104,4 +110,4 @@ const CategoryContent: React.FC<CategoryContentProps> = ({ category }) => {
     );
 };
 
-export default CategoryContent;
+export default CategoryContentPost;
