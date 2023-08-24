@@ -9,7 +9,7 @@ import { ReactComponent as CheckIcon } from "@/assets/icons/checkboxChecked.svg"
 
 //components
 import DropDown from "@/components/DropDown/DropDown";
-import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
+import TodoForm from "@/components/pages/Todo/Calendar/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
 import { StyledTodo, TodoDiv, StyledCheckbox, Text } from "./Todo.styles";
