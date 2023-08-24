@@ -53,7 +53,7 @@ export default function TodoForm({
                 todo: value,
                 status: status
             });
-            // console.log("투두입력!", contentId, value, status);
+            // console.log("투두수정!", response);
         } catch (error) {
             console.error(error);
         }

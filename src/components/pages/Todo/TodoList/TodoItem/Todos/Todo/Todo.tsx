@@ -38,7 +38,7 @@ export default function Todo({
                 status: checkStatus
             });
 
-            // console.log("클릭됨!", checkStatus);
+            // console.log("체크!", response);
         } catch (error) {
             console.error(error);
         }
@@ -47,7 +47,7 @@ export default function Todo({
     //투두 delete 요청
     async function deleteTodo() {
         try {
-            console.log("클릭됨!", contentId);
+            // console.log("클릭됨!", contentId);
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
             >("delete", `/todoContents/${contentId}`);
