@@ -49,7 +49,7 @@ const Header = styled.div`
 const ItemList = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: .5rem;
     flex-basis: 70%;
 `;
 

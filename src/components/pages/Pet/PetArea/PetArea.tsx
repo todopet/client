@@ -21,16 +21,16 @@ interface petAreaProps {
 }
 
 interface petInfoProps {
-	hunger?: number;
 	curHunger?: number;
-	affection?: number;
+	maxHunger?: number;
 	curAffection?: number;
-	condition?: number;
+	maxAffection?: number;
 	curCondition?: number;
-	cleanliness?: number;
+	maxCondition?: number;
 	curCleanliness?: number;
-	exp?: number;
-	curExp?: number;
+	maxCleanliness?: number;
+	curExperience?: number;
+	maxExperience?: number;
 }
 
 export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessInfo, expInfo, levelInfo }: petAreaProps) {
@@ -43,22 +43,22 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 		setInvState(!invState);
 	}
 
-	const {hunger, curHunger}: petInfoProps = hungerInfo;
-	const {affection, curAffection}: petInfoProps = affectionInfo;
-	const {condition, curCondition}: petInfoProps = conditionInfo;
-	const {cleanliness, curCleanliness}: petInfoProps = cleanlinessInfo;
-	const {exp, curExp}: petInfoProps = expInfo;
+	const {curHunger, maxHunger}: petInfoProps = hungerInfo;
+	const {curAffection, maxAffection}: petInfoProps = affectionInfo;
+	const {curCondition, maxCondition}: petInfoProps = conditionInfo;
+	const {curCleanliness, maxCleanliness}: petInfoProps = cleanlinessInfo;
+	const {curExperience, maxExperience}: petInfoProps = expInfo;
 	const level: number = levelInfo;
 
 	return (
 		<MainArea>
-			<Exp totalCount={exp} currentCount={curExp}></Exp>
+			<Exp totalCount={curExperience} currentCount={maxExperience}></Exp>
 			<MainHeader>
 				<StatusInfo>
-					<Status name="포만감" color="#FF5156" totalCount={hunger} currentCount={curHunger}></Status>
-					<Status name="친밀도" color="#FFE210" totalCount={affection} currentCount={curAffection}></Status>
-					<Status name="컨디션" color="#45E397" totalCount={condition} currentCount={curCondition}></Status>
-					<Status name="청결도" color="#0190FE" totalCount={cleanliness} currentCount={curCleanliness}></Status>
+					<Status name="포만감" color="#FF5156" totalCount={curHunger} currentCount={maxHunger}></Status>
+					<Status name="친밀도" color="#FFE210" totalCount={curAffection} currentCount={maxAffection}></Status>
+					<Status name="컨디션" color="#45E397" totalCount={curCondition} currentCount={maxCondition}></Status>
+					<Status name="청결도" color="#0190FE" totalCount={curCleanliness} currentCount={maxCleanliness}></Status>
 				</StatusInfo>
 				<LevelInfo><Stars level={level}></Stars></LevelInfo>
 			</MainHeader>

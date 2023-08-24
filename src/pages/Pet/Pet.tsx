@@ -16,33 +16,33 @@ export default function Pet() {
     async function receivePetData() {
         try {
             const response: res<myPet> = await axiosRequest.requestAxios<res<myPet>>("get", "/myPets", {});
-            console.log(response);
-            const petData = response.data.pets[0];
-            
+            const petInfo = response.data.pets[0];
+            // console.log(petInfo);
+            const petLevel: number = petInfo.pet.level;
             
             // 데이터를 객체로 업데이트
             setPetData({
                 hungerInfo: {
-                    curHunger: petData.curHunger,
-                    hunger: petData.petInfo.hunger,
+                    curHunger: petInfo.pet.hunger,
+                    maxHunger: 100 + petLevel*20
                 },
                 affectionInfo: {
-                    curAffection: petData.curAffection,
-                    affection: petData.petInfo.affection,
+                    curAffection: petInfo.pet.affection,
+                    maxAffection: 100 + petLevel*20
                 },
                 conditionInfo: {
-                    curCondition: petData.curCondition,
-                    condition: petData.petInfo.condition,
+                    curCondition: petInfo.pet.condition,
+                    maxCondition: 100 + petLevel*20
                 },
                 cleanlinessInfo: {
-                    curCleanliness: petData.curCleanliness,
-                    cleanliness: petData.petInfo.cleanliness,
+                    curCleanliness: petInfo.pet.cleanliness,
+                    maxCleanliness: 100 + petLevel*20
                 },
                 expInfo: {
-                    curExp: petData.curExp,
-                    exp: petData.petInfo.exp,
+                    curExperience: petLevel < 5 ? petInfo.pet.experience : 1,
+                    maxExperience: petLevel < 5 ? 100 * (2 ** petLevel) : 1
                 },
-                levelInfo: petData.petInfo.level, // level 업데이트
+                levelInfo: petLevel // level 업데이트
             });
         } catch (error) {
             console.error("Error fetching pet data: ", error);
