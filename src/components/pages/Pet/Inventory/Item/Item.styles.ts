@@ -29,6 +29,17 @@ const ItemInfoRow = styled.div`
     flex-direction: row;
     justify-content: space-between;
 `;
+// const ItemIcon = styled.div`
+//     background-image: url(${props => props.url});
+//     background-repeat: no-repeat;
+//     background-position: center;
+//     width: 100px;
+//     height: 96px;
+//     margin-right: 18px;
+//     cursor: pointer;
+
+//     &:hover { opacity: .6 }
+// `
 const StyledCakeIcon = styled(cakeIcon)`
     width: 100px;
     height: 96px;

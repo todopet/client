@@ -1,32 +1,23 @@
 export interface myPet {
     _id: string;
     userId: string;
-    pets: pets[];
+    pets: pet[];
     createdAt: Date;
     updatedAt: Date;
 }
 
-interface pets {
-    pet: string;
-    myPetName: string;
-    curAffection: number;
-    curCleanliness: number;
-    curExp: number;
-    curHunger: number;
-    curCondition: number;
+interface pet {
+    pet: petInfo;
     _id: string;
-    petInfo: petInfo;
 }
 
 interface petInfo {
+    petName: string;
+    level: number
     affection: number;
     cleanliness: number;
-    condition: number;
+    experience: number;
     hunger: number;
-    exp: number;
-    level: number;
-    createdAt: string;
-    updatedAt: string;
-    petName: string;
+    condition: number;
     _id: string;
 }
