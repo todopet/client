@@ -11,11 +11,13 @@ import { TodoListStyles } from "./TodoList.styles";
 export default function TodoList() {
     //전체 목표카테고리 get 요청 ->api작업완료시 (전체) -> (날짜)기준으로 바꾸기
     async function getCategory() {
+        const startDate = "2023-08-19T15:00:00.000Z";
+        const endDate = "2023-08-27T15:00:00.000Z";
         try {
             const response: res<todoCategory[]> =
                 await axiosRequest.requestAxios<res<todoCategory[]>>(
                     "get",
-                    "/todoContents"
+                    `/todoContents?start=${startDate}&end=${endDate}`
                 );
             // console.log("categories", response);
             setCategories(response.data);
