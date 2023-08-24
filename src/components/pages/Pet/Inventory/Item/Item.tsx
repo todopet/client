@@ -3,7 +3,8 @@ import {
     ItemWrap,
     ItemInfo,
     ItemInfoRow,
-    StyledCakeIcon,
+    // StyledCakeIcon,
+    ItemIcon,
     ItemName,
     Itemdescription,
     DiscardBtnStyled
@@ -28,10 +29,15 @@ export default function Item({ url, name, des, _id, quantity, itemData, setItemD
     const [ discard, setDiscard ] = useState(false);
     const [ use, setUse ] = useState(false);
 
+    // const splitedUrl = url.split("/");
+    // const imageUrl = splitedUrl[2] + "/" + splitedUrl[3];
+    // console.log(imageUrl);
+    
     return (
         <ItemWrap>
             <ItemInfo onClick={() => setUse(!use)}>
-                <StyledCakeIcon />  {/* url을 받아서 그에 맞는 아이콘 보여주는걸로 수정 필요 */}
+                {/* <StyledCakeIcon /> */}
+                <ItemIcon imageUrl={url} />
                 <ItemQtyLabel count={quantity} />
             </ItemInfo>
             <ItemInfo>
@@ -46,8 +52,8 @@ export default function Item({ url, name, des, _id, quantity, itemData, setItemD
                 </Itemdescription>
             </ItemInfo>
             {/* 사용하거나 버릴때 호출하는 api 경로의 파라미터는 _id */}
-            { discard && <ActionModal modalType="discardModal" state={discard} setState={setDiscard} itemId={_id} name={name} itemData={itemData} setItemData={setItemData} /> }
-            { use && <ActionModal modalType="useModal" state={use} setState={setUse} itemId={_id} name={name} itemData={itemData} setItemData={setItemData} /> }
+            { discard && <ActionModal modalType="discardModal" state={discard} setState={setDiscard} itemId={_id} name={name} quantity={quantity} itemData={itemData} setItemData={setItemData} /> }
+            { use && <ActionModal modalType="useModal" state={use} setState={setUse} itemId={_id} name={name} quantity={quantity} itemData={itemData} setItemData={setItemData} /> }
         </ItemWrap>
     );
 }

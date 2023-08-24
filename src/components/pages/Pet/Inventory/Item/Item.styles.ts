@@ -1,6 +1,8 @@
+import Button from "@/components/Button/Button";
 import styled from "styled-components";
 
-import { ReactComponent as cakeIcon } from "@/assets/itemImages/cake.svg"; //임시 이미지
+// import { ReactComponent as cakeIcon } from "@/assets/itemImages/cake.svg"; //임시 이미지
+// import { ReactComponent as icon } from "../../../../../../public/logo192.png";
 
 const ItemInfo = styled.div``;
 const ItemWrap = styled.div`
@@ -29,25 +31,27 @@ const ItemInfoRow = styled.div`
     flex-direction: row;
     justify-content: space-between;
 `;
-// const ItemIcon = styled.div`
-//     background-image: url(${props => props.url});
-//     background-repeat: no-repeat;
-//     background-position: center;
+const ItemIcon = styled(Button)<{ imageUrl: string }>`
+    background-image: url(${props => props.imageUrl});
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100px;
+    height: 96px;
+    margin-right: 18px;
+    cursor: pointer;
+    border: 0;
+    background-color: transparent;
+
+    &:hover { opacity: .6 }
+`
+// const StyledCakeIcon = styled(cakeIcon)`
 //     width: 100px;
 //     height: 96px;
 //     margin-right: 18px;
 //     cursor: pointer;
 
 //     &:hover { opacity: .6 }
-// `
-const StyledCakeIcon = styled(cakeIcon)`
-    width: 100px;
-    height: 96px;
-    margin-right: 18px;
-    cursor: pointer;
-
-    &:hover { opacity: .6 }
-`;
+// `;
 const ItemName = styled.div`
     font-size: 20px;
     color: #545353;
@@ -79,7 +83,8 @@ export {
     ItemWrap,
     ItemInfo,
     ItemInfoRow,
-    StyledCakeIcon,
+    // StyledCakeIcon,
+    ItemIcon,
     ItemName,
     Itemdescription,
     DiscardBtnStyled
