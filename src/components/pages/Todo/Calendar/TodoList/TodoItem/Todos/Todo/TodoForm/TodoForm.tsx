@@ -53,7 +53,7 @@ export default function TodoForm({
                 todo: value,
                 status: status
             });
-            console.log("투두입력!", contentId, value, status);
+            // console.log("투두수정!", response);
         } catch (error) {
             console.error(error);
         }
@@ -63,6 +63,7 @@ export default function TodoForm({
     const submitForm = async () => {
         if (existingContent) {
             await changeTodoContent();
+            finishEdit && finishEdit(); //수정이 끝나면 form 닫힘
         } else if (value) {
             await postTodo();
         }
@@ -73,7 +74,6 @@ export default function TodoForm({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         submitForm();
-        finishEdit && finishEdit();
     };
 
     //input form 참조

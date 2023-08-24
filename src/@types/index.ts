@@ -1,5 +1,5 @@
 import { user } from "@/@types/user";
-import { category } from "@/@types/category";
+import { category, todoCategory } from "@/@types/category";
 import { todo } from "@/@types/todo";
 import { myPet } from "@/@types/myPet";
 import { myItems } from "./myItems";
@@ -9,4 +9,4 @@ interface res<D> {
     data: D;
 }
 
-export type { res, user, myPet, category, todo, myItems };
+export type { res, user, myPet, category, todo, myItems, todoCategory };
