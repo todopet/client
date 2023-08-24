@@ -5,8 +5,8 @@ import { CalendarStyles } from "./Calendar.styles";
 import ToggleButton from "@/components/ToggleButton/ToggleButton";
 import axiosRequest from "@/api/index";
 import { res, category } from "@/@types/index";
-import TodoList from "../TodoList/TodoList";
-// import TodoList from "@/components/pages/Todo/Calendar/TodoList/TodoList";
+// import TodoList from "../TodoList/TodoList";
+import TodoList from "@/components/pages/Todo/Calendar/TodoList/TodoList";
 
 export interface CalendarProps {
     defaultMode?: "week" | "month";
