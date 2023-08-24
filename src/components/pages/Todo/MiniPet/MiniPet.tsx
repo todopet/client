@@ -1,7 +1,12 @@
+//hook
 import { useState, useRef, useEffect } from "react";
-import { MiniPetWrap, MyPet, Bg } from "./MiniPet.styles";
+//img
 import background from "@/assets/images/miniPetBackground.png";
-import miniPet from "@/assets/images/miniPet.png.png";
+import miniPet from "@/assets/images/lvZeroPet.png.png";
+//components
+import Toast from "@/components/pages/Todo/MiniPet/Toast/Toast";
+//styles
+import { MiniPetWrap, Bg, MyPet } from "./MiniPet.styles";
 
 export default function MiniPet() {
     const miniPetWrapperRef = useRef<HTMLDivElement | null>(null);
@@ -22,7 +27,7 @@ export default function MiniPet() {
 
                 //x축 이동
                 setXPosition(xPosition + 5);
-                console.log("xxx");
+                // console.log("xxx");
                 if (xPosition > containerWidth) {
                     setXPosition(-sessakWidth);
                 }
@@ -30,10 +35,10 @@ export default function MiniPet() {
                 //y축 이동
                 if (yDirection === 1) {
                     setYPosition(yPosition + 5);
-                    console.log(1);
+                    // console.log(1);
                 } else if (yDirection === -1) {
                     setYPosition(yPosition - 5);
-                    console.log(-1);
+                    // console.log(-1);
                 }
 
                 //container영역으로 이동 제한
@@ -46,7 +51,7 @@ export default function MiniPet() {
                     setXPosition(xPosition + 5);
                     setXPosition(xPosition + 5);
 
-                    console.log("stay");
+                    // console.log("stay");
                 }
 
                 miniPetRef.current.style.left = xPosition + "px";
@@ -61,8 +66,8 @@ export default function MiniPet() {
 
     return (
         <MiniPetWrap ref={miniPetWrapperRef}>
+            {/* <Toast /> */}
             <MyPet ref={miniPetRef} src={miniPet} alt="miniPet" />
-
             <Bg src={background} alt="background" />
         </MiniPetWrap>
     );

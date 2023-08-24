@@ -1,17 +1,17 @@
 import { useState } from "react";
 //api, interface
-import { category } from "@/@types/index";
+import { todoCategory } from "@/@types/index";
 
 //components
 import Category from "./Category/Category";
 import Todos from "./Todos/Todos";
-import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
+import TodoForm from "@/components/pages/Todo/Calendar/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
 import { TodoItemStyles } from "./TodoItem.styles";
 
 interface TodoItemProps {
-    category: category;
+    category: todoCategory;
     getCategory: () => void;
 }
 export default function TodoItem({ category, getCategory }: TodoItemProps) {
