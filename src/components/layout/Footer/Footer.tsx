@@ -6,30 +6,34 @@ import { ReactComponent as MypageIcon } from "@/assets/icons/footerMy.svg";
 import {
     FooterContainer,
     FooterItemWrapper,
-    FooterText
+    FooterText,
+    StyledLink
 } from "./Footer.styles";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface FooterItemProps {
     to: string;
     icon: React.ReactElement;
-    active: boolean;
     label: string;
 }
 
 export const FooterItem: React.FC<FooterItemProps> = ({
     to,
     icon,
-    active,
     label
-}) => (
-    <Link to={to}>
-        <FooterItemWrapper active={active}>
+}) => {
+    const location = useLocation();
+
+    const isActive = location.pathname === to;
+
+    return (
+    <StyledLink to={to}>
+        <FooterItemWrapper active={isActive}>
             {icon}
             <FooterText>{label}</FooterText>
         </FooterItemWrapper>
-    </Link>
-);
+    </StyledLink>
+)};
 
 const Footer: React.FC = () => {
     return (
@@ -37,25 +41,21 @@ const Footer: React.FC = () => {
             <FooterItem
                 to="/todo"
                 icon={<HomeIcon />}
-                active={true}
                 label="피드"
             />
             <FooterItem
                 to="/pet"
                 icon={<GrowIcon />}
-                active={false}
                 label="키우기"
             />
             <FooterItem
                 to="/rank"
                 icon={<RankingIcon />}
-                active={false}
                 label="랭킹"
             />
             <FooterItem
                 to="/mypage"
                 icon={<MypageIcon />}
-                active={false}
                 label="My"
             />
         </FooterContainer>
