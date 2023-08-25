@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 //img
 import background from "@/assets/images/miniPetBackground.png";
-import miniPet from "@/assets/images/lvZeroPet.png.png";
+// import miniPet from "@/assets/images/lvZeroPet.png.png";
 //components
 import Toast from "@/components/pages/Todo/MiniPet/Toast/Toast";
 //styles
@@ -67,7 +67,7 @@ export default function MiniPet() {
     return (
         <MiniPetWrap ref={miniPetWrapperRef}>
             {/* <Toast /> */}
-            <MyPet ref={miniPetRef} src={miniPet} alt="miniPet" />
+            {/* <MyPet ref={miniPetRef} src={miniPet} alt="miniPet" /> */}
             <Bg src={background} alt="background" />
         </MiniPetWrap>
     );
