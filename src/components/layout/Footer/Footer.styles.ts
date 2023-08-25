@@ -29,28 +29,14 @@ export const FooterItemWrapper = styled.div<{ active: boolean }>`
     font-weight: 400;
     line-height: normal;
 
-    &:hover {
-        color: black;
-    }
-
-    svg {
-
-        stroke: ${(props) =>
-            props.active ? "black" : "#ADADAD"}; // 기본 색상 설정
-    }
-
-    /* &:hover {
-        color: black;
-
+    & {
         svg {
-            stroke: black; // 호버 시 색상 설정
-
             path {
-                fill: black;
-                stroke: black;
+                fill: ${(props) => (props.active ? "black" : "#ADADAD")};
+                stroke: ${(props) => (props.active ? "black" : "#ADADAD")};
             }
         }
-    } */
+    }
 `;
 
 export const FooterText = styled.span`
@@ -60,5 +46,5 @@ export const FooterText = styled.span`
 `;
 
 export const StyledLink = styled(Link)`
-  text-decoration: none;
+    text-decoration: none;
 `;
