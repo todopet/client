@@ -69,7 +69,7 @@ export const RankList = styled.div`
 `;
 
 export const RankingContainer = styled.div`
-    margin-bottom: 60px;
+    //margin-bottom: 60px;
 `;
 
 export const RankInfoContainer = styled.div`
