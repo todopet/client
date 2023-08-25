@@ -9,9 +9,9 @@ import {
 import EditBtn from "@/components/pages/Pet/Inventory/Item/Action/EditBtn/EditBtn";
 import ChangeQtyBtn from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn/ChangeQtyBtn";
 import { items, myItems } from "@/@types/myItems";
-import axios from "axios";
 import axiosRequest from "@/api";
 import { res } from "@/@types";
+import { dumpItemRes } from "@/@types/dumpItemRes";
 
 interface modalTypeProps {
     modalType: "useModal" | "discardModal";
@@ -45,10 +45,14 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
     }
 
     async function handleDumpItem(itemId: string) {
-        const data = { quantity: itemCount*-1 };
-        const response = await axios.patch(`http://localhost:3001/api/v1/inventories/items/${itemId}`, data);
-        console.log(response);
-        receiveItemData();
+        try {
+            const data = { quantity: itemCount*-1 };
+            const response: res<dumpItemRes> = await axiosRequest.requestAxios<res<dumpItemRes>>("patch", `/inventories/items/${itemId}`, data);
+            console.log(response);
+            receiveItemData();
+        } catch (error) {
+            console.error("Error fetching pet data: ", error);
+        }
     }
 
     return (
@@ -76,8 +80,8 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
                                 <ChangeQtyBtn
                                     modalType={modalType}
                                     operationType="increase"
-                                    onClick={() => (itemCount <= quantity) ? setItemCount(itemCount+1) : false}
-                                    isCountPositiveNum={itemCount <= quantity}
+                                    onClick={() => (itemCount < quantity) ? setItemCount(itemCount+1) : false}
+                                    isCountPositiveNum={itemCount < quantity}
                                 />
                             </Quantity>
                             <BtnWrap>

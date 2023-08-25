@@ -3,10 +3,11 @@ import { category, todoCategory } from "@/@types/category";
 import { todo } from "@/@types/todo";
 import { myPet } from "@/@types/myPet";
 import { myItems } from "./myItems";
+import { dumpItemRes } from "@/@types/dumpItemRes";
 
 interface res<D> {
     error: string | null;
     data: D;
 }
 
-export type { res, user, myPet, category, todo, myItems, todoCategory };
+export type { res, user, myPet, category, todo, myItems, todoCategory, dumpItemRes };
