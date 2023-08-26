@@ -7,17 +7,19 @@ import {
 } from "./Header.styles";
 import Dropdown from "@/components/DropDown/DropDown";
 import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";
+import { ReactComponent as PlusIcon } from "@/assets/icons/plus.svg";
 
 export default function Header() {
     //DropDown의 props
     const listItems = [
         {
-            content: "목표관리",
-            href: "/category/list"
+            content: "목표등록",
+            href: "/category/post", // 경로 설정
+            svg: <PlusIcon />
         },
         {
-            content: "목표등록",
-            href: "/category/post" // 경로 설정
+            content: "목표관리",
+            href: "/category/list"
         }
     ];
 
