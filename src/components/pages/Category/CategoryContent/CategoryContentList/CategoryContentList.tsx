@@ -8,7 +8,8 @@ import {
     ButtonWrap,
     ActionButtonWrap,
     ActionButton,
-    Wrap
+    Wrap,
+    StyledLink
 } from "./CategoryContentList.styles";
 import axiosRequest from "@/api";
 import { res } from "@/@types/index";
@@ -90,11 +91,11 @@ const CategoryContentList: React.FC = () => {
                         return (
                             !category.ended && (
                                 <CircleButton key={category._id}>
-                                    <Link
+                                    <StyledLink
                                         to={`/category/post?categoryId=${category._id}`}
                                     >
                                         {category.category}
-                                    </Link>
+                                    </StyledLink>
                                 </CircleButton>
                             )
                         );

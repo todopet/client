@@ -25,15 +25,18 @@ const CircleButton = styled.button`
 const ActionButtonWrap = styled.div`
     display: flex;
     justify-content: space-evenly;
+    margin-top: 130px;
 `;
 
-const ActionButton = styled.button`
+const ActionButton = styled.button<{ type: string }>`
     width: 10.1875rem;
     height: 2.375rem;
     flex-shrink: 0;
     border: none;
     border-radius: 0.5rem;
     background: #f5f5f5;
+    color: ${(props) => (props.type === "exit" ? "black" : "#FA4D28")};
+    font-weight: 400;
 `;
 
 export { Text, CircleButton, ButtonWrap, ActionButtonWrap, ActionButton };

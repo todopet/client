@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as PlusSvg } from "@/assets/icons/plusButton.svg";
@@ -73,6 +72,10 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
         }
     }, [title]);
 
+    const handlePlusButtonClick = () => {
+        navigate("/category/ 경로 뭐더라");
+    };
+
     const handleCategoryNameChange = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
@@ -127,7 +130,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
                     <Button onClick={handleAddCategory}>확인</Button>
                 )}
                 {title === "관리" && (
-                    <Button>
+                    <Button onClick={handlePlusButtonClick}>
                         <PlusSvg />
                     </Button>
                 )}
