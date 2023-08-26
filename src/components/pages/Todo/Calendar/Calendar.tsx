@@ -13,8 +13,6 @@ import { CalendarStyles } from "./Calendar.styles";
 import ToggleButton from "@/components/ToggleButton/ToggleButton";
 import axiosRequest from "@/api/index";
 import { res, category } from "@/@types/index";
-// import TodoList from "../TodoList/TodoList";
-import TodoList from "@/components/pages/Todo/TodoList/TodoList";
 
 export interface CalendarProps {
     defaultMode?: "week" | "month";
@@ -47,7 +45,6 @@ const CalendarBody: FC<CalendarBodyProps> = ({ mode }) => {
         <>
             {mode === "week" && <Week />}
             {mode === "month" && <Month />}
-            <TodoList />
         </>
     );
 };
