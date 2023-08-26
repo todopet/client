@@ -5,7 +5,7 @@ import CircleButton from '@/components/CircleButton/CircleButton';
 import Exp from '@/components/pages/Pet/Exp/Exp';
 import Status from '@/components/pages/Pet/Status/Status';
 import Stars from '@/components/pages/Pet/Stars/Stars';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ModalBackdrop } from "@/components/pages/MyPage/UserInfo/UserInfo.styles";
 import Achievement from "@/components/pages/Pet/Achievement/Achievement";
 import InventoryModal from "@/components/pages/Pet/Inventory/Inventory";
@@ -18,6 +18,7 @@ interface petAreaProps {
 	cleanlinessInfo: object;
 	expInfo: object;
 	levelInfo: number;
+	receivePetData(): void;
 }
 
 interface petInfoProps {
@@ -33,7 +34,7 @@ interface petInfoProps {
 	maxExperience?: number;
 }
 
-export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessInfo, expInfo, levelInfo }: petAreaProps) {
+export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessInfo, expInfo, levelInfo, receivePetData }: petAreaProps) {
 	const [achState, setAchState] = useState(false);
 	const [invState, setInvState] = useState(false);
 	const toggleAchState = () => {
@@ -49,20 +50,56 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 	const {curCleanliness, maxCleanliness}: petInfoProps = cleanlinessInfo;
 	const {curExperience, maxExperience}: petInfoProps = expInfo;
 	const level: number = levelInfo;
+	// const level: number = 5;
+
+	let petImgSize = {};
+
+	// 펫이 레벨별로 사이즈가 달라서 이미지 영역 크기와 위치를 레벨별로 지정해줘야 할듯..
+	switch (level) {
+		case 0:
+			petImgSize = {width: 20, height: 10, left: 30, bottom: 25}
+			break;
+		case 1:
+			petImgSize = {width: 30, height: 10, left: 28, bottom: 25}
+			break;
+		case 2:
+			petImgSize = {width: 31, height: 11, left: 26, bottom: 24}
+			break;
+		case 3:
+			petImgSize = {width: 35, height: 15, left: 24, bottom: 25}
+			break;
+		case 4:
+			petImgSize = {width: 50, height: 30, left: 20, bottom: 21}
+			break;
+		case 5:
+			petImgSize = {width: 65, height: 45, left: 18, bottom: 25}
+			break;
+	}
+
+	const { width, height, left, bottom } = petImgSize as {
+		width: number;
+		height: number;
+		left: number;
+		bottom: number;
+	};
+
+	useEffect(() => {
+		receivePetData();
+	}, [invState]);
 
 	return (
 		<MainArea>
-			<Exp totalCount={curExperience} currentCount={maxExperience}></Exp>
+			<Exp totalCount={maxExperience} currentCount={curExperience}></Exp>
 			<MainHeader>
 				<StatusInfo>
-					<Status name="포만감" color="#FF5156" totalCount={curHunger} currentCount={maxHunger}></Status>
-					<Status name="친밀도" color="#FFE210" totalCount={curAffection} currentCount={maxAffection}></Status>
-					<Status name="컨디션" color="#45E397" totalCount={curCondition} currentCount={maxCondition}></Status>
-					<Status name="청결도" color="#0190FE" totalCount={curCleanliness} currentCount={maxCleanliness}></Status>
+					<Status name="포만감" color="#FF5156" totalCount={maxHunger} currentCount={curHunger}></Status>
+					<Status name="친밀도" color="#FFE210" totalCount={maxAffection} currentCount={curAffection}></Status>
+					<Status name="컨디션" color="#45E397" totalCount={maxCondition} currentCount={curCondition}></Status>
+					<Status name="청결도" color="#0190FE" totalCount={maxCleanliness} currentCount={curCleanliness}></Status>
 				</StatusInfo>
 				<LevelInfo><Stars level={level}></Stars></LevelInfo>
 			</MainHeader>
-			<MainBody><PetImg></PetImg></MainBody>
+			<MainBody><PetImg level={level} width={width} height={height} left={left} bottom={bottom}></PetImg></MainBody>
 			<MainFooter>
 				<MainFooterButton className="" url={ranking} color="#56ABF9" border="1px" onClick={toggleAchState} />
 				<MainFooterButton className="" url={inventory} color="#F7CF68" border="1px" onClick={toggleInvState} />

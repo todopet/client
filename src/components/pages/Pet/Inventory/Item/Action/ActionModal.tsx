@@ -12,6 +12,7 @@ import { items, myItems } from "@/@types/myItems";
 import axiosRequest from "@/api";
 import { res } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
+import axios from "axios";
 
 interface modalTypeProps {
     modalType: "useModal" | "discardModal";
@@ -39,9 +40,10 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
     }
 
     async function handleUseItem(itemId: string) {
-        // const data = { quantity : itemCount };
-        // const response = await axios.patch(`http://localhost:3001/api/v1/inventories/items/${itemId}/use`, data);
-        // console.log(response);
+        const data = { quantity: itemCount };
+        const response = await axios.post(`http://localhost:3001/api/v1/inventories/${itemId}/use`, data);
+        console.log(response);
+        receiveItemData();
     }
 
     async function handleDumpItem(itemId: string) {
@@ -90,7 +92,8 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
                                     btnType="confirm" 
                                     onClick={() => {
                                         if (modalType === "useModal") {
-                                            // handleUseItem(itemId);
+                                            handleUseItem(itemId);
+                                            setOpenModal(false);
                                         } else if (modalType === "discardModal") {
                                             handleDumpItem(itemId);
                                             setOpenModal(false);

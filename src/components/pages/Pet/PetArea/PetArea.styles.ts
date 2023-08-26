@@ -1,23 +1,33 @@
 import styled from 'styled-components';
 import petRoom from '@/assets/images/pet_room.svg'
-import pet from '@/assets/images/pet-example.svg'
+// import pet from '@/assets/images/pet-example.svg'
 import { FooterButton, MainModalBackdrop } from './PetArea';
 import { ModalTitle } from '@/components/pages/MyPage/UserInfo/UserInfo.styles';
 
 const MainArea = styled.main`
-    height: 77.5vh;
+    height: 100%;
     background-image: url(${petRoom});
     display: flex;
     flex-direction: column;
 	position: relative;
 `
 
-const PetImg = styled.div`
-	background-image: url(${pet});
+const PetImg = styled.div<{ 
+	level: number,
+	width: number,
+	height: number,
+	left: number,
+	bottom: number
+}>`
+	background-image: url("/petImages/pet-${props => props.level}.png");
+	background-repeat: no-repeat;
+    background-position: center;
+	background-size: contain;
 	position: absolute;
-	width: 60%;
-	height: 28%;
-	left: 20px; bottom: 22%;
+	width: ${props => props.width}%;
+	height: ${props => props.height}%;
+	left: ${props => props.left}%;
+	bottom: ${props => props.bottom}%;
 `
 
 const MainHeader = styled.div`
