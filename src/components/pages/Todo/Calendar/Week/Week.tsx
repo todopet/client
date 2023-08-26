@@ -1,4 +1,31 @@
-import { FC, useState, useContext } from "react";
+/*
+앞으로 해야할 일
+
+1. 우선 updateSelectedDate를 써서 날짜셀 클릭시에 그 날짜의 todo만 나타나게 한다
+
+2. todoCountForCell의 년, 월, 일을 dates의 년, 월, 일 하고 비교해서
+    같은 인덱스에 완료된 투두를 카운트한 숫자가 들어가게 한다.
+
+3. 카운트한 숫자를 기준으로 Cell에 개수별 조건을 걸어서 background-color 스타일을 준다
+    0개:    E7E8EA
+    1~2개:  E1F9E1
+    3~4개:  C5F4C4
+    5~6개:  AAEEA8
+    7~8개:  56DD53
+    9~10개: 24A921
+    11개~ : 1B8518
+    
+4. selectedDate: string 전달해서 todo생성시 타임스탬프 지정되게 해야 함
+*/
+
+import React, {
+    FC,
+    useState,
+    useContext,
+    useEffect,
+    SyntheticEvent,
+    MouseEventHandler
+} from "react";
 import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
@@ -34,17 +61,14 @@ export default function Week() {
         month: currentSunday.getMonth(),
         weekCount: getWeekCount()
     });
-    // const [startDate, setStartDate] = useState("");
-    // const [endDate, setEndDate] = useState("");
-    const dates: Date[] = [];
+    const [clicked, setClicked] = useState(-1);
 
-    //     const contextValue = {
-    //     mode,
-    //     periodTodos,
-    //     dateTodos,
-    //     getAllTodos,
-    //     updateDate,
-    // };
+    // 일주일의 날짜를 넣는 배열
+    const dates: Date[] = [];
+    const todoCountForCell: number[] = [];
+
+    // Calendar로부터 전달받음
+    const { updateDate, periodTodos } = useContext(CalendarContext);
 
     const getWeekDates = () => {
         for (let i = 0; i < 7; ++i) {
@@ -71,16 +95,26 @@ export default function Week() {
                 }
             }
         }
+
+        const start = dates[0].toISOString();
+        const end = dates[6].toISOString();
+        updateDate(start, end);
+
+        // const countDates = () => {
+        //     const todoDates: Date[] = [];
+        //     periodTodos.forEach((category: any) =>
+        //         category.todos.forEach((todo: any) => {
+        //             const newDate = new Date(todo.createdAt);
+        //             todoDates.push(newDate);
+        //         })
+        //     );
+
+        //     console.log("Week periodTodos: ", todoDates);
+        //     console.log("Week todoDates: ", todoDates);
+        // };
+        // countDates();
     };
     getWeekDates();
-
-    const updateDate = useContext(CalendarContext);
-    console.log(updateDate);
-
-    const start = dates[0].toISOString();
-    const end = dates[6].toISOString();
-    console.log(start, "///", end);
-    updateDate(start, end);
 
     function getWeekCount() {
         const firstDayOfMonth = new Date(
@@ -131,7 +165,6 @@ export default function Week() {
         setCurrentSunday(
             new Date(currentSunday.setDate(currentSunday.getDate() + 7))
         );
-
         setTimeout(() => {
             setTitleData({
                 year: specialCaseOfYearEnd
@@ -141,6 +174,10 @@ export default function Week() {
                 weekCount: isFirstDateIncluded ? 1 : getWeekCount()
             });
         }, 0);
+    };
+
+    const handleDateCellClick = (idx: number) => {
+        setClicked(idx ?? -1);
     };
 
     return (
@@ -168,14 +205,17 @@ export default function Week() {
                 </Styles.DayWrap>
                 <Styles.DateCellWrap>
                     {dates.map((date, i) => (
-                        <Styles.DateCell>
-                            <Styles.Cell></Styles.Cell>
+                        <Styles.DateCell onClick={() => handleDateCellClick(i)}>
+                            <Styles.Cell />
                             <Styles.Date
+                                id={i}
                                 isToday={
                                     date.getFullYear() === todayYear &&
                                     date.getMonth() === todayMonth &&
                                     date.getDate() === today.getDate()
                                 }
+                                isClicked={clicked === i}
+                                data-date={date.toISOString()}
                             >
                                 {date.getDate()}
                             </Styles.Date>

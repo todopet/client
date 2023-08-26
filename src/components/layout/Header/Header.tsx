@@ -6,6 +6,7 @@ import {
     ButtonCatainer
 } from "./Header.styles";
 import Dropdown from "@/components/DropDown/DropDown";
+import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";
 
 export default function Header() {
     //DropDown의 props
@@ -26,7 +27,9 @@ export default function Header() {
                 <Logo />
             </LogoContainer>
             <ButtonCatainer>
-                <Dropdown list={listItems}>...</Dropdown>
+                <Dropdown list={listItems}>
+                    <MenuIcon />
+                </Dropdown>
             </ButtonCatainer>
         </HeaderContainer>
     );

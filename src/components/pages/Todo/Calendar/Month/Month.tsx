@@ -2,7 +2,8 @@ import * as Styles from "./Month.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import { useState, FC } from "react";
+import React, { useState, FC, useContext } from "react";
+import { CalendarContext } from "../Calendar";
 
 interface TitleProps {
     children?: React.ReactNode;
@@ -22,9 +23,14 @@ const firstDateOfMonth = new Date(todayYear, todayMonth, 1);
 export default function Month() {
     const [baseDate, setBaseDate] = useState(firstDateOfMonth);
     const [month, setMonth] = useState(todayMonth + 1);
+    const [clicked, setClicked] = useState(-1);
 
-    // 1일~말일까지의 날짜를 넣을 숫자 배열
+    // 한달의 날짜를 넣는 배열
     const dates: Date[] = [];
+    const todoCountForCell: number[] = [];
+
+    // Calendar로부터 전달받음
+    const { updateDate, periodTodos } = useContext(CalendarContext);
 
     function getMonthDate() {
         const firstDateOfMonth = new Date(
@@ -46,6 +52,10 @@ export default function Month() {
                 new Date(baseDate.getFullYear(), baseDate.getMonth(), 1 + i)
             );
         }
+
+        const start = dates[0].toISOString();
+        const end = dates[dates.length - 1].toISOString();
+        updateDate(start, end);
     }
     getMonthDate();
 
@@ -55,6 +65,10 @@ export default function Month() {
                 {props.year}년 {props.month}월
             </>
         );
+    };
+
+    const handleDateCellClick = (idx: number) => {
+        setClicked(idx ?? -1);
     };
 
     return (
@@ -105,14 +119,17 @@ export default function Month() {
                     date.getFullYear() === 9999 ? (
                         <Styles.DateCell></Styles.DateCell>
                     ) : (
-                        <Styles.DateCell>
-                            <Styles.Cell></Styles.Cell>
+                        <Styles.DateCell onClick={() => handleDateCellClick(i)}>
+                            <Styles.Cell />
                             <Styles.Date
+                                id={i}
                                 isToday={
                                     date.getFullYear() === todayYear &&
                                     date.getMonth() === todayMonth &&
-                                    date.getDate() === todayDate
+                                    date.getDate() === today.getDate()
                                 }
+                                isClicked={clicked === i}
+                                data-date={date.toISOString()}
                             >
                                 {date.getDate()}
                             </Styles.Date>
