@@ -1,42 +1,63 @@
 import React from "react";
-import { ReactComponent as HomeIcon } from "@/assets/images/home.svg";
-// import { ReactComponent as GrowIcon } from "@/assets/images/grow.svg"; // 예시 경로
-import { ReactComponent as RankingIcon } from "@/assets/images/footerRanking.svg";
-import { ReactComponent as MypageIcon } from "@/assets/images/footerMypage.svg";
+import { ReactComponent as HomeIcon } from "@/assets/icons/home.svg";
+import { ReactComponent as GrowIcon } from "@/assets/icons/footerPet.svg";
+import { ReactComponent as RankingIcon } from "@/assets/icons/footerRanking.svg";
+import { ReactComponent as MypageIcon } from "@/assets/icons/footerMy.svg";
 import {
     FooterContainer,
     FooterItemWrapper,
-    FooterText
+    FooterText,
+    StyledLink
 } from "./Footer.styles";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface FooterItemProps {
+    to: string;
     icon: React.ReactElement;
-    active: boolean;
     label: string;
 }
 
 export const FooterItem: React.FC<FooterItemProps> = ({
+    to,
     icon,
-    active,
     label
-}) => (
-    <FooterItemWrapper active={active}>
-        {icon}
-        <FooterText>{label}</FooterText>
-    </FooterItemWrapper>
-);
+}) => {
+    const location = useLocation();
+
+    const isActive = location.pathname === to;
+
+    return (
+    <StyledLink to={to}>
+        <FooterItemWrapper active={isActive}>
+            {icon}
+            <FooterText>{label}</FooterText>
+        </FooterItemWrapper>
+    </StyledLink>
+)};
 
 const Footer: React.FC = () => {
     return (
         <FooterContainer>
-            <FooterItem icon={<HomeIcon />} active={true} label="피드" />
-            {/* <FooterItem
-                // icon={<GrowIcon />} // 예시 아이콘
-                active={false}
+            <FooterItem
+                to="/todo"
+                icon={<HomeIcon />}
+                label="피드"
+            />
+            <FooterItem
+                to="/pet"
+                icon={<GrowIcon />}
                 label="키우기"
-            /> */}
-            <FooterItem icon={<RankingIcon />} active={false} label="랭킹" />
-            <FooterItem icon={<MypageIcon />} active={false} label="My" />
+            />
+            <FooterItem
+                to="/rank"
+                icon={<RankingIcon />}
+                label="랭킹"
+            />
+            <FooterItem
+                to="/mypage"
+                icon={<MypageIcon />}
+                label="My"
+            />
         </FooterContainer>
     );
 };

@@ -1,11 +1,12 @@
+import CategoryContentList from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentList";
 import CategoryHeader from "@/components/pages/Category/CategoryHeader/CategoryHeader";
-import CategoryContent from "@/components/pages/Category/CategoryContent/CategoryContent";
 
-export default function CategoryList() {
+const CategoryList = () => {
     return (
         <>
-            <CategoryHeader />
-            <CategoryContent />
+            <CategoryHeader></CategoryHeader>
+            <CategoryContentList></CategoryContentList>
         </>
     );
-}
+};
+export default CategoryList;

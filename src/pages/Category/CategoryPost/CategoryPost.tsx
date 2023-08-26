@@ -1,10 +1,12 @@
-import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
+import CategoryHeader from "@/components/pages/Category/CategoryHeader/CategoryHeader";
+import CategoryContentPost from "@/components/pages/Category/CategoryContent/CategoryContentPost/CategoryContentPost";
 
-export default function CategoryPost() {
+const CategoryPost = () => {
     return (
         <>
-            <ConfirmModal texts={["이것은 A입니다.", "이것은 B입니다."]} />
-            <div>Category</div>
+            <CategoryHeader></CategoryHeader>
+            <CategoryContentPost></CategoryContentPost>
         </>
     );
-}
+};
+export default CategoryPost;

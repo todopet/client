@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import mainImage from "@/assets/images/main.png";
-import googleIcon from "@/assets/images/google.svg";
+import googleIcon from "@/assets/icons/google.svg";
 
 const Container = styled.div`
     display: flex;

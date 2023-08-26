@@ -1,9 +1,10 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
     body {
         font-family: Arial, sans-serif;
         height: 100vh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: center; /* 가로 중앙 정렬 */
@@ -18,4 +19,11 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-export { GlobalStyle };
+const LayoutWrapper = styled.div`
+    overflow-y: scroll;
+    margin-top:60px;
+    height: calc(100vh - 130px);
+    margin-bottom: 70px;
+`
+
+export { GlobalStyle, LayoutWrapper };

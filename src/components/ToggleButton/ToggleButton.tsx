@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import { FC, SyntheticEvent, useState } from "react";
 import { ToggleWrapper, Switch } from "./ToggleButton.styles";
 
-function ToggleButton() {
+interface ToggleButtonProps {
+    onToggle?: (isToggled: boolean) => void;
+    active?: boolean;
+}
+
+const ToggleButton: FC<ToggleButtonProps> = ({ onToggle }) => {
     const [isToggled, setIsToggled] = useState(false);
+
+    const handleChangeToggle = (e:SyntheticEvent) => {
+        const newToggled = !isToggled;
+        setIsToggled(newToggled);
+        onToggle?.(newToggled); // 콜백프롭스 형식으로 자식의 상태 변경을 부모에게 알림
+    }
 
     return (
         <ToggleWrapper
             active={isToggled}
-            onClick={() => setIsToggled(!isToggled)}
+            onClick={handleChangeToggle}
         >
             <Switch active={isToggled}>{isToggled ? "월" : "주"}</Switch>
         </ToggleWrapper>

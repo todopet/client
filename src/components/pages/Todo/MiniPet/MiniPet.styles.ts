@@ -1,16 +1,24 @@
 import styled from "styled-components";
 
-
-const MiniPetStyle = styled.div`
+const MiniPetWrap = styled.div`
     width: 390px;
-    height: 50px;
-    background-repeat: no-repeat;
-    background-position: center;
+    height: 70px;
+    position: relative;
 
-    & img {
-        width: 390px;
-        height: 50px;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 `;
 
-export { MiniPetStyle };
+const MyPet = styled.img`
+    max-height: 50px;
+    position: absolute;
+    z-index: 1;
+    bottom: 5px;
+`;
+const Bg = styled.img`
+    width: 390px;
+    height: 50px;
+`;
+
+export { MiniPetWrap, Bg, MyPet };

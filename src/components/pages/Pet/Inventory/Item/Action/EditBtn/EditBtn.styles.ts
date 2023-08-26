@@ -19,6 +19,7 @@ const ButtonStyled = styled(Button)<EditBtnProps>`
             : props.modalType === "useModal"
             ? "#2dc770"
             : "#adadad"};
+    cursor: pointer;
 `;
 
 const ButtonWrap = styled.div<EditBtnProps>`
@@ -33,6 +34,11 @@ const ButtonWrap = styled.div<EditBtnProps>`
             : props.modalType === "useModal"
             ? "#aaeea8"
             : "#d9d9d9"};
+    cursor: pointer;
+
+    &:hover {
+        opacity: .7;
+    }
 `;
 
 export { ButtonStyled, ButtonWrap };

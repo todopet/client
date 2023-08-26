@@ -1,5 +1,5 @@
-import ranking from '@/assets/images/ranking.svg'
-import inventory from '@/assets/images/inventory.svg';
+import ranking from '@/assets/icons/ranking.svg'
+import inventory from '@/assets/icons/inventory.svg';
 import { MainFooter, MainArea, PetImg, MainHeader, StatusInfo, MainBody, LevelInfo, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper } from './PetArea.styles';
 import CircleButton from '@/components/CircleButton/CircleButton';
 import Exp from '@/components/pages/Pet/Exp/Exp';
@@ -8,30 +8,66 @@ import Stars from '@/components/pages/Pet/Stars/Stars';
 import { useState } from 'react';
 import { ModalBackdrop } from "@/components/pages/MyPage/UserInfo/UserInfo.styles";
 import Achievement from "@/components/pages/Pet/Achievement/Achievement";
+import InventoryModal from "@/components/pages/Pet/Inventory/Inventory";
+import { ModalBg } from '../Inventory/Inventory.styles';
 
-export function PetArea() {
-	const [state, setState] = useState(false);
-	const clickHandler = () => {
-		setState(!state);
+interface petAreaProps {
+	hungerInfo: object;
+	affectionInfo: object;
+	conditionInfo: object;
+	cleanlinessInfo: object;
+	expInfo: object;
+	levelInfo: number;
+}
+
+interface petInfoProps {
+	curHunger?: number;
+	maxHunger?: number;
+	curAffection?: number;
+	maxAffection?: number;
+	curCondition?: number;
+	maxCondition?: number;
+	curCleanliness?: number;
+	maxCleanliness?: number;
+	curExperience?: number;
+	maxExperience?: number;
+}
+
+export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessInfo, expInfo, levelInfo }: petAreaProps) {
+	const [achState, setAchState] = useState(false);
+	const [invState, setInvState] = useState(false);
+	const toggleAchState = () => {
+		setAchState(!achState);
 	}
+	const toggleInvState = () => {
+		setInvState(!invState);
+	}
+
+	const {curHunger, maxHunger}: petInfoProps = hungerInfo;
+	const {curAffection, maxAffection}: petInfoProps = affectionInfo;
+	const {curCondition, maxCondition}: petInfoProps = conditionInfo;
+	const {curCleanliness, maxCleanliness}: petInfoProps = cleanlinessInfo;
+	const {curExperience, maxExperience}: petInfoProps = expInfo;
+	const level: number = levelInfo;
+
 	return (
 		<MainArea>
-			<Exp></Exp>
+			<Exp totalCount={curExperience} currentCount={maxExperience}></Exp>
 			<MainHeader>
 				<StatusInfo>
-					<Status name="포만감" color="#FF5156"></Status>
-					<Status name="친밀도" color="#FFE210"></Status>
-					<Status name="컨디션" color="#45E397"></Status>
-					<Status name="청결도" color="#0190FE"></Status>
+					<Status name="포만감" color="#FF5156" totalCount={curHunger} currentCount={maxHunger}></Status>
+					<Status name="친밀도" color="#FFE210" totalCount={curAffection} currentCount={maxAffection}></Status>
+					<Status name="컨디션" color="#45E397" totalCount={curCondition} currentCount={maxCondition}></Status>
+					<Status name="청결도" color="#0190FE" totalCount={curCleanliness} currentCount={maxCleanliness}></Status>
 				</StatusInfo>
-				<LevelInfo><Stars level={2}></Stars></LevelInfo>
+				<LevelInfo><Stars level={level}></Stars></LevelInfo>
 			</MainHeader>
 			<MainBody><PetImg></PetImg></MainBody>
 			<MainFooter>
-				<MainFooterButton url={ranking} color="#56ABF9" border="1px" onClick={clickHandler} />
-				<MainFooterButton url={inventory} color="#F7CF68" border="1px" onClick={clickHandler} />
-				<AchModal on={state}>
-					{ state && <AchModalTitle>업적</AchModalTitle> }
+				<MainFooterButton className="" url={ranking} color="#56ABF9" border="1px" onClick={toggleAchState} />
+				<MainFooterButton className="" url={inventory} color="#F7CF68" border="1px" onClick={toggleInvState} />
+				<AchModal on={achState}>
+					{ achState && <AchModalTitle>업적</AchModalTitle> }  {/* 모달창 크기가 0인 상태에서도 '업적' 텍스트가 화면에 나와서 모달창 꺼져있을땐 아예 안나오게 처리 */}
 					<AchArea>
 						<AchWrapper>
 							<Achievement achName="첫 Todo 완료하기" isRewarded={false} achDone={false} totalCount={3} currentCount={2} />
@@ -46,30 +82,37 @@ export function PetArea() {
 					</AchArea>
 				</AchModal>
 				{
-					state && 
-					<AchModalBackdrop onClick={clickHandler} />
+					achState && 
+					<AchModalBackdrop className="" onClick={toggleAchState} />
+				}
+
+				<InventoryModal on={invState} />
+				{
+					invState &&
+					<ModalBg onClick={toggleInvState} />
 				}
 			</MainFooter>
 		</MainArea>
 	)
 }
 
-// interface classtype {
-//     className: string;
-//     onClick: () => void;
-// }
+interface footerButton {
+    className: string;
+	url: string;
+	color: string;
+	border: string;
+    onClick(): void;
+}
 
-// @ts-ignore
-export function FooterButton({ className, url, color, border, onClick }: classtype) {
+interface modalBackdrop {
+	className: string;
+	onClick(): void;
+}
+
+export function FooterButton({ className, url, color, border, onClick }: footerButton) {
 	return <CircleButton className={className} url={url} color={color} border={border} onClick={onClick}></CircleButton>
 }
 
-// @ts-ignore
-export function MainModalBackdrop( { className, onClick, children }: classtype) {
-	return <ModalBackdrop className={className} onClick={onClick}>{children}</ModalBackdrop>
+export function MainModalBackdrop( { className, onClick }: modalBackdrop) {
+	return <ModalBackdrop className={className} onClick={onClick}></ModalBackdrop>
 }
-
-// @ts-ignore
-// export function MainModal( { className }: classtype) {
-// 	return <Modal className={className}></Modal>
-// }

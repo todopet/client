@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import pet from '@/assets/images/pet.svg';
-import update from '@/assets/images/update.svg';
+import pet from '@/assets/images/pet-example.svg';
+import update from '@/assets/icons/update.svg';
 import { Icon } from './UserInfo';
 import { ModalButton } from './UserInfo';
 
