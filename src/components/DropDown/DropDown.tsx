@@ -37,10 +37,8 @@ const Dropdown = ({ list, children }: ListProps) => {
                                 centerContent={hasAnySvg}
                                 onClick={item.handleClick}
                             >
-                                <Link href={item.href}>
-                                    {item.content}
-                                    {item.svg && item.svg}
-                                </Link>
+                                <Link href={item.href}>{item.content}</Link>
+                                {item.svg && item.svg}
                             </Li>
                         ))}
                     </Ul>
