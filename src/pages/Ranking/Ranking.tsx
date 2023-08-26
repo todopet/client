@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axiosRequest from "@/api/index";
 import Ranker from "@/components/Ranker/Ranker";
 import {
     TopThree,
@@ -11,9 +12,15 @@ import {
     SILVER_COLOR,
     BRONZE_COLOR,
     RankInfoContainer,
+    UserRankInfo,
+    Rank,
+    NickName,
+    Medal,
+    CompletedTodo,
     RankNumber,
     RankNickname
 } from "./Ranking.styles";
+import { res, ranking, userInfo } from "@/@types/index";
 import Divider from "@/components/Divider/Divider";
 import { ReactComponent as GoldMedal } from "@/assets/icons/goldmedal.svg";
 import { ReactComponent as SilverMedal } from "@/assets/icons/silvermedal.svg";
@@ -68,63 +75,104 @@ const Ranking: React.FC = () => {
             (a, b) =>
                 topThreeOrder.indexOf(a.rank) - topThreeOrder.indexOf(b.rank)
         );
+    const [userRankList, setUserRankList] = useState<ranking[]>([]);
+    const [userTopThreeList, setUserTopThreeList] = useState<ranking[]>([]);
 
-    function onSignIn(googleUser: GoogleUser) {
-        const profile = googleUser.getBasicProfile();
-        const userData: UserProfile = {
-            id: profile.getId(),
-            nickname: profile.getName(),
-            imageUrl: profile.getImageUrl()
-        };
-        setUserProfile(userData);
-    }
+    const getUserRankList = async () => {
+        try {
+            const response: res<ranking[]> = await axiosRequest.requestAxios<
+                res<ranking[]>
+            >("get", "/users", {});
+            setUserRankList(response.data);
+            setUserTopThreeList(setTopThree(userRankList));
+        } catch (error) {
+            console.error("Error fetching pet data: ", error);
+        }
+    };
+
+    const setTopThree = (rankList: ranking[]) => {
+        return rankList
+            .slice(0, 3)
+            .sort(
+                (a, b) =>
+                    topThreeOrder.indexOf(a.rank) -
+                    topThreeOrder.indexOf(b.rank)
+            );
+    };
+
+    useEffect(() => {
+        getUserRankList();
+    }, []);
+
+    // function onSignIn(googleUser: GoogleUser) {
+    //     const profile = googleUser.getBasicProfile();
+    //     const userData: UserProfile = {
+    //         id: profile.getId(),
+    //         nickname: profile.getName(),
+    //         imageUrl: profile.getImageUrl()
+    //     };
+    //     setUserProfile(userData);
+    // }
 
     return (
         <RankingContainer>
             <Title>Top Ranking</Title>
             <TopThree>
-                {sortedTopThree.map((user) => {
+                {userTopThreeList.map((list) => {
                     let borderColor = "black";
-                    if (user.rank === 1) {
+                    if (list.rank === 1) {
                         borderColor = GOLD_COLOR;
-                    } else if (user.rank === 2) {
+                    } else if (list.rank === 2) {
                         borderColor = SILVER_COLOR;
-                    } else if (user.rank === 3) {
+                    } else if (list.rank === 3) {
                         borderColor = BRONZE_COLOR;
                     }
 
                     const IconComponent =
-                        user.rank === 1 ? FirstPlaceIcon : CircleIcon;
+                        list.rank === 1 ? FirstPlaceIcon : CircleIcon;
                     return (
-                        <RankInfoContainer key={user.id}>
-                            <RankNumber>{user.rank}</RankNumber>
+                        <RankInfoContainer key={list.userInfo._id}>
+                            <RankNumber>{list.rank}</RankNumber>
                             <IconComponent color={borderColor}>
                                 <img
-                                    src={userProfile?.imageUrl}
-                                    alt={userProfile?.nickname}
+                                    src={list.userInfo.picture}
+                                    alt={list.userInfo.nickname}
                                 />
                             </IconComponent>
-                            <RankNickname>{user.nickname}</RankNickname>
+                            <RankNickname>
+                                {list.userInfo.nickname}
+                            </RankNickname>
                         </RankInfoContainer>
                     );
                 })}
             </TopThree>
 
             <RankList>
-                {userList.map((user, index) => (
-                    <div key={user.id}>
-                        {user.rank === 1 ? (
-                            <GoldMedal className="medal" />
-                        ) : user.rank === 2 ? (
-                            <SilverMedal className="medal" />
-                        ) : user.rank === 3 ? (
-                            <BronzeMedal className="medal" />
+                <UserRankInfo>
+                    <Rank>순위</Rank>
+                    <NickName>이름</NickName>
+                    <CompletedTodo>횟수</CompletedTodo>
+                </UserRankInfo>
+                {userRankList.map((list, index) => (
+                    <UserRankInfo key={list.userInfo._id}>
+                        {list.rank === 1 ? (
+                            <Rank>
+                                <GoldMedal />
+                            </Rank>
+                        ) : list.rank === 2 ? (
+                            <Rank>
+                                <SilverMedal />
+                            </Rank>
+                        ) : list.rank === 3 ? (
+                            <Rank>
+                                <BronzeMedal />
+                            </Rank>
                         ) : (
-                            <span className="rank">{user.rank}</span>
+                            <Rank>{list.rank}</Rank>
                         )}
-                        <span className="nickname">{user.nickname}</span>
-                        <span>{user.solvedPlans}</span>
-                    </div>
+                        <NickName>{list.userInfo.nickname}</NickName>
+                        <CompletedTodo>{list.count}</CompletedTodo>
+                    </UserRankInfo>
                 ))}
             </RankList>
         </RankingContainer>
