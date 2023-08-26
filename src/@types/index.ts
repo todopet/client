@@ -1,4 +1,4 @@
-import { user } from "@/@types/user";
+import { user, myUser } from "@/@types/user";
 import { category, todoCategory } from "@/@types/category";
 import { todo } from "@/@types/todo";
 import { myPet } from "@/@types/myPet";
@@ -21,5 +21,6 @@ export type {
     todoCategory,
     dumpItemRes,
     ranking,
-    userInfo
+    userInfo,
+    myUser
 };
