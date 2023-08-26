@@ -1,3 +1,11 @@
+/*
+기존에 Calendar.tsx에서 Context를 작성하였으나,
+src/libs/hooks/useTodoContext.tsx에서 새롭게 작성 중입니다.
+
+아직 반영이 안 되어 Context가 중복되어 있습니다
+양해 부탁 드립니다
+*/
+
 import { createContext, FC, useCallback, useEffect, useState } from "react";
 import Week from "@/components/pages/Todo/Calendar/Week/Week";
 import Month from "./Month/Month";
@@ -6,7 +14,7 @@ import ToggleButton from "@/components/ToggleButton/ToggleButton";
 import axiosRequest from "@/api/index";
 import { res, category } from "@/@types/index";
 // import TodoList from "../TodoList/TodoList";
-import TodoList from "@/components/pages/Todo/Calendar/TodoList/TodoList";
+import TodoList from "@/components/pages/Todo/TodoList/TodoList";
 
 export interface CalendarProps {
     defaultMode?: "week" | "month";
@@ -17,16 +25,12 @@ export interface CalendarContextProps {
     periodTodos?: category[];
     dateTodos?: category[];
     getAllTodos: (startDate: string, endDate: string) => void;
-    // setStartDate: React.SetStateAction<string>;
-    // setEndDate: React.SetStateAction<string>;
     updateDate: (start: string, end: string) => void;
-    // setSeletedDate: React.SetStateAction<string>;
+    updateSelectedDate: (selected: string) => void;
 }
 
 interface CalendarBodyProps {
     mode?: CalendarProps["defaultMode"];
-    // onSendDate: (startDate: string, endDate: string) => void;
-    // children: JSX.Element;
 }
 
 export const CalendarContext = createContext<any>({
@@ -35,9 +39,7 @@ export const CalendarContext = createContext<any>({
     dateTodos: [],
     getAllTodos: () => {},
     updateDate: () => {},
-    // setStartDate: () => "",
-    // setEndDate: () => "",
-    // setSeletedDate: () => "",
+    updateSelectedDate: () => {},
 });
 
 const CalendarBody: FC<CalendarBodyProps> = ({ mode }) => {
@@ -53,15 +55,13 @@ const CalendarBody: FC<CalendarBodyProps> = ({ mode }) => {
 const Calendar: FC<CalendarProps> = (props) => {
     const { defaultMode = "week" } = props;
     const [mode, setMode] = useState(defaultMode);
-    const [periodTodos, setPeriodTodos] = useState<category[]>(); // 잔디 칠하기 위한 response
-    const [dateTodos, setDateTodos] = useState<category[]>();
+
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [seletedDate, setSeletedDate] = useState("");
+    const [periodTodos, setPeriodTodos] = useState<category[]>();
 
-    // const handleReceiveDate = (startDate: string, endDate: string) => {
-    //     console.log(startDate, endDate);
-    // };
+    const [selectedDate, setSelectedDate] = useState("");
+    const [dateTodos, setDateTodos] = useState<category[]>();
 
     async function getAllTodos(startDate: string, endDate: string) {
         try {
@@ -69,8 +69,21 @@ const Calendar: FC<CalendarProps> = (props) => {
                 "get",
                 `/todoContents?start=${startDate}&end=${endDate}`
             );
-            console.log("response: ", response);
             setPeriodTodos(response.data);
+            console.log("Calendar periodTodos: ", periodTodos);
+        } catch (error) {
+            console.error("error: ", error);
+        }
+    }
+
+    async function getDateTodos(selectedDate: string) {
+        try {
+            const response = await axiosRequest.requestAxios<res<category[]>>(
+                "get",
+                `/todoContents?start=${selectedDate}&end=${selectedDate}`
+            );
+            setDateTodos(response.data);
+            console.log("Calendar periodTodos: ", periodTodos);
         } catch (error) {
             console.error("error: ", error);
         }
@@ -78,24 +91,25 @@ const Calendar: FC<CalendarProps> = (props) => {
 
     useEffect(() => {
         getAllTodos(startDate, endDate);
-    }, [startDate, endDate]);
+        getDateTodos(selectedDate);
+    }, [startDate, endDate, selectedDate]);
 
     const updateDate = (start: string, end: string) => {
         setStartDate(start);
         setEndDate(end);
-        console.log("startDate: ",startDate);
-        console.log("endDate: ",endDate);
     };
 
-    const contextValue = {
-        mode,
+    const updateSelectedDate = (selected: string) => {
+        setSelectedDate(selected);
+    };
+
+    const contextValue: CalendarContextProps = {
+        mode: mode,
         periodTodos,
         dateTodos,
         getAllTodos,
-        updateDate
-        // setStartDate,
-        // setEndDate,
-        // setSeletedDate
+        updateDate,
+        updateSelectedDate,
     };
 
     const handleToggle = useCallback(
@@ -104,8 +118,7 @@ const Calendar: FC<CalendarProps> = (props) => {
     );
 
     return (
-        // <CalendarContext.Provider value={contextValue}>
-        <CalendarContext.Provider value={ updateDate }>
+        <CalendarContext.Provider value={contextValue}>
             <CalendarStyles>
                 <ToggleButton onToggle={handleToggle} />
                 <CalendarBody mode={mode} />
@@ -113,4 +126,5 @@ const Calendar: FC<CalendarProps> = (props) => {
         </CalendarContext.Provider>
     );
 };
+
 export default Calendar;
