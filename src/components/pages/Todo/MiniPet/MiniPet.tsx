@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { TodoContext } from "@/libs/hooks/useTodoContext";
 //img
 import background from "@/assets/images/miniPetBackground.png";
-import miniPet from "@/assets/images/lvZeroPet.png.png";
+import miniPet from "@/assets/images/pet-0.png";
 //components
 import MiniPetToast, {
     ToastTypes
