@@ -6,10 +6,19 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
     height: 100vh;
+    width: 100vw;
 
     background: rgba(0, 0, 0, 0.58);
     backdrop-filter: blur(2px);
+    z-index: 1000;
 `;
 
 const ModalWrap = styled.div`

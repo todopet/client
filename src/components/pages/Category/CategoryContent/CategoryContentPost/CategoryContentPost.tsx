@@ -20,6 +20,7 @@ import { res } from "@/@types/index";
 const CategoryContentPost: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
     const navigate = useNavigate();
     const [categoryList, setCategoryList] = useState<any[]>([]);
     const location = useLocation();
@@ -87,8 +88,10 @@ const CategoryContentPost: React.FC = () => {
             {/* 카테고리 이름을 보여주는 부분 */}
 
             <ActionButtonWrap>
-                <ActionButton onClick={handleOpenModal}>종료하기</ActionButton>
-                <ActionButton onClick={handleOpenDeleteModal}>
+                <ActionButton type="exit" onClick={handleOpenModal}>
+                    종료하기
+                </ActionButton>
+                <ActionButton type="delete" onClick={handleOpenDeleteModal}>
                     삭제
                 </ActionButton>
             </ActionButtonWrap>
@@ -101,7 +104,7 @@ const CategoryContentPost: React.FC = () => {
             )}
             {isDeleteModalOpen && (
                 <ConfirmModal
-                    message="목표를 삭제하시겠습니까? 기존의 할 일 목록이 모두 삭제됩니다."
+                    message="목표를 삭제하시겠습니까?\n기존의 할 일 목록이 모두 삭제됩니다."
                     onConfirm={handleConfirmDeleteModal}
                     onCancel={handleCloseDeleteModal}
                 />

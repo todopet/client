@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Wrap = styled.div`
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     margin-top: 45px;
 `;
 
@@ -47,4 +48,18 @@ const ActionButton = styled.button`
     background: #f5f5f5;
 `;
 
-export { Text, CircleButton, ButtonWrap, ActionButtonWrap, ActionButton, Wrap };
+const StyledLink = styled(Link)`
+    font-weight: 500;
+    text-decoration: none;
+    color: inherit;
+`;
+
+export {
+    Text,
+    CircleButton,
+    ButtonWrap,
+    ActionButtonWrap,
+    ActionButton,
+    Wrap,
+    StyledLink
+};
