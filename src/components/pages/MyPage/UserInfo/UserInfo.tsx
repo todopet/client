@@ -9,7 +9,7 @@ interface userinfoType {
 
 export function UserInfo({ name, date }: userinfoType) {
     const [state, setState] = useState(false);
-    const clickHandler = () => {
+    const handleClick = () => {
         setState(!state);
     }
     return (
@@ -18,7 +18,7 @@ export function UserInfo({ name, date }: userinfoType) {
             <UserInfoArea>
                 <UserName>
                     <NickName name={name}></NickName>
-                    <UpdateIcon className={""} onClick={clickHandler}></UpdateIcon>
+                    <UpdateIcon className={""} onClick={handleClick}></UpdateIcon>
                     { 
                         state && 
                         <ModalBackdrop>
@@ -26,8 +26,8 @@ export function UserInfo({ name, date }: userinfoType) {
                                 <ModalTitle>닉네임 변경하기</ModalTitle>
                                 <ModalInput />  {/* 임시 인풋창 */}
                                 <ModalButtonArea>
-                                    <DeleteButton className={""} onClick={clickHandler}>취소</DeleteButton>
-                                    <UpdateButton className={""} onClick={clickHandler}>닉네임 변경</UpdateButton>
+                                    <DeleteButton className="" onClick={handleClick}>취소</DeleteButton>
+                                    <UpdateButton className="" onClick={handleClick}>닉네임 변경</UpdateButton>
                                 </ModalButtonArea>
                             </Modal>
                         </ModalBackdrop> 
@@ -39,20 +39,19 @@ export function UserInfo({ name, date }: userinfoType) {
     );
 }
 
-// interface classtype {
-//     className: string;
-//     onClick: () => void;
-// }
+interface classType {
+    className: string;
+    onClick(): void;
+    children?: React.ReactNode;
+}
 
-// @ts-ignore
-export function Icon({ className, onClick }: classtype) {
+export function Icon({ className, onClick }: classType) {
     return (
         <div className={className} onClick={onClick}></div>
     )
 };
 
-//@ts-ignore
-export function ModalButton({ className, onClick, children }: classtype) {
+export function ModalButton({ className, onClick, children }: classType) {
     return (
         <button className={className} onClick={onClick}>{children}</button>
     )
