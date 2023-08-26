@@ -1,5 +1,6 @@
 //react hook
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { TodoContext } from "@/libs/hooks/useTodoContext";
 //api, interface
 import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
@@ -9,7 +10,7 @@ import { ReactComponent as CheckIcon } from "@/assets/icons/checkboxChecked.svg"
 
 //components
 import DropDown from "@/components/DropDown/DropDown";
-import TodoForm from "@/components/pages/Todo/Calendar/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
+import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
 import { StyledTodo, TodoDiv, StyledCheckbox, Text } from "./Todo.styles";
@@ -28,22 +29,22 @@ export default function Todo({
     getCategory
 }: TodoProps) {
     //투두 체크시 patch요청(unchecked->completed, completed->reverted, reverted->completed)
-    async function updateStatus(checkStatus: string) {
-        try {
-            const response: res<todo[]> = await axiosRequest.requestAxios<
-                res<todo[]>
-            >("patch", `/todoContents/${contentId}`, {
-                contentId: contentId,
-                todo: content,
-                status: checkStatus
-            });
+    // async function updateStatus(checkStatus: string) {
+    //     try {
+    //         const response: res<todo[]> = await axiosRequest.requestAxios<
+    //             res<todo[]>
+    //         >("patch", `/todoContents/${contentId}`, {
+    //             contentId: contentId,
+    //             todo: content,
+    //             status: checkStatus
+    //         });
 
-            // console.log("체크!", response);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
+    //         console.log("체크!", response);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+    const { updateStatus } = useContext(TodoContext);
     //투두 delete 요청
     async function deleteTodo() {
         try {
@@ -68,7 +69,7 @@ export default function Todo({
             checkStatus = "completed";
         }
         //patch요청
-        await updateStatus(checkStatus);
+        await updateStatus(contentId, content, checkStatus);
         //상태 업데이트
         setNewCheckStatus(checkStatus);
         //todo get요청
