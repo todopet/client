@@ -1,17 +1,17 @@
 //react hook
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 //api, interface
 import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
 //icons
 //components
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
 //styles
 import { Form, StyledCheckbox, Input } from "./TodoForm.styles";
 
 interface TodoFormProps {
     categoryId?: string;
     contentId?: string;
-    getCategory: () => void;
     existingContent?: string;
     status?: string;
     finishEdit?: () => void;
@@ -19,11 +19,12 @@ interface TodoFormProps {
 export default function TodoForm({
     categoryId,
     contentId,
-    getCategory,
     existingContent,
     status,
     finishEdit
 }: TodoFormProps) {
+    const { getTodos } = useContext(TodoContext);
+
     //input value 관리
     const [value, setValue] = useState<string>(
         existingContent ? existingContent : ""
@@ -67,7 +68,7 @@ export default function TodoForm({
         } else if (value) {
             await postTodo();
         }
-        getCategory();
+        getTodos();
         setValue("");
     };
 

@@ -15,8 +15,8 @@ export interface TodoContextProps {
     // mode: "week" | "month";
     // periodTodos?: todoCategory[];
     // dateTodos?: todoCategory[];
-    getAllTodos: (startDate: string, endDate: string) => void;
-
+    getTodos: () => void;
+    dateTodos?: todoCategory[];
     updateStatus: (
         contentId: string,
         checkStatus: string,
@@ -28,10 +28,10 @@ export interface TodoContextProps {
 
 //context 생성
 export const TodoContext = createContext<TodoContextProps>({
-    getAllTodos: (startDate: string, endDate: string) => {},
+    getTodos: () => {},
     // mode: "week",
     // periodTodos: [],
-    // dateTodos: [],
+    dateTodos: [],
     updateStatus: (
         contentId: string,
         checkStatus: string,
@@ -47,22 +47,29 @@ interface TodoContextProviderProps {
 export default function TodoContextProvider({
     children
 }: TodoContextProviderProps) {
-    //기간별 투두목록 불러오기
-    async function getAllTodos(startDate: string, endDate: string) {
+    const [dateTodos, setDateTodos] = useState<todoCategory[]>();
+
+    //기간별 투두 불러오기
+    async function getTodos() {
+        const startDate = "2023-08-27"; //캘린더에서 정해진 날짜로 적용예정
+        const endDate = "2023-08-27"; //캘린더에서 정해진 날짜로 적용예정
         try {
-            const response = await axiosRequest.requestAxios<
-                res<todoCategory[]>
-            >("get", `/todoContents?start=${startDate}&end=${endDate}`);
-            console.log("response: ", response);
-            // setPeriodTodos(response.data);
+            const response: res<todoCategory[]> =
+                await axiosRequest.requestAxios<res<todoCategory[]>>(
+                    "get",
+                    `/todoContents?start=${startDate}&end=${endDate}`
+                );
+            // console.log("categories", response);
+            setDateTodos(response.data);
         } catch (error) {
-            console.error("error: ", error);
+            console.error(error);
         }
     }
 
     const [reward, setReward] = useState<string>("");
     const [isActiveToast, setIsActiveToast] = useState<boolean>(false);
-    //투두 체크시 patch요청(unchecked->completed, completed->reverted, reverted->completed)
+
+    //투두 체크시 상태 변경(unchecked->completed, completed->reverted, reverted->completed)
     async function updateStatus(
         contentId: string,
         content: string,
@@ -90,8 +97,8 @@ export default function TodoContextProvider({
     const contextValue: TodoContextProps = {
         // mode,
         // periodTodos,
-        // dateTodos,
-        getAllTodos,
+        getTodos,
+        dateTodos,
         updateStatus,
         reward,
         isActiveToast
