@@ -1,7 +1,7 @@
 import { ToastWrap } from "./Toast.styles";
 
 interface ToastProps {
-    content: string[];
+    content: React.ReactNode;
     bgColor: "black" | "white";
     isActive: boolean;
 }
@@ -9,9 +9,7 @@ interface ToastProps {
 export default function Toast({ content, bgColor, isActive }: ToastProps) {
     return isActive ? (
         <ToastWrap show={isActive} bgColor={bgColor}>
-            {content[0]}
-            <br />
-            {content[1]}
+            {content}
         </ToastWrap>
     ) : null;
 }

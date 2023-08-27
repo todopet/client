@@ -1,6 +1,6 @@
 //hook
 import { useState, useRef, useEffect, useContext } from "react";
-import { TodoContext } from "@/libs/hooks/useTodoContext";
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
 //img
 import background from "@/assets/images/miniPetBackground.png";
 import miniPet from "@/assets/images/pet-0.png";
