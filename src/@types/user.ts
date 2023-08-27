@@ -1,4 +1,4 @@
-export interface User {
+export interface user {
     id: string;
     name: string;
     status: string;
@@ -6,7 +6,7 @@ export interface User {
     createdAt: Date;
 }
 
-export interface MyUser {
+export interface myUser {
     _id: string;
     nickname: string;
     picture: string;
