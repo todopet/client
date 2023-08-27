@@ -32,12 +32,12 @@ export const FirstPlaceIcon = styled(CircleIcon)`
     border-color: ${GOLD_COLOR};
 `;
 
-export const RankList = styled.table`
+export const RankList = styled.div`
     /* display: flex;
     flex-direction: column;
     align-items: center; */
 `;
-export const UserRankInfo = styled.tr`
+export const UserRankInfo = styled.div`
     /* margin-bottom: 5px; */
     /* margin-left: 50px; */
     /* font-family: Pretendard; */
@@ -46,31 +46,45 @@ export const UserRankInfo = styled.tr`
     font-weight: 600;
     display: flex;
     width: 100vw;
+    /* min-width: 5rem; */
     justify-content: space-around;
     align-items: center;
     height: 45px;
 `;
 
-export const Rank = styled.td`
+export const Rank = styled.span`
     /* width: 24px; */
     width: auto;
-    height: 32px;
+    min-width: 3rem;
+    text-align: center;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const NickName = styled.span`
+    text-align: center;
+    width: 8rem;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const Medal = styled.span`
     text-align: center;
 `;
 
-export const NickName = styled.td`
-    text-align: center;
-`;
-
-export const Medal = styled.td`
-    text-align: center;
-`;
-
-export const CompletedTodo = styled.td`
+export const CompletedTodo = styled.span`
     width: auto;
     /* width: 3rem; */
-    /* margin-left: 1rem; */
+    min-width: 3rem;
     text-align: right;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const RankingContainer = styled.div``;
@@ -95,4 +109,10 @@ export const RankNickname = styled.span`
     font-size: 14px;
     font-weight: 600;
     /* margin-top: 2rem; */
+`;
+
+export const ProfileImage = styled.img`
+    height: inherit;
+    width: inherit;
+    border-radius: inherit;
 `;
