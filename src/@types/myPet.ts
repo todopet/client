@@ -1,19 +1,19 @@
-export interface myPet {
+export interface MyPet {
     _id: string;
     userId: string;
-    pets: pet[];
+    pets: Pet[];
     createdAt: Date;
     updatedAt: Date;
 }
 
-interface pet {
-    pet: petInfo;
+interface Pet {
+    pet: PetInfo;
     _id: string;
 }
 
-interface petInfo {
+interface PetInfo {
     petName: string;
-    level: number
+    level: number;
     affection: number;
     cleanliness: number;
     experience: number;

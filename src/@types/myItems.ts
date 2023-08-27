@@ -1,19 +1,19 @@
-export interface myItems {
+export interface MyItems {
     createdAt: string;
     updatedAt: string;
     userId: string;
     _id: string;
-    items: items[];
+    items: Items[];
 }
 
-export interface items {
-    info: itemInfo;
+export interface Items {
+    info: ItemInfo;
     item: string;
     quantity: number;
     _id: string;
 }
 
-interface itemInfo {
+interface ItemInfo {
     createdAt: string;
     description: string;
     effect: number;
