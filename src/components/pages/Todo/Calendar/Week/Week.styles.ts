@@ -7,8 +7,8 @@ interface DateProps {
 }
 
 const WeekStyle = styled.div`
-    width: 390px;
-    height: 130px;
+    width: 380px;
+    margin-left: 4px;
 `;
 
 const DayWrap = styled.div`
@@ -20,7 +20,6 @@ const DayWrap = styled.div`
 `;
 
 const Day = styled.span`
-    margin: 0px 17px;
     font-size: 14px;
     font-family: Pretendard;
 `;
@@ -64,7 +63,7 @@ const Date = styled.div<DateProps>`
 `;
 
 const Title = styled.span`
-    margin: 4px 18px 4px 26px;
+    margin: 2px 20px 0px 20px;
     font-family: Pretendard;
 `;
 

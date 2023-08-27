@@ -7,7 +7,8 @@ interface DateProps {
 }
 
 const MonthStyle = styled.div`
-    width: 390px;
+    width: 380px;
+    margin-left: 4px;
 `;
 
 const DayWrap = styled.div`
@@ -19,7 +20,6 @@ const DayWrap = styled.div`
 `;
 
 const Day = styled.span`
-    margin: 0px 13px;
     font-size: 14px;
     font-family: Pretendard;
 `;
@@ -63,7 +63,7 @@ const Date = styled.div<DateProps>`
 `;
 
 const Title = styled.span`
-    margin: 6px 24px 4px 26px;
+    margin: 2px 40px 0px 40px;
     font-family: Pretendard;
 `;
 
