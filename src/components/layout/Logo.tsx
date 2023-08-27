@@ -25,6 +25,7 @@ const StyledLogo = styled.button`
     justify-content: center;
     flex-shrink: 0;
     outline: none;
+    margin-left: 15px;
 
     &:hover {
         opacity: 0.8;

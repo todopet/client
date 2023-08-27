@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import background from '@/assets/images/background.svg'
-import pet from '@/assets/images/pet.svg'
+import petRoom from '@/assets/images/pet_room.svg'
+import pet from '@/assets/images/pet-example.svg'
 import { FooterButton, MainModalBackdrop } from './PetArea';
 import { ModalTitle } from '@/components/pages/MyPage/UserInfo/UserInfo.styles';
 
 const MainArea = styled.main`
     height: 77.5vh;
-    background-image: url(${background});
+    background-image: url(${petRoom});
     display: flex;
     flex-direction: column;
 	position: relative;
@@ -17,13 +17,13 @@ const PetImg = styled.div`
 	position: absolute;
 	width: 60%;
 	height: 28%;
-	left: 20px; bottom: 120px;
+	left: 20px; bottom: 22%;
 `
 
 const MainHeader = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 10px;
     flex-basis: 22%;
 `
 
@@ -57,22 +57,20 @@ const MainFooterButton = styled(FooterButton)`
 	}
 `
 
-const AchModalBackdrop = styled(MainModalBackdrop)`
+const AchModalBackdrop = styled(MainModalBackdrop)``
 
-`
-
-// ${props => props.on === true ? "" : "top: 100%"};
 const AchModal = styled.div<{on: boolean}>`
 	position: absolute;
 	bottom: 0; left: 0;
 	width: 100%;
-	height: ${props => props.on === true ? "80" : 0}%;
-	border-radius: 20px 20px 0 0;
+	height: ${props => props.on === true ? "85" : 0}%;
+	border-radius: 30px 30px 0 0;
 	background-color: white;
 	display: flex;
 	flex-direction: column;
 	z-index: 1;
 	transition: all .5s;
+	gap: .5rem;
 `
 
 const AchModalTitle = styled(ModalTitle)`

@@ -6,6 +6,7 @@ const DividerWrap = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    flex-basis: 3%;
 
     & > div {
         font-size: 12px;
@@ -13,7 +14,7 @@ const DividerWrap = styled.div`
     }
 `;
 const Line = styled.div`
-    width: 46%;
+    width: 45%;
     height: 1px;
     background-color: #dfdfdf;
 `;

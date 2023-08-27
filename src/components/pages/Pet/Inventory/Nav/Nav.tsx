@@ -10,22 +10,27 @@ import {
     ButtonStyled
 } from "./Nav.styles";
 
-export default function Nav() {
+interface categoryType {
+    activeCategory: string;
+    setActiveCategory(categoryName: string): void;
+}
+
+export default function Nav({ activeCategory, setActiveCategory }: categoryType) {
     return (
         <NavWrap>
-            <ButtonStyled>
+            <ButtonStyled on={activeCategory === "feed"} onClick={() => {setActiveCategory("feed")}}>
                 <StyledFeedIcon />
             </ButtonStyled>
-            <ButtonStyled>
+            <ButtonStyled on={activeCategory === "play"} onClick={() => {setActiveCategory("play")}}>
                 <StyledHeartIcon />
             </ButtonStyled>
-            <ButtonStyled>
+            <ButtonStyled on={activeCategory === "rest"} onClick={() => {setActiveCategory("rest")}}>
                 <StyledRestIcon />
             </ButtonStyled>
-            <ButtonStyled>
+            <ButtonStyled on={activeCategory === "wash"} onClick={() => {setActiveCategory("wash")}}>
                 <StyledWashIcon />
             </ButtonStyled>
-            <ButtonStyled>
+            <ButtonStyled on={activeCategory === "hidden"} onClick={() => {setActiveCategory("hidden")}}>
                 <StyledHiddenIcon />
             </ButtonStyled>
         </NavWrap>
