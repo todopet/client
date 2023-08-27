@@ -7,11 +7,11 @@ import { TodoContext } from "@/components/pages/Todo/TodoContext";
 import { TodoListStyles } from "./TodoList.styles";
 
 export default function TodoList() {
-    const { getTodos, dateTodos } = useContext(TodoContext);
+    const { getTodos, dateTodos, selectedDate } = useContext(TodoContext);
 
     useEffect(() => {
-        getTodos();
-    }, []);
+        getTodos(selectedDate, selectedDate);
+    }, [selectedDate]);
 
     return (
         <TodoListStyles>

@@ -2,8 +2,8 @@ import * as Styles from "./Month.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import React, { useState, FC, useContext } from "react";
-import { CalendarContext } from "../Calendar";
+import React, { useState, FC, useContext, useEffect } from "react";
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
 
 interface TitleProps {
     children?: React.ReactNode;
@@ -30,7 +30,7 @@ export default function Month() {
     const todoCountForCell: number[] = [];
 
     // Calendar로부터 전달받음
-    const { updateDate, periodTodos } = useContext(CalendarContext);
+    const { updateDate, periodTodos } = useContext(TodoContext);
 
     function getMonthDate() {
         const firstDateOfMonth = new Date(
@@ -53,19 +53,20 @@ export default function Month() {
             );
         }
 
-        const start = dates[0].toISOString();
-        const end = dates[dates.length - 1].toISOString();
+        const formatDate = (date: Date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+        };
+
+        const start = formatDate(dates[baseDate.getDay()]);
+        const end = formatDate(dates[dates.length - 1]);
         updateDate(start, end);
     }
     getMonthDate();
-
-    const Title: FC<TitleProps> = (props) => {
-        return (
-            <>
-                {props.year}년 {props.month}월
-            </>
-        );
-    };
+    // useEffect(() => { getMonthDate() }, [baseDate]);
 
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
@@ -89,10 +90,7 @@ export default function Month() {
                     <LeftSvg />
                 </ArrowButton>
                 <Styles.Title>
-                    <Title
-                        year={baseDate.getFullYear()}
-                        month={baseDate.getMonth() + 1}
-                    />
+                    {baseDate.getFullYear()}년 {baseDate.getMonth() + 1}월
                 </Styles.Title>
                 <ArrowButton
                     onClick={() => {
