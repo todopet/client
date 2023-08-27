@@ -10,8 +10,9 @@ import EditBtn from "@/components/pages/Pet/Inventory/Item/Action/EditBtn/EditBt
 import ChangeQtyBtn from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn/ChangeQtyBtn";
 import { items, myItems } from "@/@types/myItems";
 import axiosRequest from "@/api";
-import { res } from "@/@types";
+import { res, useItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
+import axios from "axios";
 
 interface modalTypeProps {
     modalType: "useModal" | "discardModal";
@@ -39,16 +40,21 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
     }
 
     async function handleUseItem(itemId: string) {
-        // const data = { quantity : itemCount };
-        // const response = await axios.patch(`http://localhost:3001/api/v1/inventories/items/${itemId}/use`, data);
-        // console.log(response);
+        try {
+            const data = { quantity: itemCount };
+            const response: res<useItemRes> = await axiosRequest.requestAxios<res<useItemRes>>("post", `/inventories/${itemId}/use`, data);
+            // console.log(response);
+            receiveItemData();
+        } catch (error) {
+            console.log("Error fetching pet data: ", error);
+        }
     }
 
     async function handleDumpItem(itemId: string) {
         try {
             const data = { quantity: itemCount*-1 };
             const response: res<dumpItemRes> = await axiosRequest.requestAxios<res<dumpItemRes>>("patch", `/inventories/items/${itemId}`, data);
-            console.log(response);
+            // console.log(response);
             receiveItemData();
         } catch (error) {
             console.error("Error fetching pet data: ", error);
@@ -90,7 +96,8 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
                                     btnType="confirm" 
                                     onClick={() => {
                                         if (modalType === "useModal") {
-                                            // handleUseItem(itemId);
+                                            handleUseItem(itemId);
+                                            setOpenModal(false);
                                         } else if (modalType === "discardModal") {
                                             handleDumpItem(itemId);
                                             setOpenModal(false);

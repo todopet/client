@@ -60,7 +60,6 @@ const UpdateIcon = styled(Icon)`
     }
 `
 
-// 나중에 헤더 추가하면 bottom은 헤더 높이로 수정
 const ModalBackdrop = styled.div`
     position: absolute;
     top: 0; bottom: 0;
@@ -73,18 +72,20 @@ const ModalBackdrop = styled.div`
 
 const Modal = styled.div`
     width: 80%;
-    height: 20%;
+    height: 23%;
     border-radius: 15px;
     background-color: white;
     margin-bottom: 60px;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 `
 
 const ModalTitle = styled.p`
     font-weight: bold;
-    font-size: 17px;
+    font-size: 1rem;
     padding-left: 25px;
+    margin-bottom: 0;
 `
 
 const ModalInput = styled.input`
@@ -100,7 +101,7 @@ const ModalButtonArea = styled.div`
     justify-content: flex-end;
     align-items: center;
     gap: .7rem;
-    padding: 20px 30px;
+    padding: 0 30px 20px;
 `
 
 const DeleteButton = styled(ModalButton)`
