@@ -32,7 +32,7 @@ const Dropdown = ({ list, children }: ListProps) => {
                 </DropdownButton>
                 <Menu $isDropped={categoryIsOpen}>
                     <Ul>
-                        {list.map((item) => (
+                        {list.map((item, index) => (
                             <Li
                                 centerContent={hasAnySvg}
                                 onClick={item.handleClick}

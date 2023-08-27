@@ -37,20 +37,21 @@ const App: React.FC = () => {
         <>
             <GlobalStyle />
             <Router>
-                    <Routes>
-                        {routePaths.map((data) => (
-                            <Route
-                                path={data.path}
-                                element={
-                                    <LayoutWrapper>
-                                        {data.withHeader && <Header />}
-                                        {data.element}
-                                        {data.withFooter && <Footer />}
-                                    </LayoutWrapper>
-                                }
-                            />
-                        ))}
-                    </Routes>
+                <Routes>
+                    {routePaths.map((data) => (
+                        <Route
+                            key={data.path}
+                            path={data.path}
+                            element={
+                                <LayoutWrapper>
+                                    {data.withHeader && <Header />}
+                                    {data.element}
+                                    {data.withFooter && <Footer />}
+                                </LayoutWrapper>
+                            }
+                        />
+                    ))}
+                </Routes>
             </Router>
         </>
     );
