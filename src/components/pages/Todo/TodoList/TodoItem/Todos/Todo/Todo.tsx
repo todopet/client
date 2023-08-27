@@ -1,6 +1,6 @@
 //react hook
 import { useState, useContext } from "react";
-import { TodoContext } from "@/libs/hooks/useTodoContext";
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
 //api, interface
 import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
@@ -19,32 +19,10 @@ interface TodoProps {
     content: string;
     status: string;
     contentId: string;
-    getCategory: () => void;
 }
 
-export default function Todo({
-    content,
-    status,
-    contentId,
-    getCategory
-}: TodoProps) {
-    //투두 체크시 patch요청(unchecked->completed, completed->reverted, reverted->completed)
-    // async function updateStatus(checkStatus: string) {
-    //     try {
-    //         const response: res<todo[]> = await axiosRequest.requestAxios<
-    //             res<todo[]>
-    //         >("patch", `/todoContents/${contentId}`, {
-    //             contentId: contentId,
-    //             todo: content,
-    //             status: checkStatus
-    //         });
-
-    //         console.log("체크!", response);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-    const { updateStatus } = useContext(TodoContext);
+export default function Todo({ content, status, contentId }: TodoProps) {
+    const { updateStatus, getTodos } = useContext(TodoContext);
     //투두 delete 요청
     async function deleteTodo() {
         try {
@@ -73,7 +51,7 @@ export default function Todo({
         //상태 업데이트
         setNewCheckStatus(checkStatus);
         //todo get요청
-        getCategory();
+        getTodos();
     };
 
     //DropDown의 props
@@ -88,7 +66,7 @@ export default function Todo({
             content: "삭제",
             handleClick: async () => {
                 await deleteTodo();
-                getCategory();
+                getTodos();
             }
         }
     ];
@@ -101,7 +79,6 @@ export default function Todo({
             {isEditing ? (
                 <TodoForm
                     contentId={contentId}
-                    getCategory={getCategory}
                     existingContent={content}
                     status={status}
                     finishEdit={() => setIsEditig(false)}

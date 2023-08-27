@@ -3,9 +3,8 @@ import { todo } from "@/@types/index";
 
 interface TodosProps {
     todos: todo[];
-    getCategory: () => void;
 }
-export default function Todos({ todos, getCategory }: TodosProps) {
+export default function Todos({ todos }: TodosProps) {
     return (
         <div>
             {todos &&
@@ -15,7 +14,6 @@ export default function Todos({ todos, getCategory }: TodosProps) {
                             content={todo.todo}
                             status={todo.status}
                             contentId={todo._id}
-                            getCategory={getCategory}
                         />
                     );
                 })}
