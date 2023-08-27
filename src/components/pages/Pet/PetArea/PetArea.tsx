@@ -1,6 +1,6 @@
 import ranking from '@/assets/icons/ranking.svg'
 import inventory from '@/assets/icons/inventory.svg';
-import { MainFooter, MainArea, PetImg, MainHeader, StatusInfo, MainBody, LevelInfo, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper } from './PetArea.styles';
+import { MainFooter, MainArea, PetImg, EmotionImg, MainHeader, StatusInfo, MainBody, LevelInfo, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper } from './PetArea.styles';
 import CircleButton from '@/components/CircleButton/CircleButton';
 import Exp from '@/components/pages/Pet/Exp/Exp';
 import Status from '@/components/pages/Pet/Status/Status';
@@ -21,15 +21,27 @@ interface petAreaProps {
 	receivePetData(): void;
 }
 
-interface petInfoProps {
+interface PetHungerProps {
 	curHunger?: number;
 	maxHunger?: number;
+}
+
+interface PetAffectionProps {
 	curAffection?: number;
 	maxAffection?: number;
+}
+
+interface PetConditionProps {
 	curCondition?: number;
 	maxCondition?: number;
+}
+
+interface PetCleanlinessProps {
 	curCleanliness?: number;
 	maxCleanliness?: number;
+}
+
+interface PetExperienceProps {
 	curExperience?: number;
 	maxExperience?: number;
 }
@@ -44,44 +56,69 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 		setInvState(!invState);
 	}
 
-	const {curHunger, maxHunger}: petInfoProps = hungerInfo;
-	const {curAffection, maxAffection}: petInfoProps = affectionInfo;
-	const {curCondition, maxCondition}: petInfoProps = conditionInfo;
-	const {curCleanliness, maxCleanliness}: petInfoProps = cleanlinessInfo;
-	const {curExperience, maxExperience}: petInfoProps = expInfo;
+	const {curHunger, maxHunger}: PetHungerProps = hungerInfo;
+	const {curAffection, maxAffection}: PetAffectionProps = affectionInfo;
+	const {curCondition, maxCondition}: PetConditionProps = conditionInfo;
+	const {curCleanliness, maxCleanliness}: PetCleanlinessProps = cleanlinessInfo;
+	const {curExperience, maxExperience}: PetExperienceProps = expInfo;
 	const level: number = levelInfo;
-	// const level: number = 5;
+	// const level: number = 0;
 
 	let petImgSize = {};
+	let emotionPosition = {};
 
-	// 펫이 레벨별로 사이즈가 달라서 이미지 영역 크기와 위치를 레벨별로 지정해줘야 할듯..
+	// 펫이 레벨별로 사이즈가 달라서 이미지 영역 크기와 위치를 레벨별로 지정해줘야 할듯.. 감정표현 이미지도
 	switch (level) {
 		case 0:
-			petImgSize = {width: 20, height: 10, left: 30, bottom: 25}
+			petImgSize = {petImgWidth: 20, petImgHeight: 10, petImgLeft: 30, petImgBottom: 25}
+			emotionPosition = {emotionPositionWidth: 50, emotionPositionHeight: 60, emotionPositionTop: -50, emotionPositionLeft: 75}
 			break;
 		case 1:
-			petImgSize = {width: 30, height: 10, left: 28, bottom: 25}
+			petImgSize = {petImgWidth: 30, petImgHeight: 10, petImgLeft: 28, petImgBottom: 25}
+			emotionPosition = {emotionPositionWidth: 50, emotionPositionHeight: 60, emotionPositionTop: -25, emotionPositionLeft: 64}
 			break;
 		case 2:
-			petImgSize = {width: 31, height: 11, left: 26, bottom: 24}
+			petImgSize = {petImgWidth: 31, petImgHeight: 11, petImgLeft: 26, petImgBottom: 24.5}
+			emotionPosition = {emotionPositionWidth: 50, emotionPositionHeight: 60, emotionPositionTop: -35, emotionPositionLeft: 65}
 			break;
 		case 3:
-			petImgSize = {width: 35, height: 15, left: 24, bottom: 25}
+			petImgSize = {petImgWidth: 35, petImgHeight: 15, petImgLeft: 24, petImgBottom: 25}
+			emotionPosition = {emotionPositionWidth: 40, emotionPositionHeight: 48, emotionPositionTop: -35, emotionPositionLeft: 67}
 			break;
 		case 4:
-			petImgSize = {width: 50, height: 30, left: 20, bottom: 21}
+			petImgSize = {petImgWidth: 50, petImgHeight: 30, petImgLeft: 20, petImgBottom: 21}
+			emotionPosition = {emotionPositionWidth: 40, emotionPositionHeight: 25, emotionPositionTop: 5, emotionPositionLeft: 55}
 			break;
 		case 5:
-			petImgSize = {width: 65, height: 45, left: 18, bottom: 25}
+			petImgSize = {petImgWidth: 65, petImgHeight: 45, petImgLeft: 18, petImgBottom: 25}
+			emotionPosition = {emotionPositionWidth: 30, emotionPositionHeight: 20, emotionPositionTop: 15, emotionPositionLeft: 54}
 			break;
 	}
 
-	const { width, height, left, bottom } = petImgSize as {
-		width: number;
-		height: number;
-		left: number;
-		bottom: number;
+	const { petImgWidth, petImgHeight, petImgLeft, petImgBottom } = petImgSize as {
+		petImgWidth: number;
+		petImgHeight: number;
+		petImgLeft: number;
+		petImgBottom: number;
 	};
+
+	const { emotionPositionWidth, emotionPositionHeight, emotionPositionTop, emotionPositionLeft } = emotionPosition as {
+		emotionPositionWidth: number; 
+		emotionPositionHeight: number; 
+		emotionPositionTop: number; 
+		emotionPositionLeft: number;
+	}
+
+	const hungerPercent = (curHunger !== undefined && maxHunger !== undefined) ? Math.round((curHunger / maxHunger) * 100) : 0;
+	const affectionPercent = (curHunger !== undefined && maxHunger !== undefined) ? Math.round((curHunger / maxHunger) * 100) : 0;
+	const conditionPercent = (curHunger !== undefined && maxHunger !== undefined) ? Math.round((curHunger / maxHunger) * 100) : 0;
+	const cleanlinessPercent = (curHunger !== undefined && maxHunger !== undefined) ? Math.round((curHunger / maxHunger) * 100) : 0;
+
+	const findPetEmotion = () => {
+		if (hungerPercent >= 80 && affectionPercent >= 80 && conditionPercent >= 80 && cleanlinessPercent >= 80) return "joy";
+		else if (hungerPercent < 30 || affectionPercent < 30 || conditionPercent < 30 || cleanlinessPercent < 30) return "sad";
+		else return "normal";
+	}
 
 	useEffect(() => {
 		receivePetData();
@@ -99,7 +136,12 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 				</StatusInfo>
 				<LevelInfo><Stars level={level}></Stars></LevelInfo>
 			</MainHeader>
-			<MainBody><PetImg level={level} width={width} height={height} left={left} bottom={bottom}></PetImg></MainBody>
+			<MainBody>
+				<PetImg level={level} width={petImgWidth} height={petImgHeight} left={petImgLeft} bottom={petImgBottom}>
+					<EmotionImg on={findPetEmotion() !== "normal"} status={findPetEmotion()}
+						width={emotionPositionWidth} height={emotionPositionHeight} top={emotionPositionTop} left={emotionPositionLeft} />
+				</PetImg>
+			</MainBody>
 			<MainFooter>
 				<MainFooterButton className="" url={ranking} color="#56ABF9" border="1px" onClick={toggleAchState} />
 				<MainFooterButton className="" url={inventory} color="#F7CF68" border="1px" onClick={toggleInvState} />

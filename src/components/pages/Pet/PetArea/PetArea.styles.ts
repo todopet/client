@@ -3,6 +3,8 @@ import petRoom from '@/assets/images/pet_room.svg'
 // import pet from '@/assets/images/pet-example.svg'
 import { FooterButton, MainModalBackdrop } from './PetArea';
 import { ModalTitle } from '@/components/pages/MyPage/UserInfo/UserInfo.styles';
+import joyEmotion from '@/assets/images/joyEmotion.png.png'
+import sadEmotion from '@/assets/images/sadEmotion.png.png'
 
 const MainArea = styled.main`
     height: 100%;
@@ -28,6 +30,26 @@ const PetImg = styled.div<{
 	height: ${props => props.height}%;
 	left: ${props => props.left}%;
 	bottom: ${props => props.bottom}%;
+`
+
+const EmotionImg = styled.div<{ 
+	on: boolean, 
+	status: string,
+	width: number,
+	height: number,
+	top: number
+	left: number
+}>`
+	background-image: url(${props => props.status === "joy" ? joyEmotion : props.status === "sad" ? sadEmotion : false });
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	position: absolute;
+	width: ${props => props.width}%;
+	height: ${props => props.height}%;
+	top: ${props => props.top}%;
+	left: ${props => props.left}%;
+	display: ${props => props.on ? "inline-block" : "none"};
 `
 
 const MainHeader = styled.div`
@@ -107,4 +129,4 @@ const AchWrapper = styled.div`
 `
 
 
-export { MainArea, PetImg, MainHeader, StatusInfo, LevelInfo, MainBody, MainFooter, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper };
+export { MainArea, PetImg, EmotionImg, MainHeader, StatusInfo, LevelInfo, MainBody, MainFooter, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper };
