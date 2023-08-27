@@ -1,23 +1,55 @@
 import styled from 'styled-components';
 import petRoom from '@/assets/images/pet_room.svg'
-import pet from '@/assets/images/pet-example.svg'
+// import pet from '@/assets/images/pet-example.svg'
 import { FooterButton, MainModalBackdrop } from './PetArea';
 import { ModalTitle } from '@/components/pages/MyPage/UserInfo/UserInfo.styles';
+import joyEmotion from '@/assets/images/joyEmotion.png.png'
+import sadEmotion from '@/assets/images/sadEmotion.png.png'
 
 const MainArea = styled.main`
-    height: 77.5vh;
+    height: 100%;
     background-image: url(${petRoom});
     display: flex;
     flex-direction: column;
 	position: relative;
 `
 
-const PetImg = styled.div`
-	background-image: url(${pet});
+const PetImg = styled.div<{ 
+	level: number,
+	width: number,
+	height: number,
+	left: number,
+	bottom: number
+}>`
+	background-image: url("/petImages/pet-${props => props.level}.png");
+	background-repeat: no-repeat;
+    background-position: center;
+	background-size: contain;
 	position: absolute;
-	width: 60%;
-	height: 28%;
-	left: 20px; bottom: 22%;
+	width: ${props => props.width}%;
+	height: ${props => props.height}%;
+	left: ${props => props.left}%;
+	bottom: ${props => props.bottom}%;
+`
+
+const EmotionImg = styled.div<{ 
+	on: boolean, 
+	status: string,
+	width: number,
+	height: number,
+	top: number
+	left: number
+}>`
+	background-image: url(${props => props.status === "joy" ? joyEmotion : props.status === "sad" ? sadEmotion : false });
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	position: absolute;
+	width: ${props => props.width}%;
+	height: ${props => props.height}%;
+	top: ${props => props.top}%;
+	left: ${props => props.left}%;
+	display: ${props => props.on ? "inline-block" : "none"};
 `
 
 const MainHeader = styled.div`
@@ -97,4 +129,4 @@ const AchWrapper = styled.div`
 `
 
 
-export { MainArea, PetImg, MainHeader, StatusInfo, LevelInfo, MainBody, MainFooter, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper };
+export { MainArea, PetImg, EmotionImg, MainHeader, StatusInfo, LevelInfo, MainBody, MainFooter, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper };

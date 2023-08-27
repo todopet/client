@@ -1,4 +1,4 @@
-import TodoContextProvider from "@/libs/hooks/useTodoContext";
+import TodoContextProvider from "@/components/pages/Todo/TodoContext";
 
 import MiniPet from "@/components/pages/Todo/MiniPet/MiniPet";
 import Calendar from "@/components/pages/Todo/Calendar/Calendar";
