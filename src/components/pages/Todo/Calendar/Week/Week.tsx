@@ -1,36 +1,9 @@
-/*
-앞으로 해야할 일
-
-1. 우선 updateSelectedDate를 써서 날짜셀 클릭시에 그 날짜의 todo만 나타나게 한다
-
-2. todoCountForCell의 년, 월, 일을 dates의 년, 월, 일 하고 비교해서
-    같은 인덱스에 완료된 투두를 카운트한 숫자가 들어가게 한다.
-
-3. 카운트한 숫자를 기준으로 Cell에 개수별 조건을 걸어서 background-color 스타일을 준다
-    0개:    E7E8EA
-    1~2개:  E1F9E1
-    3~4개:  C5F4C4
-    5~6개:  AAEEA8
-    7~8개:  56DD53
-    9~10개: 24A921
-    11개~ : 1B8518
-    
-4. selectedDate: string 전달해서 todo생성시 타임스탬프 지정되게 해야 함
-*/
-
-import React, {
-    FC,
-    useState,
-    useContext,
-    useEffect,
-    SyntheticEvent,
-    MouseEventHandler
-} from "react";
+import React, { FC, useState, useContext } from "react";
 import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import { CalendarContext } from "../Calendar";
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
 
 interface TitleProps {
     children?: React.ReactNode;
@@ -68,7 +41,16 @@ export default function Week() {
     const todoCountForCell: number[] = [];
 
     // Calendar로부터 전달받음
-    const { updateDate, periodTodos } = useContext(CalendarContext);
+    const { updateDate, updateSelectedDate, periodTodos } =
+        useContext(TodoContext);
+
+    const formatDate = (date: Date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    };
 
     const getWeekDates = () => {
         for (let i = 0; i < 7; ++i) {
@@ -79,15 +61,19 @@ export default function Week() {
             );
             dates.push(d);
         }
+
+        // 예외처리를 위한 boolean 변수 2개
         isFirstDateIncluded = false;
         specialCaseOfYearEnd = false;
 
+        // 현재 주에 1일이 포함되었는지 확인
         isFirstDateIncluded = dates.map((date) => date.getDate()).includes(1);
         if (dates[0].getDate() === 1) {
             // 1일이 일요일인 경우의 예외처리
             isFirstDateIncluded = false;
         }
 
+        // 매해 12월에서 1월로 넘어가는 부분의 월&주차 오류 처리
         if (currentSunday.getMonth() === 11) {
             if (dates.map((date, i) => date.getDate()).includes(31)) {
                 if (dates[6].getDate() !== 31) {
@@ -96,8 +82,8 @@ export default function Week() {
             }
         }
 
-        const start = dates[0].toISOString();
-        const end = dates[6].toISOString();
+        const start = formatDate(dates[0]);
+        const end = formatDate(dates[6]);
         updateDate(start, end);
 
         // const countDates = () => {
@@ -178,6 +164,7 @@ export default function Week() {
 
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
+        updateSelectedDate(formatDate(dates[idx]));
     };
 
     return (
@@ -215,7 +202,7 @@ export default function Week() {
                                     date.getDate() === today.getDate()
                                 }
                                 isClicked={clicked === i}
-                                data-date={date.toISOString()}
+                                data-date={date}
                             >
                                 {date.getDate()}
                             </Styles.Date>
