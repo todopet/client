@@ -4,8 +4,8 @@ import CategoryContentPost from "@/components/pages/Category/CategoryContent/Cat
 const CategoryPost = () => {
     return (
         <>
-            <CategoryHeader></CategoryHeader>
-            <CategoryContentPost></CategoryContentPost>
+            <CategoryHeader title={"등록"}></CategoryHeader>
+            <CategoryContentPost title={"등록"}></CategoryContentPost>
         </>
     );
 };

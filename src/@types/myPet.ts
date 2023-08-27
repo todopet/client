@@ -13,7 +13,7 @@ interface pet {
 
 interface petInfo {
     petName: string;
-    level: number
+    level: number;
     affection: number;
     cleanliness: number;
     experience: number;

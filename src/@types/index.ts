@@ -4,7 +4,7 @@ import { todo } from "@/@types/todo";
 import { myPet } from "@/@types/myPet";
 import { myItems } from "./myItems";
 import { dumpItemRes } from "@/@types/dumpItemRes";
-import { ranking, userInfo } from "@/@types/ranking";
+import { RankInfo, userInfo } from "@/@types/ranking";
 
 interface res<D> {
     error: string | null;
@@ -20,7 +20,7 @@ export type {
     myItems,
     todoCategory,
     dumpItemRes,
-    ranking,
+    RankInfo,
     userInfo,
     myUser
 };
