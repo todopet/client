@@ -1,4 +1,4 @@
-export interface Ranking {
+export interface RankInfo {
     count: number;
     userInfo: userInfo;
     rank: number;
