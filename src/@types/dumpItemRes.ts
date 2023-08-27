@@ -1,4 +1,4 @@
-export interface dumpItemRes {
+export interface DumpItemRes {
     status: number;
     message: string;
-};
+}
