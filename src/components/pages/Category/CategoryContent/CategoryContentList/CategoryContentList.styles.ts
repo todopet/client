@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Wrap = styled.div`
     width: 100%;
     padding: 10px;
-    margin-top: 45px;
+    margin-top: -5px;
 `;
 
 const Text = styled.div`
