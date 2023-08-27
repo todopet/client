@@ -17,7 +17,7 @@ export default function Pet() {
         try {
             const response: res<myPet> = await axiosRequest.requestAxios<res<myPet>>("get", "/myPets", {});
             const petInfo = response.data.pets[0];
-            // console.log(petInfo);
+            console.log(petInfo);
             const petLevel: number = petInfo.pet.level;
             
             // 데이터를 객체로 업데이트
@@ -40,7 +40,7 @@ export default function Pet() {
                 },
                 expInfo: {
                     curExperience: petLevel < 5 ? petInfo.pet.experience : 1,
-                    maxExperience: petLevel < 5 ? 100 * (2 ** petLevel) : 1
+                    maxExperience: petLevel < 5 ? 100 * (2 ** (petLevel + 1)) - 100 : 1
                 },
                 levelInfo: petLevel // level 업데이트
             });
@@ -53,6 +53,8 @@ export default function Pet() {
         receivePetData();
     }, []);
 
+    // console.log(petData);
+
     // 데이터를 모두 받은 후에 PetArea 컴포넌트를 렌더링
     return (
         <PetArea
@@ -62,6 +64,7 @@ export default function Pet() {
             cleanlinessInfo={petData.cleanlinessInfo}
             expInfo={petData.expInfo}
             levelInfo={petData.levelInfo}
+            receivePetData={receivePetData}
         />
     );
 }

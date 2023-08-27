@@ -3,6 +3,10 @@ import heart from '@/assets/icons/mypage_heart.svg';
 import calendar from '@/assets/icons/calendar.svg';
 import check from '@/assets/icons/check.svg';
 
+const CardWrapper = styled.div`
+    width: 100%;
+`
+
 const ActivityCard = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -23,13 +27,13 @@ const Icon = styled.div<{ activityType: string }>`
     background-size: contain;
     width: 23px;
     height: 23px;
-    margin: 0 0 0 30px;
+    margin: 0 0 0 7%;
 `
 
 const Description = styled.div`
     color: black;
-    font-size: 17px;
+    font-size: .9rem;
     margin-bottom: 2px;
 `
 
-export { ActivityCard, Icon, Description };
+export { CardWrapper, ActivityCard, Icon, Description };

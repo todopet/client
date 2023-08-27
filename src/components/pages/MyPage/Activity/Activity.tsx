@@ -1,4 +1,4 @@
-import { ActivityCard, Icon, Description } from './Activity.styles';
+import { CardWrapper, ActivityCard, Icon, Description } from './Activity.styles';
 
 interface activityInfo {
     activityType: string;
@@ -7,7 +7,7 @@ interface activityInfo {
 
 export default function Activity({ activityType, data }: activityInfo) {
     return (
-        <div>
+        <CardWrapper>
             {
                 activityType === "heart" && 
                 <ActivityCard color="#FCF5FF">
@@ -29,6 +29,6 @@ export default function Activity({ activityType, data }: activityInfo) {
                     <Description>지금까지 {data}개의 todo를 완료했어요!</Description>
                 </ActivityCard>
             }
-        </div>
+        </CardWrapper>
     );
 }
