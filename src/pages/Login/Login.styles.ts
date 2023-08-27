@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import mainImage from "@/assets/images/main.png";
+import mainImage from "@/assets/images/main.svg";
 import googleIcon from "@/assets/icons/google.svg";
 
 const Container = styled.div`
@@ -20,10 +20,10 @@ const Main = styled.div`
 
 const MainImage = styled.div`
     background: url(${mainImage});
-    width: 240px;
-    height: 240px;
+    width: 250px;
+    height: 200px;
     background-repeat: no-repeat;
-    border: 1px solid black;
+    margin-bottom: -100px;
 `;
 
 const TitleGroup = styled.div`
@@ -37,6 +37,7 @@ const Title = styled.div`
     font-size: 2.75rem;
     font-style: normal;
     font-weight: 800;
+    margin-bottom: 10px;
 `;
 
 const Content = styled.div`
