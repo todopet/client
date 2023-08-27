@@ -21,9 +21,6 @@ const GlobalStyle = createGlobalStyle`
 
 const LayoutWrapper = styled.div`
     overflow-y: scroll;
-    margin-top:60px;
-    height: calc(100vh - 130px);
-    margin-bottom: 70px;
-`
+`;
 
 export { GlobalStyle, LayoutWrapper };
