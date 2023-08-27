@@ -8,6 +8,7 @@ import {
     Li,
     Link
 } from "./DropDown.styles";
+import { PropsWithChildren } from "react";
 
 interface ListItem {
     content: string;
@@ -15,10 +16,10 @@ interface ListItem {
     href?: string; //클릭시 주소이동을 원할시 사용
     handleClick?: () => void; //클릭시 원하는 기능 적용
 }
-interface ListProps {
+interface ListProps extends PropsWithChildren {
     list: ListItem[];
-    children: React.ReactNode;
 }
+
 //사용하려는 카테고리 목록(list)을 props로 전달, 버튼으로 사용할 컴포넌트(children)를 추가해주세요.
 const Dropdown = ({ list, children }: ListProps) => {
     const [categoryIsOpen, categoryRef, categoryHandler] =
