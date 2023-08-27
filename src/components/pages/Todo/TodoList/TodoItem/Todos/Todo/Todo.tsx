@@ -22,7 +22,7 @@ interface TodoProps {
 }
 
 export default function Todo({ content, status, contentId }: TodoProps) {
-    const { updateStatus, getTodos } = useContext(TodoContext);
+    const { updateStatus, getTodos, selectedDate } = useContext(TodoContext);
     //투두 delete 요청
     async function deleteTodo() {
         try {
@@ -51,7 +51,7 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         //상태 업데이트
         setNewCheckStatus(checkStatus);
         //todo get요청
-        getTodos();
+        getTodos(selectedDate, selectedDate);
     };
 
     //DropDown의 props
@@ -66,7 +66,7 @@ export default function Todo({ content, status, contentId }: TodoProps) {
             content: "삭제",
             handleClick: async () => {
                 await deleteTodo();
-                getTodos();
+                getTodos(selectedDate, selectedDate);
             }
         }
     ];

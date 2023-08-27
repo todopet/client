@@ -23,7 +23,7 @@ export default function TodoForm({
     status,
     finishEdit
 }: TodoFormProps) {
-    const { getTodos } = useContext(TodoContext);
+    const { getTodos, selectedDate } = useContext(TodoContext);
 
     //input value 관리
     const [value, setValue] = useState<string>(
@@ -68,7 +68,7 @@ export default function TodoForm({
         } else if (value) {
             await postTodo();
         }
-        getTodos();
+        getTodos(selectedDate, selectedDate);
         setValue("");
     };
 
