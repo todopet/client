@@ -34,7 +34,6 @@ const Dropdown = ({ list, children }: ListProps) => {
                     <Ul>
                         {list.map((item, index) => (
                             <Li
-                                key={index}
                                 centerContent={hasAnySvg}
                                 onClick={item.handleClick}
                             >
