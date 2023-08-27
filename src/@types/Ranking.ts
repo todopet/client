@@ -1,10 +1,10 @@
 export interface Ranking {
     count: number;
-    userInfo: UserInfo;
+    userInfo: userInfo;
     rank: number;
 }
 
-export interface UserInfo {
+export interface userInfo {
     _id: string;
     googleId: string;
     nickname: string;

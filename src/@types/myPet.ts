@@ -1,17 +1,17 @@
-export interface MyPet {
+export interface myPet {
     _id: string;
     userId: string;
-    pets: Pet[];
+    pets: pet[];
     createdAt: Date;
     updatedAt: Date;
 }
 
-interface Pet {
-    pet: PetInfo;
+interface pet {
+    pet: petInfo;
     _id: string;
 }
 
-interface PetInfo {
+interface petInfo {
     petName: string;
     level: number;
     affection: number;
