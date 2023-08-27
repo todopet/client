@@ -33,9 +33,17 @@ export default function InventoryModal({ on }: parameterType) {
         }
     }
 
+    // 펫 화면 진입 후 인벤토리창을 열었을때만 api 호출
     useEffect(() => {
-        receiveItemData();
-    }, []);
+        if (on) receiveItemData();
+    }, [on]);
+
+    // 인벤토리 모달창 닫을때만 펫데이터 조회 api 호출
+    // (이렇게 안하면 열때 닫을때 모두 호출됨 -> 지금 petArea.tsx에서 invState를 deps로 해서 useEffect의 콜백으로 receivePetData 해놨으니까
+    //  이렇게 하려면 receivePetData를 전역 상태관리 해서 넘겨줘야할듯)
+    // useEffect(() => {
+    //     if (!on) receivePetData();
+    // }, [on])
 
     useEffect(() => {
         console.log(itemData);
