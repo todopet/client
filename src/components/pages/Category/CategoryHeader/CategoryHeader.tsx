@@ -88,36 +88,36 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
         }
     };
 
-    const handleAddCategory = async () => {
-        // categoryName 비어있는지 확인
-        if (!categoryName) {
-            alert("목표를 입력해 주세요.");
-            return; // 빈 카테고리 이름으로 API 요청 보내지 않도록 함수 종료
-        }
+    // const handleAddCategory = async () => {
+    //     // categoryName 비어있는지 확인
+    //     if (!categoryName) {
+    //         alert("목표를 입력해 주세요.");
+    //         return; // 빈 카테고리 이름으로 API 요청 보내지 않도록 함수 종료
+    //     }
 
-        try {
-            if (title === "등록") {
-                await axiosRequest.requestAxios(
-                    "post",
-                    "/api/v1/todoCategory/",
-                    {
-                        category: categoryName
-                    }
-                );
-            } else if (title === "수정") {
-                await axiosRequest.requestAxios(
-                    "patch",
-                    `/api/v1/todoCategory/${selectedCategoryId}`,
-                    {
-                        category: categoryName
-                    }
-                );
-            }
-        } catch (error) {
-            console.error("API 호출 중 에러 발생:", error);
-            alert("오류가 발생했습니다. 다시 시도해 주세요.");
-        }
-    };
+    //     try {
+    //         if (title === "등록") {
+    //             await axiosRequest.requestAxios(
+    //                 "post",
+    //                 "/api/v1/todoCategory/",
+    //                 {
+    //                     category: categoryName
+    //                 }
+    //             );
+    //         } else if (title === "수정") {
+    //             await axiosRequest.requestAxios(
+    //                 "patch",
+    //                 `/api/v1/todoCategory/${selectedCategoryId}`,
+    //                 {
+    //                     category: categoryName
+    //                 }
+    //             );
+    //         }
+    //     } catch (error) {
+    //         console.error("API 호출 중 에러 발생:", error);
+    //         alert("오류가 발생했습니다. 다시 시도해 주세요.");
+    //     }
+    // };
 
     return (
         <Container>
@@ -126,9 +126,9 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
                     <LeftSvg />
                 </Button>
                 <Text>목표 {title}</Text>
-                {title === "등록" && (
+                {/* {title === "등록" && (
                     <Button onClick={handleAddCategory}>확인</Button>
-                )}
+                )} */}
                 {title === "관리" && (
                     <Button onClick={handlePlusButtonClick}>
                         <PlusSvg />
@@ -154,23 +154,10 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
                             ) => setCategoryName(e.target.value)}
                             placeholder=" 목표 수정"
                         />
-                        <Button onClick={handleAddCategory}>확인</Button>
+                        {/* <Button onClick={handleAddCategory}>확인</Button> */}
                     </>
                 )}
             </ActionContainer>
-
-            {title === "등록" && (
-                <InputContainer>
-                    <StyledInput
-                        type="text"
-                        value={categoryName}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setCategoryName(e.target.value)
-                        }
-                        placeholder=" 목표 입력"
-                    />
-                </InputContainer>
-            )}
         </Container>
     );
 };
