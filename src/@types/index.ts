@@ -1,10 +1,10 @@
-import { user } from "@/@types/user";
+import { user, myUser } from "@/@types/user";
 import { category, todoCategory } from "@/@types/category";
 import { todo } from "@/@types/todo";
 import { myPet } from "@/@types/myPet";
 import { myItems } from "./myItems";
 import { dumpItemRes } from "@/@types/dumpItemRes";
-import { ranking, userInfo } from "@/@types/ranking";
+import { Ranking, userInfo } from "@/@types/Ranking";
 
 interface res<D> {
     error: string | null;
@@ -20,6 +20,7 @@ export type {
     myItems,
     todoCategory,
     dumpItemRes,
-    ranking,
-    userInfo
+    Ranking,
+    userInfo,
+    myUser
 };
