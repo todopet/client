@@ -1,6 +1,6 @@
-import { Todo } from "@/@types/Todo";
+import { todo } from "@/@types/todo";
 
-export interface Category {
+export interface category {
     _id: string;
     userId: string;
     category: string;
@@ -8,6 +8,6 @@ export interface Category {
     updatedAt: Date;
 }
 
-export interface TodoCategory extends Category {
-    todos: Todo[];
+export interface todoCategory extends category {
+    todos: todo[];
 }

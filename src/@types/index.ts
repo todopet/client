@@ -1,26 +1,26 @@
-import { User, MyUser } from "@/@types/User";
-import { Category, TodoCategory } from "@/@types/Category";
-import { Todo } from "@/@types/Todo";
-import { MyPet } from "@/@types/MyPet";
-import { MyItems } from "./MyItems";
-import { DumpItemRes } from "@/@types/DumpItemRes";
-import { Ranking, UserInfo } from "@/@types/Ranking";
+import { user, myUser } from "@/@types/user";
+import { category, todoCategory } from "@/@types/category";
+import { todo } from "@/@types/todo";
+import { myPet } from "@/@types/myPet";
+import { myItems } from "./myItems";
+import { dumpItemRes } from "@/@types/dumpItemRes";
+import { Ranking, userInfo } from "@/@types/Ranking";
 
-interface Res<D> {
+interface res<D> {
     error: string | null;
     data: D;
 }
 
 export type {
-    Res,
-    User,
-    MyPet,
-    Category,
-    Todo,
-    MyItems,
-    TodoCategory,
-    DumpItemRes,
+    res,
+    user,
+    myPet,
+    category,
+    todo,
+    myItems,
+    todoCategory,
+    dumpItemRes,
     Ranking,
-    UserInfo,
-    MyUser
+    userInfo,
+    myUser
 };

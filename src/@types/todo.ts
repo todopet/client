@@ -1,4 +1,4 @@
-export interface Todo {
+export interface todo {
     categoryId: string;
     createdAt: Date;
     message: Message | null;
