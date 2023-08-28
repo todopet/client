@@ -1,19 +1,11 @@
-import React, { FC, useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
 import { TodoContext } from "@/components/pages/Todo/TodoContext";
 
-interface TitleProps {
-    children?: React.ReactNode;
-    year: number;
-    month: number;
-    weekCount: number;
-}
-
-// 오늘을 기준으로 연,월,일,요일을 구함
-// day=요일 date=날짜
+// 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
 const today = new Date();
 const todayYear = today.getFullYear();
 const todayMonth = today.getMonth();
@@ -21,7 +13,7 @@ const todayDay = today.getDay();
 const todayDate = today.getDate();
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 
-// 오늘을 기준으로 지난 일요일의 날짜객체를 얻음
+// 오늘을 기준으로 지난 일요일의 날짜 객체를 얻음
 // todayDate - todayDay를 하면 일요일의 날짜가 나오는데, 일요일이 0이기 때문. 일요일~토요일 0~6.
 const lastSunday = new Date(todayYear, todayMonth, todayDate - todayDay);
 let isFirstDateIncluded = false;
@@ -32,23 +24,20 @@ export default function Week() {
     const [titleData, setTitleData] = useState({
         year: currentSunday.getFullYear(),
         month: currentSunday.getMonth(),
-        weekCount: getWeekCount()
+        weekCount: calculateWeekCount()
     });
     const [clicked, setClicked] = useState(-1);
 
-    // 일주일의 날짜를 넣는 배열
-    const dates: Date[] = [];
-    const todoCountForCell: number[] = [];
-
-    // Calendar로부터 전달받음
-    const { updateDate, updateSelectedDate, periodTodos } =
+    const dates: Date[] = []; // 일주일의 날짜를 넣는 배열
+    const completedTodosByDay: number[] = [];
+    const { updateSelectedDate, getTodos, periodTodos } =
         useContext(TodoContext);
 
+    // 날짜 형식 yyyy-mm-dd 지정 함수
     const formatDate = (date: Date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
-
         return `${year}-${month}-${day}`;
     };
 
@@ -81,28 +70,42 @@ export default function Week() {
                 }
             }
         }
-
-        const start = formatDate(dates[0]);
-        const end = formatDate(dates[6]);
-        updateDate(start, end);
-
-        // const countDates = () => {
-        //     const todoDates: Date[] = [];
-        //     periodTodos.forEach((category: any) =>
-        //         category.todos.forEach((todo: any) => {
-        //             const newDate = new Date(todo.createdAt);
-        //             todoDates.push(newDate);
-        //         })
-        //     );
-
-        //     console.log("Week periodTodos: ", todoDates);
-        //     console.log("Week todoDates: ", todoDates);
-        // };
-        // countDates();
     };
-    getWeekDates();
 
-    function getWeekCount() {
+    const countDates = () => {
+        const todoDates: number[] = [];
+        // console.log(periodTodos);
+        periodTodos?.forEach((category: any) =>
+            category.todos.forEach((todo: any) => {
+                const newDate = new Date(todo.createdAt);
+                todoDates.push(newDate.getDay());
+            })
+        );
+        // console.log("Week todoDates: ", todoDates);
+
+        for (let i = 0; i < 7; ++i) {
+            let count = 0;
+            for (let j = 0; j < todoDates.length; ++j) {
+                if (todoDates[j] === i) {
+                    ++count;
+                }
+            }
+            completedTodosByDay.push(count);
+        }
+        // console.log("Week completedTodosByDay배열: ", completedTodosByDay);
+    };
+
+    getWeekDates();
+    countDates();
+
+    const start = formatDate(dates[0]);
+    const end = formatDate(dates[6]);
+
+    useEffect(() => {
+        getTodos(start, end);
+    }, [currentSunday]);
+
+    function calculateWeekCount() {
         const firstDayOfMonth = new Date(
             currentSunday.getFullYear(),
             currentSunday.getMonth(),
@@ -113,14 +116,6 @@ export default function Week() {
         const weekCount = Math.ceil((currentDate + firstDayOfMonth) / 7);
         return weekCount;
     }
-
-    const Title: FC<TitleProps> = (props) => {
-        return (
-            <>
-                {props.year}년 {props.month + 1}월 {props.weekCount}주차
-            </>
-        );
-    };
 
     const calculateMonth = () => {
         if (specialCaseOfYearEnd && isFirstDateIncluded) {
@@ -142,7 +137,7 @@ export default function Week() {
                     ? currentSunday.getFullYear() + 1
                     : currentSunday.getFullYear(),
                 month: calculateMonth(),
-                weekCount: isFirstDateIncluded ? 1 : getWeekCount()
+                weekCount: isFirstDateIncluded ? 1 : calculateWeekCount()
             });
         }, 0);
     };
@@ -157,7 +152,7 @@ export default function Week() {
                     ? currentSunday.getFullYear() + 1
                     : currentSunday.getFullYear(),
                 month: calculateMonth(),
-                weekCount: isFirstDateIncluded ? 1 : getWeekCount()
+                weekCount: isFirstDateIncluded ? 1 : calculateWeekCount()
             });
         }, 0);
     };
@@ -165,6 +160,7 @@ export default function Week() {
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
         updateSelectedDate(formatDate(dates[idx]));
+        // console.log(idx);
     };
 
     return (
@@ -174,11 +170,8 @@ export default function Week() {
                     <LeftSvg />
                 </ArrowButton>
                 <Styles.Title>
-                    <Title
-                        year={titleData.year}
-                        month={titleData.month}
-                        weekCount={titleData.weekCount}
-                    />
+                    {titleData.year}년 {titleData.month + 1}월{" "}
+                    {titleData.weekCount}주차
                 </Styles.Title>
                 <ArrowButton onClick={handleRightClick}>
                     <RightSvg />
@@ -192,8 +185,11 @@ export default function Week() {
                 </Styles.DayWrap>
                 <Styles.DateCellWrap>
                     {dates.map((date, i) => (
-                        <Styles.DateCell onClick={() => handleDateCellClick(i)}>
-                            <Styles.Cell />
+                        <Styles.DateCell
+                            key={i}
+                            onClick={() => handleDateCellClick(i)}
+                        >
+                            <Styles.Cell completed={completedTodosByDay[i]} />
                             <Styles.Date
                                 id={i}
                                 isToday={
