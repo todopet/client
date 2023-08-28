@@ -1,20 +1,16 @@
 //hook
-import { useState, useRef, useEffect, useContext } from "react";
-import { TodoContext } from "@/components/pages/Todo/TodoContext";
+import { useState, useRef, useEffect } from "react";
+
 //img
 import background from "@/assets/images/miniPetBackground.png";
 import miniPet from "@/assets/images/pet-0.png";
 //components
-import MiniPetToast, {
-    ToastTypes
-} from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
+import MiniPetToast from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
+
 //styles
 import { MiniPetWrap, Bg, MyPet } from "./MiniPet.styles";
 
 export default function MiniPet() {
-    //보상관련 toast(투두를 체크를 했을때 set)
-    const [toastType, setToastType] = useState<ToastTypes>(ToastTypes.SPECIAL);
-
     //새싹이 관련
     const miniPetWrapperRef = useRef<HTMLDivElement | null>(null);
     const miniPetRef = useRef<HTMLImageElement | null>(null);
@@ -71,15 +67,9 @@ export default function MiniPet() {
         return () => clearInterval(intervalId);
     }, [xPosition]);
 
-    const { reward, isActiveToast } = useContext(TodoContext);
-
     return (
         <MiniPetWrap ref={miniPetWrapperRef}>
-            <MiniPetToast
-                isActive={isActiveToast}
-                toastType={toastType}
-                itemName={reward}
-            />
+            <MiniPetToast />
             <MyPet ref={miniPetRef} src={miniPet} alt="miniPet" />
             <Bg src={background} alt="background" />
         </MiniPetWrap>

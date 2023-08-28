@@ -9,6 +9,7 @@ import {
 
 import axiosRequest from "@/api/index";
 import { res, todo, todoCategory } from "@/@types/index";
+import { Message, ToastTypes } from "@/@types/todo";
 
 //context로 관리할 객체 타입
 export interface TodoContextProps {
@@ -23,7 +24,7 @@ export interface TodoContextProps {
         checkStatus: string,
         content: string
     ) => void;
-    reward: string;
+    message: Message | null;
     isActiveToast: boolean;
 }
 
@@ -40,7 +41,7 @@ export const TodoContext = createContext<TodoContextProps>({
         checkStatus: string,
         content: string
     ) => {},
-    reward: "",
+    message: { reward: null, type: ToastTypes.NORMAL },
     isActiveToast: false
 });
 
@@ -78,8 +79,6 @@ export default function TodoContextProvider({
 
     //기간별 투두 불러오기
     async function getTodos(startDate: string, endDate: string) {
-        // const startDate = "2023-08-27"; //캘린더에서 정해진 날짜로 적용예정
-        // const endDate = "2023-08-27"; //캘린더에서 정해진 날짜로 적용예정
         try {
             const response: res<todoCategory[]> =
                 await axiosRequest.requestAxios<res<todoCategory[]>>(
@@ -87,16 +86,20 @@ export default function TodoContextProvider({
                     `/todoContents?start=${startDate}&end=${endDate}`
                 );
             // console.log("categories", response);
-            console.log("Calendar startDate: ", startDate);
-            console.log("Calendar endDate: ", endDate);
-            console.log("Calendar periodTodos: ", periodTodos);
+            // console.log("Calendar startDate: ", startDate);
+            // console.log("Calendar endDate: ", endDate);
+            // console.log("Calendar periodTodos: ", periodTodos);
             setDateTodos(response.data);
         } catch (error) {
             console.error(error);
         }
     }
 
-    const [reward, setReward] = useState<string>("");
+    const [message, setMessage] = useState<Message | null>({
+        type: ToastTypes.NORMAL,
+        reward: null
+    });
+
     const [isActiveToast, setIsActiveToast] = useState<boolean>(false);
 
     //투두 체크시 상태 변경(unchecked->completed, completed->reverted, reverted->completed)
@@ -118,7 +121,7 @@ export default function TodoContextProvider({
             setTimeout(() => {
                 setIsActiveToast(false);
             }, 5500);
-            setReward(response.data.message?.reward || "");
+            setMessage(response.data.message);
         } catch (error) {
             console.error(error);
         }
@@ -132,7 +135,7 @@ export default function TodoContextProvider({
         updateSelectedDate,
         selectedDate,
         updateStatus,
-        reward,
+        message,
         isActiveToast
     };
 

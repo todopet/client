@@ -1,36 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Toast from "@/components/Toast/Toast";
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
+//type
+import { ToastTypes } from "@/@types/todo";
 import { ToastStyle } from "./MiniPetToast.styles";
 
-export enum ToastTypes {
-    SPECIAL = "special",
-    NORMAL = "normal",
-    RECEIVED = "received",
-    ALL_RECEIVED = "all-received"
-}
+export default function MiniPetToast() {
+    const { message, isActiveToast } = useContext(TodoContext);
 
-interface MiniPetToastProps {
-    toastType: ToastTypes;
-    isActive: boolean;
-    itemName: string;
-}
-export default function MiniPetToast({
-    toastType,
-    isActive,
-    itemName
-}: MiniPetToastProps) {
     let content: React.ReactNode;
     let bgColor: "black" | "white" = "white";
 
     //보상에 따라 content, bgColor 변경
-    switch (toastType) {
+    switch (message?.type) {
         case ToastTypes.SPECIAL:
             content = (
                 <>
                     특별한 보상으로
                     <br />
-                    {itemName}(을)를 받았습니다 🥳
+                    {message.reward}(을)를 받았습니다 🥳
                 </>
             );
             bgColor = "black";
@@ -41,7 +30,7 @@ export default function MiniPetToast({
                 <>
                     할 일을 완료하여
                     <br />
-                    {itemName}(을)를 받았습니다 🍀
+                    {message.reward}(을)를 받았습니다 🍀
                 </>
             );
 
@@ -59,7 +48,13 @@ export default function MiniPetToast({
 
     return (
         <ToastStyle>
-            <Toast isActive={isActive} bgColor={bgColor} content={content} />
+            {message && (
+                <Toast
+                    isActive={isActiveToast}
+                    bgColor={bgColor}
+                    content={content}
+                />
+            )}
         </ToastStyle>
     );
 }
