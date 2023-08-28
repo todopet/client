@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const MiniPetWrap = styled.div`
     width: 390px;
-    height: 70px;
+    height: 80px;
     position: relative;
 
     display: flex;
