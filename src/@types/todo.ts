@@ -11,10 +11,12 @@ export interface todo {
 export interface Message {
     type: ToastTypes;
     reward: string | null;
+    inventoryCount: number;
 }
 export enum ToastTypes {
     SPECIAL = "SPECIAL",
     NORMAL = "NORMAL",
     RECEIVED = "RECEIVED",
-    ALL_RECEIVED = "ALL_RECEIVED"
+    ALL_RECEIVED = "ALL_RECEIVED",
+    FULL = "FULL"
 }

@@ -41,7 +41,7 @@ export const TodoContext = createContext<TodoContextProps>({
         checkStatus: string,
         content: string
     ) => {},
-    message: { reward: null, type: ToastTypes.NORMAL },
+    message: { reward: null, type: ToastTypes.NORMAL, inventoryCount: 0 },
     isActiveToast: false
 });
 
@@ -97,7 +97,8 @@ export default function TodoContextProvider({
 
     const [message, setMessage] = useState<Message | null>({
         type: ToastTypes.NORMAL,
-        reward: null
+        reward: null,
+        inventoryCount: 0
     });
 
     const [isActiveToast, setIsActiveToast] = useState<boolean>(false);

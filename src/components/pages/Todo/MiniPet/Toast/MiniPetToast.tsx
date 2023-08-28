@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 import Toast from "@/components/Toast/Toast";
 import { TodoContext } from "@/components/pages/Todo/TodoContext";
@@ -11,7 +11,12 @@ export default function MiniPetToast() {
 
     let content: React.ReactNode;
     let bgColor: "black" | "white" = "white";
-
+    const [fullMessage, setFullMessage] = useState<string>("");
+    useEffect(() => {
+        if (message && message.inventoryCount === 50) {
+            setFullMessage("인벤토리가 가득 찼습니다");
+        }
+    }, []);
     //보상에 따라 content, bgColor 변경
     switch (message?.type) {
         case ToastTypes.SPECIAL:
@@ -20,6 +25,8 @@ export default function MiniPetToast() {
                     특별한 보상으로
                     <br />
                     {message.reward}(을)를 받았습니다 🥳
+                    <br />
+                    {fullMessage}
                 </>
             );
             bgColor = "black";
@@ -31,6 +38,8 @@ export default function MiniPetToast() {
                     할 일을 완료하여
                     <br />
                     {message.reward}(을)를 받았습니다 🍀
+                    <br />
+                    {fullMessage}
                 </>
             );
 
