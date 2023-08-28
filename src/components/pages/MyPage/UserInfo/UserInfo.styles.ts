@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import pet from '@/assets/images/pet-example.svg';
-import update from '@/assets/icons/update.svg';
-import { Icon } from './UserInfo';
-import { ModalButton } from './UserInfo';
+import styled from "styled-components";
+import pet from "@/assets/images/pet-example.svg";
+import update from "@/assets/icons/update.svg";
+import { Icon } from "./UserInfo";
+import { ModalButton } from "./UserInfo";
 
 const UserInfoWrapper = styled.div`
     display: flex;
@@ -10,11 +10,13 @@ const UserInfoWrapper = styled.div`
     align-items: center;
     gap: 4rem;
     width: 100%;
-    heigth: 100%;
-`
+    height: 100%;
+`;
 
-const UserIcon = styled.div`
-    background-image: url(${pet});
+const UserIcon = styled.div<{
+    imagePath: string;
+}>`
+    background-image: url(${(props) => props.imagePath});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -29,22 +31,21 @@ const UserIcon = styled.div`
         0px 0px 23.4px rgba(0, 0, 0, 0.036),
         0px 0px 56px rgba(0, 0, 0, 0.05);
     cursor: pointer;
-`
+`;
 // 펫 아이콘 누르면 다시 펫 페이지로 갈 수 있게하는거 어떨까요
-
 
 const UserInfoArea = styled.div`
     display: flex;
     flex-direction: column;
     height: 80px;
-`
+`;
 
 const UserName = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 50%;
-`
+`;
 
 const UpdateIcon = styled(Icon)`
     background-image: url(${update});
@@ -56,19 +57,21 @@ const UpdateIcon = styled(Icon)`
     cursor: pointer;
 
     &:hover {
-        opacity: .5;
+        opacity: 0.5;
     }
-`
+`;
 
 const ModalBackdrop = styled.div`
     position: absolute;
-    top: 0; bottom: 0;
-    left: 0; right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 
 const Modal = styled.div`
     width: 80%;
@@ -79,53 +82,67 @@ const Modal = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-`
+`;
 
 const ModalTitle = styled.p`
     font-weight: bold;
     font-size: 1rem;
     padding-left: 25px;
     margin-bottom: 0;
-`
+`;
 
 const ModalInput = styled.input`
     width: 80%;
     height: 20%;
-    border: 2px solid #BFF2BD;
+    border: 2px solid #bff2bd;
     border-radius: 20px;
     margin: 0 auto;
-`
+`;
 
 const ModalButtonArea = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: .7rem;
+    gap: 0.7rem;
     padding: 0 30px 20px;
-`
+`;
 
 const DeleteButton = styled(ModalButton)`
-	background-color: #AAEEA8;
-    border: none; 
+    background-color: #aaeea8;
+    border: none;
     cursor: pointer;
-	width: 45px;
-	height: 35px;
+    width: 45px;
+    height: 35px;
     border-radius: 15px;
-    color: #28B666;
-`
+    color: #28b666;
+`;
 
 const UpdateButton = styled(ModalButton)`
-    background-color: #E7E8EA;
-    border: none; 
+    background-color: #e7e8ea;
+    border: none;
     cursor: pointer;
     width: 100px;
     height: 35px;
     border-radius: 15px;
-`
+`;
 
 const JoinDate = styled.p`
     margin: 10px 0;
     height: 50%;
-`
+`;
 
-export { UserInfoWrapper, UserIcon, UserInfoArea, UserName, UpdateIcon, ModalBackdrop, Modal, ModalTitle, ModalInput, ModalButtonArea, DeleteButton, UpdateButton, JoinDate };
+export {
+    UserInfoWrapper,
+    UserIcon,
+    UserInfoArea,
+    UserName,
+    UpdateIcon,
+    ModalBackdrop,
+    Modal,
+    ModalTitle,
+    ModalInput,
+    ModalButtonArea,
+    DeleteButton,
+    UpdateButton,
+    JoinDate
+};

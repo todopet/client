@@ -17,6 +17,7 @@ import {
 } from "@/components/pages/MyPage/UserInfo/UserInfo.styles";
 import { res, myUser } from "@/@types/index";
 import axiosRequest from "@/api";
+import { setKoreaTime } from "@/libs/utils/global";
 
 import { useEffect, useState } from "react";
 
@@ -53,7 +54,11 @@ export default function MyPage() {
     return (
         <MyPageWrapper>
             <ContentWrapper>
-                <UserInfo name={userInfo.nickname} date="2023.08.17"></UserInfo>
+                <UserInfo
+                    picture={userInfo.picture}
+                    name={userInfo.nickname}
+                    date={setKoreaTime(userInfo.createdAt)}
+                ></UserInfo>
                 <ActivityWrapper>
                     <Activity
                         activityType="heart"
