@@ -41,6 +41,15 @@ export default function MiniPetToast() {
         case ToastTypes.ALL_RECEIVED:
             content = <>일일 보상 횟수를 초과하였습니다 😅</>;
             break;
+        case ToastTypes.FULL:
+            content = (
+                <>
+                    인벤토리 공간이 부족하여
+                    <br />
+                    보상이 지급되지 않습니다 🥲
+                </>
+            );
+            break;
         default:
             content = <>에러가 발생했습니다 🙀</>;
             break;
