@@ -24,13 +24,22 @@ export default function MiniPet() {
                 res<PetLevel>
             >("get", `/myPets/myPet/level`);
             console.log("petLevel: ", response);
+            setPetLevel(response.data.level);
         } catch (error) {
             console.error(error);
         }
     }
+    useEffect(() => {
+        getPetLevel();
+    }, []);
+
+    //마이펫 레벨
+    const [petLevel, setPetLevel] = useState<number>(0);
+
     interface ItemsCount {
         count: number;
     }
+
     //인벤토리 아이템 수량 조회
     async function getItemsCount() {
         try {
@@ -117,6 +126,32 @@ export default function MiniPet() {
         return () => clearInterval(intervalId);
     }, [xPosition]);
 
+    // 펫이 레벨별로 이미지 사이즈 지정
+    let petImgSize = { petImgWidth: 50, petImgHeight: 50 };
+    switch (petLevel) {
+        case 0:
+            petImgSize = { petImgWidth: 31, petImgHeight: 37.4 };
+            break;
+        case 1:
+            petImgSize = { petImgWidth: 53, petImgHeight: 37.4 };
+            break;
+        case 2:
+            petImgSize = { petImgWidth: 59.2, petImgHeight: 34.4 };
+            break;
+        case 3:
+            petImgSize = { petImgWidth: 59.2, petImgHeight: 50 };
+            break;
+        case 4:
+            petImgSize = { petImgWidth: 71.8, petImgHeight: 56.2 };
+            break;
+        case 5:
+            petImgSize = { petImgWidth: 93.6, petImgHeight: 62.4 };
+            break;
+    }
+    const { petImgWidth, petImgHeight } = petImgSize as {
+        petImgWidth: number;
+        petImgHeight: number;
+    };
     return (
         <MiniPetWrap ref={miniPetWrapperRef}>
             {isActiveToast && (
@@ -128,7 +163,12 @@ export default function MiniPet() {
             )}
 
             <MiniPetToast />
-            <MyPet ref={miniPetRef} src={miniPet} alt="miniPet" />
+            <MyPet
+                ref={miniPetRef}
+                petLevel={petLevel}
+                width={petImgWidth}
+                height={petImgHeight}
+            />
             <Bg src={background} alt="background" />
         </MiniPetWrap>
     );
