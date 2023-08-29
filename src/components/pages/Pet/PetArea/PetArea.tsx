@@ -86,7 +86,7 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 	const {curCleanliness, maxCleanliness}: PetCleanlinessProps = cleanlinessInfo;
 	const {curExperience, maxExperience}: PetExperienceProps = expInfo;
 	const level: number = levelInfo;
-	// const level: number = 5;
+	// const level: number = 4;
 
 	const [isFull, setIsFull] = useState(false);
 
@@ -101,23 +101,23 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 			break;
 		case 1:
 			petImgSize = {petImgWidth: 43, petImgHeight: 20, petImgLeft: 30, petImgBottom: 7.7}
-			emotionPosition = {emotionPositionWidth: 35, emotionPositionHeight: 45, emotionPositionTop: -5, emotionPositionLeft: 65}
+			emotionPosition = {emotionPositionWidth: 35, emotionPositionHeight: 45, emotionPositionTop: -3, emotionPositionLeft: 68}
 			break;
 		case 2:
 			petImgSize = {petImgWidth: 50, petImgHeight: 25, petImgLeft: 27, petImgBottom: 4.7}
-			emotionPosition = {emotionPositionWidth: 30, emotionPositionHeight: 40, emotionPositionTop: 0, emotionPositionLeft: 70}
+			emotionPosition = {emotionPositionWidth: 30, emotionPositionHeight: 40, emotionPositionTop: 1, emotionPositionLeft: 71}
 			break;
 		case 3:
 			petImgSize = {petImgWidth: 42, petImgHeight: 20, petImgLeft: 18, petImgBottom: 25}
-			emotionPosition = {emotionPositionWidth: 35, emotionPositionHeight: 48, emotionPositionTop: -35, emotionPositionLeft: 71}
+			emotionPosition = {emotionPositionWidth: 35, emotionPositionHeight: 48, emotionPositionTop: -31, emotionPositionLeft: 72}
 			break;
 		case 4:
 			petImgSize = {petImgWidth: 53, petImgHeight: 30, petImgLeft: 27, petImgBottom: 6}
-			emotionPosition = {emotionPositionWidth: 40, emotionPositionHeight: 31, emotionPositionTop: -7, emotionPositionLeft: 53}
+			emotionPosition = {emotionPositionWidth: 40, emotionPositionHeight: 31, emotionPositionTop: -8, emotionPositionLeft: 53}
 			break;
 		case 5:
 			petImgSize = {petImgWidth: 65, petImgHeight: 45, petImgLeft: 23, petImgBottom: 25}
-			emotionPosition = {emotionPositionWidth: 32, emotionPositionHeight: 22, emotionPositionTop: 10, emotionPositionLeft: 48}
+			emotionPosition = {emotionPositionWidth: 32, emotionPositionHeight: 22, emotionPositionTop: 7, emotionPositionLeft: 48}
 			break;
 	}
 

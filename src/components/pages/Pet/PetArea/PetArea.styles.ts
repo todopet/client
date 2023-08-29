@@ -13,6 +13,7 @@ const MainArea = styled.main`
     display: flex;
     flex-direction: column;
 	position: relative;
+	width: 100%;
 `
 
 const PetImg = styled.div<{ 
@@ -22,7 +23,7 @@ const PetImg = styled.div<{
 	left: number,
 	bottom: number
 }>`
-	background-image: url("/petImages/pet-${props => props.level}.png");
+	background-image: url("/petImages/pet-${props => props.level}.gif");
 	background-repeat: no-repeat;
     background-position: center;
 	background-size: contain;
