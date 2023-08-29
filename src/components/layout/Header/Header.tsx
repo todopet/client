@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Logo from "../Logo";
 import {
     HeaderContainer,
@@ -26,7 +27,9 @@ export default function Header() {
     return (
         <HeaderContainer>
             <LogoContainer>
-                <Logo />
+                <Link to="/todo">
+                    <Logo />
+                </Link>
             </LogoContainer>
             <ButtonCatainer>
                 <Dropdown list={listItems}>
