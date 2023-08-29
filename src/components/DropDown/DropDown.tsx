@@ -6,9 +6,11 @@ import {
     Menu,
     Ul,
     Li,
+    Label,
     Link
 } from "./DropDown.styles";
 import { PropsWithChildren } from "react";
+import { StyleSheetManager } from "styled-components";
 
 interface ListItem {
     content: string;
@@ -33,15 +35,25 @@ const Dropdown = ({ list, children }: ListProps) => {
                 </DropdownButton>
                 <Menu $isDropped={categoryIsOpen}>
                     <Ul>
-                        {list.map((item) => (
-                            <Li
-                                centerContent={hasAnySvg}
-                                onClick={item.handleClick}
-                            >
-                                <Link href={item.href}>{item.content}</Link>
-                                {item.svg && item.svg}
-                            </Li>
-                        ))}
+                        <StyleSheetManager
+                            shouldForwardProp={(prop) =>
+                                !["centercontent"].includes(prop)
+                            }
+                        >
+                            {list.map((item, index) => (
+                                <Li
+                                    key={index}
+                                    centercontent={hasAnySvg}
+                                    onClick={item.handleClick}
+                                >
+                                    <Link href={item.href}>
+                                        <Label>{item.content}</Label>
+                                        {item.svg && item.svg}
+                                    </Link>
+                                    {/* {item.svg && item.svg} */}
+                                </Li>
+                            ))}
+                        </StyleSheetManager>
                     </Ul>
                 </Menu>
             </DropdownContainer>
