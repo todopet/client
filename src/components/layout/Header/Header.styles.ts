@@ -16,6 +16,9 @@ export const HeaderContainer = styled.header`
 `;
 export const LogoContainer = styled.div`
     // margin-right: auto;
+    a {
+        text-decoration: none;
+    }
 `;
 
 export const ButtonCatainer = styled.div`
