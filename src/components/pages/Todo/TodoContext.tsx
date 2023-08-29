@@ -1,11 +1,4 @@
-import {
-    createContext,
-    FC,
-    ReactNode,
-    useCallback,
-    useEffect,
-    useState
-} from "react";
+import { createContext, useState } from "react";
 
 import axiosRequest from "@/api/index";
 import { res, todo, todoCategory } from "@/@types/index";
@@ -14,7 +7,6 @@ import { Message, ToastTypes } from "@/@types/todo";
 //context로 관리할 객체 타입
 export interface TodoContextProps {
     periodTodos?: todoCategory[];
-    updateDate: (start: string, end: string) => void;
     updateSelectedDate: (selected: string) => void;
     dateTodos?: todoCategory[];
     selectedDate: string;
@@ -32,7 +24,6 @@ export interface TodoContextProps {
 export const TodoContext = createContext<TodoContextProps>({
     getTodos: () => {},
     periodTodos: [],
-    updateDate: () => {},
     updateSelectedDate: () => {},
     selectedDate: "",
     dateTodos: [],
@@ -51,13 +42,12 @@ interface TodoContextProviderProps {
 export default function TodoContextProvider({
     children
 }: TodoContextProviderProps) {
-    const [startDate, setStartDate] = useState<string>("");
-    const [endDate, setEndDate] = useState<string>("");
     const [periodTodos, setPeriodTodos] = useState<todoCategory[]>();
 
     const [dateTodos, setDateTodos] = useState<todoCategory[]>();
 
     const today = new Date();
+
     const formatDate = (date: Date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -65,16 +55,11 @@ export default function TodoContextProvider({
 
         return `${year}-${month}-${day}`;
     };
-    const [selectedDate, setSelectedDate] = useState(formatDate(today));
 
-    const updateDate = (start: string, end: string) => {
-        setStartDate(start);
-        setEndDate(end);
-    };
+    const [selectedDate, setSelectedDate] = useState(formatDate(today));
 
     const updateSelectedDate = (selected: string) => {
         setSelectedDate(selected);
-        console.log("투두컨텍스트의 selectedDate: ", selectedDate);
     };
 
     //기간별 투두 불러오기
@@ -85,11 +70,8 @@ export default function TodoContextProvider({
                     "get",
                     `/todoContents?start=${startDate}&end=${endDate}`
                 );
-            // console.log("categories", response);
-            // console.log("Calendar startDate: ", startDate);
-            // console.log("Calendar endDate: ", endDate);
-            // console.log("Calendar periodTodos: ", periodTodos);
-            setDateTodos(response.data);
+            if (startDate === endDate) setDateTodos(response.data);
+            else setPeriodTodos(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -132,7 +114,6 @@ export default function TodoContextProvider({
         getTodos,
         periodTodos,
         dateTodos,
-        updateDate,
         updateSelectedDate,
         selectedDate,
         updateStatus,

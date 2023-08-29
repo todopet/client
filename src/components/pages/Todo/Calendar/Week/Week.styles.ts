@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface CellProps {
+    completed: number;
+}
+
 interface DateProps {
     isToday: boolean;
     isClicked: boolean;
@@ -37,12 +41,27 @@ const DateCell = styled.div`
     align-items: center;
 `;
 
-const Cell = styled.div`
+const Cell = styled.div<CellProps>`
     width: 22px;
     height: 22px;
     border-radius: 3px;
-    background-color: lightgray;
     margin: 10px 10px 2px 10px;
+    background-color: ${(props) =>
+        props.completed === 0
+            ? "#E7E8EA"
+            : props.completed <= 2
+            ? "#E1F9E1"
+            : props.completed <= 4
+            ? "#C5F4C4"
+            : props.completed <= 6 
+            ? "#AAEEA8"
+            : props.completed <= 8
+            ? "#56DD53"
+            : props.completed <= 10
+            ? "#24A921"
+            : props.completed >= 11
+            ? "#1B8518"
+            : "red"};
 `;
 
 const Date = styled.div<DateProps>`
