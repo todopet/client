@@ -3,7 +3,7 @@ import pet from "@/assets/images/pet-example.svg";
 import update from "@/assets/icons/update.svg";
 import { Icon } from "./UserInfo";
 import { ModalButton } from "./UserInfo";
-
+import Input from "@/components/Input/Input";
 const UserInfoWrapper = styled.div`
     display: flex;
     justify-content: center;
