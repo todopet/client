@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
     ModalBg,
     ModalWrap,
@@ -12,7 +12,7 @@ import { items, myItems } from "@/@types/myItems";
 import axiosRequest from "@/api";
 import { res, useItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
-import axios from "axios";
+import { ItemDataContext } from "../../Inventory";
 
 interface modalTypeProps {
     modalType: "useModal" | "discardModal";
@@ -21,10 +21,10 @@ interface modalTypeProps {
     itemId: string;
     name: string;
     quantity: number;
-    itemData: items[];
-    setItemData(itemData: Array<items>): void;
 }
-export default function ActionModal({ modalType, state, setState, itemId, name, quantity, itemData, setItemData }: modalTypeProps) {
+export default function ActionModal({ modalType, state, setState, itemId, name, quantity }: modalTypeProps) {
+    const [itemData, setItemData] = useContext(ItemDataContext);
+
     const [openModal, setOpenModal] = useState<boolean>(true);
     const [itemCount, setItemCount] = useState(1);
     // console.log(itemId);

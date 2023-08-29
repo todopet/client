@@ -9,16 +9,21 @@ import {
 import Item from "@/components/pages/Pet/Inventory/Item/Item";
 import Divider from "@/components/Divider/Divider";
 import Nav from "@/components/pages/Pet/Inventory/Nav/Nav";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext, createContext, Dispatch, SetStateAction } from 'react';
 import axiosRequest from '@/api';
 import { myItems, res } from '@/@types';
 import { items } from "@/@types/myItems";
+import { MyContext } from "@/pages/Pet/Pet";
 
 interface parameterType {
     on: boolean;
 }
 
+export const ItemDataContext = createContext<[items[], Dispatch<SetStateAction<items[]>>]>([[], () => {}]);
+
 export default function InventoryModal({ on }: parameterType) {
+    const receivePetData = useContext(MyContext);
+
     const [activeCategory, setActiveCategory] = useState("feed");
     const [itemData, setItemData] = useState<items[]>([]);
     let totalItemAmount = 0;
@@ -33,17 +38,11 @@ export default function InventoryModal({ on }: parameterType) {
         }
     }
 
-    // 펫 화면 진입 후 인벤토리창을 열었을때만 api 호출
+    // 펫 화면에서 인벤토리창을 열면 아이템 정보 조회 api 호출, 인벤토리창을 닫으면 펫 정보 조회 api 호출
     useEffect(() => {
         if (on) receiveItemData();
+        if (!on) receivePetData();
     }, [on]);
-
-    // 인벤토리 모달창 닫을때만 펫데이터 조회 api 호출
-    // (이렇게 안하면 열때 닫을때 모두 호출됨 -> 지금 petArea.tsx에서 invState를 deps로 해서 useEffect의 콜백으로 receivePetData 해놨으니까
-    //  이렇게 하려면 receivePetData를 전역 상태관리 해서 넘겨줘야할듯)
-    // useEffect(() => {
-    //     if (!on) receivePetData();
-    // }, [on])
 
     useEffect(() => {
         console.log(itemData);
@@ -73,24 +72,24 @@ export default function InventoryModal({ on }: parameterType) {
     itemData.map(el => totalItemAmount += el.quantity);
 
     return (
-        <ModalWrap on={on}>  {/* PetArea의 State를 받음. true면 모달창 on, false면 off */}
-            <Header>
-                <Title>도구</Title>
-                <Count>{totalItemAmount} / 50</Count>
-            </Header>
-            <Nav activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
-            <Divider category={findTargetedCategory} />
-            <ItemList>
-                {sortedItem.map((e, idx) => <Item
-                    key={idx}
-                    url={e.info.image}
-                    name={e.info.name}
-                    des={e.info.description}
-                    _id={e._id}
-                    quantity={e.quantity}
-                    itemData={itemData}
-                    setItemData={setItemData} />)}
-            </ItemList>
-        </ModalWrap>
+        <ItemDataContext.Provider value={[itemData, setItemData]}>
+            <ModalWrap on={on}>  {/* PetArea의 State를 받음. true면 모달창 on, false면 off */}
+                <Header>
+                    <Title>도구</Title>
+                    <Count>{totalItemAmount} / 50</Count>
+                </Header>
+                <Nav activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
+                <Divider category={findTargetedCategory} />
+                <ItemList>
+                    {sortedItem.map((e, idx) => <Item
+                        key={idx}
+                        url={e.info.image}
+                        name={e.info.name}
+                        des={e.info.description}
+                        _id={e._id}
+                        quantity={e.quantity} />)}
+                </ItemList>
+            </ModalWrap>
+        </ItemDataContext.Provider>
     );
 }
