@@ -5,16 +5,10 @@ import {
     Container,
     Button,
     Text,
-    InputContainer,
-    ActionContainer,
-    StyledInput
+    ActionContainer
 } from "./CategoryHeader.styles";
 import { useNavigate } from "react-router-dom";
 import axiosRequest from "@/api";
-
-interface CategoryHeaderProps {
-    title?: string;
-}
 
 interface InputProps {
     type?: string;
@@ -48,33 +42,34 @@ const Input: React.FC<InputProps> = ({
     );
 };
 
-const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
+// subjects 객체의 타입을 정의합니다.
+interface Subjects {
+    [key: string]: () => JSX.Element;
+}
+
+interface CategoryHeaderProps {
+    subject: string;
+    handleClick: () => void;
+}
+
+const CategoryHeader: React.FC<CategoryHeaderProps> = ({
+    subject,
+    handleClick
+}) => {
     const navigate = useNavigate();
     const [categoryName, setCategoryName] = useState("");
     const [selectedCategoryId, setSelectedCategoryId] = useState("");
     const [categories, setCategories] = useState<Category[]>([]);
 
     useEffect(() => {
-        async function fetchCategories() {
-            try {
-                const response = await axiosRequest.requestAxios<ApiResponse>(
-                    "get",
-                    "/todoCategories"
-                );
-                setCategories(response.data);
-            } catch (error) {
-                console.error("Failed to fetch categories:", error);
-            }
-        }
+        // if (subject === "수정") {
+        //     fetchCategories();
+        // }
+    }, []);
 
-        if (title === "수정") {
-            fetchCategories();
-        }
-    }, [title]);
+    const renderActionContent = (subject: string) => {};
 
-    const handlePlusButtonClick = () => {
-        navigate("/category/ 경로 뭐더라");
-    };
+    const handleEditCategory = () => {};
 
     const handleCategoryNameChange = (
         e: React.ChangeEvent<HTMLSelectElement>
@@ -119,22 +114,34 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
     //     }
     // };
 
+    const subjects: Subjects = {
+        등록: () => {
+            return <Button onClick={handleClick}>확인</Button>;
+        },
+        관리: () => {
+            return (
+                <Button onClick={handleClick}>
+                    <PlusSvg />
+                </Button>
+            );
+        },
+        수정: () => {
+            return <Button onClick={handleClick}>확인</Button>;
+        }
+    };
+
     return (
         <Container>
             <ActionContainer>
                 <Button onClick={() => navigate(-1)}>
                     <LeftSvg />
                 </Button>
-                <Text>목표 {title}</Text>
+                <Text>목표 {subject}</Text>
                 {/* {title === "등록" && (
                     <Button onClick={handleAddCategory}>확인</Button>
                 )} */}
-                {title === "관리" && (
-                    <Button onClick={handlePlusButtonClick}>
-                        <PlusSvg />
-                    </Button>
-                )}
-                {title === "수정" && (
+                {subjects[subject]()}
+                {/* {title === "수정" && (
                     <>
                         <select
                             value={selectedCategoryId}
@@ -154,9 +161,9 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ title }) => {
                             ) => setCategoryName(e.target.value)}
                             placeholder=" 목표 수정"
                         />
-                        {/* <Button onClick={handleAddCategory}>확인</Button> */}
+                        <Button onClick={handleAddCategory}>확인</Button>
                     </>
-                )}
+                )} */}
             </ActionContainer>
         </Container>
     );

@@ -5,11 +5,13 @@ const Wrap = styled.div`
     width: 100%;
     padding: 10px;
     margin-top: -5px;
+    box-sizing: border-box;
 `;
 
 const Text = styled.div`
     font-size: 14px;
     color: #adadad;
+    margin-top: 20px;
     margin-left: 20px;
     font-weight: 500;
 `;

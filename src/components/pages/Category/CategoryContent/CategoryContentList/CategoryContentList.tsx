@@ -11,34 +11,17 @@ import {
     Wrap,
     StyledLink
 } from "./CategoryContentList.styles";
-import axiosRequest from "@/api";
-import { res } from "@/@types/index";
+import { category } from "@/@types/index";
+import CategoryContentListItem from "./CategoryContentListItem/CategoryContentListItem";
 
-// interface Category {
-//     id: string;
-//     name: string;
-// }
+interface CategoryListProps {
+    categoryList: category[];
+}
 
-const CategoryContentList: React.FC = () => {
+const CategoryContentList: React.FC<CategoryListProps> = ({ categoryList }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const navigate = useNavigate();
-    const [categoryList, setCategoryList] = useState<any[]>([]);
-
-    async function getPostings() {
-        try {
-            const response: res<any[]> = await axiosRequest.requestAxios<
-                res<any[]>
-            >("get", "/todoCategories");
-            // console.log("전체게시글", response.data);
-            setCategoryList(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    useEffect(() => {
-        getPostings();
-    }, []);
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -90,13 +73,10 @@ const CategoryContentList: React.FC = () => {
                     categoryList.map((category) => {
                         return (
                             !category.ended && (
-                                <CircleButton key={category._id}>
-                                    <StyledLink
-                                        to={`/category/post?categoryId=${category._id}`}
-                                    >
-                                        {category.category}
-                                    </StyledLink>
-                                </CircleButton>
+                                <CategoryContentListItem
+                                    key={category._id}
+                                    category={category}
+                                ></CategoryContentListItem>
                             )
                         );
                     })}
@@ -107,9 +87,10 @@ const CategoryContentList: React.FC = () => {
                     categoryList.map((category) => {
                         return (
                             category.ended && (
-                                <CircleButton key={category._id}>
-                                    {category.category}
-                                </CircleButton>
+                                <CategoryContentListItem
+                                    key={category._id}
+                                    category={category}
+                                ></CategoryContentListItem>
                             )
                         );
                     })}
