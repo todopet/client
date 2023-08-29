@@ -1,10 +1,8 @@
-import {
-    createContext,
-    useState
-} from "react";
+import { createContext, useState } from "react";
 
 import axiosRequest from "@/api/index";
 import { res, todo, todoCategory } from "@/@types/index";
+import { Message, ToastTypes } from "@/@types/todo";
 
 //context로 관리할 객체 타입
 export interface TodoContextProps {
@@ -18,7 +16,7 @@ export interface TodoContextProps {
         checkStatus: string,
         content: string
     ) => void;
-    reward: string;
+    message: Message | null;
     isActiveToast: boolean;
 }
 
@@ -34,7 +32,7 @@ export const TodoContext = createContext<TodoContextProps>({
         checkStatus: string,
         content: string
     ) => {},
-    reward: "",
+    message: { reward: null, type: ToastTypes.NORMAL, inventoryCount: 0 },
     isActiveToast: false
 });
 
@@ -57,7 +55,7 @@ export default function TodoContextProvider({
 
         return `${year}-${month}-${day}`;
     };
-    
+
     const [selectedDate, setSelectedDate] = useState(formatDate(today));
 
     const updateSelectedDate = (selected: string) => {
@@ -79,7 +77,12 @@ export default function TodoContextProvider({
         }
     }
 
-    const [reward, setReward] = useState<string>("");
+    const [message, setMessage] = useState<Message | null>({
+        type: ToastTypes.NORMAL,
+        reward: null,
+        inventoryCount: 0
+    });
+
     const [isActiveToast, setIsActiveToast] = useState<boolean>(false);
 
     //투두 체크시 상태 변경(unchecked->completed, completed->reverted, reverted->completed)
@@ -101,7 +104,7 @@ export default function TodoContextProvider({
             setTimeout(() => {
                 setIsActiveToast(false);
             }, 5500);
-            setReward(response.data.message?.reward || "");
+            setMessage(response.data.message);
         } catch (error) {
             console.error(error);
         }
@@ -114,7 +117,7 @@ export default function TodoContextProvider({
         updateSelectedDate,
         selectedDate,
         updateStatus,
-        reward,
+        message,
         isActiveToast
     };
 

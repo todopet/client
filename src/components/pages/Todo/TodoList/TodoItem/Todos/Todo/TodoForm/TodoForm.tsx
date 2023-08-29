@@ -33,13 +33,14 @@ export default function TodoForm({
     //투두 post요청(투두 생성)
     async function postTodo() {
         try {
-            // console.log("투두입력!", categoryId, value);
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
             >("post", `/todoContents`, {
                 categoryId: categoryId,
-                todo: value
+                todo: value,
+                date: selectedDate
             });
+            // console.log("투두입력!", response);
         } catch (error) {
             console.error(error);
         }

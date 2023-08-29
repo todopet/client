@@ -1,5 +1,5 @@
 //react hook
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { TodoContext } from "@/components/pages/Todo/TodoContext";
 //api, interface
 import axiosRequest from "@/api/index";
@@ -36,6 +36,9 @@ export default function Todo({ content, status, contentId }: TodoProps) {
     }
 
     const [newCheckStatus, setNewCheckStatus] = useState<string>(status);
+    useEffect(() => {
+        setNewCheckStatus(status);
+    }, [status]);
 
     const handleCheckClick = async () => {
         let checkStatus = "";
@@ -46,14 +49,13 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         } else if (status === "reverted") {
             checkStatus = "completed";
         }
-        //patch요청
-        await updateStatus(contentId, content, checkStatus);
         //상태 업데이트
         setNewCheckStatus(checkStatus);
+        //patch요청
+        updateStatus(contentId, content, checkStatus);
         //todo get요청
         getTodos(selectedDate, selectedDate);
     };
-
     //DropDown의 props
     const listItems = [
         {
