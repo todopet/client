@@ -70,18 +70,18 @@ export default function Week() {
                 }
             }
         }
+        console.log("getWeekDates");
     };
 
     const countDates = () => {
         const todoDates: number[] = [];
-        // console.log(periodTodos);
         periodTodos?.forEach((category: any) =>
             category.todos.forEach((todo: any) => {
                 const newDate = new Date(todo.createdAt);
-                todoDates.push(newDate.getDay());
+                if (todo.status === "completed")
+                    todoDates.push(newDate.getDay());
             })
         );
-        // console.log("Week todoDates: ", todoDates);
 
         for (let i = 0; i < 7; ++i) {
             let count = 0;
@@ -92,18 +92,16 @@ export default function Week() {
             }
             completedTodosByDay.push(count);
         }
-        // console.log("Week completedTodosByDay배열: ", completedTodosByDay);
+        console.log("countDates");
     };
-
     getWeekDates();
     countDates();
-
     const start = formatDate(dates[0]);
     const end = formatDate(dates[6]);
 
     useEffect(() => {
         getTodos(start, end);
-    }, [currentSunday]);
+    }, [currentSunday, completedTodosByDay]);
 
     function calculateWeekCount() {
         const firstDayOfMonth = new Date(
@@ -160,7 +158,6 @@ export default function Week() {
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
         updateSelectedDate(formatDate(dates[idx]));
-        // console.log(idx);
     };
 
     return (

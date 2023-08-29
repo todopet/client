@@ -53,18 +53,18 @@ export default function Month() {
                 new Date(baseDate.getFullYear(), baseDate.getMonth(), 1 + i)
             );
         }
+        console.log("getMonthDates");
     }
 
     const countDates = () => {
-        const todoDates: number[] = []; // todo들을 평탄화한 날짜 배열
-        // console.log(periodTodos);
+        const todoDates: number[] = [];
         periodTodos?.forEach((category: any) =>
             category.todos.forEach((todo: any) => {
                 const newDate = new Date(todo.createdAt);
-                todoDates.push(newDate.getDate());
+                if (todo.status === "completed")
+                    todoDates.push(newDate.getDate());
             })
         );
-        // console.log("Month todoDates: ", todoDates);
 
         for (let i = 0; i < dates.length; ++i) {
             let count = 0;
@@ -75,7 +75,7 @@ export default function Month() {
             }
             completedTodosByDay.push(count);
         }
-        // console.log("Month completedTodosByDay배열: ", completedTodosByDay);
+        console.log("countDates");
     };
 
     getMonthDate();
@@ -86,12 +86,11 @@ export default function Month() {
 
     useEffect(() => {
         getTodos(start, end);
-    }, [baseDate]);
+    }, [baseDate, completedTodosByDay]);
 
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
         updateSelectedDate(formatDate(dates[idx]));
-        // console.log(idx);
     };
 
     return (
@@ -131,15 +130,18 @@ export default function Month() {
             </Styles.TitleWrap>
             <Styles.DayWrap>
                 {dayText.map((day, i) => (
-                    <Styles.Day>{day}</Styles.Day>
+                    <Styles.Day key={i}>{day}</Styles.Day>
                 ))}
             </Styles.DayWrap>
             <Styles.DateCellWrap>
                 {dates.map((date, i) =>
                     date.getFullYear() === 9999 ? (
-                        <Styles.DateCell></Styles.DateCell>
+                        <Styles.DateCell key={i}></Styles.DateCell>
                     ) : (
-                        <Styles.DateCell onClick={() => handleDateCellClick(i)}>
+                        <Styles.DateCell
+                            key={i}
+                            onClick={() => handleDateCellClick(i)}
+                        >
                             <Styles.Cell completed={completedTodosByDay[i]} />
                             <Styles.Date
                                 id={i}
@@ -149,7 +151,6 @@ export default function Month() {
                                     date.getDate() === today.getDate()
                                 }
                                 isClicked={clicked === i}
-                                data-date={date.toISOString()}
                             >
                                 {date.getDate()}
                             </Styles.Date>
