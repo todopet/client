@@ -10,6 +10,7 @@ import Pet from "@/pages/Pet/Pet";
 import MyPage from "@/pages/MyPage/MyPage";
 import CategoryList from "@/pages/Category/CategoryList/CategoryList";
 import CategoryPost from "@/pages/Category/CategoryPost/CategoryPost";
+import { StyleSheetManager } from "styled-components";
 // import NotFound from "@/pages/NotFound";
 
 const routePaths = [
@@ -43,11 +44,22 @@ const App: React.FC = () => {
                             key={data.path}
                             path={data.path}
                             element={
-                                <LayoutWrapper>
-                                    {data.withHeader && <Header />}
-                                    {data.element}
-                                    {data.withFooter && <Footer />}
-                                </LayoutWrapper>
+                                <StyleSheetManager
+                                    shouldForwardProp={(prop) =>
+                                        !["withheader", "withfooter"].includes(
+                                            prop
+                                        )
+                                    }
+                                >
+                                    <LayoutWrapper
+                                        withheader={data.withHeader.toString()}
+                                        withfooter={data.withFooter.toString()}
+                                    >
+                                        {data.withHeader && <Header />}
+                                        {data.element}
+                                        {data.withFooter && <Footer />}
+                                    </LayoutWrapper>
+                                </StyleSheetManager>
                             }
                         />
                     ))}
