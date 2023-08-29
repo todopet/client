@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import { PetArea } from '@/components/pages/Pet/PetArea/PetArea';
 import axiosRequest from '@/api';
 import { res, myPet } from '@/@types';
+
+export const MyContext = createContext<() => Promise<void>>(async () => {});
 
 export default function Pet() {
     const [petData, setPetData] = useState({
@@ -10,39 +12,41 @@ export default function Pet() {
         conditionInfo: {},
         cleanlinessInfo: {},
         expInfo: {},
-        levelInfo: 0, // 초기값으로 0 설정
+        levelInfo: 0,
+        petName: ""
     });
 
     async function receivePetData() {
         try {
             const response: res<myPet> = await axiosRequest.requestAxios<res<myPet>>("get", "/myPets", {});
-            const petInfo = response.data.pets[0];
+            const petInfo = response.data.pet;
             console.log(petInfo);
-            const petLevel: number = petInfo.pet.level;
+            const petLevel: number = petInfo.level;
             
             // 데이터를 객체로 업데이트
             setPetData({
                 hungerInfo: {
-                    curHunger: petInfo.pet.hunger,
+                    curHunger: petInfo.hunger,
                     maxHunger: 100 + petLevel*20
                 },
                 affectionInfo: {
-                    curAffection: petInfo.pet.affection,
+                    curAffection: petInfo.affection,
                     maxAffection: 100 + petLevel*20
                 },
                 conditionInfo: {
-                    curCondition: petInfo.pet.condition,
+                    curCondition: petInfo.condition,
                     maxCondition: 100 + petLevel*20
                 },
                 cleanlinessInfo: {
-                    curCleanliness: petInfo.pet.cleanliness,
+                    curCleanliness: petInfo.cleanliness,
                     maxCleanliness: 100 + petLevel*20
                 },
                 expInfo: {
-                    curExperience: petLevel < 5 ? petInfo.pet.experience : 1,
+                    curExperience: petLevel < 5 ? petInfo.experience : 1,
                     maxExperience: petLevel < 5 ? 100 * (2 ** (petLevel + 1)) - 100 : 1
                 },
-                levelInfo: petLevel // level 업데이트
+                levelInfo: petLevel,
+                petName: petInfo.petName
             });
         } catch (error) {
             console.error("Error fetching pet data: ", error);
@@ -57,14 +61,16 @@ export default function Pet() {
 
     // 데이터를 모두 받은 후에 PetArea 컴포넌트를 렌더링
     return (
-        <PetArea
-            hungerInfo={petData.hungerInfo}
-            affectionInfo={petData.affectionInfo}
-            conditionInfo={petData.conditionInfo}
-            cleanlinessInfo={petData.cleanlinessInfo}
-            expInfo={petData.expInfo}
-            levelInfo={petData.levelInfo}
-            receivePetData={receivePetData}
-        />
+        <MyContext.Provider value={receivePetData}>
+            <PetArea
+                hungerInfo={petData.hungerInfo}
+                affectionInfo={petData.affectionInfo}
+                conditionInfo={petData.conditionInfo}
+                cleanlinessInfo={petData.cleanlinessInfo}
+                expInfo={petData.expInfo}
+                levelInfo={petData.levelInfo}
+                petName={petData.petName}
+            />
+        </MyContext.Provider>
     );
 }
