@@ -5,8 +5,8 @@ interface CellProps {
 }
 
 interface DateProps {
-    isToday: boolean;
-    isClicked: boolean;
+    $istoday: boolean;
+    $isclicked: boolean;
     id: number;
 }
 
@@ -72,9 +72,9 @@ const Date = styled.div<DateProps>`
     font-size: 14px;
     font-family: Pretendard;
     color: ${(props) =>
-        props.isClicked ? "white" : props.isToday ? "white" : "black"};
+        props.$isclicked ? "white" : props.$istoday ? "white" : "black"};
     background-color: ${(props) =>
-        props.isClicked ? "#556FE9" : props.isToday ? "black" : ""};
+        props.$isclicked ? "#556FE9" : props.$istoday ? "black" : ""};
     display: flex;
     justify-content: center;
     align-items: center;
