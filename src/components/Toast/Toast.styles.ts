@@ -1,12 +1,12 @@
 import { css, keyframes, styled } from "styled-components";
 
 const fadein = keyframes`
-  0% { top: 45px; opacity: 0; }
-  100% { top: 30px; opacity: 1; }
+  0% { top: 60%; opacity: 0; }
+  100% { top: 55%; opacity: 1; }
 `;
 const fadeout = keyframes`
-  0% { top: 30px; opacity: 1; }
-  100% { top: 45px; opacity: 0; }
+  0% { top: 55%; opacity: 1; }
+  100% { top: 60%; opacity: 0; }
 `;
 
 interface ToastWrapProps {
@@ -21,7 +21,8 @@ const ToastWrap = styled.div<ToastWrapProps>`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 250px;
+
+    white-space: nowrap;
     color: ${(props) => (props.bgColor === "black" ? "#ffffff" : "#000000")};
     background: ${(props) =>
         props.bgColor === "black"
@@ -39,12 +40,14 @@ const ToastWrap = styled.div<ToastWrapProps>`
     position: absolute;
 
     //커스텀 요소
+    min-width: 250px;
+    min-height: 45px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -60%);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
-    padding: 4px 0;
+    padding: 4px 10px;
 
     animation: ${(props) =>
         props.show
