@@ -1,5 +1,24 @@
 import styled from "styled-components";
 
+const InputContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+`;
+
+const StyledInput = styled.input`
+    background: none;
+    border: none;
+    border-bottom: 1.8px solid #000;
+    outline: none;
+    font-size: 16px;
+    padding: 5px 0;
+    width: 90%;
+    transition: border-color 0.3s ease;
+`;
+
 const Text = styled.div`
     font-size: 18px;
 `;
@@ -39,4 +58,12 @@ const ActionButton = styled.button<{ type: string }>`
     font-weight: 400;
 `;
 
-export { Text, CircleButton, ButtonWrap, ActionButtonWrap, ActionButton };
+export {
+    InputContainer,
+    StyledInput,
+    Text,
+    CircleButton,
+    ButtonWrap,
+    ActionButtonWrap,
+    ActionButton
+};
