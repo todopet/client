@@ -1,15 +1,38 @@
 import ranking from '@/assets/icons/ranking.svg'
 import inventory from '@/assets/icons/inventory.svg';
-import { MainFooter, MainArea, PetImg, EmotionImg, MainHeader, StatusInfo, MainBody, LevelInfo, MainFooterButton, AchModalBackdrop, AchModal, AchModalTitle, AchArea, AchWrapper } from './PetArea.styles';
+import { MainFooter, 
+	MainArea, 
+	PetImg, 
+	EmotionImg, 
+	MainHeader, 
+	StatusInfo, 
+	MainBody, 
+	LevelInfo, 
+	PetLevelNameArea,
+	LevelStar,
+	Level,
+	PetNameBox,
+	PetName, 
+	MainFooterButton, 
+	InventoryFullImg, 
+	AchModalBackdrop, 
+	AchModal, 
+	AchModalTitle, 
+	AchArea, 
+	AchWrapper 
+} from './PetArea.styles';
 import CircleButton from '@/components/CircleButton/CircleButton';
 import Exp from '@/components/pages/Pet/Exp/Exp';
 import Status from '@/components/pages/Pet/Status/Status';
 import Stars from '@/components/pages/Pet/Stars/Stars';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ModalBackdrop } from "@/components/pages/MyPage/UserInfo/UserInfo.styles";
 import Achievement from "@/components/pages/Pet/Achievement/Achievement";
 import InventoryModal from "@/components/pages/Pet/Inventory/Inventory";
 import { ModalBg } from '../Inventory/Inventory.styles';
+import { itemsCount, res } from '@/@types';
+import axiosRequest from '@/api';
+import { maxVolume } from '@/libs/constants';
 
 interface petAreaProps {
 	hungerInfo: object;
@@ -18,7 +41,7 @@ interface petAreaProps {
 	cleanlinessInfo: object;
 	expInfo: object;
 	levelInfo: number;
-	receivePetData(): void;
+	petName: string;
 }
 
 interface PetHungerProps {
@@ -46,7 +69,8 @@ interface PetExperienceProps {
 	maxExperience?: number;
 }
 
-export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessInfo, expInfo, levelInfo, receivePetData }: petAreaProps) {
+export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessInfo, expInfo, levelInfo, petName }: petAreaProps) {
+
 	const [achState, setAchState] = useState(false);
 	const [invState, setInvState] = useState(false);
 	const toggleAchState = () => {
@@ -62,7 +86,9 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 	const {curCleanliness, maxCleanliness}: PetCleanlinessProps = cleanlinessInfo;
 	const {curExperience, maxExperience}: PetExperienceProps = expInfo;
 	const level: number = levelInfo;
-	// const level: number = 0;
+	// const level: number = 5;
+
+	const [isFull, setIsFull] = useState(false);
 
 	let petImgSize = {};
 	let emotionPosition = {};
@@ -70,28 +96,28 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 	// 펫이 레벨별로 사이즈가 달라서 이미지 영역 크기와 위치를 레벨별로 지정해줘야 할듯.. 감정표현 이미지도
 	switch (level) {
 		case 0:
-			petImgSize = {petImgWidth: 20, petImgHeight: 10, petImgLeft: 30, petImgBottom: 25}
+			petImgSize = {petImgWidth: 25, petImgHeight: 15, petImgLeft: 36.5, petImgBottom: 9}
 			emotionPosition = {emotionPositionWidth: 50, emotionPositionHeight: 60, emotionPositionTop: -50, emotionPositionLeft: 75}
 			break;
 		case 1:
-			petImgSize = {petImgWidth: 30, petImgHeight: 10, petImgLeft: 28, petImgBottom: 25}
-			emotionPosition = {emotionPositionWidth: 50, emotionPositionHeight: 60, emotionPositionTop: -25, emotionPositionLeft: 64}
+			petImgSize = {petImgWidth: 43, petImgHeight: 20, petImgLeft: 30, petImgBottom: 7.7}
+			emotionPosition = {emotionPositionWidth: 35, emotionPositionHeight: 45, emotionPositionTop: -5, emotionPositionLeft: 65}
 			break;
 		case 2:
-			petImgSize = {petImgWidth: 31, petImgHeight: 11, petImgLeft: 26, petImgBottom: 24.5}
-			emotionPosition = {emotionPositionWidth: 50, emotionPositionHeight: 60, emotionPositionTop: -35, emotionPositionLeft: 65}
+			petImgSize = {petImgWidth: 50, petImgHeight: 25, petImgLeft: 27, petImgBottom: 4.7}
+			emotionPosition = {emotionPositionWidth: 30, emotionPositionHeight: 40, emotionPositionTop: 0, emotionPositionLeft: 70}
 			break;
 		case 3:
-			petImgSize = {petImgWidth: 35, petImgHeight: 15, petImgLeft: 24, petImgBottom: 25}
-			emotionPosition = {emotionPositionWidth: 40, emotionPositionHeight: 48, emotionPositionTop: -35, emotionPositionLeft: 67}
+			petImgSize = {petImgWidth: 42, petImgHeight: 20, petImgLeft: 18, petImgBottom: 25}
+			emotionPosition = {emotionPositionWidth: 35, emotionPositionHeight: 48, emotionPositionTop: -35, emotionPositionLeft: 71}
 			break;
 		case 4:
-			petImgSize = {petImgWidth: 50, petImgHeight: 30, petImgLeft: 20, petImgBottom: 21}
-			emotionPosition = {emotionPositionWidth: 40, emotionPositionHeight: 25, emotionPositionTop: 5, emotionPositionLeft: 55}
+			petImgSize = {petImgWidth: 53, petImgHeight: 30, petImgLeft: 27, petImgBottom: 6}
+			emotionPosition = {emotionPositionWidth: 40, emotionPositionHeight: 31, emotionPositionTop: -7, emotionPositionLeft: 53}
 			break;
 		case 5:
-			petImgSize = {petImgWidth: 65, petImgHeight: 45, petImgLeft: 18, petImgBottom: 25}
-			emotionPosition = {emotionPositionWidth: 30, emotionPositionHeight: 20, emotionPositionTop: 15, emotionPositionLeft: 54}
+			petImgSize = {petImgWidth: 65, petImgHeight: 45, petImgLeft: 23, petImgBottom: 25}
+			emotionPosition = {emotionPositionWidth: 32, emotionPositionHeight: 22, emotionPositionTop: 10, emotionPositionLeft: 48}
 			break;
 	}
 
@@ -110,9 +136,11 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 	}
 
 	const hungerPercent = (curHunger !== undefined && maxHunger !== undefined) ? Math.round((curHunger / maxHunger) * 100) : 0;
-	const affectionPercent = (curHunger !== undefined && maxHunger !== undefined) ? Math.round((curHunger / maxHunger) * 100) : 0;
-	const conditionPercent = (curHunger !== undefined && maxHunger !== undefined) ? Math.round((curHunger / maxHunger) * 100) : 0;
-	const cleanlinessPercent = (curHunger !== undefined && maxHunger !== undefined) ? Math.round((curHunger / maxHunger) * 100) : 0;
+	const affectionPercent = (curAffection !== undefined && maxAffection !== undefined) ? Math.round((curAffection / maxAffection) * 100) : 0;
+	const conditionPercent = (curCondition !== undefined && maxCondition !== undefined) ? Math.round((curCondition / maxCondition) * 100) : 0;
+	const cleanlinessPercent = (curCleanliness !== undefined && maxCleanliness !== undefined) ? Math.round((curCleanliness / maxCleanliness) * 100) : 0;
+
+	// console.log(hungerPercent, affectionPercent, conditionPercent, cleanlinessPercent);
 
 	const findPetEmotion = () => {
 		if (hungerPercent >= 80 && affectionPercent >= 80 && conditionPercent >= 80 && cleanlinessPercent >= 80) return "joy";
@@ -120,8 +148,19 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 		else return "normal";
 	}
 
+	const isInventoryFull = async () => {
+		try {
+			const response: res<itemsCount> = await axiosRequest.requestAxios<res<itemsCount>>("get", "/inventories/itemsCount", {});
+			setIsFull(response.data.count >= maxVolume);
+		} catch (error) {
+			console.error("Error fetching pet data: ", error);
+		}
+	}
+
+	// 펫화면 처음 들어갔을때 뿐만 아니라 인벤토리창을 닫았을 때에도 아이템 개수가 50개 이상인지 아닌지 체크해야되니까 invState가 변할때를 기준으로 isInventoryFull 함수 실행.
+	// deps에 invState하면 인벤토리를 열었을때도 실행되는데 인벤토리 열때는 실행할 필요 없으므로 invState가 바뀌었을때 얘가 false일때(=> 인벤토리창을 닫았을때)만 함수 실행
 	useEffect(() => {
-		receivePetData();
+		if (!invState) isInventoryFull();
 	}, [invState]);
 
 	return (
@@ -134,7 +173,15 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 					<Status name="컨디션" color="#45E397" totalCount={maxCondition} currentCount={curCondition}></Status>
 					<Status name="청결도" color="#0190FE" totalCount={maxCleanliness} currentCount={curCleanliness}></Status>
 				</StatusInfo>
-				<LevelInfo><Stars level={level}></Stars></LevelInfo>
+				<LevelInfo>
+					<Stars level={level} />
+					<PetLevelNameArea>
+						<LevelStar><Level>{level}</Level></LevelStar>
+						<PetNameBox>
+							<PetName>{petName}</PetName>
+						</PetNameBox>
+					</PetLevelNameArea>
+				</LevelInfo>
 			</MainHeader>
 			<MainBody>
 				<PetImg level={level} width={petImgWidth} height={petImgHeight} left={petImgLeft} bottom={petImgBottom}>
@@ -145,6 +192,7 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 			<MainFooter>
 				<MainFooterButton className="" url={ranking} color="#56ABF9" border="1px" onClick={toggleAchState} />
 				<MainFooterButton className="" url={inventory} color="#F7CF68" border="1px" onClick={toggleInvState} />
+				<InventoryFullImg on={isFull} />
 				<AchModal on={achState}>
 					{ achState && <AchModalTitle>업적</AchModalTitle> }  {/* 모달창 크기가 0인 상태에서도 '업적' 텍스트가 화면에 나와서 모달창 꺼져있을땐 아예 안나오게 처리 */}
 					<AchArea>

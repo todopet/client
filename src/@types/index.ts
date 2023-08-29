@@ -6,6 +6,7 @@ import { myItems } from "./myItems";
 import { dumpItemRes } from "@/@types/dumpItemRes";
 import { RankInfo, userInfo } from "@/@types/ranking";
 import { useItemRes } from "./useItemRes";
+import { itemsCount } from "./itemsCount";
 
 interface res<D> {
     error: string | null;
@@ -24,5 +25,6 @@ export type {
     RankInfo,
     userInfo,
     myUser,
-    useItemRes
+    useItemRes,
+    itemsCount
 };

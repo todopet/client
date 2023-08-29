@@ -21,22 +21,15 @@ interface itemPropsType {
     des: string;
     _id: string;
     quantity: number;
-    itemData: items[];
-    setItemData(itemData: Array<items>): void;
 }
 
-export default function Item({ url, name, des, _id, quantity, itemData, setItemData }: itemPropsType) {  // itemData, setItemData 나중에 useContext로 해보기
+export default function Item({ url, name, des, _id, quantity }: itemPropsType) {
     const [ discard, setDiscard ] = useState(false);
     const [ use, setUse ] = useState(false);
-
-    // const splitedUrl = url.split("/");
-    // const imageUrl = splitedUrl[2] + "/" + splitedUrl[3];
-    // console.log(imageUrl);
     
     return (
         <ItemWrap>
             <ItemInfo onClick={() => setUse(!use)}>
-                {/* <StyledCakeIcon /> */}
                 <ItemIcon imageUrl={url} />
                 <ItemQtyLabel count={quantity} />
             </ItemInfo>
@@ -52,8 +45,8 @@ export default function Item({ url, name, des, _id, quantity, itemData, setItemD
                 </Itemdescription>
             </ItemInfo>
             {/* 사용하거나 버릴때 호출하는 api 경로의 파라미터는 _id */}
-            { discard && <ActionModal modalType="discardModal" state={discard} setState={setDiscard} itemId={_id} name={name} quantity={quantity} itemData={itemData} setItemData={setItemData} /> }
-            { use && <ActionModal modalType="useModal" state={use} setState={setUse} itemId={_id} name={name} quantity={quantity} itemData={itemData} setItemData={setItemData} /> }
+            { discard && <ActionModal modalType="discardModal" state={discard} setState={setDiscard} itemId={_id} name={name} quantity={quantity} /> }
+            { use && <ActionModal modalType="useModal" state={use} setState={setUse} itemId={_id} name={name} quantity={quantity} /> }
         </ItemWrap>
     );
 }
