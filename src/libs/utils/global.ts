@@ -14,6 +14,13 @@ const formatDateToString = (date: Date): string => {
     return formattedDate;
 };
 
+/**
+ * 작성자명 : 원종석
+ * 작성일자 : 2023-08-28 (월)
+ * 작성내용 : UTC 시간으로 들어오는 정보들을 한국 시간으로 변환한다.
+ * @param {Date} date 날짜
+ * @returns "YYYY-MM-DD" 형태의 string 데이터
+ */
 const setKoreaTime = (date: Date): string => {
     const utcDate: Date = new Date(date);
 

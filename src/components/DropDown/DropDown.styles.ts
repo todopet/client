@@ -73,16 +73,29 @@ const Ul = styled.ul`
     align-items: center;
 `;
 
-const Li = styled.li<{ centerContent?: boolean }>`
+const Li = styled.li<{ centercontent?: boolean }>`
     display: flex;
     flex-direction: row;
     justify-content: ${(props) =>
-        props.centerContent ? "space-between" : "center"};
+        props.centercontent ? "space-between" : "center"};
     align-items: center;
 `;
+const Label = styled.label``;
 const Link = styled.a`
+    display: flex;
+    justify-content: inherit;
+    width: inherit;
     text-decoration: none;
     color: black;
 `;
 
-export { Wrapper, DropdownContainer, DropdownButton, Menu, Ul, Li, Link };
+export {
+    Wrapper,
+    DropdownContainer,
+    DropdownButton,
+    Menu,
+    Ul,
+    Li,
+    Label,
+    Link
+};

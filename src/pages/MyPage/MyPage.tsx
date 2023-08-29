@@ -21,6 +21,10 @@ import { setKoreaTime } from "@/libs/utils/global";
 
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
+
 export default function MyPage() {
     const [userInfo, setUserInfo] = useState<myUser>({
         _id: "",
@@ -31,9 +35,17 @@ export default function MyPage() {
         todoCount: 0,
         historyCount: 0
     });
+
+    const [showModal, setShowModal] = useState(false);
+
     const handleClick = () => {
-        console.log("");
+        setShowModal(true);
     };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
     const handleLogin = () => {};
 
     const getUserInfo = async () => {
@@ -51,10 +63,26 @@ export default function MyPage() {
         getUserInfo();
     }, []);
 
+    const navigate = useNavigate();
+
+    const handleWithdraw = async () => {
+        try {
+            const response = await axios.patch(
+                `http://localhost:3001/api/v1/withdraw`
+            );
+            alert("탈퇴 처리되었습니다. ");
+            navigate("/");
+        } catch (error) {
+            console.error("Error withdrawing user:", error);
+            alert("회원 탈퇴 처리 실패");
+        }
+    };
+
     return (
         <MyPageWrapper>
             <ContentWrapper>
                 <UserInfo
+                    id={userInfo._id}
                     picture={userInfo.picture}
                     name={userInfo.nickname}
                     date={setKoreaTime(userInfo.createdAt)}
@@ -86,15 +114,15 @@ export default function MyPage() {
                         text="회원탈퇴"
                         onClick={handleClick}
                     />
-                    {false && (
+                    {showModal && (
                         <ModalBackdrop>
                             <Modal>
                                 <AlertText>
                                     <Text>
-                                        테이머킴님의 펫이 기다리고 있어요!
+                                        {`${userInfo.nickname}님의 펫이 기다리고 있어요!`}
                                     </Text>
                                     <Text>
-                                        테이머킴님의 펫을 두고 떠나시려구요?
+                                        {`${userInfo.nickname}님의 펫을 두고 떠나시려구요?🥺`}
                                     </Text>
                                 </AlertText>
                                 <ModalButtonArea>
@@ -102,13 +130,13 @@ export default function MyPage() {
                                         className=""
                                         color="#E7E8EA"
                                         text="아니오"
-                                        onClick={handleClick}
+                                        onClick={handleCloseModal}
                                     />
                                     <NewButton
                                         className=""
                                         color="#E7E8EA"
                                         text="예"
-                                        onClick={handleClick}
+                                        onClick={handleWithdraw}
                                     />
                                 </ModalButtonArea>
                             </Modal>
@@ -129,7 +157,11 @@ interface classtype {
 
 export function MyButton({ className, onClick, color, text }: classtype) {
     return (
-        <button className={className} onClick={onClick} color={color}>
+        <button
+            className={className}
+            onClick={onClick}
+            style={{ backgroundColor: color }}
+        >
             {text}
         </button>
     );
