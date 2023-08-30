@@ -5,8 +5,8 @@ interface CellProps {
 }
 
 interface DateProps {
-    isToday: boolean;
-    isClicked: boolean;
+    $istoday: boolean;
+    $isclicked: boolean;
     id: number;
 }
 
@@ -48,19 +48,19 @@ const Cell = styled.div<CellProps>`
     margin: 10px 10px 2px 10px;
     background-color: ${(props) =>
         props.completed === 0
-            ? "#E7E8EA"
+            ? "#e9e9e9"
             : props.completed <= 2
-            ? "#E1F9E1"
+            ? "#cff1cf"
             : props.completed <= 4
-            ? "#C5F4C4"
-            : props.completed <= 6 
-            ? "#AAEEA8"
+            ? "#a7eba6"
+            : props.completed <= 6
+            ? "#70d66a"
             : props.completed <= 8
-            ? "#56DD53"
+            ? "#41b13f"
             : props.completed <= 10
-            ? "#24A921"
+            ? "#1d861c"
             : props.completed >= 11
-            ? "#1B8518"
+            ? "#046900"
             : "red"};
 `;
 
@@ -72,9 +72,9 @@ const Date = styled.div<DateProps>`
     font-size: 14px;
     font-family: Pretendard;
     color: ${(props) =>
-        props.isClicked ? "white" : props.isToday ? "white" : "black"};
+        props.$isclicked ? "white" : props.$istoday ? "white" : "black"};
     background-color: ${(props) =>
-        props.isClicked ? "#556FE9" : props.isToday ? "black" : ""};
+        props.$isclicked ? "#556FE9" : props.$istoday ? "black" : ""};
     display: flex;
     justify-content: center;
     align-items: center;

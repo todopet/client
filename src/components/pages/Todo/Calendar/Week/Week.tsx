@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
@@ -16,6 +16,11 @@ const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 // 오늘을 기준으로 지난 일요일의 날짜 객체를 얻음
 // todayDate - todayDay를 하면 일요일의 날짜가 나오는데, 일요일이 0이기 때문. 일요일~토요일 0~6.
 const lastSunday = new Date(todayYear, todayMonth, todayDate - todayDay);
+const saturday = new Date(
+    lastSunday.getFullYear(),
+    lastSunday.getMonth(),
+    lastSunday.getDate() + 6
+);
 let isFirstDateIncluded = false;
 let specialCaseOfYearEnd = false;
 
@@ -24,12 +29,14 @@ export default function Week() {
     const [titleData, setTitleData] = useState({
         year: currentSunday.getFullYear(),
         month: currentSunday.getMonth(),
-        weekCount: calculateWeekCount()
+        weekCount: calculateWeekCount(),
     });
     const [clicked, setClicked] = useState(-1);
+    const [dates, setDates] = useState<Date[]>([]);
+    const [completedTodosByDay, setCompletedTodosByDay] = useState<number[]>(
+        []
+    );
 
-    const dates: Date[] = []; // 일주일의 날짜를 넣는 배열
-    const completedTodosByDay: number[] = [];
     const { updateSelectedDate, getTodos, periodTodos } =
         useContext(TodoContext);
 
@@ -42,68 +49,130 @@ export default function Week() {
     };
 
     const getWeekDates = () => {
+        setDates([]);
+        const newDates = [];
         for (let i = 0; i < 7; ++i) {
             const d = new Date(
                 currentSunday.getFullYear(),
                 currentSunday.getMonth(),
                 currentSunday.getDate() + i
             );
-            dates.push(d);
+            newDates.push(d);
         }
+        setDates(newDates);
 
         // 예외처리를 위한 boolean 변수 2개
         isFirstDateIncluded = false;
         specialCaseOfYearEnd = false;
 
+        // console.log(newDates);
         // 현재 주에 1일이 포함되었는지 확인
-        isFirstDateIncluded = dates.map((date) => date.getDate()).includes(1);
-        if (dates[0].getDate() === 1) {
+
+        isFirstDateIncluded = newDates
+            .map((date) => date.getDate())
+            .includes(1);
+        if (newDates[0].getDate() === 1) {
             // 1일이 일요일인 경우의 예외처리
             isFirstDateIncluded = false;
         }
 
         // 매해 12월에서 1월로 넘어가는 부분의 월&주차 오류 처리
         if (currentSunday.getMonth() === 11) {
-            if (dates.map((date, i) => date.getDate()).includes(31)) {
-                if (dates[6].getDate() !== 31) {
+            if (newDates.map((date, i) => date.getDate()).includes(31)) {
+                if (newDates[6].getDate() !== 31) {
                     specialCaseOfYearEnd = true;
                 }
             }
         }
+        // console.log("getWeekDates");
+
+        const start = formatDate(currentSunday);
+        const end = formatDate(
+            new Date(
+                currentSunday.getFullYear(),
+                currentSunday.getMonth(),
+                currentSunday.getDate() + 6
+            )
+        );
+        getTodos(start, end);
     };
 
-    const countDates = () => {
+// // 초기 countDates
+// const countDates = () => {
+//     const todoDates: number[] = [];
+//     console.log("countDates periodTodos: ", periodTodos);
+//     periodTodos?.forEach((category: any) =>
+//         category.todos.forEach((todo: any) => {
+//             const newDate = new Date(todo.createdAt);
+//             // console.log(todo.status === "completed");
+//             if (todo.status === "completed")
+//                 todoDates.push(newDate.getDay());
+//         })
+//     );
+//     console.log("todoDates: ", todoDates);
+//     for (let i = 0; i < 7; ++i) {
+//         let count = 0;
+//         for (let j = 0; j < todoDates.length; ++j) {
+//             if (todoDates[j] === i) {
+//                 ++count;
+//             }
+//         }
+//         // console.log(count);
+//         setCompletedTodosByDay((prev) => [...prev, count]);
+//     }
+//     console.log("countDates");
+// }
+
+// 중기 countDates
+const countDates = () => {
+    const todoDates = periodTodos
+        ?.map(
+            (v: any) =>
+                v.todos?.map((todo: any) => {
+                    if (todo.status === "completed") {
+                        return new Date(todo.createdAt);
+                    }
+                    return null;
+                })
+        )
+        .filter((v) => v);
+    todoDates?.reduce(
+        (acc, cur) => {
+            acc[cur] = acc[cur] + 1;
+            return acc;
+        },
+        Array.from({ length: 7 }, () => 0)
+    );
+};
+
+    // 최종 countDates(이름없어짐)
+    const _completedTodosByDay = useMemo(() => {
         const todoDates: number[] = [];
-        // console.log(periodTodos);
         periodTodos?.forEach((category: any) =>
             category.todos.forEach((todo: any) => {
                 const newDate = new Date(todo.createdAt);
-                todoDates.push(newDate.getDay());
+                // console.log(todo.status === "completed");
+                if (todo.status === "completed")
+                    todoDates.push(newDate.getDay());
             })
         );
-        // console.log("Week todoDates: ", todoDates);
-
-        for (let i = 0; i < 7; ++i) {
-            let count = 0;
-            for (let j = 0; j < todoDates.length; ++j) {
-                if (todoDates[j] === i) {
-                    ++count;
-                }
-            }
-            completedTodosByDay.push(count);
-        }
-        // console.log("Week completedTodosByDay배열: ", completedTodosByDay);
-    };
-
-    getWeekDates();
-    countDates();
-
-    const start = formatDate(dates[0]);
-    const end = formatDate(dates[6]);
+        return todoDates?.reduce(
+            (acc, cur) => {
+                acc[cur] = acc[cur] + 1;
+                return acc;
+            },
+            Array.from({ length: 7 }, () => 0)
+        );
+    }, [periodTodos]);
+    console.log("_completedTodosByDay: ", _completedTodosByDay);
 
     useEffect(() => {
+        getWeekDates();
+        const start = formatDate(lastSunday);
+        const end = formatDate(saturday);
         getTodos(start, end);
-    }, [currentSunday]);
+        countDates();
+    }, []);
 
     function calculateWeekCount() {
         const firstDayOfMonth = new Date(
@@ -127,40 +196,49 @@ export default function Week() {
         }
     };
 
+    const onChangeWeek = (_currentSunday: Date) => {
+        // console.log("onChangeWeek: ",periodTodos);
+        getWeekDates();
+        countDates();
+    };
+
     const handleLeftClick = () => {
-        setCurrentSunday(
-            new Date(currentSunday.setDate(currentSunday.getDate() - 7))
+        const newCurrentSunday = new Date(
+            currentSunday.setDate(currentSunday.getDate() - 7)
         );
+        setCurrentSunday(newCurrentSunday);
         setTimeout(() => {
             setTitleData({
                 year: specialCaseOfYearEnd
-                    ? currentSunday.getFullYear() + 1
-                    : currentSunday.getFullYear(),
+                    ? newCurrentSunday.getFullYear() + 1
+                    : newCurrentSunday.getFullYear(),
                 month: calculateMonth(),
                 weekCount: isFirstDateIncluded ? 1 : calculateWeekCount()
             });
         }, 0);
+        onChangeWeek(newCurrentSunday);
     };
 
     const handleRightClick = () => {
-        setCurrentSunday(
-            new Date(currentSunday.setDate(currentSunday.getDate() + 7))
+        const newCurrentSunday = new Date(
+            currentSunday.setDate(currentSunday.getDate() + 7)
         );
+        setCurrentSunday(newCurrentSunday);
         setTimeout(() => {
             setTitleData({
                 year: specialCaseOfYearEnd
-                    ? currentSunday.getFullYear() + 1
-                    : currentSunday.getFullYear(),
+                    ? newCurrentSunday.getFullYear() + 1
+                    : newCurrentSunday.getFullYear(),
                 month: calculateMonth(),
                 weekCount: isFirstDateIncluded ? 1 : calculateWeekCount()
             });
         }, 0);
+        onChangeWeek(newCurrentSunday);
     };
 
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
         updateSelectedDate(formatDate(dates[idx]));
-        // console.log(idx);
     };
 
     return (
@@ -189,15 +267,21 @@ export default function Week() {
                             key={i}
                             onClick={() => handleDateCellClick(i)}
                         >
-                            <Styles.Cell completed={completedTodosByDay[i]} />
+                            <Styles.Cell
+                                completed={
+                                    Array.isArray(_completedTodosByDay)
+                                        ? _completedTodosByDay[i]
+                                        : 0
+                                }
+                            />
                             <Styles.Date
                                 id={i}
-                                isToday={
+                                $istoday={
                                     date.getFullYear() === todayYear &&
                                     date.getMonth() === todayMonth &&
                                     date.getDate() === today.getDate()
                                 }
-                                isClicked={clicked === i}
+                                $isclicked={clicked === i}
                                 data-date={date}
                             >
                                 {date.getDate()}
@@ -208,4 +292,4 @@ export default function Week() {
             </div>
         </Styles.WeekStyle>
     );
-}
+};
