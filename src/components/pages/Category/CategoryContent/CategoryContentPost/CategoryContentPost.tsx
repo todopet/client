@@ -39,6 +39,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                     res<category>
                 >("get", `/todoCategories/${id}`);
                 setInputValue(response.data.category);
+                onTextSend(response.data.category);
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
             }
@@ -67,7 +68,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 >("patch", `/todoCategories/endCategory/${id}`);
                 if (!response.error) {
                     alert("목표가 종료되었습니다.");
-                    navigate(-1); // list 페이지로 이동
+                    navigate("/category/list");
                 } else {
                     throw new Error("목표 종료를 실패했습니다.");
                 }
@@ -88,7 +89,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 >("delete", `/todoCategories/${id}`);
                 if (!response.error) {
                     alert("목표가 삭제되었습니다.");
-                    navigate(-1); // list 페이지로 이동
+                    navigate("/category/list");
                 } else {
                     throw new Error("목표 삭제를 실패했습니다.");
                 }
