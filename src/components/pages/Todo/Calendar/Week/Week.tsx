@@ -29,7 +29,7 @@ export default function Week() {
     const [titleData, setTitleData] = useState({
         year: currentSunday.getFullYear(),
         month: currentSunday.getMonth(),
-        weekCount: calculateWeekCount()
+        weekCount: calculateWeekCount(),
     });
     const [clicked, setClicked] = useState(-1);
     const [dates, setDates] = useState<Date[]>([]);
@@ -97,61 +97,56 @@ export default function Week() {
         getTodos(start, end);
     };
 
-    const countDates = () => {
-        const todoDates = periodTodos?.map(
-                (v: any) =>
-                    v.todos?.map((todo: any) => {
-                        if (todo.status === "completed") {
-                            return new Date(todo.createdAt);
-                        }
-                        return null;
-                    })
-            )
-            .filter((v) => v);
-        todoDates?.reduce(
-            (acc, cur) => {
-                acc[cur] = acc[cur] + 1;
-                return acc;
-            },
-            Array.from({ length: 7 }, () => 0)
-        );
+// // 초기 countDates
+// const countDates = () => {
+//     const todoDates: number[] = [];
+//     console.log("countDates periodTodos: ", periodTodos);
+//     periodTodos?.forEach((category: any) =>
+//         category.todos.forEach((todo: any) => {
+//             const newDate = new Date(todo.createdAt);
+//             // console.log(todo.status === "completed");
+//             if (todo.status === "completed")
+//                 todoDates.push(newDate.getDay());
+//         })
+//     );
+//     console.log("todoDates: ", todoDates);
+//     for (let i = 0; i < 7; ++i) {
+//         let count = 0;
+//         for (let j = 0; j < todoDates.length; ++j) {
+//             if (todoDates[j] === i) {
+//                 ++count;
+//             }
+//         }
+//         // console.log(count);
+//         setCompletedTodosByDay((prev) => [...prev, count]);
+//     }
+//     console.log("countDates");
+// }
 
-        // const todoDates: number[] = [];
-        // // console.log("countDates periodTodos: ", periodTodos);
-        // periodTodos?.forEach((category: any) =>
-        //     category.todos.forEach((todo: any) => {
-        //         const newDate = new Date(todo.createdAt);
-        //         // console.log(todo.status === "completed");
-        //         if (todo.status === "completed")
-        //             todoDates.push(newDate.getDay());
-        //     })
-        // );
-        // // console.log("todoDates: ", todoDates);
-        // for (let i = 0; i < 7; ++i) {
-        //     let count = 0;
-        //     for (let j = 0; j < todoDates.length; ++j) {
-        //         if (todoDates[j] === i) {
-        //             ++count;
-        //         }
-        //     }
-        //     // console.log(count);
-        //     setCompletedTodosByDay((prev) => [...prev, count]);
-        // }
-        // console.log("countDates");
-    };
+// 중기 countDates
+const countDates = () => {
+    const todoDates = periodTodos
+        ?.map(
+            (v: any) =>
+                v.todos?.map((todo: any) => {
+                    if (todo.status === "completed") {
+                        return new Date(todo.createdAt);
+                    }
+                    return null;
+                })
+        )
+        .filter((v) => v);
+    todoDates?.reduce(
+        (acc, cur) => {
+            acc[cur] = acc[cur] + 1;
+            return acc;
+        },
+        Array.from({ length: 7 }, () => 0)
+    );
+};
 
+    // 최종 countDates(이름없어짐)
     const _completedTodosByDay = useMemo(() => {
-        // const todoDates = periodTodos
-        //     ?.map(
-        //         (v: any) =>
-        //             v.todos?.map((todo: any) => {
-        //                 if (todo.status === "completed") {
-        //                     return new Date(todo.createdAt);
-        //                 }
-        //                 return null;
-        //             })
-        //     )
-        //     .filter((v) => v);
         const todoDates: number[] = [];
         periodTodos?.forEach((category: any) =>
             category.todos.forEach((todo: any) => {
@@ -169,10 +164,7 @@ export default function Week() {
             Array.from({ length: 7 }, () => 0)
         );
     }, [periodTodos]);
-    
-    console.log(_completedTodosByDay);
-    // getWeekDates();
-    // countDates();
+    console.log("_completedTodosByDay: ", _completedTodosByDay);
 
     useEffect(() => {
         getWeekDates();
@@ -275,7 +267,13 @@ export default function Week() {
                             key={i}
                             onClick={() => handleDateCellClick(i)}
                         >
-                            <Styles.Cell completed={Array.isArray(_completedTodosByDay) ? _completedTodosByDay[i] : 0} />
+                            <Styles.Cell
+                                completed={
+                                    Array.isArray(_completedTodosByDay)
+                                        ? _completedTodosByDay[i]
+                                        : 0
+                                }
+                            />
                             <Styles.Date
                                 id={i}
                                 $istoday={
@@ -294,4 +292,4 @@ export default function Week() {
             </div>
         </Styles.WeekStyle>
     );
-}
+};
