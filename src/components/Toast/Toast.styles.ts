@@ -11,7 +11,7 @@ const fadeout = keyframes`
 
 interface ToastWrapProps {
     show: boolean;
-    bgColor: "black" | "white";
+    bgcolor: "black" | "white";
 }
 
 const ToastWrap = styled.div<ToastWrapProps>`
@@ -23,9 +23,9 @@ const ToastWrap = styled.div<ToastWrapProps>`
     justify-content: center;
 
     white-space: nowrap;
-    color: ${(props) => (props.bgColor === "black" ? "#ffffff" : "#000000")};
+    color: ${(props) => (props.bgcolor === "black" ? "#ffffff" : "#000000")};
     background: ${(props) =>
-        props.bgColor === "black"
+        props.bgcolor === "black"
             ? "rgba(0, 0, 0, 0.8)"
             : "rgba(255, 255, 255, 0.85)"};
 

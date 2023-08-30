@@ -10,14 +10,14 @@ export default function MiniPetToast() {
     const { message, isActiveToast } = useContext(TodoContext);
 
     let content: React.ReactNode;
-    let bgColor: "black" | "white" = "white";
+    let bgcolor: "black" | "white" = "white";
     const [fullMessage, setFullMessage] = useState<string>("");
     useEffect(() => {
         if (message?.inventoryCount === 50) {
             setFullMessage("인벤토리가 가득 찼습니다");
         }
     }, []);
-    //보상에 따라 content, bgColor 변경
+    //보상에 따라 content, bgcolor 변경
     switch (message?.type) {
         case ToastTypes.SPECIAL:
             content = (
@@ -29,7 +29,7 @@ export default function MiniPetToast() {
                     {fullMessage}
                 </>
             );
-            bgColor = "black";
+            bgcolor = "black";
 
             break;
         case ToastTypes.NORMAL:
@@ -68,7 +68,7 @@ export default function MiniPetToast() {
         <ToastStyle>
             <Toast
                 isActive={isActiveToast}
-                bgColor={bgColor}
+                bgcolor={bgcolor}
                 content={content}
             />
         </ToastStyle>

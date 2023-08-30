@@ -157,7 +157,7 @@ export default function MiniPet() {
             {isActiveToast && (
                 <Toast
                     isActive={isActiveToast}
-                    bgColor={"black"}
+                    bgcolor={"black"}
                     content={toastContent}
                 />
             )}
