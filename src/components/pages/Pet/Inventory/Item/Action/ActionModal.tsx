@@ -13,6 +13,7 @@ import axiosRequest from "@/api";
 import { res, useItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
 import { ItemDataContext } from "../../Inventory";
+import axios from "axios";
 
 interface modalTypeProps {
     modalType: "useModal" | "discardModal";
@@ -42,8 +43,8 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
     async function handleUseItem(itemId: string) {
         try {
             const data = { quantity: itemCount };
-            const response: res<useItemRes> = await axiosRequest.requestAxios<res<useItemRes>>("post", `/inventories/${itemId}/use`, data);
-            // console.log(response);
+            const response: res<useItemRes> = await axiosRequest.requestAxios<res<useItemRes>>("post", `/inventories/${itemId}/put`, data);
+            console.log(response);
             receiveItemData();
         } catch (error) {
             console.log("Error fetching pet data: ", error);
@@ -54,7 +55,7 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
         try {
             const data = { quantity: itemCount*-1 };
             const response: res<dumpItemRes> = await axiosRequest.requestAxios<res<dumpItemRes>>("patch", `/inventories/items/${itemId}`, data);
-            // console.log(response);
+            console.log(response);
             receiveItemData();
         } catch (error) {
             console.error("Error fetching pet data: ", error);
