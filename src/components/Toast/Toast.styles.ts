@@ -10,12 +10,12 @@ const fadeout = keyframes`
 `;
 
 interface ToastWrapProps {
-    show: boolean;
+    $show: boolean;
     bgcolor: "black" | "white";
 }
 
 const ToastWrap = styled.div<ToastWrapProps>`
-    visibility: ${(props) => (props.show ? "visible" : "hidden")};
+    visibility: ${(props) => (props.$show ? "visible" : "hidden")};
 
     box-sizing: border-box;
     display: flex;
@@ -50,7 +50,7 @@ const ToastWrap = styled.div<ToastWrapProps>`
     padding: 4px 10px;
 
     animation: ${(props) =>
-        props.show
+        props.$show
             ? css`
                   ${fadein} 1s, ${fadeout} 1s 3.5s
               `

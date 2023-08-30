@@ -8,7 +8,7 @@ interface ToastProps {
 
 export default function Toast({ content, bgcolor, isActive }: ToastProps) {
     return isActive ? (
-        <ToastWrap show={isActive} bgcolor={bgcolor}>
+        <ToastWrap $show={isActive} bgcolor={bgcolor}>
             {content}
         </ToastWrap>
     ) : null;
