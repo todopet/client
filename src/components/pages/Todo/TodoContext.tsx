@@ -61,7 +61,7 @@ export default function TodoContextProvider({
     const updateSelectedDate = (selected: string) => {
         setSelectedDate(selected);
     };
-    
+
     //기간별 투두 불러오기
     async function getTodos(startDate: string, endDate: string) {
         // console.log(startDate, endDate);
@@ -87,6 +87,8 @@ export default function TodoContextProvider({
     });
 
     const [isActiveToast, setIsActiveToast] = useState<boolean>(false);
+    //
+    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
     //투두 체크시 상태 변경(unchecked->completed, completed->reverted, reverted->completed)
     async function updateStatus(
@@ -95,19 +97,40 @@ export default function TodoContextProvider({
         checkStatus: string
     ) {
         try {
-            const response: res<todo> = await axiosRequest.requestAxios<
-                res<todo>
-            >("patch", `/todoContents/${contentId}`, {
-                contentId: contentId,
-                todo: content,
-                status: checkStatus
-            });
-            // console.log("체크!", response.data.message);
-            setIsActiveToast(true);
-            setTimeout(() => {
+            if (checkStatus === "completed") {
+                //이전 토스트를 꺼줍니다.
                 setIsActiveToast(false);
-            }, 5500);
-            setMessage(response.data.message);
+                if (timer) {
+                    // 이전 타이머가 있으면 취소합니다.
+                    clearTimeout(timer);
+                }
+
+                const response: res<todo> = await axiosRequest.requestAxios<
+                    res<todo>
+                >("patch", `/todoContents/${contentId}`, {
+                    contentId: contentId,
+                    todo: content,
+                    status: checkStatus
+                });
+
+                setMessage(response.data.message);
+                setIsActiveToast(true);
+
+                // 새로운 타이머를 설정합니다.
+                setTimer(
+                    setTimeout(() => {
+                        setIsActiveToast(false);
+                    }, 5500)
+                );
+            } else {
+                const response: res<todo> = await axiosRequest.requestAxios<
+                    res<todo>
+                >("patch", `/todoContents/${contentId}`, {
+                    contentId: contentId,
+                    todo: content,
+                    status: checkStatus
+                });
+            }
         } catch (error) {
             console.error(error);
         }
