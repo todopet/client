@@ -13,10 +13,11 @@ const UserInfoWrapper = styled.div`
     height: 100%;
 `;
 
-const UserIcon = styled.div<{
-    imagePath: string;
-}>`
-    background-image: url(${(props) => props.imagePath});
+interface ImagePathProps {
+    imagepath: string;
+}
+const UserIcon = styled.div<ImagePathProps>`
+    background-image: url(${(props: ImagePathProps) => props.imagepath});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -97,6 +98,7 @@ const ModalInput = styled.input`
     border: 2px solid #bff2bd;
     border-radius: 20px;
     margin: 0 auto;
+    padding: 0 10px;
 `;
 
 const ModalButtonArea = styled.div`

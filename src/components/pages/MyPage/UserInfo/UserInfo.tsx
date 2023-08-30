@@ -14,56 +14,57 @@ import {
     JoinDate
 } from "./UserInfo.styles";
 import NickName from "../NickName/NickName";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosRequest from "@/api";
-import { res } from "@/@types/index";
+import { res, myUser } from "@/@types/index";
 
 interface userinfoType {
-    id: string;
     picture: string;
     name: string;
     date: string;
 }
 
-export function UserInfo({ id, picture, name, date }: userinfoType) {
-    const [state, setState] = useState(false);
+export function UserInfo({ picture, name, date }: userinfoType) {
+    const [isNicknameModal, setIsNicknameModal] = useState(false);
     const [nickname, setNickname] = useState("");
-    async function getUserName() {
+    const navigate = useNavigate();
+    const getUserName = async () => {
         try {
-            const response: res<any> = await axios.get(
-                `http://localhost:3001/api/v1/users/user`
-            );
-            console.log(response.data);
+            const response: res<myUser> = await axiosRequest.requestAxios<
+                res<myUser>
+            >("get", "/users/user");
+            console.log(response);
             setNickname(response.data.nickname);
         } catch (error) {
             alert("오류가 발생했습니다. 다시 시도해 주세요.");
         }
-    }
-    const handleClick = () => {
-        getUserName();
-        setState(!state);
     };
 
-    // useEffect(() => {
-    //     getUserName();
-    // }, []);
+    const handleClick = () => {
+        getUserName();
+        setIsNicknameModal(true);
+    };
+
+    const handleClose = () => {
+        setIsNicknameModal(false);
+    };
 
     const handleNicknameChange = async () => {
         try {
-            const response: res<any> = await axios.patch(
-                `http://localhost:3001/api/v1/users/myInfo`,
-                { nickname: "메타몽" }
-            );
+            const response: res<myUser> = await axiosRequest.requestAxios<
+                res<myUser>
+            >("patch", "/users/myInfo", { nickname });
+            console.log(response);
             alert("닉네임이 수정되었습니다!"); // 사용자에게 알림
-            window.location.reload(); // 페이지 새로고침
+            navigate(0); // 페이지 새로고침
         } catch (error) {
             alert("오류가 발생했습니다. 다시 시도해 주세요.");
         }
     };
     return (
         <UserInfoWrapper>
-            <UserIcon imagePath={picture}></UserIcon>
+            <UserIcon imagepath={picture}></UserIcon>
             <UserInfoArea>
                 <UserName>
                     <NickName name={name}></NickName>
@@ -71,7 +72,7 @@ export function UserInfo({ id, picture, name, date }: userinfoType) {
                         className={""}
                         onClick={handleClick}
                     ></UpdateIcon>
-                    {state && (
+                    {isNicknameModal && (
                         <ModalBackdrop>
                             <Modal>
                                 <ModalTitle>닉네임 변경하기</ModalTitle>
@@ -85,7 +86,7 @@ export function UserInfo({ id, picture, name, date }: userinfoType) {
                                 <ModalButtonArea>
                                     <DeleteButton
                                         className=""
-                                        onClick={handleClick}
+                                        onClick={handleClose}
                                     >
                                         취소
                                     </DeleteButton>

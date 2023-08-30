@@ -8,9 +8,12 @@ export interface user {
 
 export interface myUser {
     _id: string;
+    googldId?: string;
     nickname: string;
+    membershipStatus?: string;
     picture: string;
     createdAt: Date;
+    updatedAt?: Date;
     withPetDate: number;
     todoCount: number;
     historyCount: number;

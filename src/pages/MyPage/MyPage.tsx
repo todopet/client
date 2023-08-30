@@ -3,27 +3,17 @@ import {
     ContentWrapper,
     ActivityWrapper,
     ButtonWrapper,
-    MypageButton,
-    AlertText,
-    Text,
-    ModalButtonArea,
-    NewButton
+    MypageButton
 } from "./MyPage.styles";
+import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
 import { UserInfo } from "@/components/pages/MyPage/UserInfo/UserInfo";
 import Activity from "@/components/pages/MyPage/Activity/Activity";
-import {
-    Modal,
-    ModalBackdrop
-} from "@/components/pages/MyPage/UserInfo/UserInfo.styles";
 import { res, myUser } from "@/@types/index";
 import axiosRequest from "@/api";
 import { setKoreaTime } from "@/libs/utils/global";
-
 import { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export default function MyPage() {
     const [userInfo, setUserInfo] = useState<myUser>({
@@ -36,17 +26,54 @@ export default function MyPage() {
         historyCount: 0
     });
 
-    const [showModal, setShowModal] = useState(false);
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+    const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
-    const handleClick = () => {
-        setShowModal(true);
+    const handleConfirmLogoutModal = () => {
+        setIsLogoutModalOpen(true);
+    };
+
+    const handleConfirmWithdrawModal = () => {
+        setIsWithdrawModalOpen(true);
     };
 
     const handleCloseModal = () => {
-        setShowModal(false);
+        setIsLogoutModalOpen(false);
+        setIsWithdrawModalOpen(false);
     };
 
-    const handleLogin = () => {};
+    const handleConfirmLogout = async () => {
+        try {
+            const response: AxiosResponse = await axios.post(
+                "http://localhost:3001/api/v1/logout"
+            );
+            if (response.status === 200) {
+                alert("로그아웃 처리되었습니다. ");
+                navigate("/");
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            console.error("Error withdrawing user:", error);
+            alert("로그아웃에 실패하였습니다 :(");
+        }
+    };
+    const handleConfirmWithdraw = async () => {
+        try {
+            const response: AxiosResponse = await axios.post(
+                "http://localhost:3001/api/v1/withdraw"
+            );
+            if (response.status === 200) {
+                alert("회원 탈퇴 처리되었습니다. ");
+                navigate("/");
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            console.error("Error withdrawing user:", error);
+            alert("회원 탈퇴 처리 실패");
+        }
+    };
 
     const getUserInfo = async () => {
         try {
@@ -65,24 +92,10 @@ export default function MyPage() {
 
     const navigate = useNavigate();
 
-    const handleWithdraw = async () => {
-        try {
-            const response = await axios.patch(
-                `http://localhost:3001/api/v1/withdraw`
-            );
-            alert("탈퇴 처리되었습니다. ");
-            navigate("/");
-        } catch (error) {
-            console.error("Error withdrawing user:", error);
-            alert("회원 탈퇴 처리 실패");
-        }
-    };
-
     return (
         <MyPageWrapper>
             <ContentWrapper>
                 <UserInfo
-                    id={userInfo._id}
                     picture={userInfo.picture}
                     name={userInfo.nickname}
                     date={setKoreaTime(userInfo.createdAt)}
@@ -106,41 +119,27 @@ export default function MyPage() {
                         className=""
                         color="#F5F5F5"
                         text="로그아웃"
-                        onClick={handleLogin}
+                        onClick={handleConfirmLogoutModal}
                     />
                     <MypageButton
                         className=""
                         color="#F5F5F5"
                         text="회원탈퇴"
-                        onClick={handleClick}
+                        onClick={handleConfirmWithdrawModal}
                     />
-                    {showModal && (
-                        <ModalBackdrop>
-                            <Modal>
-                                <AlertText>
-                                    <Text>
-                                        {`${userInfo.nickname}님의 펫이 기다리고 있어요!`}
-                                    </Text>
-                                    <Text>
-                                        {`${userInfo.nickname}님의 펫을 두고 떠나시려구요?🥺`}
-                                    </Text>
-                                </AlertText>
-                                <ModalButtonArea>
-                                    <NewButton
-                                        className=""
-                                        color="#E7E8EA"
-                                        text="아니오"
-                                        onClick={handleCloseModal}
-                                    />
-                                    <NewButton
-                                        className=""
-                                        color="#E7E8EA"
-                                        text="예"
-                                        onClick={handleWithdraw}
-                                    />
-                                </ModalButtonArea>
-                            </Modal>
-                        </ModalBackdrop>
+                    {isLogoutModalOpen && (
+                        <ConfirmModal
+                            message={"로그아웃 하시겠습니까?"}
+                            onConfirm={handleConfirmLogout}
+                            onCancel={handleCloseModal}
+                        ></ConfirmModal>
+                    )}
+                    {isWithdrawModalOpen && (
+                        <ConfirmModal
+                            message={`${userInfo.nickname}님의 펫이 기다리고 있어요!\n${userInfo.nickname}님의 펫을 두고 떠나시려구요?🥺`}
+                            onConfirm={handleConfirmWithdraw}
+                            onCancel={handleCloseModal}
+                        ></ConfirmModal>
                     )}
                 </ButtonWrapper>
             </ContentWrapper>
