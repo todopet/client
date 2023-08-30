@@ -21,6 +21,7 @@ const DayWrap = styled.div`
     justify-items: center;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 2px;
 `;
 
 const Day = styled.span`
@@ -83,7 +84,7 @@ const Date = styled.div<DateProps>`
 `;
 
 const Title = styled.span`
-    margin: 2px 40px 0px 40px;
+    margin: 0px 40px 0px 40px;
     font-family: Pretendard;
 `;
 
@@ -91,7 +92,6 @@ const TitleWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 28px;
 `;
 
 export {
