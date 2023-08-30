@@ -10,12 +10,12 @@ const fadeout = keyframes`
 `;
 
 interface ToastWrapProps {
-    show: boolean;
-    bgColor: "black" | "white";
+    $show: boolean;
+    bgcolor: "black" | "white";
 }
 
 const ToastWrap = styled.div<ToastWrapProps>`
-    visibility: ${(props) => (props.show ? "visible" : "hidden")};
+    visibility: ${(props) => (props.$show ? "visible" : "hidden")};
 
     box-sizing: border-box;
     display: flex;
@@ -23,9 +23,9 @@ const ToastWrap = styled.div<ToastWrapProps>`
     justify-content: center;
 
     white-space: nowrap;
-    color: ${(props) => (props.bgColor === "black" ? "#ffffff" : "#000000")};
+    color: ${(props) => (props.bgcolor === "black" ? "#ffffff" : "#000000")};
     background: ${(props) =>
-        props.bgColor === "black"
+        props.bgcolor === "black"
             ? "rgba(0, 0, 0, 0.8)"
             : "rgba(255, 255, 255, 0.85)"};
 
@@ -50,7 +50,7 @@ const ToastWrap = styled.div<ToastWrapProps>`
     padding: 4px 10px;
 
     animation: ${(props) =>
-        props.show
+        props.$show
             ? css`
                   ${fadein} 1s, ${fadeout} 1s 3.5s
               `

@@ -2,13 +2,13 @@ import { ToastWrap } from "./Toast.styles";
 
 interface ToastProps {
     content: React.ReactNode;
-    bgColor: "black" | "white";
+    bgcolor: "black" | "white";
     isActive: boolean;
 }
 
-export default function Toast({ content, bgColor, isActive }: ToastProps) {
+export default function Toast({ content, bgcolor, isActive }: ToastProps) {
     return isActive ? (
-        <ToastWrap show={isActive} bgColor={bgColor}>
+        <ToastWrap $show={isActive} bgcolor={bgcolor}>
             {content}
         </ToastWrap>
     ) : null;

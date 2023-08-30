@@ -12,11 +12,11 @@ const MiniPetWrap = styled.div`
 `;
 
 const MyPet = styled.div<{
-    petLevel: number;
+    petlevel: number;
     width: number;
     height: number;
 }>`
-    background-image: url("/petImages/pet-${(props) => props.petLevel}.png");
+    background-image: url("/petImages/pet-${(props) => props.petlevel}.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
