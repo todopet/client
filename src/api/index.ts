@@ -6,6 +6,7 @@ axios.defaults.baseURL =
     process.env.REACT_APP_API_URL ?? `http://localhost:3001/api/v1`;
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
+
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 5000;
 
@@ -70,7 +71,7 @@ const axiosRequest: AxiosRequest = {
                 method,
                 url: `${axios.defaults.baseURL}${url}`,
                 data,
-                headers // 아이템, 인벤토리 호출할때만 넣기. 주요 기능에만 제한하는 것은 어떨지
+                headers: { "x-custom-Data": Date.now() * 4 + 1000 } // 아이템, 인벤토리 호출할때만 넣기. 주요 기능에만 제한하는 것은 어떨지
             });
 
             return response.data as T;

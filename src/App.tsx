@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GlobalStyle, LayoutWrapper } from "@/App.styles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Footer from "@/components/layout/Footer/Footer";
@@ -14,7 +14,12 @@ import { StyleSheetManager } from "styled-components";
 // import NotFound from "@/pages/NotFound";
 
 const routePaths = [
-    { path: "/", element: <Login />, withHeader: false, withFooter: false },
+    {
+        path: "/",
+        element: <Login />,
+        withHeader: false,
+        withFooter: false
+    },
     {
         path: "/category/list",
         element: <CategoryList />,
@@ -34,6 +39,8 @@ const routePaths = [
 ];
 
 const App: React.FC = () => {
+    useEffect(() => {}, []);
+
     return (
         <>
             <GlobalStyle />
