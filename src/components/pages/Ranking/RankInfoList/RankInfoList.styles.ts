@@ -13,7 +13,6 @@ export const UserRankInfo = styled.div`
     font-style: normal;
     font-weight: 600;
     display: flex;
-    width: 100vw;
     /* min-width: 5rem; */
     justify-content: space-around;
     align-items: center;
