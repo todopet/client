@@ -13,7 +13,7 @@ export default function MiniPetToast() {
     let bgColor: "black" | "white" = "white";
     const [fullMessage, setFullMessage] = useState<string>("");
     useEffect(() => {
-        if (message && message.inventoryCount === 50) {
+        if (message?.inventoryCount === 50) {
             setFullMessage("인벤토리가 가득 찼습니다");
         }
     }, []);
@@ -66,13 +66,11 @@ export default function MiniPetToast() {
 
     return (
         <ToastStyle>
-            {message && (
-                <Toast
-                    isActive={isActiveToast}
-                    bgColor={bgColor}
-                    content={content}
-                />
-            )}
+            <Toast
+                isActive={isActiveToast}
+                bgColor={bgColor}
+                content={content}
+            />
         </ToastStyle>
     );
 }
