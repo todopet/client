@@ -16,7 +16,7 @@ export default function MiniPetToast() {
         if (message?.inventoryCount === 50) {
             setFullMessage("인벤토리가 가득 찼습니다");
         }
-    }, []);
+    }, [message]);
     //보상에 따라 content, bgcolor 변경
     switch (message?.type) {
         case ToastTypes.SPECIAL:

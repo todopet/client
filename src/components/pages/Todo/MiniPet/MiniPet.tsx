@@ -23,7 +23,7 @@ export default function MiniPet() {
             const response: res<Petlevel> = await axiosRequest.requestAxios<
                 res<Petlevel>
             >("get", `/myPets/myPet/level`);
-            console.log("petlevel: ", response);
+            // console.log("petlevel: ", response);
             setPetlevel(response.data.level);
         } catch (error) {
             console.error(error);
@@ -46,7 +46,7 @@ export default function MiniPet() {
             const response: res<ItemsCount> = await axiosRequest.requestAxios<
                 res<ItemsCount>
             >("get", `/inventories/itemsCount`);
-            console.log("itemsCount: ", response.data);
+            // console.log("itemsCount: ", response.data);
             setItemsCount(response.data.count);
         } catch (error) {
             console.error(error);
