@@ -34,6 +34,12 @@ const LayoutWrapper = styled.div<LayoutProps>`
             ? "calc(100vh - 130px)"
             : "100vh"};
     margin-bottom: ${(props) => (props.withfooter === "true" ? "70px" : "0px")};
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 25px;
+        background: transparent;
+    }
 `;
 
 export { GlobalStyle, LayoutWrapper };
