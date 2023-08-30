@@ -1,5 +1,5 @@
 //react hook
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 //components
 import TodoItem from "./TodoItem/TodoItem";
 import { TodoContext } from "@/components/pages/Todo/TodoContext";
@@ -16,7 +16,7 @@ export default function TodoList() {
     return (
         <TodoListStyles>
             {dateTodos?.map((todos) => {
-                return <TodoItem todos={todos} />;
+                return <TodoItem key={todos._id} todos={todos} />;
             })}
         </TodoListStyles>
     );
