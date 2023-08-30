@@ -23,7 +23,7 @@ const CategoryPost = () => {
 
             if (!response.error) {
                 alert("목표가 등록되었습니다.");
-                navigate(-1); // list 페이지로 이동
+                navigate("/category/list");
             } else {
                 throw new Error("목표 등록에 실패했습니다.");
             }
@@ -44,7 +44,7 @@ const CategoryPost = () => {
 
             if (!response.error) {
                 alert("목표가 수정되었습니다.");
-                navigate(-1); // list 페이지로 이동
+                navigate("/category/list");
             } else {
                 throw new Error("목표 수정에 실패했습니다.");
             }
@@ -54,26 +54,11 @@ const CategoryPost = () => {
     };
 
     const checkCategory = (category: string) => {
-        // category 내용이 비어있는지 확인
         if (!category.trim()) {
             alert("목표를 입력해 주세요.");
             return false;
         }
         return true;
-    };
-
-    const handleConfirmDeleteModal = async () => {
-        try {
-            const response: res<category> = await axiosRequest.requestAxios<
-                res<category>
-            >("delete", `/todoCategories/${id}`);
-            alert("삭제가 완료되었습니다!"); // 사용자에게 알림
-            navigate("/category/list"); // list 페이지로 이동
-        } catch (error) {
-            console.error("Error deleting category:", error);
-            alert("오류가 발생했습니다. 다시 시도해 주세요.");
-        }
-        // setIsDeleteModalOpen(false);
     };
 
     const handleInputText = (text: string) => {
