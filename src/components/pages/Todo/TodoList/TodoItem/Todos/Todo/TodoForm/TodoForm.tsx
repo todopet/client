@@ -43,8 +43,9 @@ export default function TodoForm({
                     todo: value,
                     date: selectedDate
                 },
-                { "x-custom-Data": Date.now() * 4 + 1000 }
+                { "x-custom-data": Date.now() * 4 + 1000 }
             );
+            console.log(response);
             // console.log("투두입력!", response);
         } catch (error) {
             console.error(error);
