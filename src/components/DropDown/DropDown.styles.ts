@@ -55,7 +55,6 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
 const Ul = styled.ul`
     & > li {
         box-sizing: border-box;
-        padding: 8px 12px;
         border-bottom: 1px solid #d9d9d9;
         width: 100%;
         line-height: 100%;
@@ -80,13 +79,16 @@ const Li = styled.li<{ centercontent?: boolean }>`
         props.centercontent ? "space-between" : "center"};
     align-items: center;
 `;
-const Label = styled.label``;
+const Label = styled.label`
+    cursor: pointer;
+`;
 const Link = styled.a`
     display: flex;
     justify-content: inherit;
     width: inherit;
     text-decoration: none;
     color: black;
+    padding: 8px 12px;
 `;
 
 export {
