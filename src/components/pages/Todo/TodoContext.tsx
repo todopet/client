@@ -115,7 +115,7 @@ export default function TodoContextProvider({
                         todo: content,
                         status: checkStatus
                     },
-                    { "x-custom-Data": Date.now() * 4 + 1000 }
+                    { "x-custom-data": Date.now() * 4 + 1000 }
                 );
 
                 setMessage(response.data.message);
@@ -138,7 +138,7 @@ export default function TodoContextProvider({
                         todo: content,
                         status: checkStatus
                     },
-                    { "x-custom-Data": Date.now() * 4 + 1000 }
+                    { "x-custom-data": Date.now() * 4 + 1000 }
                 );
             }
         } catch (error) {
