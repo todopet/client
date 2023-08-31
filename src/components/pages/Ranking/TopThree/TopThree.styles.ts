@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
-import { ReactComponent as King } from "@/assets/icons/owner.svg";
+// import { ReactComponent as King } from "@/assets/icons/owner.svg";
+import crown from "@/assets/icons/owner.svg";
 
 export const GOLD_COLOR = "#ffd700";
 export const SILVER_COLOR = "#c0c0c0";
@@ -8,8 +9,8 @@ export const BRONZE_COLOR = "#cd7f32";
 export const TopThreeContainer = styled.div`
     display: flex;
     justify-content: space-around;
-    margin-bottom: 20px;
-    min-height: 10rem;
+    margin-bottom: 30px;
+    min-height: 11rem;
 `;
 
 export const RankInfoContainer = styled.div`
@@ -19,6 +20,7 @@ export const RankInfoContainer = styled.div`
     width: auto;
     height: auto;
     justify-content: space-between;
+    align-items: center;
 `;
 
 export const RankNumber = styled.span`
@@ -40,8 +42,19 @@ export const CircleIcon = styled.div`
 export const FirstPlaceIcon = styled(CircleIcon)`
     transform: scale(1.4);
     border-color: ${GOLD_COLOR};
-    background-image: King;
+    position: relative;
 `;
+
+export const Crown = styled.div`
+    background-image: url(${crown});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 1.5rem;
+    height: 1.3rem;
+    position: absolute;
+    top: -1rem;
+`
 
 export const ProfileImage = styled.img`
     height: inherit;

@@ -1,4 +1,7 @@
 import { styled } from "styled-components";
+import goldMedal from "@/assets/icons/goldmedal.svg";
+import silverMedal from "@/assets/icons/silvermedal.svg";
+import bronzeMedal from "@/assets/icons/bronzemedal.svg";
 
 export const RankList = styled.div`
     /* display: flex;
@@ -29,6 +32,25 @@ export const Rank = styled.span`
     justify-content: center;
     align-items: center;
 `;
+
+export const MedalImgWrapper = styled.div`
+    width: auto;
+    min-width: 3rem;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+export const MedalImg = styled.div<{ranking: number}>`
+    background-image: url(${props => props.ranking === 1 ? goldMedal : props.ranking === 2 ? silverMedal : bronzeMedal});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 1.5rem;
+    height: 2rem;
+    margin-top: .35rem;
+`
 
 export const NickName = styled.span`
     text-align: center;
