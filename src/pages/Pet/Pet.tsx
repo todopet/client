@@ -12,7 +12,7 @@ export default function Pet() {
         conditionInfo: {},
         cleanlinessInfo: {},
         expInfo: {},
-        levelInfo: 0,
+        levelInfo: null as number | null,  //levelInfo에 초기값을 숫자로 지정해주면 펫 정보가 받아와지기 전 딜레이 타이밍때 해당 레벨의 펫이미지, 레벨 정보 등이 나와서 초기값 null로 해줌 
         petName: ""
     });
 
@@ -21,7 +21,8 @@ export default function Pet() {
             const response: res<myPet> = await axiosRequest.requestAxios<res<myPet>>("get", "/myPets", {});
             const petInfo = response.data.pet;
             console.log(petInfo);
-            const petLevel: number = petInfo.level;
+            const petLevel: number|null = petInfo.level;
+            // const petLevel: number = 5;
             
             // 데이터를 객체로 업데이트
             setPetData({
@@ -52,6 +53,7 @@ export default function Pet() {
             console.error("Error fetching pet data: ", error);
         }
     }
+    console.log(petData.levelInfo, petData);
 
     useEffect(() => {
         receivePetData();

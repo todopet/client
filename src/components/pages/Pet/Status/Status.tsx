@@ -15,7 +15,7 @@ export default function Status({ name, color, totalCount, currentCount }: Status
         <StatusArea>
             <BarName>{name}</BarName>
             <ExpTotalBar>
-                <ExpCurrentBar totalCount={totalCount} currentCount={currentCount} color={color}></ExpCurrentBar>
+                <ExpCurrentBar totalCount={totalCount} currentCount={currentCount} color={color} />
             </ExpTotalBar>
         </StatusArea>
     );

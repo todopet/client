@@ -40,7 +40,7 @@ interface petAreaProps {
 	conditionInfo: object;
 	cleanlinessInfo: object;
 	expInfo: object;
-	levelInfo: number;
+	levelInfo: number | null;
 	petName: string;
 }
 
@@ -85,7 +85,7 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 	const {curCondition, maxCondition}: PetConditionProps = conditionInfo;
 	const {curCleanliness, maxCleanliness}: PetCleanlinessProps = cleanlinessInfo;
 	const {curExperience, maxExperience}: PetExperienceProps = expInfo;
-	const level: number = levelInfo;
+	const level: number | null = levelInfo;
 	// const level: number = 4;
 
 	const [isFull, setIsFull] = useState(false);
@@ -190,11 +190,11 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 				</PetImg>
 			</MainBody>
 			<MainFooter>
-				<MainFooterButton className="" url={ranking} color="#56ABF9" border="1px" onClick={toggleAchState} />
+				{/* <MainFooterButton className="" url={ranking} color="#56ABF9" border="1px" onClick={toggleAchState} /> */}
 				<MainFooterButton className="" url={inventory} color="#F7CF68" border="1px" onClick={toggleInvState} />
 				<InventoryFullImg on={isFull} />
-				<AchModal on={achState}>
-					{ achState && <AchModalTitle>업적</AchModalTitle> }  {/* 모달창 크기가 0인 상태에서도 '업적' 텍스트가 화면에 나와서 모달창 꺼져있을땐 아예 안나오게 처리 */}
+				{/* <AchModal on={achState}>
+					{ achState && <AchModalTitle>업적</AchModalTitle> }  모달창 크기가 0인 상태에서도 '업적' 텍스트가 화면에 나와서 모달창 꺼져있을땐 아예 안나오게 처리
 					<AchArea>
 						<AchWrapper>
 							<Achievement achName="첫 Todo 완료하기" isRewarded={false} achDone={false} totalCount={3} currentCount={2} />
@@ -207,7 +207,7 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 							<Achievement achName="첫 Todo 완료하기" isRewarded={false} achDone={false} totalCount={5} currentCount={2} />
 						</AchWrapper>
 					</AchArea>
-				</AchModal>
+				</AchModal> */}
 				{
 					achState && 
 					<AchModalBackdrop className="" onClick={toggleAchState} />
