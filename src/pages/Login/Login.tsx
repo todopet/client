@@ -13,8 +13,9 @@ import {
 const Login = () => {
     const handleLoginClick = async () => {
         // 백엔드에서 리다이렉트
-        // document.location.href = "http://34.64.42.28/api/v1/login";
-        document.location.href = "/api/v1/login";
+        // TODO: 발표 전 수정
+        // document.location.href = "https://kdt-sw-5-2-team14.elicecoding.com/api/v1/login";
+        document.location.href = "http://localhost:3000/api/v1/login";
     };
     return (
         <Container>
