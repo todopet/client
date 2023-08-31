@@ -45,7 +45,7 @@ export default function MyPage() {
     const handleConfirmLogout = async () => {
         try {
             const response: AxiosResponse = await axios.post(
-                "http://localhost:3001/api/v1/logout"
+                "https://kdt-sw-5-2-team14.elicecoding.com/api/v1/logout"
             );
             if (response.status === 200) {
                 alert("로그아웃 처리되었습니다. ");
@@ -61,7 +61,7 @@ export default function MyPage() {
     const handleConfirmWithdraw = async () => {
         try {
             const response: AxiosResponse = await axios.post(
-                "http://localhost:3001/api/v1/withdraw"
+                "https://kdt-sw-5-2-team14.elicecoding.com/api/v1/withdraw"
             );
             if (response.status === 200) {
                 alert("회원 탈퇴 처리되었습니다. ");
