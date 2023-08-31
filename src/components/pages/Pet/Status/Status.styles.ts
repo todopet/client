@@ -22,11 +22,12 @@ const ExpTotalBar = styled(TotalBar)`
     width: 60%;
     height: 25px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 20px;
+    overflow: hidden;
 `
 
 const ExpCurrentBar = styled(CurrentBar)`
-    border-radius: 10px;
+    border-radius: 20px 0 0 20px;
 `
 
 
