@@ -38,7 +38,6 @@ const PetImg = styled.div<{
 `
 
 const EmotionImg = styled.div<{ 
-	on: boolean, 
 	status: string,
 	width: number,
 	height: number,
@@ -54,7 +53,6 @@ const EmotionImg = styled.div<{
 	height: ${props => props.height}%;
 	top: ${props => props.top}%;
 	left: ${props => props.left}%;
-	display: ${props => props.on ? "inline-block" : "none"};
 `
 
 const MainHeader = styled.div`
@@ -147,7 +145,7 @@ const MainFooterButton = styled(FooterButton)`
 	}
 `
 
-const InventoryFullImg = styled.div<{on: boolean}>`
+const InventoryFullImg = styled.div`
 	background-image: url(${exclamationMark});
 	background-repeat: no-repeat;
 	background-position: center;
@@ -159,7 +157,6 @@ const InventoryFullImg = styled.div<{on: boolean}>`
 	height: 3.85%;
 	bottom: 12.3%;
 	right: 5.5%;
-	display: ${props => props.on ? "inline-block" : "none"};
 `
 
 const AchModalBackdrop = styled(MainModalBackdrop)``

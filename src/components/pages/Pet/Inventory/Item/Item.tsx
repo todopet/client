@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     ItemWrap,
     ItemInfo,
     ItemInfoRow,
-    // StyledCakeIcon,
     ItemIcon,
     ItemName,
     Itemdescription,
@@ -13,7 +12,6 @@ import {
 import ItemQtyLabel from "@/components/pages/Pet/Inventory/Item/ItemQtyLavel/ItemQtyLabel";
 import DiscardBtn from "@/components/pages/Pet/Inventory/Item/DiscardBtn/DiscardBtn";
 import ActionModal from "./Action/ActionModal";
-import { items } from "@/@types/myItems";
 
 interface itemPropsType {
     url: string;
@@ -30,7 +28,7 @@ export default function Item({ url, name, des, _id, quantity }: itemPropsType) {
     return (
         <ItemWrap>
             <ItemInfo onClick={() => setUse(!use)}>
-                <ItemIcon imageUrl={url} />
+                <ItemIcon imageurl={url} />
                 <ItemQtyLabel count={quantity} />
             </ItemInfo>
             <ItemInfo>
@@ -45,8 +43,8 @@ export default function Item({ url, name, des, _id, quantity }: itemPropsType) {
                 </Itemdescription>
             </ItemInfo>
             {/* 사용하거나 버릴때 호출하는 api 경로의 파라미터는 _id */}
-            { discard && <ActionModal modalType="discardModal" state={discard} setState={setDiscard} itemId={_id} name={name} quantity={quantity} /> }
-            { use && <ActionModal modalType="useModal" state={use} setState={setUse} itemId={_id} name={name} quantity={quantity} /> }
+            { discard && <ActionModal modaltype="discardModal" state={discard} setState={setDiscard} itemId={_id} name={name} quantity={quantity} /> }
+            { use && <ActionModal modaltype="useModal" state={use} setState={setUse} itemId={_id} name={name} quantity={quantity} /> }
         </ItemWrap>
     );
 }

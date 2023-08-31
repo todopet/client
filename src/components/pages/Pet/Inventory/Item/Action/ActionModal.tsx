@@ -16,14 +16,14 @@ import { ItemDataContext } from "../../Inventory";
 import axios from "axios";
 
 interface modalTypeProps {
-    modalType: "useModal" | "discardModal";
+    modaltype: "useModal" | "discardModal";
     state: boolean;
     setState(state: boolean): void;
     itemId: string;
     name: string;
     quantity: number;
 }
-export default function ActionModal({ modalType, state, setState, itemId, name, quantity }: modalTypeProps) {
+export default function ActionModal({ modaltype, state, setState, itemId, name, quantity }: modalTypeProps) {
     const [itemData, setItemData] = useContext(ItemDataContext);
 
     const [openModal, setOpenModal] = useState<boolean>(true);
@@ -72,39 +72,39 @@ export default function ActionModal({ modalType, state, setState, itemId, name, 
                         <ModalWrap onClick={(e) => e.stopPropagation()}>
                             <Item>
                                 <div>
-                                    {modalType === "useModal" ? "사용할" : "버리는"}
+                                    {modaltype === "useModal" ? "사용할" : "버리는"}
                                 </div>
                                 <div>도구: {name}</div>
                             </Item>
                             <Quantity>
                                 <ChangeQtyBtn
-                                    modalType={modalType}
+                                    modaltype={modaltype}
                                     operationType="decrease"
                                     onClick={() => (itemCount > 1) ? setItemCount(itemCount-1) : false}
-                                    isCountPositiveNum={itemCount > 1}
+                                    iscountpositivenum={itemCount > 1}
                                 />
                                 <div>{itemCount}</div>
                                 <ChangeQtyBtn
-                                    modalType={modalType}
+                                    modaltype={modaltype}
                                     operationType="increase"
                                     onClick={() => (itemCount < quantity) ? setItemCount(itemCount+1) : false}
-                                    isCountPositiveNum={itemCount < quantity}
+                                    iscountpositivenum={itemCount < quantity}
                                 />
                             </Quantity>
                             <BtnWrap>
                                 <EditBtn 
-                                    modalType={modalType} 
-                                    btnType="confirm" 
+                                    modaltype={modaltype} 
+                                    btntype="confirm" 
                                     onClick={() => {
-                                        if (modalType === "useModal") {
+                                        if (modaltype === "useModal") {
                                             handleUseItem(itemId);
                                             setOpenModal(false);
-                                        } else if (modalType === "discardModal") {
+                                        } else if (modaltype === "discardModal") {
                                             handleDumpItem(itemId);
                                             setOpenModal(false);
                                         }
                                     }} />
-                                <EditBtn modalType={modalType} btnType="cancel" onClick={() => {
+                                <EditBtn modaltype={modaltype} btntype="cancel" onClick={() => {
                                     setOpenModal(false);
                                     setState(!state);
                                 }} />
