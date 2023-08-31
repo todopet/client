@@ -16,7 +16,7 @@ interface TodoItemProps {
 export default function TodoItem({ todos }: TodoItemProps) {
     const [openInputForm, setOpenInputForm] = useState<boolean>(false);
     const handleClick = () => {
-        setOpenInputForm(!openInputForm);
+        !todos.ended && setOpenInputForm(!openInputForm);
         // console.log("클릭됨!");
     };
     return (
