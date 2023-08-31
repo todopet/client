@@ -3,7 +3,8 @@ import axios, { AxiosHeaders } from "axios";
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
 
 axios.defaults.baseURL =
-    process.env.REACT_APP_API_URL ?? `http://localhost:3001/api/v1`;
+    process.env.REACT_APP_API_URL ??
+    `https://kdt-sw-5-2-team14.elicecoding.com/api/v1`;
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
