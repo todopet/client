@@ -1,17 +1,11 @@
-import React from "react";
+import Spinner from "@/assets/images/spinner.gif";
+
+import { LoadingWrap } from "./Loading.styles";
 
 export default function Loading() {
     return (
-        <div>
-            <div>로딩바 임시임시임시</div>
-            <div>로딩바 임시임시임시</div>
-            <div>로딩바 임시임시임시</div>
-            <div>로딩바 임시임시임시</div>
-            <div>로딩바 임시임시임시</div>
-            <div>로딩바 임시임시임시</div>
-            <div>로딩바 임시임시임시</div>
-            <div>로딩바 임시임시임시</div>
-            <div>로딩바 임시임시임시</div>
-        </div>
+        <LoadingWrap>
+            <img src={Spinner} alt="Loading"></img>
+        </LoadingWrap>
     );
 }
