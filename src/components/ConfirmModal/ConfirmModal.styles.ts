@@ -14,7 +14,7 @@ const Container = styled.div`
     bottom: 0;
 
     height: 100vh;
-    width: 100vw;
+    width: 390px;
 
     background: rgba(0, 0, 0, 0.58);
     backdrop-filter: blur(2px);

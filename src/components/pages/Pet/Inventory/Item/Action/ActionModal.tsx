@@ -43,7 +43,7 @@ export default function ActionModal({ modaltype, state, setState, itemId, name, 
     async function handleUseItem(itemId: string) {
         try {
             const data = { quantity: itemCount };
-            const response: res<useItemRes> = await axiosRequest.requestAxios<res<useItemRes>>("post", `/inventories/${itemId}/put`, data);
+            const response: res<useItemRes> = await axiosRequest.requestAxios<res<useItemRes>>("post", `/inventories/${itemId}/put`, data, {"x-custom-Data": Date.now() * 4 + 1000});
             console.log(response);
             receiveItemData();
         } catch (error) {
@@ -54,7 +54,7 @@ export default function ActionModal({ modaltype, state, setState, itemId, name, 
     async function handleDumpItem(itemId: string) {
         try {
             const data = { quantity: itemCount*-1 };
-            const response: res<dumpItemRes> = await axiosRequest.requestAxios<res<dumpItemRes>>("patch", `/inventories/items/${itemId}`, data);
+            const response: res<dumpItemRes> = await axiosRequest.requestAxios<res<dumpItemRes>>("patch", `/inventories/items/${itemId}`, data, {"x-custom-Data": Date.now() * 4 + 1000});
             console.log(response);
             receiveItemData();
         } catch (error) {
