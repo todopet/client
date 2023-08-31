@@ -1,8 +1,11 @@
 import { category } from "@/@types";
 import {
     CircleButton,
-    StyledLink
+    StyledLink,
+    ItemWrap
 } from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentList.styles";
+
+import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";
 
 interface CategoryProps {
     category: category;
@@ -11,15 +14,18 @@ interface CategoryProps {
 const CategoryContentListItem: React.FC<CategoryProps> = ({ category }) => {
     return (
         <>
-            {(
-                <CircleButton key={category._id}>
+            {
+                <ItemWrap>
+                    <CircleButton key={category._id}>
+                        {category.category}
+                    </CircleButton>
                     <StyledLink
                         to={`/category/post?categoryId=${category._id}`}
                     >
-                        {category.category}
+                        <MenuIcon />
                     </StyledLink>
-                </CircleButton>
-            )}
+                </ItemWrap>
+            }
         </>
     );
 };
