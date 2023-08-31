@@ -22,7 +22,11 @@ export default function TodoItem({ todos }: TodoItemProps) {
     return (
         <TodoItemStyles>
             <>
-                <Category category={todos.category} handleClick={handleClick} />
+                <Category
+                    category={todos.category}
+                    isEnded={todos.ended}
+                    handleClick={handleClick}
+                />
                 <Todos todos={todos.todos} />
                 {openInputForm && (
                     <TodoForm
