@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 const ModalBg = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: fixed;
+    top: 60px;
+    bottom: 70px;
+    width: 390px;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 15;
 `;
 
 const ModalWrap = styled.div<{on: boolean}>`
@@ -21,7 +21,7 @@ const ModalWrap = styled.div<{on: boolean}>`
 	background-color: white;
 	display: flex;
 	flex-direction: column;
-	z-index: 1;
+	z-index: 20;
 	transition: all .5s;
     gap: .5rem;
     overflow: hidden;  // 이거 안하면 ModalWrap의 크기가 0이 되어도 내부 요소들이 다 튀어나와서 화면 밑으로 깔려있음... 왜지?
