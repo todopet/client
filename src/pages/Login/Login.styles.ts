@@ -49,12 +49,13 @@ const Content = styled.div`
 
 const LoginBtnGroup = styled.button`
     display: flex;
-    width: 20rem;
+    width: 21.75rem;
     height: 3.6875rem;
-    border-color: #8d8d8d;
-    background-color: #ffffff;
     flex-shrink: 0;
-    border-radius: 5rem;
+    border-radius: 0.5rem;
+    border: 0.0625rem solid #c9c9c9;
+    margin-bottom: 2.7rem;
+    background: #fff;
     align-items: center;
     justify-content: center;
 `;
@@ -63,13 +64,22 @@ const GoogleImage = styled.div`
     background: url(${googleIcon});
     width: 45px;
     height: 45px;
+    margin-top: 12px;
+    margin-left: -10px;
     background-repeat: no-repeat;
 `;
 
 const LoginContent = styled.div`
     display: flex;
     width: 15rem;
-    font-size: 1rem;
+    font-size: 1.125rem;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.03375rem;
+    color: #5e5e5e;
+    text-align: center;
     align-items: center;
     justify-content: center;
 `;
