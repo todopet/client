@@ -153,9 +153,9 @@ const InventoryFullImg = styled.div`
 	background-color: white;
 	border-radius: 50%;
 	position: absolute;
-	width: 7.1%;
-	height: 3.85%;
-	bottom: 12.3%;
+	width: 1.7rem;
+	height: 1.7rem;
+	bottom: 11.6%;
 	right: 5.5%;
 `
 
