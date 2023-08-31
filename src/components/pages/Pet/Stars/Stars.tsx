@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Star from "@/components/Star/Star";
 
 interface StarsProps {
-    level: number;
+    level: number | null;
 }
 
 export default function Stars({ level }: StarsProps) {
@@ -15,8 +15,10 @@ export default function Stars({ level }: StarsProps) {
         "empty",
         "empty"
     ];
-    for (let i = 0; i < level; i++) {
-        starStatus[i] = "full";
+    if (level !== null) {
+        for (let i = 0; i < level; i++) {
+            starStatus[i] = "full";
+        }
     }
 
     return (
