@@ -165,13 +165,13 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 
 	return (
 		<MainArea>
-			<Exp totalCount={maxExperience} currentCount={curExperience}></Exp>
+			<Exp totalcount={maxExperience} currentcount={curExperience}></Exp>
 			<MainHeader>
 				<StatusInfo>
-					<Status name="포만감" color="#FF5156" totalCount={maxHunger} currentCount={curHunger}></Status>
-					<Status name="친밀도" color="#FFE210" totalCount={maxAffection} currentCount={curAffection}></Status>
-					<Status name="컨디션" color="#45E397" totalCount={maxCondition} currentCount={curCondition}></Status>
-					<Status name="청결도" color="#0190FE" totalCount={maxCleanliness} currentCount={curCleanliness}></Status>
+					<Status name="포만감" color="#FF5156" totalcount={maxHunger} currentcount={curHunger}></Status>
+					<Status name="친밀도" color="#FFE210" totalcount={maxAffection} currentcount={curAffection}></Status>
+					<Status name="컨디션" color="#45E397" totalcount={maxCondition} currentcount={curCondition}></Status>
+					<Status name="청결도" color="#0190FE" totalcount={maxCleanliness} currentcount={curCleanliness}></Status>
 				</StatusInfo>
 				<LevelInfo>
 					<Stars level={level} />
@@ -185,14 +185,16 @@ export function PetArea({ hungerInfo, affectionInfo, conditionInfo, cleanlinessI
 			</MainHeader>
 			<MainBody>
 				<PetImg level={level} width={petImgWidth} height={petImgHeight} left={petImgLeft} bottom={petImgBottom}>
-					<EmotionImg on={findPetEmotion() !== "normal"} status={findPetEmotion()}
-						width={emotionPositionWidth} height={emotionPositionHeight} top={emotionPositionTop} left={emotionPositionLeft} />
+					{
+						findPetEmotion() !== "normal" && 
+							<EmotionImg status={findPetEmotion()} width={emotionPositionWidth} height={emotionPositionHeight} top={emotionPositionTop} left={emotionPositionLeft} />
+					}
 				</PetImg>
 			</MainBody>
 			<MainFooter>
 				{/* <MainFooterButton className="" url={ranking} color="#56ABF9" border="1px" onClick={toggleAchState} /> */}
 				<MainFooterButton className="" url={inventory} color="#F7CF68" border="1px" onClick={toggleInvState} />
-				<InventoryFullImg on={isFull} />
+				{isFull && <InventoryFullImg />}
 				{/* <AchModal on={achState}>
 					{ achState && <AchModalTitle>업적</AchModalTitle> }  모달창 크기가 0인 상태에서도 '업적' 텍스트가 화면에 나와서 모달창 꺼져있을땐 아예 안나오게 처리
 					<AchArea>

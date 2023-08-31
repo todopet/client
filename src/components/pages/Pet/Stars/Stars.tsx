@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 import Star from "@/components/Star/Star";
@@ -23,8 +22,8 @@ export default function Stars({ level }: StarsProps) {
 
     return (
         <StarWrap>
-            {starStatus.map((status) => {
-                return <Star status={status} />;
+            {starStatus.map((status, idx) => {
+                return <Star key={idx} status={status} />;
             })}
         </StarWrap>
     );

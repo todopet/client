@@ -16,7 +16,7 @@ export default function Achievement({ achName, isRewarded, achDone, totalCount, 
             <AchInfo>
                 <AchName>{achName}</AchName>
                 <TotalBar>
-                    <CurrentBar totalCount={totalCount} currentCount={currentCount} color={"#1AAB17"}></CurrentBar>
+                    <CurrentBar totalcount={totalCount} currentcount={currentCount} color={"#1AAB17"}></CurrentBar>
                     <p>{currentCount}/{totalCount}</p>
                 </TotalBar>
             </AchInfo>
