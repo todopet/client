@@ -14,7 +14,7 @@ import Toast from "@/components/Toast/Toast";
 import { MiniPetWrap, Bg, MyPet } from "./MiniPet.styles";
 
 interface Petlevel {
-    level: number;
+    level: number | null;
 }
 export default function MiniPet() {
     //마이펫 레벨 get
@@ -34,7 +34,7 @@ export default function MiniPet() {
     }, []);
 
     //마이펫 레벨
-    const [petlevel, setPetlevel] = useState<number>(0);
+    const [petlevel, setPetlevel] = useState<number | null>(null);
 
     interface ItemsCount {
         count: number;

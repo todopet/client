@@ -12,7 +12,7 @@ const MiniPetWrap = styled.div`
 `;
 
 const MyPet = styled.div<{
-    petlevel: number;
+    petlevel: number | null;
     width: number;
     height: number;
 }>`
