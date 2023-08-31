@@ -36,9 +36,8 @@ const LayoutWrapper = styled.div<LayoutProps>`
     margin-bottom: ${(props) => (props.withfooter === "true" ? "70px" : "0px")};
     overflow-x: hidden;
     &::-webkit-scrollbar {
-        width: 4px;
-        border-radius: 25px;
-        background: transparent;
+        display: none; /*Chrome, Safari, Opera*/
+        width: 0px;
     }
 `;
 
