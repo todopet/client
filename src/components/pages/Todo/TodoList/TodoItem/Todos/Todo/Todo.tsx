@@ -35,9 +35,9 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         }
     }
 
-    const [newCheckStatus, setNewCheckStatus] = useState<string>(status);
+    const [newcheckstatus, setNewcheckstatus] = useState<string>(status);
     useEffect(() => {
-        setNewCheckStatus(status);
+        setNewcheckstatus(status);
     }, [status]);
 
     const handleCheckClick = async () => {
@@ -50,7 +50,7 @@ export default function Todo({ content, status, contentId }: TodoProps) {
             checkStatus = "completed";
         }
         //상태 업데이트
-        setNewCheckStatus(checkStatus);
+        setNewcheckstatus(checkStatus);
         //patch요청
         updateStatus(contentId, content, checkStatus);
         //todo get요청
@@ -89,11 +89,11 @@ export default function Todo({ content, status, contentId }: TodoProps) {
                 <TodoDiv>
                     <StyledCheckbox
                         onClick={handleCheckClick}
-                        newCheckStatus={newCheckStatus}
+                        newcheckstatus={newcheckstatus}
                     >
-                        {newCheckStatus === "completed" && <CheckIcon />}
+                        {newcheckstatus === "completed" && <CheckIcon />}
                     </StyledCheckbox>
-                    <Text newCheckStatus={newCheckStatus}>{content}</Text>
+                    <Text newcheckstatus={newcheckstatus}>{content}</Text>
                 </TodoDiv>
             )}
             <DropDown list={listItems}>

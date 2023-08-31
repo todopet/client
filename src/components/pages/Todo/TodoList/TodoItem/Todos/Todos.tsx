@@ -11,6 +11,7 @@ export default function Todos({ todos }: TodosProps) {
                 todos.map((todo) => {
                     return (
                         <Todo
+                            key={todo._id}
                             content={todo.todo}
                             status={todo.status}
                             contentId={todo._id}
