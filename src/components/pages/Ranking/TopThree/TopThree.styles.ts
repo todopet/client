@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { ReactComponent as King } from "@/assets/icons/owner.svg";
 
 export const GOLD_COLOR = "#ffd700";
 export const SILVER_COLOR = "#c0c0c0";
@@ -39,6 +40,7 @@ export const CircleIcon = styled.div`
 export const FirstPlaceIcon = styled(CircleIcon)`
     transform: scale(1.4);
     border-color: ${GOLD_COLOR};
+    background-image: King;
 `;
 
 export const ProfileImage = styled.img`

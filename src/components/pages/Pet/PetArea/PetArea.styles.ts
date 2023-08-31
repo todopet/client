@@ -20,7 +20,7 @@ const MainArea = styled.main`
 `
 
 const PetImg = styled.div<{ 
-	level: number,
+	level: number | null,
 	width: number,
 	height: number,
 	left: number,
@@ -123,8 +123,9 @@ const PetName = styled.p`
 	font-size: 1rem;
 	font-weight: bold;
 	margin: 0;
-	height: 100%;
-	padding: 4.6% 0 0 6%;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 6%;
 `
 
 const MainBody = styled.div`
@@ -133,7 +134,7 @@ const MainBody = styled.div`
 
 const MainFooter = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 	align-items: center;
 	flex-basis: 20%;
 	padding: 0 25px;
