@@ -42,7 +42,7 @@ interface AxiosRequest {
         method: string,
         url: string,
         data?: {},
-        headers?: AxiosHeaders
+        headers?: {}
     ) => Promise<T>;
 }
 
@@ -61,7 +61,7 @@ const axiosRequest: AxiosRequest = {
         method: string,
         url: string,
         data = {},
-        headers?: AxiosHeaders
+        headers = {}
     ) => {
         // 이상한 method 넣으면 실행 못하게 미리 에러 처리 한다.
         if (!allowMethod.includes(method.toLowerCase()))
@@ -71,7 +71,7 @@ const axiosRequest: AxiosRequest = {
                 method,
                 url: `${axios.defaults.baseURL}${url}`,
                 data,
-                headers: { "x-custom-Data": Date.now() * 4 + 1000 } // 아이템, 인벤토리 호출할때만 넣기. 주요 기능에만 제한하는 것은 어떨지
+                headers // 아이템, 인벤토리 호출할때만 넣기. 주요 기능에만 제한하는 것은 어떨지
             });
 
             return response.data as T;
