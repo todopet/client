@@ -3,6 +3,8 @@ import styled from "styled-components";
 const MiniPetWrap = styled.div`
     width: 390px;
     height: 80px;
+    background-color: white;
+    z-index: 5;
     position: relative;
 
     display: flex;
@@ -28,12 +30,7 @@ const MyPet = styled.div<{
     z-index: 1;
     bottom: 5px;
 `;
-// const MyPet = styled.img`
-//     max-height: 50px;
-//     position: absolute;
-//     z-index: 1;
-//     bottom: 5px;
-// `;
+
 const Bg = styled.img`
     width: 390px;
     height: 50px;
