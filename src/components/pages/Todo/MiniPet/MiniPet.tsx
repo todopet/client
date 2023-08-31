@@ -13,28 +13,28 @@ import Toast from "@/components/Toast/Toast";
 //styles
 import { MiniPetWrap, Bg, MyPet } from "./MiniPet.styles";
 
-interface PetLevel {
+interface Petlevel {
     level: number;
 }
 export default function MiniPet() {
     //마이펫 레벨 get
-    async function getPetLevel() {
+    async function getPetlevel() {
         try {
-            const response: res<PetLevel> = await axiosRequest.requestAxios<
-                res<PetLevel>
+            const response: res<Petlevel> = await axiosRequest.requestAxios<
+                res<Petlevel>
             >("get", `/myPets/myPet/level`);
-            console.log("petLevel: ", response);
-            setPetLevel(response.data.level);
+            // console.log("petlevel: ", response);
+            setPetlevel(response.data.level);
         } catch (error) {
             console.error(error);
         }
     }
     useEffect(() => {
-        getPetLevel();
+        getPetlevel();
     }, []);
 
     //마이펫 레벨
-    const [petLevel, setPetLevel] = useState<number>(0);
+    const [petlevel, setPetlevel] = useState<number>(0);
 
     interface ItemsCount {
         count: number;
@@ -46,7 +46,7 @@ export default function MiniPet() {
             const response: res<ItemsCount> = await axiosRequest.requestAxios<
                 res<ItemsCount>
             >("get", `/inventories/itemsCount`);
-            console.log("itemsCount: ", response.data);
+            // console.log("itemsCount: ", response.data);
             setItemsCount(response.data.count);
         } catch (error) {
             console.error(error);
@@ -128,7 +128,7 @@ export default function MiniPet() {
 
     // 펫이 레벨별로 이미지 사이즈 지정
     let petImgSize = { petImgWidth: 50, petImgHeight: 50 };
-    switch (petLevel) {
+    switch (petlevel) {
         case 0:
             petImgSize = { petImgWidth: 31, petImgHeight: 37.4 };
             break;
@@ -157,7 +157,7 @@ export default function MiniPet() {
             {isActiveToast && (
                 <Toast
                     isActive={isActiveToast}
-                    bgColor={"black"}
+                    bgcolor={"black"}
                     content={toastContent}
                 />
             )}
@@ -165,7 +165,7 @@ export default function MiniPet() {
             <MiniPetToast />
             <MyPet
                 ref={miniPetRef}
-                petLevel={petLevel}
+                petlevel={petlevel}
                 width={petImgWidth}
                 height={petImgHeight}
             />
