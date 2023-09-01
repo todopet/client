@@ -10,12 +10,12 @@ const ButtonStyled = styled(CircleButton)`
     svg {
         & > path {
             fill: ${(props) =>
-                props.modaltype === "useModal" ? "#2dc770" : "#adadad"};
+                props.modalType === "useModal" ? "#2dc770" : "#adadad"};
         }
     }
 
     &:hover {
-        opacity: ${props => props.iscountpositivenum ? .7 : false};
+        opacity: ${props => props.isCountPositiveNum ? .7 : false};
     }
 `;
 

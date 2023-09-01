@@ -14,15 +14,11 @@ export const FooterContainer = styled.footer`
     z-index: 10;
 `;
 
-interface IsActiveProps {
-    active: string;
-}
-export const FooterItemWrapper = styled.div<IsActiveProps>`
+export const FooterItemWrapper = styled.div<{ active: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: ${(props: IsActiveProps) =>
-        props.active === "true" ? "black" : "#ADADAD"};
+    color: ${(props) => (props.active ? "black" : "#ADADAD")};
     cursor: pointer;
     text-align: center;
     font-family: Pretendard;
@@ -34,10 +30,8 @@ export const FooterItemWrapper = styled.div<IsActiveProps>`
     & {
         svg {
             path {
-                fill: ${(props: IsActiveProps) =>
-                    props.active === "true" ? "black" : "#ADADAD"};
-                stroke: ${(props: IsActiveProps) =>
-                    props.active === "true" ? "black" : "#ADADAD"};
+                fill: ${(props) => (props.active ? "black" : "#ADADAD")};
+                stroke: ${(props) => (props.active ? "black" : "#ADADAD")};
             }
         }
     }

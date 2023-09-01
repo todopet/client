@@ -7,12 +7,11 @@ interface DividerProps {
 
 export default function Divider({ category }: DividerProps) {
     const itemCategory = category();
-    const haslength = !!itemCategory;
     return (
         <DividerWrap>
-            <Line haslength={haslength.toString()}></Line>
-            {haslength && <div>{itemCategory}</div>}
-            <Line haslength={haslength.toString()}></Line>
+            <Line></Line>
+            <div>{itemCategory}</div>
+            <Line></Line>
         </DividerWrap>
     );
 }

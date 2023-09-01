@@ -1,6 +1,9 @@
 import Button from "@/components/Button/Button";
 import styled from "styled-components";
 
+// import { ReactComponent as cakeIcon } from "@/assets/itemImages/cake.svg"; //임시 이미지
+// import { ReactComponent as icon } from "../../../../../../public/logo192.png";
+
 const ItemInfo = styled.div``;
 const ItemWrap = styled.div`
     box-sizing: border-box;
@@ -28,8 +31,8 @@ const ItemInfoRow = styled.div`
     flex-direction: row;
     justify-content: space-between;
 `;
-const ItemIcon = styled(Button)<{ imageurl: string }>`
-    background-image: url(${props => props.imageurl});
+const ItemIcon = styled(Button)<{ imageUrl: string }>`
+    background-image: url(${props => props.imageUrl});
     background-repeat: no-repeat;
     background-position: center;
     width: 100px;

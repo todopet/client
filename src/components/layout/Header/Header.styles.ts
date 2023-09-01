@@ -16,17 +16,12 @@ export const HeaderContainer = styled.header`
 `;
 export const LogoContainer = styled.div`
     // margin-right: auto;
-    a {
-        text-decoration: none;
-    }
 `;
 
 export const ButtonCatainer = styled.div`
-    margin-right: 16px;
+    margin-right: 20px;
 
-    & > div > div > div > div:nth-child(2) {
-        width: 125px;
-        top: 0;
-        left: -128px;
+    & > div > div > div:nth-child(2) {
+        width: 140px;
     }
 `;

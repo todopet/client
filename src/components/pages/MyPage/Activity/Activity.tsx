@@ -1,9 +1,4 @@
-import {
-    CardWrapper,
-    ActivityCard,
-    Icon,
-    Description
-} from "./Activity.styles";
+import { ActivityCard, Icon, Description } from './Activity.styles';
 
 interface activityInfo {
     activityType: string;
@@ -12,29 +7,28 @@ interface activityInfo {
 
 export default function Activity({ activityType, data }: activityInfo) {
     return (
-        <CardWrapper>
-            {activityType === "heart" && (
+        <div>
+            {
+                activityType === "heart" && 
                 <ActivityCard color="#FCF5FF">
-                    <Icon activitytype="heart"></Icon>
+                    <Icon activityType="heart"></Icon>
                     <Description>펫과 함께한지 {data}일 됐어요!</Description>
                 </ActivityCard>
-            )}
-            {activityType === "calendar" && (
+            }
+            {
+                activityType === "calendar" && 
                 <ActivityCard color="#F6FFF7">
-                    <Icon activitytype="calendar"></Icon>
-                    <Description>
-                        지금까지 {data}일 동안 todo를 달성했어요!
-                    </Description>
+                    <Icon activityType="calendar"></Icon>
+                    <Description>지금까지 {data}일 동안 todo를 달성했어요!</Description>
                 </ActivityCard>
-            )}
-            {activityType === "check" && (
+            }
+            {
+                activityType === "check" && 
                 <ActivityCard color="#F3FDFF">
-                    <Icon activitytype="check"></Icon>
-                    <Description>
-                        지금까지 {data}개의 todo를 완료했어요!
-                    </Description>
+                    <Icon activityType="check"></Icon>
+                    <Description>지금까지 {data}개의 todo를 완료했어요!</Description>
                 </ActivityCard>
-            )}
-        </CardWrapper>
+            }
+        </div>
     );
 }

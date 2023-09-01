@@ -1,7 +1,4 @@
-import styled, {
-    createGlobalStyle,
-    StyleSheetManager
-} from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -22,23 +19,11 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-interface LayoutProps {
-    withheader: string;
-    withfooter: string;
-}
-const LayoutWrapper = styled.div<LayoutProps>`
+const LayoutWrapper = styled.div`
     overflow-y: scroll;
-    margin-top: ${(props) => (props.withheader === "true" ? "60px" : "0px")};
-    height: ${(props) =>
-        props.withheader === "true" && props.withfooter === "true"
-            ? "calc(100vh - 130px)"
-            : "100vh"};
-    margin-bottom: ${(props) => (props.withfooter === "true" ? "70px" : "0px")};
-    overflow-x: hidden;
-    &::-webkit-scrollbar {
-        display: none; /*Chrome, Safari, Opera*/
-        width: 0px;
-    }
-`;
+    margin-top:60px;
+    height: calc(100vh - 130px);
+    margin-bottom: 70px;
+`
 
 export { GlobalStyle, LayoutWrapper };

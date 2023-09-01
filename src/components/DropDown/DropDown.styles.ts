@@ -11,15 +11,12 @@ const Wrapper = styled.div`
 `;
 
 const DropdownContainer = styled.div`
+    position: relative;
     text-align: center;
 `;
 
 const DropdownButton = styled.div`
     cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    position: relative;
 `;
 
 const Menu = styled.div.attrs<DropDownProps>((props) => {
@@ -28,12 +25,12 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
     };
 })`
     position: absolute;
-    top: -10px;
-    left: -106px;
+    top: 25px;
+    right: 0;
     width: 100px; //컴포넌트마다 수정하기
     text-align: center;
     box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.2);
-    border-radius: 14px;
+    border-radius: 16px;
     background-color: white;
 
     opacity: 0;
@@ -58,6 +55,7 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
 const Ul = styled.ul`
     & > li {
         box-sizing: border-box;
+        padding: 8px 12px;
         border-bottom: 1px solid #d9d9d9;
         width: 100%;
         line-height: 100%;
@@ -75,33 +73,16 @@ const Ul = styled.ul`
     align-items: center;
 `;
 
-const Li = styled.li<{ centercontent?: boolean }>`
+const Li = styled.li<{ centerContent?: boolean }>`
     display: flex;
     flex-direction: row;
     justify-content: ${(props) =>
-        props.centercontent ? "space-between" : "center"};
+        props.centerContent ? "space-between" : "center"};
     align-items: center;
-    padding: 0 4px;
-`;
-const Label = styled.label`
-    cursor: pointer;
 `;
 const Link = styled.a`
-    display: flex;
-    justify-content: inherit;
-    width: inherit;
     text-decoration: none;
     color: black;
-    padding: 6px 12px;
 `;
 
-export {
-    Wrapper,
-    DropdownContainer,
-    DropdownButton,
-    Menu,
-    Ul,
-    Li,
-    Label,
-    Link
-};
+export { Wrapper, DropdownContainer, DropdownButton, Menu, Ul, Li, Link };

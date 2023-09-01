@@ -1,19 +1,15 @@
 import styled from "styled-components";
 
 const ModalBg = styled.div`
-    position: fixed;
+    position: absolute;
     top: 0; bottom: 0;
-    left: calc(50vw - 195px);
-    height: 100vh;
-    width: 390px;
-    background: rgba(0, 0, 0, 0.58);
-    backdrop-filter: blur(2px);
+    left: 0; right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 3;
 `;
-
 const ModalWrap = styled.div`
     position: absolute;
     width: 292px;

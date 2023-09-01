@@ -8,15 +8,7 @@ export interface todo {
     userId: string;
     _id: string;
 }
-export interface Message {
-    type: ToastTypes;
-    reward: string | null;
-    inventoryCount: number;
-}
-export enum ToastTypes {
-    SPECIAL = "SPECIAL",
-    NORMAL = "NORMAL",
-    RECEIVED = "RECEIVED",
-    ALL_RECEIVED = "ALL_RECEIVED",
-    FULL = "FULL"
+interface Message {
+    content: string;
+    reward: string;
 }
