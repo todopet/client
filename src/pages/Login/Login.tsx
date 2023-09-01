@@ -1,3 +1,5 @@
+import Spinner from "@/assets/images/spinner.gif";
+
 import {
     Container,
     Main,
@@ -7,7 +9,8 @@ import {
     Content,
     LoginBtnGroup,
     GoogleImage,
-    LoginContent
+    LoginContent,
+    Img
 } from "@/pages/Login/Login.styles";
 
 const Login = () => {
@@ -20,16 +23,17 @@ const Login = () => {
     return (
         <Container>
             <Main>
-                <MainImage></MainImage>
                 <TitleGroup>
-                    <Title>todo pet</Title>
+                    <Title>Todo Pet</Title>
+                    <Img src={Spinner} alt="Login"></Img>
+
                     <Content>할 일을 완료하며, 펫과 함께 성장하세요.</Content>
                 </TitleGroup>
             </Main>
             <LoginBtnGroup>
                 <GoogleImage></GoogleImage>
                 <LoginContent onClick={handleLoginClick}>
-                    Google 계정으로 로그인
+                    구글 계정으로 로그인
                 </LoginContent>
             </LoginBtnGroup>
         </Container>

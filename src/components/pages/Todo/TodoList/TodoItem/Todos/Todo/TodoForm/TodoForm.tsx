@@ -56,11 +56,16 @@ export default function TodoForm({
         try {
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
-            >("patch", `/todoContents/${contentId}`, {
-                contentId: contentId,
-                todo: value,
-                status: status
-            });
+            >(
+                "patch",
+                `/todoContents/${contentId}`,
+                {
+                    contentId: contentId,
+                    todo: value,
+                    status: status
+                },
+                { "x-custom-data": Date.now() * 4 + 1000 }
+            );
             // console.log("투두수정!", response);
         } catch (error) {
             console.error(error);
