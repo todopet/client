@@ -3,7 +3,6 @@ import Spinner from "@/assets/images/spinner.gif";
 import {
     Container,
     Main,
-    MainImage,
     TitleGroup,
     Title,
     Content,
@@ -12,6 +11,8 @@ import {
     LoginContent,
     Img
 } from "@/pages/Login/Login.styles";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
     const handleLoginClick = async () => {
@@ -20,6 +21,18 @@ const Login = () => {
         // document.location.href = "https://kdt-sw-5-2-team14.elicecoding.com/api/v1/login";
         document.location.href = "http://localhost:3001/api/v1/login";
     };
+    const location = useLocation();
+    useEffect(() => {
+        const hash = location.hash.split("#")[1];
+        if (hash) {
+            const uri = decodeURIComponent(hash);
+            const queries = uri.split("&");
+            const queryParams = queries.map((el) => el.split("="));
+            const reason = queryParams[2][1];
+            alert(reason);
+        }
+    }, [location.hash]);
+
     return (
         <Container>
             <Main>
