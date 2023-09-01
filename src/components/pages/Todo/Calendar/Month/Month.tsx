@@ -2,26 +2,36 @@ import * as Styles from "./Month.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import React, { useState, FC, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useMemo } from "react";
 import { TodoContext } from "@/components/pages/Todo/TodoContext";
+import axiosRequest from "@/api/index";
+import { res, todoCategory } from "@/@types/index";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
 const today = new Date();
 const todayYear = today.getFullYear();
 const todayMonth = today.getMonth();
+const firstDateOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 
-// 오늘을 기준으로 이번 달의 1일의 날짜 객체를 얻음
-const firstDateOfMonth = new Date(todayYear, todayMonth, 1);
+async function getTodos(startDate: string, endDate: string) {
+    try {
+        const response: res<todoCategory[]> = await axiosRequest.requestAxios<
+            res<todoCategory[]>
+        >("get", `/todoContents?start=${startDate}&end=${endDate}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}
 
 export default function Month() {
-    const [baseDate, setBaseDate] = useState(firstDateOfMonth);
-    const [month, setMonth] = useState(todayMonth + 1);
+    const [firstDate, setFirstDate] = useState(firstDateOfThisMonth);
     const [clicked, setClicked] = useState(-1);
+    const [dates, setDates] = useState<Date[]>([]);
 
-    const dates: Date[] = []; // 한달의 날짜를 넣는 배열
-    const completedTodosByDay: number[] = [];
-    const { updateSelectedDate, getTodos, periodTodos } =
+    const { updateSelectedDate, updateStartEnd, periodTodos, setPeriodTodos } =
         useContext(TodoContext);
 
     // 날짜 형식 yyyy-mm-dd 지정 함수
@@ -32,61 +42,87 @@ export default function Month() {
         return `${year}-${month}-${day}`;
     };
 
-    function getMonthDate() {
+    function getMonthDates(firstDate: Date) {
+        const newDates = [];
         const firstDateOfMonth = new Date(
-            baseDate.getFullYear(),
-            baseDate.getMonth(),
+            firstDate.getFullYear(),
+            firstDate.getMonth(),
             1
         );
-
         const lastDateOfMonth = new Date(
-            baseDate.getFullYear(),
-            baseDate.getMonth() + 1,
+            firstDate.getFullYear(),
+            firstDate.getMonth() + 1,
             0
         );
 
         for (let i = 0; i < firstDateOfMonth.getDay(); ++i) {
-            dates.push(new Date(9999, 11, 31));
+            newDates.push(new Date(9999, 11, 31));
         }
         for (let i = 0; i < lastDateOfMonth.getDate(); ++i) {
-            dates.push(
-                new Date(baseDate.getFullYear(), baseDate.getMonth(), 1 + i)
+            newDates.push(
+                new Date(firstDate.getFullYear(), firstDate.getMonth(), 1 + i)
             );
         }
-        console.log("getMonthDates");
+        setDates(newDates);
+        fetchData(newDates);
     }
 
-    const countDates = () => {
+    const fetchData = (newDates: Date[]) => {
+        const start = formatDate(newDates[firstDate.getDay()]);
+        const end = formatDate(newDates[newDates.length - 1]);
+        updateStartEnd(start, end);
+        const todos = getTodos(start, end);
+        todos
+            .then((value) => {
+                setPeriodTodos(value);
+            })
+            .catch((error) => {
+                console.error("promise chain 내의 에러: ", error);
+            });
+    };
+
+    const completedTodosByDay = useMemo(() => {
         const todoDates: number[] = [];
         periodTodos?.forEach((category: any) =>
             category.todos.forEach((todo: any) => {
                 const newDate = new Date(todo.createdAt);
                 if (todo.status === "completed")
-                    todoDates.push(newDate.getDate());
+                    todoDates.push(newDate.getDay());
             })
         );
-
-        for (let i = 0; i < dates.length; ++i) {
-            let count = 0;
-            for (let j = 0; j < todoDates.length; ++j) {
-                if (todoDates[j] === i - 1) {
-                    ++count;
-                }
-            }
-            completedTodosByDay.push(count);
-        }
-        console.log("countDates");
-    };
-
-    getMonthDate();
-    countDates();
-
-    const start = formatDate(dates[baseDate.getDay()]);
-    const end = formatDate(dates[dates.length - 1]);
+        return todoDates.reduce(
+            (acc, cur) => {
+                acc[cur] = acc[cur] + 1;
+                return acc;
+            },
+            Array.from({ length: dates.length }, () => 0)
+        );
+    }, [periodTodos]);
 
     useEffect(() => {
-        getTodos(start, end);
-    }, [baseDate, completedTodosByDay]);
+        getMonthDates(firstDate);
+    }, []);
+
+
+    const handleLeftClick = () => {
+        const newFirstDate = new Date(
+            firstDate.getFullYear(),
+            firstDate.getMonth() - 1,
+            1
+        );
+        setFirstDate(newFirstDate);
+        getMonthDates(newFirstDate);
+    };
+
+    const handleRightClick = () => {
+        const newFirstDate = new Date(
+            firstDate.getFullYear(),
+            firstDate.getMonth() + 1,
+            1
+        );
+        setFirstDate(newFirstDate);
+        getMonthDates(newFirstDate);
+    };
 
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
@@ -96,35 +132,13 @@ export default function Month() {
     return (
         <Styles.MonthStyle>
             <Styles.TitleWrap>
-                <ArrowButton
-                    onClick={() => {
-                        setBaseDate(
-                            new Date(
-                                baseDate.getFullYear(),
-                                baseDate.getMonth() - 1,
-                                1
-                            )
-                        );
-                        setMonth(baseDate.getMonth() + 1);
-                    }}
-                >
+                <ArrowButton onClick={handleLeftClick}>
                     <LeftSvg />
                 </ArrowButton>
                 <Styles.Title>
-                    {baseDate.getFullYear()}년 {baseDate.getMonth() + 1}월
+                    {firstDate.getFullYear()}년 {firstDate.getMonth() + 1}월
                 </Styles.Title>
-                <ArrowButton
-                    onClick={() => {
-                        setBaseDate(
-                            new Date(
-                                baseDate.getFullYear(),
-                                baseDate.getMonth() + 1,
-                                1
-                            )
-                        );
-                        setMonth(baseDate.getMonth() + 1);
-                    }}
-                >
+                <ArrowButton onClick={handleRightClick}>
                     <RightSvg />
                 </ArrowButton>
             </Styles.TitleWrap>
@@ -142,15 +156,21 @@ export default function Month() {
                             key={i}
                             onClick={() => handleDateCellClick(i)}
                         >
-                            <Styles.Cell completed={completedTodosByDay[i]} />
+                            <Styles.Cell
+                                completed={
+                                    Array.isArray(completedTodosByDay)
+                                        ? completedTodosByDay[i]
+                                        : 0
+                                }
+                            />
                             <Styles.Date
                                 id={i}
-                                isToday={
+                                $istoday={
                                     date.getFullYear() === todayYear &&
                                     date.getMonth() === todayMonth &&
                                     date.getDate() === today.getDate()
                                 }
-                                isClicked={clicked === i}
+                                $isclicked={clicked === i}
                             >
                                 {date.getDate()}
                             </Styles.Date>

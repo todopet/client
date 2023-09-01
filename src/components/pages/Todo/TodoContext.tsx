@@ -1,16 +1,21 @@
 import { createContext, useState } from "react";
-
 import axiosRequest from "@/api/index";
 import { res, todo, todoCategory } from "@/@types/index";
 import { Message, ToastTypes } from "@/@types/todo";
 
-//context로 관리할 객체 타입
+// Context로 관리할 요소들의 타입 설정
 export interface TodoContextProps {
-    periodTodos?: todoCategory[];
-    updateSelectedDate: (selected: string) => void;
-    dateTodos?: todoCategory[];
     selectedDate: string;
+    startDate: string;
+    endDate: string;
+    dateTodos?: todoCategory[];
+    periodTodos?: todoCategory[];
+    setPeriodTodos: React.Dispatch<
+        React.SetStateAction<todoCategory[] | undefined>
+    >;
     getTodos: (startDate: string, endDate: string) => void;
+    updateSelectedDate: (selected: string) => void;
+    updateStartEnd: (startDate: string, endDate: string) => void;
     updateStatus: (
         contentId: string,
         checkStatus: string,
@@ -20,13 +25,17 @@ export interface TodoContextProps {
     isActiveToast: boolean;
 }
 
-//context 생성
+// Context 생성
 export const TodoContext = createContext<TodoContextProps>({
-    getTodos: () => {},
-    periodTodos: [],
-    updateSelectedDate: () => {},
     selectedDate: "",
+    startDate: "",
+    endDate: "",
     dateTodos: [],
+    periodTodos: [],
+    setPeriodTodos: () => {},
+    getTodos: () => {},
+    updateSelectedDate: () => {},
+    updateStartEnd: () => {},
     updateStatus: (
         contentId: string,
         checkStatus: string,
@@ -42,12 +51,10 @@ interface TodoContextProviderProps {
 export default function TodoContextProvider({
     children
 }: TodoContextProviderProps) {
+    const [dateTodos, setDateTodos] = useState<todoCategory[]>();
     const [periodTodos, setPeriodTodos] = useState<todoCategory[]>();
 
-    const [dateTodos, setDateTodos] = useState<todoCategory[]>();
-
     const today = new Date();
-
     const formatDate = (date: Date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -57,9 +64,15 @@ export default function TodoContextProvider({
     };
 
     const [selectedDate, setSelectedDate] = useState(formatDate(today));
-
     const updateSelectedDate = (selected: string) => {
         setSelectedDate(selected);
+    };
+
+    const [startDate, setStartDate] = useState<string>("");
+    const [endDate, setEndDate] = useState<string>("");
+    const updateStartEnd = (start: string, end: string) => {
+        setStartDate(start);
+        setEndDate(end);
     };
 
     //기간별 투두 불러오기
@@ -70,8 +83,12 @@ export default function TodoContextProvider({
                     "get",
                     `/todoContents?start=${startDate}&end=${endDate}`
                 );
-            if (startDate === endDate) setDateTodos(response.data);
-            else setPeriodTodos(response.data);
+            if (startDate === endDate) {
+                setDateTodos(response.data);
+            } else {
+                setPeriodTodos(response.data);
+            }
+            return response.data;
         } catch (error) {
             console.error(error);
         }
@@ -84,7 +101,6 @@ export default function TodoContextProvider({
     });
 
     const [isActiveToast, setIsActiveToast] = useState<boolean>(false);
-    //
     const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
     //투두 체크시 상태 변경(unchecked->completed, completed->reverted, reverted->completed)
@@ -101,7 +117,6 @@ export default function TodoContextProvider({
                     // 이전 타이머가 있으면 취소합니다.
                     clearTimeout(timer);
                 }
-
                 const response: res<todo> = await axiosRequest.requestAxios<
                     res<todo>
                 >(
@@ -124,6 +139,7 @@ export default function TodoContextProvider({
                         setIsActiveToast(false);
                     }, 5500)
                 );
+                getTodos(startDate, endDate);
             } else {
                 const response: res<todo> = await axiosRequest.requestAxios<
                     res<todo>
@@ -137,6 +153,7 @@ export default function TodoContextProvider({
                     },
                     { "x-custom-data": Date.now() * 4 + 1000 }
                 );
+                getTodos(startDate, endDate);
             }
         } catch (error) {
             console.error(error);
@@ -144,11 +161,15 @@ export default function TodoContextProvider({
     }
 
     const contextValue: TodoContextProps = {
-        getTodos,
-        periodTodos,
-        dateTodos,
-        updateSelectedDate,
         selectedDate,
+        startDate: "",
+        endDate: "",
+        dateTodos,
+        periodTodos,
+        setPeriodTodos,
+        getTodos,
+        updateSelectedDate,
+        updateStartEnd,
         updateStatus,
         message,
         isActiveToast
