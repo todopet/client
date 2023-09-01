@@ -5,7 +5,7 @@
  * @param {Date | string} date 날짜
  * @returns "YYYY-MM-DD" 형태의 string 데이터
  */
-const formatDateToString = (date: Date): string => {
+const formatDateToString = (date: Date | string): string => {
     if (typeof date === "string") date = new Date(date);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1을 하고 2자리로 포맷
