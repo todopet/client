@@ -30,7 +30,7 @@ const Button = styled.button`
     line-height: 18px;
     font-size: 16px;
     font-weight: 500;
-    pointer: cursor;
+    cursor: pointer;
 `;
 
 const Text = styled.div`

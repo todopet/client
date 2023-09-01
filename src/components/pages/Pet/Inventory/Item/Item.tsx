@@ -22,9 +22,8 @@ interface itemPropsType {
 }
 
 export default function Item({ url, name, des, _id, quantity }: itemPropsType) {
-    const [ discard, setDiscard ] = useState(false);
-    const [ use, setUse ] = useState(false);
-    console.log(use, discard);
+    const [discard, setDiscard] = useState(false);
+    const [use, setUse] = useState(false);
     return (
         <ItemWrap>
             <ItemInfo onClick={() => setUse(!use)}>
@@ -35,16 +34,37 @@ export default function Item({ url, name, des, _id, quantity }: itemPropsType) {
                 <ItemInfoRow>
                     <ItemName>{name}</ItemName>
                     <DiscardBtnStyled>
-                        <DiscardBtn onClick={(e) => { e.stopPropagation(); setDiscard(!discard); }} />
+                        <DiscardBtn
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setDiscard(!discard);
+                            }}
+                        />
                     </DiscardBtnStyled>
                 </ItemInfoRow>
-                <Itemdescription>
-                    {des}
-                </Itemdescription>
+                <Itemdescription>{des}</Itemdescription>
             </ItemInfo>
             {/* 사용하거나 버릴때 호출하는 api 경로의 파라미터는 _id */}
-            { discard && <ActionModal modaltype="discardModal" state={discard} setState={setDiscard} itemId={_id} name={name} quantity={quantity} /> }
-            { use && <ActionModal modaltype="useModal" state={use} setState={setUse} itemId={_id} name={name} quantity={quantity} /> }
+            {discard && (
+                <ActionModal
+                    modaltype="discardModal"
+                    state={discard}
+                    setState={setDiscard}
+                    itemId={_id}
+                    name={name}
+                    quantity={quantity}
+                />
+            )}
+            {use && (
+                <ActionModal
+                    modaltype="useModal"
+                    state={use}
+                    setState={setUse}
+                    itemId={_id}
+                    name={name}
+                    quantity={quantity}
+                />
+            )}
         </ItemWrap>
     );
 }

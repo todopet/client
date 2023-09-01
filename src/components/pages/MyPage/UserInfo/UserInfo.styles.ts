@@ -31,7 +31,6 @@ const UserIcon = styled.div<ImagePathProps>`
         0px 0px 12.5px rgba(0, 0, 0, 0.03),
         0px 0px 23.4px rgba(0, 0, 0, 0.036),
         0px 0px 56px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
 `;
 
 const UserInfoArea = styled.div`

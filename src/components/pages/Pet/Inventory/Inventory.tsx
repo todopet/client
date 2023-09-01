@@ -49,8 +49,6 @@ export default function InventoryModal({ on }: parameterType) {
         if (!on) receivePetData();
     }, [on]);
 
-    useEffect(() => {}, [itemData]);
-
     const findTargetedCategory = () => {
         if (activeCategory === "feed") return "먹이";
         if (activeCategory === "play") return "놀이";
