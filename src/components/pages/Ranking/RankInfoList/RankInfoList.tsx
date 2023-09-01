@@ -52,7 +52,7 @@ const RankInfoList = ({ userRankList }: RankInfoProps) => {
                         ) : (
                             <Rank>{list.rank}</Rank>
                         )}
-                        <NickName>{list.userInfo.nickname}</NickName>
+                        <NickName>{list.userInfo?.nickname}</NickName>
                         <CompletedTodo>{list.count}</CompletedTodo>
                     </UserRankInfo>
                     <Divider category={() => ""}></Divider>

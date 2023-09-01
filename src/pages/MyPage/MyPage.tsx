@@ -1,6 +1,5 @@
 import {
     MyPageWrapper,
-    ContentWrapper,
     ActivityWrapper,
     ButtonWrapper,
     MypageButton
@@ -94,55 +93,53 @@ export default function MyPage() {
 
     return (
         <MyPageWrapper>
-            <ContentWrapper>
-                <UserInfo
-                    picture={userInfo.picture}
-                    name={userInfo.nickname}
-                    date={setKoreaTime(userInfo.createdAt)}
-                ></UserInfo>
-                <ActivityWrapper>
-                    <Activity
-                        activityType="heart"
-                        data={userInfo.withPetDate.toString()}
-                    ></Activity>
-                    <Activity
-                        activityType="calendar"
-                        data={userInfo.historyCount.toString()}
-                    ></Activity>
-                    <Activity
-                        activityType="check"
-                        data={userInfo.todoCount.toString()}
-                    ></Activity>
-                </ActivityWrapper>
-                <ButtonWrapper>
-                    <MypageButton
-                        className=""
-                        color="#F5F5F5"
-                        text="로그아웃"
-                        onClick={handleConfirmLogoutModal}
-                    />
-                    <MypageButton
-                        className=""
-                        color="#F5F5F5"
-                        text="회원탈퇴"
-                        onClick={handleConfirmWithdrawModal}
-                    />
-                    {isLogoutModalOpen && (
-                        <ConfirmModal
-                            message={"로그아웃 하시겠습니까?"}
-                            onConfirm={handleConfirmLogout}
-                            onCancel={handleCloseModal}
-                        ></ConfirmModal>
-                    )}
-                    {isWithdrawModalOpen && (
-                        <ConfirmModal
-                            message={`${userInfo.nickname}님의 펫이 기다리고 있어요!\n${userInfo.nickname}님의 펫을 두고 떠나시려구요?🥺`}
-                            onConfirm={handleConfirmWithdraw}
-                            onCancel={handleCloseModal}
-                        ></ConfirmModal>
-                    )}
-                </ButtonWrapper>
-            </ContentWrapper>
+            <UserInfo
+                picture={userInfo.picture}
+                name={userInfo.nickname}
+                date={setKoreaTime(userInfo.createdAt)}
+            ></UserInfo>
+            <ActivityWrapper>
+                <Activity
+                    activityType="heart"
+                    data={userInfo.withPetDate.toString()}
+                ></Activity>
+                <Activity
+                    activityType="calendar"
+                    data={userInfo.historyCount.toString()}
+                ></Activity>
+                <Activity
+                    activityType="check"
+                    data={userInfo.todoCount.toString()}
+                ></Activity>
+            </ActivityWrapper>
+            <ButtonWrapper>
+                <MypageButton
+                    className=""
+                    color="#F5F5F5"
+                    text="로그아웃"
+                    onClick={handleConfirmLogoutModal}
+                />
+                <MypageButton
+                    className=""
+                    color="#F5F5F5"
+                    text="회원탈퇴"
+                    onClick={handleConfirmWithdrawModal}
+                />
+                {isLogoutModalOpen && (
+                    <ConfirmModal
+                        message={"로그아웃 하시겠습니까?"}
+                        onConfirm={handleConfirmLogout}
+                        onCancel={handleCloseModal}
+                    ></ConfirmModal>
+                )}
+                {isWithdrawModalOpen && (
+                    <ConfirmModal
+                        message={`${userInfo.nickname}님의 펫이 기다리고 있어요!\n${userInfo.nickname}님의 펫을 두고 떠나시려구요?🥺`}
+                        onConfirm={handleConfirmWithdraw}
+                        onCancel={handleCloseModal}
+                    ></ConfirmModal>
+                )}
+            </ButtonWrapper>
         </MyPageWrapper>
     );
 }

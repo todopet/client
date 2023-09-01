@@ -17,6 +17,9 @@ const DropdownContainer = styled.div`
 
 const DropdownButton = styled.div`
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 `;
 
 const Menu = styled.div.attrs<DropDownProps>((props) => {
@@ -30,7 +33,7 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
     width: 100px; //컴포넌트마다 수정하기
     text-align: center;
     box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.2);
-    border-radius: 16px;
+    border-radius: 14px;
     background-color: white;
 
     opacity: 0;
@@ -78,6 +81,7 @@ const Li = styled.li<{ centercontent?: boolean }>`
     justify-content: ${(props) =>
         props.centercontent ? "space-between" : "center"};
     align-items: center;
+    padding: 0 4px;
 `;
 const Label = styled.label`
     cursor: pointer;

@@ -13,7 +13,13 @@ import DropDown from "@/components/DropDown/DropDown";
 import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
-import { StyledTodo, TodoDiv, StyledCheckbox, Text } from "./Todo.styles";
+import {
+    StyledTodo,
+    TodoDiv,
+    StyledCheckbox,
+    Text,
+    TodoWrap
+} from "./Todo.styles";
 
 interface TodoProps {
     content: string;
@@ -78,24 +84,26 @@ export default function Todo({ content, status, contentId }: TodoProps) {
 
     return (
         <StyledTodo>
-            {isEditing ? (
-                <TodoForm
-                    contentId={contentId}
-                    existingContent={content}
-                    status={status}
-                    finishEdit={() => setIsEditig(false)}
-                />
-            ) : (
-                <TodoDiv>
-                    <StyledCheckbox
-                        onClick={handleCheckClick}
-                        newcheckstatus={newcheckstatus}
-                    >
-                        {newcheckstatus === "completed" && <CheckIcon />}
-                    </StyledCheckbox>
-                    <Text newcheckstatus={newcheckstatus}>{content}</Text>
-                </TodoDiv>
-            )}
+            <TodoWrap>
+                {isEditing ? (
+                    <TodoForm
+                        contentId={contentId}
+                        existingContent={content}
+                        status={status}
+                        finishEdit={() => setIsEditig(false)}
+                    />
+                ) : (
+                    <TodoDiv>
+                        <StyledCheckbox
+                            onClick={handleCheckClick}
+                            newcheckstatus={newcheckstatus}
+                        >
+                            {newcheckstatus === "completed" && <CheckIcon />}
+                        </StyledCheckbox>
+                        <Text newcheckstatus={newcheckstatus}>{content}</Text>
+                    </TodoDiv>
+                )}
+            </TodoWrap>
             <DropDown list={listItems}>
                 <MenuIcon />
             </DropDown>
