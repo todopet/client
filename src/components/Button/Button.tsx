@@ -1,5 +1,7 @@
+import { ButtonWrap } from "./Button.styles";
+
 export default function Button({ ...props }) {
-    return <button {...props}></button>;
+    return <ButtonWrap {...props}></ButtonWrap>;
 }
 // interface ButtonProps {
 //     type?: "button" | "submit" | "reset";

@@ -7,7 +7,10 @@ const StyledTodo = styled.div`
     justify-content: space-between;
     align-items: center;
 `;
-
+const TodoWrap = styled.div`
+    flex: 1;
+    padding-right: 8px;
+`;
 const TodoDiv = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -39,4 +42,4 @@ const Text = styled.span<TodoProps>`
         props.newcheckstatus === "unchecked" ? "#000000" : "#ADADAD"};
 `;
 
-export { StyledTodo, TodoDiv, StyledCheckbox, Text };
+export { StyledTodo, TodoDiv, StyledCheckbox, Text, TodoWrap };

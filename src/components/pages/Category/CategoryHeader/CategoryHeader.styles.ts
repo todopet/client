@@ -26,6 +26,11 @@ const Button = styled.button`
     display: flex;
     align-items: center;
     cursor: pointer;
+    text-align: center;
+    line-height: 18px;
+    font-size: 16px;
+    font-weight: 500;
+    pointer: cursor;
 `;
 
 const Text = styled.div`
