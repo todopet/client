@@ -35,7 +35,6 @@ export default function ActionModal({
 
     const [openModal, setOpenModal] = useState<boolean>(true);
     const [itemCount, setItemCount] = useState(1);
-    // console.log(itemId);
 
     async function receiveItemData() {
         try {
@@ -57,7 +56,6 @@ export default function ActionModal({
             >("post", `/inventories/${itemId}/put`, data, {
                 "x-custom-data": Date.now() * 4 + 1000
             });
-            console.log(response);
             receiveItemData();
         } catch (error) {
             console.log("Error fetching pet data: ", error);
@@ -72,7 +70,6 @@ export default function ActionModal({
             >("patch", `/inventories/items/${itemId}`, data, {
                 "x-custom-data": Date.now() * 4 + 1000
             });
-            console.log(response);
             receiveItemData();
         } catch (error) {
             console.error("Error fetching pet data: ", error);

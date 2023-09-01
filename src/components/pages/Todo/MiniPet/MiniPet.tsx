@@ -23,7 +23,6 @@ export default function MiniPet() {
             const response: res<Petlevel> = await axiosRequest.requestAxios<
                 res<Petlevel>
             >("get", `/myPets/myPet/level`);
-            // console.log("petlevel: ", response);
             setPetlevel(response.data.level);
         } catch (error) {
             console.error(error);
@@ -46,7 +45,6 @@ export default function MiniPet() {
             const response: res<ItemsCount> = await axiosRequest.requestAxios<
                 res<ItemsCount>
             >("get", `/inventories/itemsCount`);
-            // console.log("itemsCount: ", response.data);
             setItemsCount(response.data.count);
         } catch (error) {
             console.error(error);
@@ -89,7 +87,6 @@ export default function MiniPet() {
 
                 //x축 이동
                 setXPosition(xPosition + 5);
-                // console.log("xxx");
                 if (xPosition > containerWidth) {
                     setXPosition(-sessakWidth);
                 }
@@ -97,10 +94,8 @@ export default function MiniPet() {
                 //y축 이동
                 if (yDirection === 1) {
                     setYPosition(yPosition + 5);
-                    // console.log(1);
                 } else if (yDirection === -1) {
                     setYPosition(yPosition - 5);
-                    // console.log(-1);
                 }
 
                 //container영역으로 이동 제한
@@ -112,8 +107,6 @@ export default function MiniPet() {
                     setXPosition(xPosition + 5);
                     setXPosition(xPosition + 5);
                     setXPosition(xPosition + 5);
-
-                    // console.log("stay");
                 }
 
                 miniPetRef.current.style.left = xPosition + "px";

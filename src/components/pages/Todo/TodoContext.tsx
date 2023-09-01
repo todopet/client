@@ -64,17 +64,14 @@ export default function TodoContextProvider({
 
     //기간별 투두 불러오기
     async function getTodos(startDate: string, endDate: string) {
-        // console.log(startDate, endDate);
         try {
             const response: res<todoCategory[]> =
                 await axiosRequest.requestAxios<res<todoCategory[]>>(
                     "get",
                     `/todoContents?start=${startDate}&end=${endDate}`
                 );
-            // console.log("pereiodTodos API data: ", response.data, startDate === endDate);
             if (startDate === endDate) setDateTodos(response.data);
             else setPeriodTodos(response.data);
-            // console.log("response.data: ", response.data);
         } catch (error) {
             console.error(error);
         }
