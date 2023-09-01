@@ -14,7 +14,7 @@ export default function MiniPetToast() {
     const [fullMessage, setFullMessage] = useState<string>("");
     useEffect(() => {
         if (message?.inventoryCount === 50) {
-            setFullMessage("인벤토리가 가득 찼습니다");
+            setFullMessage("인벤토리가 가득 찼습니다❗️");
         }
     }, [message]);
     //보상에 따라 content, bgcolor 변경
@@ -26,7 +26,7 @@ export default function MiniPetToast() {
                     <br />
                     {message.reward}(을)를 받았습니다 🥳
                     <br />
-                    {fullMessage}
+                    <span style={{ color: "red" }}>{fullMessage}</span>
                 </>
             );
             bgcolor = "black";
@@ -39,7 +39,7 @@ export default function MiniPetToast() {
                     <br />
                     {message.reward}(을)를 받았습니다 🍀
                     <br />
-                    {fullMessage}
+                    <span style={{ color: "red" }}>{fullMessage}</span>
                 </>
             );
 
