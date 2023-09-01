@@ -100,6 +100,7 @@ const ModalButton = styled.button`
     border-radius: 0.5rem;
     background: #e7e8ea;
     border: none;
+    cursor: pointer;
 `;
 
 interface SpanTextProps {

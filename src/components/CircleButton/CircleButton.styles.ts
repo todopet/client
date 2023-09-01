@@ -10,6 +10,7 @@ const BaseButton = styled(Button)`
     height: 70px;
     border: ${(props) => props.border};
     border-radius: 50%;
+    cursor: pointer;
 `;
 
 export default BaseButton;
