@@ -17,7 +17,7 @@ export const RankInfoContainer = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: auto;
+    width: 25%;
     height: auto;
     align-items: center;
 `;
