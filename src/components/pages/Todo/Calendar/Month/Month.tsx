@@ -2,7 +2,7 @@ import * as Styles from "./Month.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import React, { useState, useContext, useEffect, useMemo } from "react";
+import { useState, useContext, useEffect, useMemo } from "react";
 import { TodoContext } from "@/components/pages/Todo/TodoContext";
 import axiosRequest from "@/api/index";
 import { res, todoCategory } from "@/@types/index";
@@ -12,11 +12,6 @@ const today = new Date();
 const todayYear = today.getFullYear();
 const todayMonth = today.getMonth();
 const firstDateOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-const lastDateofThisMonth = new Date(
-    firstDateOfThisMonth.getFullYear(),
-    firstDateOfThisMonth.getMonth() + 1,
-    0
-);
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 
 async function getTodos(startDate: string, endDate: string) {
@@ -25,7 +20,6 @@ async function getTodos(startDate: string, endDate: string) {
             res<todoCategory[]>
         >("get", `/todoContents?start=${startDate}&end=${endDate}`);
         return response.data;
-        // console.log("response.data: ", response.data);
     } catch (error) {
         console.error(error);
         return [];
@@ -35,11 +29,7 @@ async function getTodos(startDate: string, endDate: string) {
 export default function Month() {
     const [firstDate, setFirstDate] = useState(firstDateOfThisMonth);
     const [clicked, setClicked] = useState(-1);
-    // const [dates, setDates] = useState<Date[]>([]);
-    // const [completedTodos, setCompletedTodos] = useState<number[]>([]);
-    // const [periodTodos, setPeriodTodos] = useState<todoCategory[]>([]);
-    let dates: Date[] = [];
-    let completedTodos: number[] = [];
+    const [dates, setDates] = useState<Date[]>([]);
 
     const { updateSelectedDate, updateStartEnd, periodTodos, setPeriodTodos } =
         useContext(TodoContext);
@@ -52,8 +42,8 @@ export default function Month() {
         return `${year}-${month}-${day}`;
     };
 
-    function getMonthDates() {
-        dates = [];
+    function getMonthDates(firstDate: Date) {
+        const newDates = [];
         const firstDateOfMonth = new Date(
             firstDate.getFullYear(),
             firstDate.getMonth(),
@@ -66,31 +56,29 @@ export default function Month() {
         );
 
         for (let i = 0; i < firstDateOfMonth.getDay(); ++i) {
-            dates.push(new Date(9999, 11, 31));
+            newDates.push(new Date(9999, 11, 31));
         }
         for (let i = 0; i < lastDateOfMonth.getDate(); ++i) {
-            dates.push(
+            newDates.push(
                 new Date(firstDate.getFullYear(), firstDate.getMonth(), 1 + i)
             );
         }
-        fetchData();
+        setDates(newDates);
+        fetchData(newDates);
     }
 
-    const fetchData = () => {
-        const start = formatDate(dates[firstDate.getDay()]);
-        const end = formatDate(dates[dates.length - 1]);
+    const fetchData = (newDates: Date[]) => {
+        const start = formatDate(newDates[firstDate.getDay()]);
+        const end = formatDate(newDates[newDates.length - 1]);
         updateStartEnd(start, end);
-        // console.log(`fetchData 기간: ${start} ~ ${end}`);
         const todos = getTodos(start, end);
         todos
             .then((value) => {
                 setPeriodTodos(value);
-                // console.log("fetchData periodTodos: ", periodTodos); 
-                console.log("fetchData value: ", value);
             })
             .catch((error) => {
                 console.error("promise chain 내의 에러: ", error);
-            })
+            });
     };
 
     const completedTodosByDay = useMemo(() => {
@@ -102,22 +90,17 @@ export default function Month() {
                     todoDates.push(newDate.getDay());
             })
         );
-        console.log("***todoDates: ", todoDates);
         return todoDates.reduce(
-            // acc는 누적값, cur는 현재값.
             (acc, cur) => {
                 acc[cur] = acc[cur] + 1;
                 return acc;
             },
             Array.from({ length: dates.length }, () => 0)
-        ).splice(1, dates.length - 1);
+        );
     }, [periodTodos]);
 
-    console.log("***dates.length: ", dates.length);
-    console.log("***completedTodosByDay: ", completedTodosByDay);
-
     useEffect(() => {
-        getMonthDates();
+        getMonthDates(firstDate);
     }, []);
 
 
@@ -128,7 +111,7 @@ export default function Month() {
             1
         );
         setFirstDate(newFirstDate);
-        getMonthDates();
+        getMonthDates(newFirstDate);
     };
 
     const handleRightClick = () => {
@@ -138,7 +121,7 @@ export default function Month() {
             1
         );
         setFirstDate(newFirstDate);
-        getMonthDates();
+        getMonthDates(newFirstDate);
     };
 
     const handleDateCellClick = (idx: number) => {
@@ -198,25 +181,3 @@ export default function Month() {
         </Styles.MonthStyle>
     );
 }
-
-    // const countDates = (_periodTodos: todoCategory[]) => {
-    //     completedTodos = [];
-    //     const todoDates: number[] = [];
-    //     periodTodos?.forEach((category: any) =>
-    //         category.todos.forEach((todo: any) => {
-    //             const newDate = new Date(todo.createdAt);
-    //             if (todo.status === "completed")
-    //                 todoDates.push(newDate.getDate());
-    //         })
-    //     );
-
-    //     for (let i = 0; i < dates.length; ++i) {
-    //         let count = 0;
-    //         for (let j = 0; j < todoDates.length; ++j) {
-    //             if (todoDates[j] === i + 1) {
-    //                 ++count;
-    //             }
-    //         }
-    //         completedTodos.push(count);
-    //     }
-    // };
