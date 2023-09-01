@@ -33,5 +33,3 @@ const setKoreaTime = (date: Date): string => {
     const formattedDate = formatDateToString(koreaDate);
     return formattedDate;
 };
-
-export { sample };
