@@ -27,7 +27,6 @@ async function getTodos(startDate: string, endDate: string) {
             res<todoCategory[]>
         >("get", `/todoContents?start=${startDate}&end=${endDate}`);
         return response.data;
-        // console.log("response.data: ", response.data);
     } catch (error) {
         console.error("get요청 중 에러: ", error);
         return [];
@@ -93,7 +92,6 @@ export default function Week() {
     };
 
     const fetchData = () => {
-        // console.log("fetchData 함수 호출됨");
         const start = formatDate(currentSunday);
         const end = formatDate(
             new Date(
@@ -107,7 +105,6 @@ export default function Week() {
         todos
             .then((value) => {
                 setPeriodTodos(value);
-                // console.log("periodTodos: ", periodTodos);
             })
             .catch((error) => {
                 console.error("promise chain 내의 에러: ", error);
@@ -131,7 +128,6 @@ export default function Week() {
             Array.from({ length: dates.length }, () => 0)
         );
     }, [periodTodos]);
-    // console.log("completedTodosByDay: ", completedTodosByDay);
 
     useEffect(() => {
         getWeekDates();
@@ -249,43 +245,3 @@ export default function Week() {
         </Styles.WeekStyle>
     );
 }
-
-    // // 초기 countDates
-    // const countDates = () => {
-    //     const todoDates: number[] = [];
-    //     periodTodos?.forEach((category: any) =>
-    //         category.todos.forEach((todo: any) => {
-    //             const newDate = new Date(todo.createdAt);
-    //             if (todo.status === "completed")
-    //                 todoDates.push(newDate.getDay());
-    //         })
-    //     );
-    //     for (let i = 0; i < 7; ++i) {
-    //         let count = 0;
-    //         for (let j = 0; j < todoDates.length; ++j) {
-    //             if (todoDates[j] === i) {
-    //                 ++count;
-    //             }
-    //         }
-    //         setCompletedTodosByDay((prev) => [...prev, count]);
-    //     }
-    // }
-    //
-    // // 수정된 countDates ===> useMemo사용으로, completedTodosByDay로 변경됨
-    // const countDates = (periodTodos: todoCategory[]) => {
-    //     const todoDates: number[] = [];
-    //     periodTodos?.forEach((category: any) =>
-    //         category.todos.forEach((todo: any) => {
-    //             const newDate = new Date(todo.createdAt);
-    //             if (todo.status === "completed")
-    //                 todoDates.push(newDate.getDay());
-    //         })
-    //     );
-    //     todoDates?.reduce(
-    //         (acc, cur) => {
-    //             acc[cur] = acc[cur] + 1;
-    //             return acc;
-    //         },
-    //         Array.from({ length: 7 }, () => 0)
-    //     );
-    // };
