@@ -34,26 +34,32 @@ const TitleGroup = styled.div`
 `;
 
 const Title = styled.div`
-    font-size: 2.75rem;
+    font-size: 2.5rem;
     font-style: normal;
     font-weight: 800;
-    margin-bottom: 10px;
+    // margin-bottom: 8px;
 `;
 
+const Img = styled.img`
+    width: 280px;
+    margin-top: 8px;
+    margin-bottom: 24px;
+`;
 const Content = styled.div`
     color: #8d8d8d;
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 500;
+    margin-top: 10px;
 `;
 
 const LoginBtnGroup = styled.button`
     display: flex;
-    width: 21.75rem;
-    height: 3.6875rem;
+    width: 19rem;
+    height: 3.5rem;
     flex-shrink: 0;
-    border-radius: 0.5rem;
-    border: 0.0625rem solid #c9c9c9;
+    border-radius: 0.8rem;
+    border: 0.08rem solid #c9c9c9;
     margin-bottom: 2.7rem;
     background: #fff;
     align-items: center;
@@ -71,7 +77,7 @@ const GoogleImage = styled.div`
 
 const LoginContent = styled.div`
     display: flex;
-    width: 15rem;
+    width: 13rem;
     font-size: 1.125rem;
     font-family: Pretendard;
     font-style: normal;
@@ -93,5 +99,6 @@ export {
     LoginContent,
     TitleGroup,
     Title,
-    Content
+    Content,
+    Img
 };
