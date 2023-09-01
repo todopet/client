@@ -10,7 +10,6 @@ import levelStar from '@/assets/icons/levelStar.svg';
 const MainArea = styled.main`
     height: 100%;
 	min-height: 700px;
-	overflow-y: scroll;
 	width: 100%;
     background-image: url(${petRoom});
 	background-repeat: no-repeat;
