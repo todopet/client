@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Input from "@/components/Input/Input";
 import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
@@ -9,18 +9,46 @@ import {
     CircleButton,
     ButtonWrap,
     ActionButtonWrap,
-    ActionButton
+    ActionButton,
+    ModalText,
+    ModalButtonWrap,
+    ModalButton,
+    SpanText
 } from "./CategoryContentPost.styles";
 import axiosRequest from "@/api";
 import { category, res } from "@/@types/index";
-import Button from "@/components/Button/Button";
-import axios from "axios";
 
 interface CategoryPostProps {
     subject: string;
     onTextSend: (text: string) => void;
     id: string | null;
 }
+
+interface ConfirmContentProps {
+    message: React.ReactNode;
+    onCancel: MouseEventHandler<HTMLButtonElement>;
+    onConfirm: MouseEventHandler<HTMLButtonElement>;
+}
+
+const ConfirmContent: React.FC<ConfirmContentProps> = ({
+    message,
+    onCancel,
+    onConfirm
+}) => {
+    return (
+        <>
+            <ModalText>{message}</ModalText>
+            <ModalButtonWrap>
+                <ModalButton onClick={onCancel}>
+                    <Text>취소</Text>
+                </ModalButton>
+                <ModalButton onClick={onConfirm}>
+                    <Text>확인</Text>
+                </ModalButton>
+            </ModalButtonWrap>
+        </>
+    );
+};
 
 const CategoryContentPost: React.FC<CategoryPostProps> = ({
     subject,
@@ -125,22 +153,43 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                         </ActionButton>
                     </ActionButtonWrap>
                     {isEndModalOpen && (
-                        <ConfirmModal
-                            message={
-                                "목표를 종료하시겠습니까?\n기존의 할 일 목록은 유지되지만,\n새로운 입력은 제한됩니다."
-                            }
-                            onConfirm={handleConfirmEndModal}
-                            onCancel={handleCloseModal}
-                        ></ConfirmModal>
+                        <ConfirmModal>
+                            <ConfirmContent
+                                message={
+                                    <>
+                                        <SpanText isred={"false"}>
+                                            목표를 종료하시겠습니까?
+                                        </SpanText>
+                                        <SpanText isred={"false"}>
+                                            기존의 할 일 목록은 유지되지만,
+                                        </SpanText>
+                                        <SpanText isred={"false"}>
+                                            새로운 입력은 제한됩니다.
+                                        </SpanText>
+                                    </>
+                                }
+                                onConfirm={handleConfirmEndModal}
+                                onCancel={handleCloseModal}
+                            />
+                        </ConfirmModal>
                     )}
                     {isDeleteModalOpen && (
-                        <ConfirmModal
-                            message={
-                                "목표를 삭제하시겠습니까?\n기존의 할 일 목록이 모두 삭제됩니다."
-                            }
-                            onConfirm={handleConfirmDeleteModal}
-                            onCancel={handleCloseModal}
-                        ></ConfirmModal>
+                        <ConfirmModal>
+                            <ConfirmContent
+                                message={
+                                    <>
+                                        <SpanText isred={"false"}>
+                                            목표를 삭제하시겠습니까?
+                                        </SpanText>
+                                        <SpanText isred={"false"}>
+                                            기존의 할 일 목록이 모두 삭제됩니다.
+                                        </SpanText>
+                                    </>
+                                }
+                                onConfirm={handleConfirmDeleteModal}
+                                onCancel={handleCloseModal}
+                            />
+                        </ConfirmModal>
                     )}
                 </>
             )
