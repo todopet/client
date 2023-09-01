@@ -6,35 +6,30 @@ import { MyButton } from './MyPage';
 const MyPageWrapper = styled.div`
     width: 100%;
     height: 100%;
+    min-height: 700px;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-`
-
-const ContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    width: 85%;
+    justify-content: center;
+    align-items: center;
 `
 
 const ActivityWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 85%;
     height: 50%;
     justify-content: center;
     gap: 2rem;
-    padding: 5% 0 5% 0;
 `
 
 const ButtonWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2.5rem;
-    height: 80px;
+    gap: 2rem;
+    height: 15%;
 `
 
 const MypageButton = styled(MyButton)`
@@ -75,4 +70,4 @@ const NewButton = styled(MypageButton)`
     box-shadow: none;
 `
 
-export { MyPageWrapper, ContentWrapper, ActivityWrapper, ButtonWrapper, MypageButton, AlertText, Text, ModalButtonArea, NewButton };
+export { MyPageWrapper, ActivityWrapper, ButtonWrapper, MypageButton, AlertText, Text, ModalButtonArea, NewButton };
