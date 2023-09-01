@@ -11,7 +11,6 @@ interface ConfirmModalProps extends PropsWithChildren {}
 
 const ConfirmModal: React.FC<ConfirmModalProps> = (props) => {
     const { children } = props;
-    console.log(children);
     return (
         <Container>
             <ModalWrap>{children}</ModalWrap>
