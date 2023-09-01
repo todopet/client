@@ -121,7 +121,7 @@ export default function MyPage() {
     }, []);
 
     const navigate = useNavigate();
-    console.log(userInfo);
+    // console.log(userInfo);
     return (
         <MyPageWrapper>
             <UserInfo
@@ -187,7 +187,7 @@ export default function MyPage() {
                                         영원히 서비스를 이용할 수 없어요 😥
                                     </SpanText>
                                     <SpanText isred={"false"}>
-                                        그래도탈퇴하시겠어요?`
+                                        그래도 탈퇴하시겠어요?
                                     </SpanText>
                                 </>
                             }

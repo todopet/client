@@ -56,6 +56,7 @@ const ActionButton = styled.button<{ type: string }>`
     background: #f5f5f5;
     color: ${(props) => (props.type === "exit" ? "black" : "#FA4D28")};
     font-weight: 400;
+    cursor: pointer;
 `;
 
 const ModalText = styled.div`
@@ -88,6 +89,7 @@ const ModalButton = styled.button`
     border-radius: 0.5rem;
     background: #e7e8ea;
     border: none;
+    cursor: pointer;
 `;
 
 interface SpanTextProps {
