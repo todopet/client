@@ -11,7 +11,6 @@ const Wrapper = styled.div`
 `;
 
 const DropdownContainer = styled.div`
-    position: relative;
     text-align: center;
 `;
 
@@ -20,6 +19,7 @@ const DropdownButton = styled.div`
     align-items: center;
     justify-content: center;
     display: flex;
+    position: relative;
 `;
 
 const Menu = styled.div.attrs<DropDownProps>((props) => {
@@ -28,8 +28,8 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
     };
 })`
     position: absolute;
-    top: 25px;
-    right: 0;
+    top: -10px;
+    left: -106px;
     width: 100px; //컴포넌트마다 수정하기
     text-align: center;
     box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.2);
@@ -92,7 +92,7 @@ const Link = styled.a`
     width: inherit;
     text-decoration: none;
     color: black;
-    padding: 8px 12px;
+    padding: 6px 12px;
 `;
 
 export {
