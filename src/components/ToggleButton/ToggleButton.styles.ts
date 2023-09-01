@@ -4,6 +4,10 @@ type ToggleWrapperProps = {
     active: boolean;
 };
 
+export const ToggleDiv = styled.div`
+    position: relative;
+`;
+
 export const ToggleWrapper = styled.div<ToggleWrapperProps>`
     width: 44px;
     height: 22px;
@@ -14,9 +18,10 @@ export const ToggleWrapper = styled.div<ToggleWrapperProps>`
     align-items: center;
     cursor: pointer;
     transition: background 0.3s;
-    position: absolute;
-    margin-top: 2px;
-    margin-left: 340px;
+    position: relative;
+    margin-top: 20px;
+    margin-left: 330px;
+    top: 22px;
     justify-content: ${(props) => (props.active ? "flex-end" : "flex-start")};
 `;
 

@@ -1,13 +1,29 @@
 import styled from "styled-components";
 
+interface CellProps {
+    completed: number;
+}
+
 interface DateProps {
-    isToday: boolean;
-    isClicked: boolean;
+    $istoday: boolean;
+    $isclicked: boolean;
     id: number;
 }
 
 const MonthStyle = styled.div`
-    width: 390px;
+    width: 380px;
+    margin-left: 4px;
+`;
+
+const Title = styled.span`
+    margin: 0px 30px 0px 30px;
+    font-family: Pretendard;
+`;
+
+const TitleWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const DayWrap = styled.div`
@@ -16,10 +32,10 @@ const DayWrap = styled.div`
     justify-items: center;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 2px;
 `;
 
 const Day = styled.span`
-    margin: 0px 13px;
     font-size: 14px;
     font-family: Pretendard;
 `;
@@ -37,12 +53,27 @@ const DateCell = styled.div`
     align-items: center;
 `;
 
-const Cell = styled.div`
+const Cell = styled.div<CellProps>`
     width: 22px;
     height: 22px;
     border-radius: 3px;
-    background-color: lightgray;
     margin: 10px 10px 2px 10px;
+    background-color: ${(props) =>
+        props.completed === 0
+            ? "#e9e9e9"
+            : props.completed <= 2
+            ? "#cff1cf"
+            : props.completed <= 4
+            ? "#a7eba6"
+            : props.completed <= 6
+            ? "#70d66a"
+            : props.completed <= 8
+            ? "#41b13f"
+            : props.completed <= 10
+            ? "#1d861c"
+            : props.completed >= 11
+            ? "#046900"
+            : "white"};
 `;
 
 const Date = styled.div<DateProps>`
@@ -53,25 +84,13 @@ const Date = styled.div<DateProps>`
     font-size: 14px;
     font-family: Pretendard;
     color: ${(props) =>
-        props.isClicked ? "white" : props.isToday ? "white" : "black"};
+        props.$isclicked ? "white" : props.$istoday ? "white" : "black"};
     background-color: ${(props) =>
-        props.isClicked ? "#556FE9" : props.isToday ? "black" : ""};
+        props.$isclicked ? "#556FE9" : props.$istoday ? "black" : ""};
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-`;
-
-const Title = styled.span`
-    margin: 6px 24px 4px 26px;
-    font-family: Pretendard;
-`;
-
-const TitleWrap = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 28px;
 `;
 
 export {
@@ -83,5 +102,5 @@ export {
     Cell,
     Date,
     Title,
-    TitleWrap
+    TitleWrap,
 };

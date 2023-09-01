@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../Logo";
 import {
     HeaderContainer,
@@ -6,10 +7,11 @@ import {
     ButtonCatainer
 } from "./Header.styles";
 import Dropdown from "@/components/DropDown/DropDown";
-import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";
+import { ReactComponent as HeaderMenuIcon } from "@/assets/icons/headerMenu.svg";
 import { ReactComponent as PlusIcon } from "@/assets/icons/plus.svg";
 
 export default function Header() {
+    const location = useLocation();
     //DropDown의 props
     const listItems = [
         {
@@ -23,15 +25,21 @@ export default function Header() {
         }
     ];
 
+    const isDropDown = location.pathname === "/todo";
+
     return (
         <HeaderContainer>
             <LogoContainer>
-                <Logo />
+                <Link to="/todo">
+                    <Logo />
+                </Link>
             </LogoContainer>
             <ButtonCatainer>
-                <Dropdown list={listItems}>
-                    <MenuIcon />
-                </Dropdown>
+                {isDropDown && (
+                    <Dropdown list={listItems}>
+                        <HeaderMenuIcon />
+                    </Dropdown>
+                )}
             </ButtonCatainer>
         </HeaderContainer>
     );

@@ -6,8 +6,11 @@ import {
     Menu,
     Ul,
     Li,
+    Label,
     Link
 } from "./DropDown.styles";
+import { PropsWithChildren } from "react";
+import { StyleSheetManager } from "styled-components";
 
 interface ListItem {
     content: string;
@@ -15,10 +18,10 @@ interface ListItem {
     href?: string; //클릭시 주소이동을 원할시 사용
     handleClick?: () => void; //클릭시 원하는 기능 적용
 }
-interface ListProps {
+interface ListProps extends PropsWithChildren {
     list: ListItem[];
-    children: React.ReactNode;
 }
+
 //사용하려는 카테고리 목록(list)을 props로 전달, 버튼으로 사용할 컴포넌트(children)를 추가해주세요.
 const Dropdown = ({ list, children }: ListProps) => {
     const [categoryIsOpen, categoryRef, categoryHandler] =
@@ -29,20 +32,30 @@ const Dropdown = ({ list, children }: ListProps) => {
             <DropdownContainer>
                 <DropdownButton onClick={categoryHandler} ref={categoryRef}>
                     {children}
-                </DropdownButton>
-                <Menu $isDropped={categoryIsOpen}>
-                    <Ul>
-                        {list.map((item) => (
-                            <Li
-                                centerContent={hasAnySvg}
-                                onClick={item.handleClick}
+                    <Menu $isDropped={categoryIsOpen}>
+                        <Ul>
+                            <StyleSheetManager
+                                shouldForwardProp={(prop) =>
+                                    !["centercontent"].includes(prop)
+                                }
                             >
-                                <Link href={item.href}>{item.content}</Link>
-                                {item.svg && item.svg}
-                            </Li>
-                        ))}
-                    </Ul>
-                </Menu>
+                                {list.map((item, index) => (
+                                    <Li
+                                        key={index}
+                                        centercontent={hasAnySvg}
+                                        onClick={item.handleClick}
+                                    >
+                                        <Link href={item.href}>
+                                            <Label>{item.content}</Label>
+                                            {item.svg && item.svg}
+                                        </Link>
+                                        {/* {item.svg && item.svg} */}
+                                    </Li>
+                                ))}
+                            </StyleSheetManager>
+                        </Ul>
+                    </Menu>
+                </DropdownButton>
             </DropdownContainer>
         </Wrapper>
     );

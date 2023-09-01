@@ -1,6 +1,6 @@
 //react hook
-import { useState, useContext } from "react";
-import { TodoContext } from "@/libs/hooks/useTodoContext";
+import { useState, useContext, useEffect } from "react";
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
 //api, interface
 import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
@@ -13,42 +13,25 @@ import DropDown from "@/components/DropDown/DropDown";
 import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
-import { StyledTodo, TodoDiv, StyledCheckbox, Text } from "./Todo.styles";
+import {
+    StyledTodo,
+    TodoDiv,
+    StyledCheckbox,
+    Text,
+    TodoWrap
+} from "./Todo.styles";
 
 interface TodoProps {
     content: string;
     status: string;
     contentId: string;
-    getCategory: () => void;
 }
 
-export default function Todo({
-    content,
-    status,
-    contentId,
-    getCategory
-}: TodoProps) {
-    //투두 체크시 patch요청(unchecked->completed, completed->reverted, reverted->completed)
-    // async function updateStatus(checkStatus: string) {
-    //     try {
-    //         const response: res<todo[]> = await axiosRequest.requestAxios<
-    //             res<todo[]>
-    //         >("patch", `/todoContents/${contentId}`, {
-    //             contentId: contentId,
-    //             todo: content,
-    //             status: checkStatus
-    //         });
-
-    //         console.log("체크!", response);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-    const { updateStatus } = useContext(TodoContext);
+export default function Todo({ content, status, contentId }: TodoProps) {
+    const { updateStatus, getTodos, selectedDate } = useContext(TodoContext);
     //투두 delete 요청
     async function deleteTodo() {
         try {
-            // console.log("클릭됨!", contentId);
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
             >("delete", `/todoContents/${contentId}`);
@@ -57,7 +40,10 @@ export default function Todo({
         }
     }
 
-    const [newCheckStatus, setNewCheckStatus] = useState<string>(status);
+    const [newcheckstatus, setNewcheckstatus] = useState<string>(status);
+    useEffect(() => {
+        setNewcheckstatus(status);
+    }, [status]);
 
     const handleCheckClick = async () => {
         let checkStatus = "";
@@ -68,14 +54,13 @@ export default function Todo({
         } else if (status === "reverted") {
             checkStatus = "completed";
         }
-        //patch요청
-        await updateStatus(contentId, content, checkStatus);
         //상태 업데이트
-        setNewCheckStatus(checkStatus);
+        setNewcheckstatus(checkStatus);
+        //patch요청
+        updateStatus(contentId, content, checkStatus);
         //todo get요청
-        getCategory();
+        getTodos(selectedDate, selectedDate);
     };
-
     //DropDown의 props
     const listItems = [
         {
@@ -88,7 +73,7 @@ export default function Todo({
             content: "삭제",
             handleClick: async () => {
                 await deleteTodo();
-                getCategory();
+                getTodos(selectedDate, selectedDate);
             }
         }
     ];
@@ -98,25 +83,26 @@ export default function Todo({
 
     return (
         <StyledTodo>
-            {isEditing ? (
-                <TodoForm
-                    contentId={contentId}
-                    getCategory={getCategory}
-                    existingContent={content}
-                    status={status}
-                    finishEdit={() => setIsEditig(false)}
-                />
-            ) : (
-                <TodoDiv>
-                    <StyledCheckbox
-                        onClick={handleCheckClick}
-                        newCheckStatus={newCheckStatus}
-                    >
-                        {newCheckStatus === "completed" && <CheckIcon />}
-                    </StyledCheckbox>
-                    <Text newCheckStatus={newCheckStatus}>{content}</Text>
-                </TodoDiv>
-            )}
+            <TodoWrap>
+                {isEditing ? (
+                    <TodoForm
+                        contentId={contentId}
+                        existingContent={content}
+                        status={status}
+                        finishEdit={() => setIsEditig(false)}
+                    />
+                ) : (
+                    <TodoDiv>
+                        <StyledCheckbox
+                            onClick={handleCheckClick}
+                            newcheckstatus={newcheckstatus}
+                        >
+                            {newcheckstatus === "completed" && <CheckIcon />}
+                        </StyledCheckbox>
+                        <Text newcheckstatus={newcheckstatus}>{content}</Text>
+                    </TodoDiv>
+                )}
+            </TodoWrap>
             <DropDown list={listItems}>
                 <MenuIcon />
             </DropDown>
