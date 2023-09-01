@@ -2,7 +2,12 @@ import {
     MyPageWrapper,
     ActivityWrapper,
     ButtonWrapper,
-    MypageButton
+    MypageButton,
+    Text,
+    ModalButtonWrap,
+    ModalButton,
+    ModalText,
+    SpanText
 } from "./MyPage.styles";
 import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
 import { UserInfo } from "@/components/pages/MyPage/UserInfo/UserInfo";
@@ -10,9 +15,35 @@ import Activity from "@/components/pages/MyPage/Activity/Activity";
 import { res, myUser } from "@/@types/index";
 import axiosRequest from "@/api";
 import { setKoreaTime } from "@/libs/utils/global";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
+
+interface ConfirmContentProps {
+    message: React.ReactNode;
+    onCancel: MouseEventHandler<HTMLButtonElement>;
+    onConfirm: MouseEventHandler<HTMLButtonElement>;
+}
+
+const ConfirmContent: React.FC<ConfirmContentProps> = ({
+    message,
+    onCancel,
+    onConfirm
+}) => {
+    return (
+        <>
+            <ModalText>{message}</ModalText>
+            <ModalButtonWrap>
+                <ModalButton onClick={onCancel}>
+                    <Text>취소</Text>
+                </ModalButton>
+                <ModalButton onClick={onConfirm}>
+                    <Text>확인</Text>
+                </ModalButton>
+            </ModalButtonWrap>
+        </>
+    );
+};
 
 export default function MyPage() {
     const [userInfo, setUserInfo] = useState<myUser>({
@@ -126,18 +157,44 @@ export default function MyPage() {
                     onClick={handleConfirmWithdrawModal}
                 />
                 {isLogoutModalOpen && (
-                    <ConfirmModal
-                        message={"로그아웃 하시겠습니까?"}
-                        onConfirm={handleConfirmLogout}
-                        onCancel={handleCloseModal}
-                    ></ConfirmModal>
+                    <ConfirmModal>
+                        <ConfirmContent
+                            message={
+                                <>
+                                    <SpanText isred={"false"}>
+                                        로그아웃 하시겠습니까?
+                                    </SpanText>
+                                </>
+                            }
+                            onConfirm={handleConfirmLogout}
+                            onCancel={handleCloseModal}
+                        />
+                    </ConfirmModal>
                 )}
                 {isWithdrawModalOpen && (
-                    <ConfirmModal
-                        message={`${userInfo.nickname}님의 펫이 기다리고 있어요!\n${userInfo.nickname}님의 펫을 두고 떠나시려구요?🥺`}
-                        onConfirm={handleConfirmWithdraw}
-                        onCancel={handleCloseModal}
-                    ></ConfirmModal>
+                    <ConfirmModal>
+                        <ConfirmContent
+                            message={
+                                <>
+                                    <SpanText isred={"false"}>
+                                        {userInfo.nickname}님의 펫이 기다리고
+                                        있어요!
+                                    </SpanText>
+                                    <SpanText isred={"true"}>
+                                        회원 탈퇴시 해당 계정으로
+                                    </SpanText>
+                                    <SpanText isred={"true"}>
+                                        영원히 서비스를 이용할 수 없어요 😥
+                                    </SpanText>
+                                    <SpanText isred={"false"}>
+                                        그래도탈퇴하시겠어요?`
+                                    </SpanText>
+                                </>
+                            }
+                            onConfirm={handleConfirmWithdraw}
+                            onCancel={handleCloseModal}
+                        />
+                    </ConfirmModal>
                 )}
             </ButtonWrapper>
         </MyPageWrapper>

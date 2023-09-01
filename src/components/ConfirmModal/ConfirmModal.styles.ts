@@ -24,7 +24,7 @@ const Container = styled.div`
 const ModalWrap = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-around;
     width: 18.5625rem;
     height: 10.125rem;
     flex-shrink: 0;
@@ -39,7 +39,7 @@ const ModalWrap = styled.div`
 
     z-index: 100;
     position: absolute;
-    top: 47%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
