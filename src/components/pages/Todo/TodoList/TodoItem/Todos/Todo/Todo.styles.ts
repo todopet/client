@@ -7,7 +7,10 @@ const StyledTodo = styled.div`
     justify-content: space-between;
     align-items: center;
 `;
-
+const TodoWrap = styled.div`
+    flex: 1;
+    padding-right: 8px;
+`;
 const TodoDiv = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -15,7 +18,7 @@ const TodoDiv = styled.div`
 `;
 
 interface TodoProps {
-    newCheckStatus: string;
+    newcheckstatus: string;
 }
 const StyledCheckbox = styled.div<TodoProps>`
     display: flex;
@@ -27,16 +30,16 @@ const StyledCheckbox = styled.div<TodoProps>`
     border: none;
     border-radius: 3px;
     background-color: ${(props) =>
-        props.newCheckStatus === "completed" ? "#baabb5" : "#e7e8ea"};
+        props.newcheckstatus === "completed" ? "#baabb5" : "#e7e8ea"};
 `;
 
 const Text = styled.span<TodoProps>`
     font-family: Pretendard;
     font-size: 16px;
     text-decoration-line: ${(props) =>
-        props.newCheckStatus === "completed" ? "line-through" : "none"};
+        props.newcheckstatus === "completed" ? "line-through" : "none"};
     color: ${(props) =>
-        props.newCheckStatus === "unchecked" ? "#000000" : "#ADADAD"};
+        props.newcheckstatus === "unchecked" ? "#000000" : "#ADADAD"};
 `;
 
-export { StyledTodo, TodoDiv, StyledCheckbox, Text };
+export { StyledTodo, TodoDiv, StyledCheckbox, Text, TodoWrap };

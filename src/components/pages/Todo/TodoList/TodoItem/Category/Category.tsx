@@ -4,14 +4,21 @@ import { CategoryStyles, Text, PlusButton } from "./Category.styles";
 interface CategoryProps {
     category: string;
     handleClick: () => void;
+    isEnded: boolean;
 }
-export default function Category({ category, handleClick }: CategoryProps) {
+export default function Category({
+    category,
+    handleClick,
+    isEnded
+}: CategoryProps) {
     return (
-        <CategoryStyles onClick={handleClick}>
+        <CategoryStyles onClick={handleClick} $isEnded={isEnded}>
             <Text>{category}</Text>
-            <PlusButton>
-                <PlusSvg />
-            </PlusButton>
+            {!isEnded && (
+                <PlusButton>
+                    <PlusSvg />
+                </PlusButton>
+            )}
         </CategoryStyles>
     );
 }
