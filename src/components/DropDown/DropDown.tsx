@@ -32,30 +32,30 @@ const Dropdown = ({ list, children }: ListProps) => {
             <DropdownContainer>
                 <DropdownButton onClick={categoryHandler} ref={categoryRef}>
                     {children}
+                    <Menu $isDropped={categoryIsOpen}>
+                        <Ul>
+                            <StyleSheetManager
+                                shouldForwardProp={(prop) =>
+                                    !["centercontent"].includes(prop)
+                                }
+                            >
+                                {list.map((item, index) => (
+                                    <Li
+                                        key={index}
+                                        centercontent={hasAnySvg}
+                                        onClick={item.handleClick}
+                                    >
+                                        <Link href={item.href}>
+                                            <Label>{item.content}</Label>
+                                            {item.svg && item.svg}
+                                        </Link>
+                                        {/* {item.svg && item.svg} */}
+                                    </Li>
+                                ))}
+                            </StyleSheetManager>
+                        </Ul>
+                    </Menu>
                 </DropdownButton>
-                <Menu $isDropped={categoryIsOpen}>
-                    <Ul>
-                        <StyleSheetManager
-                            shouldForwardProp={(prop) =>
-                                !["centercontent"].includes(prop)
-                            }
-                        >
-                            {list.map((item, index) => (
-                                <Li
-                                    key={index}
-                                    centercontent={hasAnySvg}
-                                    onClick={item.handleClick}
-                                >
-                                    <Link href={item.href}>
-                                        <Label>{item.content}</Label>
-                                        {item.svg && item.svg}
-                                    </Link>
-                                    {/* {item.svg && item.svg} */}
-                                </Li>
-                            ))}
-                        </StyleSheetManager>
-                    </Ul>
-                </Menu>
             </DropdownContainer>
         </Wrapper>
     );

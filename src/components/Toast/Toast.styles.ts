@@ -27,7 +27,7 @@ const ToastWrap = styled.div<ToastWrapProps>`
     background: ${(props) =>
         props.bgcolor === "black"
             ? "rgba(0, 0, 0, 0.8)"
-            : "rgba(255, 255, 255, 0.85)"};
+            : "rgba(255, 255, 255, 0.9)"};
 
     text-align: center;
     font-family: Inter;
