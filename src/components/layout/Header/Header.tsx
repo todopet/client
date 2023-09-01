@@ -7,7 +7,7 @@ import {
     ButtonCatainer
 } from "./Header.styles";
 import Dropdown from "@/components/DropDown/DropDown";
-import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";
+import { ReactComponent as HeaderMenuIcon } from "@/assets/icons/headerMenu.svg";
 import { ReactComponent as PlusIcon } from "@/assets/icons/plus.svg";
 
 export default function Header() {
@@ -37,7 +37,7 @@ export default function Header() {
             <ButtonCatainer>
                 {isDropDown && (
                     <Dropdown list={listItems}>
-                        <MenuIcon />
+                        <HeaderMenuIcon />
                     </Dropdown>
                 )}
             </ButtonCatainer>

@@ -22,7 +22,7 @@ export const LogoContainer = styled.div`
 `;
 
 export const ButtonCatainer = styled.div`
-    margin-right: 20px;
+    margin-right: 16px;
 
     & > div > div > div:nth-child(2) {
         width: 140px;
