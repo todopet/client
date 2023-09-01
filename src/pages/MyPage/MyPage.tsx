@@ -121,7 +121,6 @@ export default function MyPage() {
     }, []);
 
     const navigate = useNavigate();
-    // console.log(userInfo);
     return (
         <MyPageWrapper>
             <UserInfo
