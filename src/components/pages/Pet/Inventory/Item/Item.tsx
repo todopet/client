@@ -24,7 +24,7 @@ interface itemPropsType {
 export default function Item({ url, name, des, _id, quantity }: itemPropsType) {
     const [ discard, setDiscard ] = useState(false);
     const [ use, setUse ] = useState(false);
-    
+    console.log(use, discard);
     return (
         <ItemWrap>
             <ItemInfo onClick={() => setUse(!use)}>
