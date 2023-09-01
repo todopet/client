@@ -13,12 +13,8 @@ const DividerWrap = styled.div`
         color: #b1aeae;
     }
 `;
-
-interface LineHasLengthProps {
-    haslength: string;
-}
-const Line = styled.div<LineHasLengthProps>`
-    width: ${(props) => (props.haslength === "true" ? "45%" : "50%")};
+const Line = styled.div`
+    width: 45%;
     height: 1px;
     background-color: #dfdfdf;
 `;

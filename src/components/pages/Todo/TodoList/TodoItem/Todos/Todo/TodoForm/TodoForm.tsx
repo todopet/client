@@ -1,17 +1,17 @@
 //react hook
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect } from "react";
 //api, interface
 import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
 //icons
 //components
-import { TodoContext } from "@/components/pages/Todo/TodoContext";
 //styles
 import { Form, StyledCheckbox, Input } from "./TodoForm.styles";
 
 interface TodoFormProps {
     categoryId?: string;
     contentId?: string;
+    getCategory: () => void;
     existingContent?: string;
     status?: string;
     finishEdit?: () => void;
@@ -19,12 +19,11 @@ interface TodoFormProps {
 export default function TodoForm({
     categoryId,
     contentId,
+    getCategory,
     existingContent,
     status,
     finishEdit
 }: TodoFormProps) {
-    const { getTodos, selectedDate } = useContext(TodoContext);
-
     //input value 관리
     const [value, setValue] = useState<string>(
         existingContent ? existingContent : ""
@@ -33,18 +32,13 @@ export default function TodoForm({
     //투두 post요청(투두 생성)
     async function postTodo() {
         try {
+            // console.log("투두입력!", categoryId, value);
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
-            >(
-                "post",
-                `/todoContents`,
-                {
-                    categoryId: categoryId,
-                    todo: value,
-                    date: selectedDate
-                },
-                { "x-custom-data": Date.now() * 4 + 1000 }
-            );
+            >("post", `/todoContents`, {
+                categoryId: categoryId,
+                todo: value
+            });
         } catch (error) {
             console.error(error);
         }
@@ -54,16 +48,12 @@ export default function TodoForm({
         try {
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
-            >(
-                "patch",
-                `/todoContents/${contentId}`,
-                {
-                    contentId: contentId,
-                    todo: value,
-                    status: status
-                },
-                { "x-custom-data": Date.now() * 4 + 1000 }
-            );
+            >("patch", `/todoContents/${contentId}`, {
+                contentId: contentId,
+                todo: value,
+                status: status
+            });
+            // console.log("투두수정!", response);
         } catch (error) {
             console.error(error);
         }
@@ -77,7 +67,7 @@ export default function TodoForm({
         } else if (value) {
             await postTodo();
         }
-        getTodos(selectedDate, selectedDate);
+        getCategory();
         setValue("");
     };
 
@@ -91,6 +81,8 @@ export default function TodoForm({
 
     //input form 외부 클릭시 제출
     function handleClickOutside(e: MouseEvent) {
+        // console.log("외부클릭!");
+
         if (formRef.current && !formRef.current.contains(e.target as Node)) {
             submitForm();
             finishEdit && finishEdit();

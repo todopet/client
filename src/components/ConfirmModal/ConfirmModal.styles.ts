@@ -14,7 +14,7 @@ const Container = styled.div`
     bottom: 0;
 
     height: 100vh;
-    width: 390px;
+    width: 100vw;
 
     background: rgba(0, 0, 0, 0.58);
     backdrop-filter: blur(2px);
@@ -24,7 +24,7 @@ const Container = styled.div`
 const ModalWrap = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     width: 18.5625rem;
     height: 10.125rem;
     flex-shrink: 0;

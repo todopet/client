@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Button from "@/components/Button/Button";
 
 export interface EditBtnProps {
-    modaltype: "useModal" | "discardModal";
-    btntype: "confirm" | "cancel";
+    modalType: "useModal" | "discardModal";
+    btnType: "confirm" | "cancel";
 }
 
 const ButtonStyled = styled(Button)<EditBtnProps>`
@@ -14,9 +14,9 @@ const ButtonStyled = styled(Button)<EditBtnProps>`
     font-weight: 500;
     width: 100%;
     color: ${(props) =>
-        props.btntype === "confirm"
+        props.btnType === "confirm"
             ? "#000000"
-            : props.modaltype === "useModal"
+            : props.modalType === "useModal"
             ? "#2dc770"
             : "#adadad"};
     cursor: pointer;
@@ -29,9 +29,9 @@ const ButtonWrap = styled.div<EditBtnProps>`
     display: flex;
     align-items: center;
     background-color: ${(props) =>
-        props.btntype === "cancel"
+        props.btnType === "cancel"
             ? "#ffffff"
-            : props.modaltype === "useModal"
+            : props.modalType === "useModal"
             ? "#aaeea8"
             : "#d9d9d9"};
     cursor: pointer;

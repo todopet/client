@@ -1,17 +1,13 @@
 import styled from "styled-components";
 
-interface CategoryStylesProps {
-    $isEnded: boolean;
-}
-const CategoryStyles = styled.div<CategoryStylesProps>`
-    background-color: #f2f2f2;
+const CategoryStyles = styled.div`
+    background-color: #F2F2F2;
     width: fit-content;
     height: 32px;
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-right: ${(props) => (props.$isEnded ? "14px" : "10px")};
     padding-left: 14px;
 `;
 
@@ -28,8 +24,8 @@ const PlusButton = styled.button`
     width: 20px;
     height: 20px;
     padding: 4px 0px;
-    margin-left: 10px;
-    cursor: pointer;
+    margin-left: 18px;
+    margin-right: 8px;
 `;
 
 export { CategoryStyles, Text, PlusButton };

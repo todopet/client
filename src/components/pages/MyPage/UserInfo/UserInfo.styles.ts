@@ -1,23 +1,20 @@
-import styled from "styled-components";
-import pet from "@/assets/images/pet-example.svg";
-import update from "@/assets/icons/update.svg";
-import { Icon } from "./UserInfo";
-import { ModalButton } from "./UserInfo";
-import Input from "@/components/Input/Input";
+import styled from 'styled-components';
+import pet from '@/assets/images/pet-example.svg';
+import update from '@/assets/icons/update.svg';
+import { Icon } from './UserInfo';
+import { ModalButton } from './UserInfo';
+
 const UserInfoWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2.7rem;
+    gap: 4rem;
     width: 100%;
-    height: 15%;
-`;
+    heigth: 100%;
+`
 
-interface ImagePathProps {
-    imagepath: string;
-}
-const UserIcon = styled.div<ImagePathProps>`
-    background-image: url(${(props: ImagePathProps) => props.imagepath});
+const UserIcon = styled.div`
+    background-image: url(${pet});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -31,21 +28,23 @@ const UserIcon = styled.div<ImagePathProps>`
         0px 0px 12.5px rgba(0, 0, 0, 0.03),
         0px 0px 23.4px rgba(0, 0, 0, 0.036),
         0px 0px 56px rgba(0, 0, 0, 0.05);
-`;
+    cursor: pointer;
+`
+// 펫 아이콘 누르면 다시 펫 페이지로 갈 수 있게하는거 어떨까요
+
 
 const UserInfoArea = styled.div`
     display: flex;
     flex-direction: column;
     height: 80px;
-    width: 40%;
-`;
+`
 
 const UserName = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 55%;
-`;
+    height: 50%;
+`
 
 const UpdateIcon = styled(Icon)`
     background-image: url(${update});
@@ -57,105 +56,75 @@ const UpdateIcon = styled(Icon)`
     cursor: pointer;
 
     &:hover {
-        opacity: 0.5;
+        opacity: .5;
     }
-`;
+`
 
+// 나중에 헤더 추가하면 bottom은 헤더 높이로 수정
 const ModalBackdrop = styled.div`
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    margin: 0 auto;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    height: 100vh;
-    width: 390px;
-
-    background: rgba(0, 0, 0, 0.58);
-    backdrop-filter: blur(2px);
-    z-index: 1000;
-`;
+    align-items: center;
+`
 
 const Modal = styled.div`
     width: 80%;
-    height: 185px;
-    border-radius: 25px;
+    height: 20%;
+    border-radius: 15px;
     background-color: white;
     margin-bottom: 60px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-`;
+`
 
 const ModalTitle = styled.p`
     font-weight: bold;
-    font-size: 1.1rem;
-    padding-left: 10%;
-    margin-bottom: 0;
-`;
+    font-size: 17px;
+    padding-left: 25px;
+`
 
 const ModalInput = styled.input`
-    width: 75%;
-    height: 23%;
-    border: 2px solid #bff2bd;
+    width: 80%;
+    height: 20%;
+    border: 2px solid #BFF2BD;
     border-radius: 20px;
     margin: 0 auto;
-    padding: 0 10px;
-`;
+`
 
 const ModalButtonArea = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0 30px 20px;
-`;
+    gap: .7rem;
+    padding: 20px 30px;
+`
 
 const DeleteButton = styled(ModalButton)`
-    background-color: #aaeea8;
-    border: none;
+	background-color: #AAEEA8;
+    border: none; 
     cursor: pointer;
-    width: 45px;
-    height: 35px;
+	width: 45px;
+	height: 35px;
     border-radius: 15px;
-    color: #28b666;
-`;
+    color: #28B666;
+`
 
 const UpdateButton = styled(ModalButton)`
-    background-color: #e7e8ea;
-    border: none;
+    background-color: #E7E8EA;
+    border: none; 
     cursor: pointer;
     width: 100px;
     height: 35px;
     border-radius: 15px;
-`;
+`
 
 const JoinDate = styled.p`
     margin: 10px 0;
     height: 50%;
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 4px;
-`;
+`
 
-export {
-    UserInfoWrapper,
-    UserIcon,
-    UserInfoArea,
-    UserName,
-    UpdateIcon,
-    ModalBackdrop,
-    Modal,
-    ModalTitle,
-    ModalInput,
-    ModalButtonArea,
-    DeleteButton,
-    UpdateButton,
-    JoinDate
-};
+export { UserInfoWrapper, UserIcon, UserInfoArea, UserName, UpdateIcon, ModalBackdrop, Modal, ModalTitle, ModalInput, ModalButtonArea, DeleteButton, UpdateButton, JoinDate };

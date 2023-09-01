@@ -5,17 +5,17 @@ interface propsType extends EditBtnProps {
     onClick(): void;
 }
 
-export default function EditBtn({ modaltype, btntype, onClick }: propsType) {
+export default function EditBtn({ modalType, btnType, onClick }: propsType) {
     let btnContent = "";
-    if (btntype === "confirm") {
-        if (modaltype === "useModal") btnContent = "사용하기";
+    if (btnType === "confirm") {
+        if (modalType === "useModal") btnContent = "사용하기";
         else btnContent = "버리기";
-    } else if (btntype === "cancel") {
+    } else if (btnType === "cancel") {
         btnContent = "취소";
     }
     return (
-        <ButtonWrap modaltype={modaltype} btntype={btntype}>
-            <ButtonStyled modaltype={modaltype} btntype={btntype} onClick={onClick}>
+        <ButtonWrap modalType={modalType} btnType={btnType}>
+            <ButtonStyled modalType={modalType} btnType={btnType} onClick={onClick}>
                 {btnContent}
             </ButtonStyled>
         </ButtonWrap>

@@ -1,73 +1,20 @@
 //hook
-import { useState, useRef, useEffect } from "react";
-//api, interface
-import axiosRequest from "@/api/index";
-import { res } from "@/@types/index";
+import { useState, useRef, useEffect, useContext } from "react";
+import { TodoContext } from "@/libs/hooks/useTodoContext";
 //img
 import background from "@/assets/images/miniPetBackground.png";
 import miniPet from "@/assets/images/pet-0.png";
 //components
-import MiniPetToast from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
-import Toast from "@/components/Toast/Toast";
-
+import MiniPetToast, {
+    ToastTypes
+} from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 //styles
 import { MiniPetWrap, Bg, MyPet } from "./MiniPet.styles";
 
-interface Petlevel {
-    level: number | null;
-}
 export default function MiniPet() {
-    //마이펫 레벨 get
-    async function getPetlevel() {
-        try {
-            const response: res<Petlevel> = await axiosRequest.requestAxios<
-                res<Petlevel>
-            >("get", `/myPets/myPet/level`);
-            setPetlevel(response.data.level);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    useEffect(() => {
-        getPetlevel();
-    }, []);
+    //보상관련 toast(투두를 체크를 했을때 set)
+    const [toastType, setToastType] = useState<ToastTypes>(ToastTypes.SPECIAL);
 
-    //마이펫 레벨
-    const [petlevel, setPetlevel] = useState<number | null>(null);
-
-    interface ItemsCount {
-        count: number;
-    }
-
-    //인벤토리 아이템 수량 조회
-    async function getItemsCount() {
-        try {
-            const response: res<ItemsCount> = await axiosRequest.requestAxios<
-                res<ItemsCount>
-            >("get", `/inventories/itemsCount`);
-            setItemsCount(response.data.count);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    const [itemsCount, setItemsCount] = useState<number>(0);
-    const [isActiveToast, setIsActiveToast] = useState<boolean>(false);
-    const [toastContent, setToastContent] = useState<React.ReactNode | null>(
-        null
-    );
-    useEffect(() => {
-        getItemsCount();
-        if (itemsCount >= 50) {
-            setToastContent(
-                <>
-                    인벤토리가 가득찼습니다.
-                    <br />
-                    아이템을 정리하여 다음 보상을 받으세요 🙂
-                </>
-            );
-            setIsActiveToast(true);
-        }
-    }, [itemsCount]);
     //새싹이 관련
     const miniPetWrapperRef = useRef<HTMLDivElement | null>(null);
     const miniPetRef = useRef<HTMLImageElement | null>(null);
@@ -87,6 +34,7 @@ export default function MiniPet() {
 
                 //x축 이동
                 setXPosition(xPosition + 5);
+                // console.log("xxx");
                 if (xPosition > containerWidth) {
                     setXPosition(-sessakWidth);
                 }
@@ -94,8 +42,10 @@ export default function MiniPet() {
                 //y축 이동
                 if (yDirection === 1) {
                     setYPosition(yPosition + 5);
+                    // console.log(1);
                 } else if (yDirection === -1) {
                     setYPosition(yPosition - 5);
+                    // console.log(-1);
                 }
 
                 //container영역으로 이동 제한
@@ -107,6 +57,8 @@ export default function MiniPet() {
                     setXPosition(xPosition + 5);
                     setXPosition(xPosition + 5);
                     setXPosition(xPosition + 5);
+
+                    // console.log("stay");
                 }
 
                 miniPetRef.current.style.left = xPosition + "px";
@@ -119,49 +71,16 @@ export default function MiniPet() {
         return () => clearInterval(intervalId);
     }, [xPosition]);
 
-    // 펫이 레벨별로 이미지 사이즈 지정
-    let petImgSize = { petImgWidth: 50, petImgHeight: 50 };
-    switch (petlevel) {
-        case 0:
-            petImgSize = { petImgWidth: 31, petImgHeight: 37.4 };
-            break;
-        case 1:
-            petImgSize = { petImgWidth: 53, petImgHeight: 37.4 };
-            break;
-        case 2:
-            petImgSize = { petImgWidth: 59.2, petImgHeight: 34.4 };
-            break;
-        case 3:
-            petImgSize = { petImgWidth: 59.2, petImgHeight: 50 };
-            break;
-        case 4:
-            petImgSize = { petImgWidth: 71.8, petImgHeight: 56.2 };
-            break;
-        case 5:
-            petImgSize = { petImgWidth: 93.6, petImgHeight: 62.4 };
-            break;
-    }
-    const { petImgWidth, petImgHeight } = petImgSize as {
-        petImgWidth: number;
-        petImgHeight: number;
-    };
+    const { reward, isActiveToast } = useContext(TodoContext);
+
     return (
         <MiniPetWrap ref={miniPetWrapperRef}>
-            {isActiveToast && (
-                <Toast
-                    isActive={isActiveToast}
-                    bgcolor={"black"}
-                    content={toastContent}
-                />
-            )}
-
-            <MiniPetToast />
-            <MyPet
-                ref={miniPetRef}
-                petlevel={petlevel}
-                width={petImgWidth}
-                height={petImgHeight}
+            <MiniPetToast
+                isActive={isActiveToast}
+                toastType={toastType}
+                itemName={reward}
             />
+            <MyPet ref={miniPetRef} src={miniPet} alt="miniPet" />
             <Bg src={background} alt="background" />
         </MiniPetWrap>
     );
