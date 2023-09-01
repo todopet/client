@@ -32,7 +32,6 @@ export default function Todo({ content, status, contentId }: TodoProps) {
     //투두 delete 요청
     async function deleteTodo() {
         try {
-            // console.log("클릭됨!", contentId);
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
             >("delete", `/todoContents/${contentId}`);

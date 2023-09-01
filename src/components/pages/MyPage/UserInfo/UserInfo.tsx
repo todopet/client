@@ -34,7 +34,6 @@ export function UserInfo({ picture, name, date }: userinfoType) {
             const response: res<myUser> = await axiosRequest.requestAxios<
                 res<myUser>
             >("get", "/users/user");
-            console.log(response);
             setNickname(response.data.nickname);
         } catch (error) {
             alert("오류가 발생했습니다. 다시 시도해 주세요.");
@@ -55,7 +54,6 @@ export function UserInfo({ picture, name, date }: userinfoType) {
             const response: res<myUser> = await axiosRequest.requestAxios<
                 res<myUser>
             >("patch", "/users/myInfo", { nickname });
-            console.log(response);
             alert("닉네임이 수정되었습니다!"); // 사용자에게 알림
             navigate(0); // 페이지 새로고침
         } catch (error) {

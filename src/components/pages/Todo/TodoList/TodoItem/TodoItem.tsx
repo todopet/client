@@ -17,7 +17,6 @@ export default function TodoItem({ todos }: TodoItemProps) {
     const [openInputForm, setOpenInputForm] = useState<boolean>(false);
     const handleClick = () => {
         !todos.ended && setOpenInputForm(!openInputForm);
-        // console.log("클릭됨!");
     };
     return (
         <TodoItemStyles>
