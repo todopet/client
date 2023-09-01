@@ -155,6 +155,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                     value={inputValue}
                     onChange={handleInput}
                     placeholder="목표를 입력하세요!"
+                    autoFocus
                 />
             </InputContainer>
             {SettingButton(subject)}
