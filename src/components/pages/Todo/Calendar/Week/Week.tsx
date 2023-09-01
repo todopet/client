@@ -1,9 +1,11 @@
-import React, { useState, useContext, useEffect, useMemo } from "react";
+import { useState, useContext, useEffect, useMemo } from "react";
 import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
 import { TodoContext } from "@/components/pages/Todo/TodoContext";
+import axiosRequest from "@/api/index";
+import { res, todoCategory } from "@/@types/index";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
 const today = new Date();
@@ -16,29 +18,33 @@ const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 // 오늘을 기준으로 지난 일요일의 날짜 객체를 얻음
 // todayDate - todayDay를 하면 일요일의 날짜가 나오는데, 일요일이 0이기 때문. 일요일~토요일 0~6.
 const lastSunday = new Date(todayYear, todayMonth, todayDate - todayDay);
-const saturday = new Date(
-    lastSunday.getFullYear(),
-    lastSunday.getMonth(),
-    lastSunday.getDate() + 6
-);
 let isFirstDateIncluded = false;
 let specialCaseOfYearEnd = false;
+
+async function getTodos(startDate: string, endDate: string) {
+    try {
+        const response: res<todoCategory[]> = await axiosRequest.requestAxios<
+            res<todoCategory[]>
+        >("get", `/todoContents?start=${startDate}&end=${endDate}`);
+        return response.data;
+        // console.log("response.data: ", response.data);
+    } catch (error) {
+        console.error("get요청 중 에러: ", error);
+        return [];
+    }
+}
 
 export default function Week() {
     const [currentSunday, setCurrentSunday] = useState(lastSunday);
     const [titleData, setTitleData] = useState({
-        year: currentSunday.getFullYear(),
-        month: currentSunday.getMonth(),
-        weekCount: calculateWeekCount(),
+        year: today.getFullYear(),
+        month: today.getMonth(),
+        weekCount: calculateWeekCount()
     });
     const [clicked, setClicked] = useState(-1);
     const [dates, setDates] = useState<Date[]>([]);
-    const [completedTodosByDay, setCompletedTodosByDay] = useState<number[]>(
-        []
-    );
 
-    const { updateSelectedDate, getTodos, periodTodos } =
-        useContext(TodoContext);
+    const { updateSelectedDate, updateStartEnd, periodTodos, setPeriodTodos } = useContext(TodoContext);
 
     // 날짜 형식 yyyy-mm-dd 지정 함수
     const formatDate = (date: Date) => {
@@ -65,9 +71,7 @@ export default function Week() {
         isFirstDateIncluded = false;
         specialCaseOfYearEnd = false;
 
-        // console.log(newDates);
         // 현재 주에 1일이 포함되었는지 확인
-
         isFirstDateIncluded = newDates
             .map((date) => date.getDate())
             .includes(1);
@@ -84,8 +88,12 @@ export default function Week() {
                 }
             }
         }
-        // console.log("getWeekDates");
+        
+        fetchData();        
+    };
 
+    const fetchData = () => {
+        // console.log("fetchData 함수 호출됨");
         const start = formatDate(currentSunday);
         const end = formatDate(
             new Date(
@@ -94,64 +102,23 @@ export default function Week() {
                 currentSunday.getDate() + 6
             )
         );
-        getTodos(start, end);
-    };
+        updateStartEnd(start, end);
+        const todos = getTodos(start, end);
+        todos
+            .then((value) => {
+                setPeriodTodos(value);
+                // console.log("periodTodos: ", periodTodos);
+            })
+            .catch((error) => {
+                console.error("promise chain 내의 에러: ", error);
+            })
+    }
 
-// // 초기 countDates
-// const countDates = () => {
-//     const todoDates: number[] = [];
-//     console.log("countDates periodTodos: ", periodTodos);
-//     periodTodos?.forEach((category: any) =>
-//         category.todos.forEach((todo: any) => {
-//             const newDate = new Date(todo.createdAt);
-//             // console.log(todo.status === "completed");
-//             if (todo.status === "completed")
-//                 todoDates.push(newDate.getDay());
-//         })
-//     );
-//     console.log("todoDates: ", todoDates);
-//     for (let i = 0; i < 7; ++i) {
-//         let count = 0;
-//         for (let j = 0; j < todoDates.length; ++j) {
-//             if (todoDates[j] === i) {
-//                 ++count;
-//             }
-//         }
-//         // console.log(count);
-//         setCompletedTodosByDay((prev) => [...prev, count]);
-//     }
-//     console.log("countDates");
-// }
-
-// 중기 countDates
-const countDates = () => {
-    const todoDates = periodTodos
-        ?.map(
-            (v: any) =>
-                v.todos?.map((todo: any) => {
-                    if (todo.status === "completed") {
-                        return new Date(todo.createdAt);
-                    }
-                    return null;
-                })
-        )
-        .filter((v) => v);
-    todoDates?.reduce(
-        (acc, cur) => {
-            acc[cur] = acc[cur] + 1;
-            return acc;
-        },
-        Array.from({ length: 7 }, () => 0)
-    );
-};
-
-    // 최종 countDates(이름없어짐)
-    const _completedTodosByDay = useMemo(() => {
+    const completedTodosByDay = useMemo(() => {
         const todoDates: number[] = [];
         periodTodos?.forEach((category: any) =>
             category.todos.forEach((todo: any) => {
                 const newDate = new Date(todo.createdAt);
-                // console.log(todo.status === "completed");
                 if (todo.status === "completed")
                     todoDates.push(newDate.getDay());
             })
@@ -161,17 +128,13 @@ const countDates = () => {
                 acc[cur] = acc[cur] + 1;
                 return acc;
             },
-            Array.from({ length: 7 }, () => 0)
+            Array.from({ length: dates.length }, () => 0)
         );
     }, [periodTodos]);
-    console.log("_completedTodosByDay: ", _completedTodosByDay);
+    // console.log("completedTodosByDay: ", completedTodosByDay);
 
     useEffect(() => {
         getWeekDates();
-        const start = formatDate(lastSunday);
-        const end = formatDate(saturday);
-        getTodos(start, end);
-        countDates();
     }, []);
 
     function calculateWeekCount() {
@@ -196,12 +159,6 @@ const countDates = () => {
         }
     };
 
-    const onChangeWeek = (_currentSunday: Date) => {
-        // console.log("onChangeWeek: ",periodTodos);
-        getWeekDates();
-        countDates();
-    };
-
     const handleLeftClick = () => {
         const newCurrentSunday = new Date(
             currentSunday.setDate(currentSunday.getDate() - 7)
@@ -216,7 +173,7 @@ const countDates = () => {
                 weekCount: isFirstDateIncluded ? 1 : calculateWeekCount()
             });
         }, 0);
-        onChangeWeek(newCurrentSunday);
+        getWeekDates();
     };
 
     const handleRightClick = () => {
@@ -233,7 +190,7 @@ const countDates = () => {
                 weekCount: isFirstDateIncluded ? 1 : calculateWeekCount()
             });
         }, 0);
-        onChangeWeek(newCurrentSunday);
+        getWeekDates();
     };
 
     const handleDateCellClick = (idx: number) => {
@@ -248,8 +205,8 @@ const countDates = () => {
                     <LeftSvg />
                 </ArrowButton>
                 <Styles.Title>
-                    {titleData.year}년 {titleData.month + 1}월{" "}
-                    {titleData.weekCount}주차
+                    {titleData.year}년 {titleData.month + 1}월
+                    {/* {" "}{titleData.weekCount}주차 */}
                 </Styles.Title>
                 <ArrowButton onClick={handleRightClick}>
                     <RightSvg />
@@ -269,8 +226,8 @@ const countDates = () => {
                         >
                             <Styles.Cell
                                 completed={
-                                    Array.isArray(_completedTodosByDay)
-                                        ? _completedTodosByDay[i]
+                                    Array.isArray(completedTodosByDay)
+                                        ? completedTodosByDay[i]
                                         : 0
                                 }
                             />
@@ -282,7 +239,6 @@ const countDates = () => {
                                     date.getDate() === today.getDate()
                                 }
                                 $isclicked={clicked === i}
-                                data-date={date}
                             >
                                 {date.getDate()}
                             </Styles.Date>
@@ -292,4 +248,44 @@ const countDates = () => {
             </div>
         </Styles.WeekStyle>
     );
-};
+}
+
+    // // 초기 countDates
+    // const countDates = () => {
+    //     const todoDates: number[] = [];
+    //     periodTodos?.forEach((category: any) =>
+    //         category.todos.forEach((todo: any) => {
+    //             const newDate = new Date(todo.createdAt);
+    //             if (todo.status === "completed")
+    //                 todoDates.push(newDate.getDay());
+    //         })
+    //     );
+    //     for (let i = 0; i < 7; ++i) {
+    //         let count = 0;
+    //         for (let j = 0; j < todoDates.length; ++j) {
+    //             if (todoDates[j] === i) {
+    //                 ++count;
+    //             }
+    //         }
+    //         setCompletedTodosByDay((prev) => [...prev, count]);
+    //     }
+    // }
+    //
+    // // 수정된 countDates ===> useMemo사용으로, completedTodosByDay로 변경됨
+    // const countDates = (periodTodos: todoCategory[]) => {
+    //     const todoDates: number[] = [];
+    //     periodTodos?.forEach((category: any) =>
+    //         category.todos.forEach((todo: any) => {
+    //             const newDate = new Date(todo.createdAt);
+    //             if (todo.status === "completed")
+    //                 todoDates.push(newDate.getDay());
+    //         })
+    //     );
+    //     todoDates?.reduce(
+    //         (acc, cur) => {
+    //             acc[cur] = acc[cur] + 1;
+    //             return acc;
+    //         },
+    //         Array.from({ length: 7 }, () => 0)
+    //     );
+    // };
