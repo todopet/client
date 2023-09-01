@@ -17,6 +17,9 @@ const DropdownContainer = styled.div`
 
 const DropdownButton = styled.div`
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 `;
 
 const Menu = styled.div.attrs<DropDownProps>((props) => {
@@ -78,6 +81,7 @@ const Li = styled.li<{ centercontent?: boolean }>`
     justify-content: ${(props) =>
         props.centercontent ? "space-between" : "center"};
     align-items: center;
+    padding: 0 4px;
 `;
 const Label = styled.label`
     cursor: pointer;
