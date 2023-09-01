@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import {
     Container,
     ModalWrap,
@@ -7,30 +7,14 @@ import {
     Button
 } from "./ConfirmModal.styles";
 
-interface ConfirmModalProps {
-    message: string;
-    onConfirm: () => void;
-    onCancel: () => void;
-}
+interface ConfirmModalProps extends PropsWithChildren {}
 
-const ConfirmModal: React.FC<ConfirmModalProps> = ({
-    message,
-    onConfirm,
-    onCancel
-}) => {
+const ConfirmModal: React.FC<ConfirmModalProps> = (props) => {
+    const { children } = props;
+    console.log(children);
     return (
         <Container>
-            <ModalWrap>
-                <Text>{message}</Text>
-                <ButtonWrap>
-                    <Button onClick={onCancel}>
-                        <Text>취소</Text>
-                    </Button>
-                    <Button onClick={onConfirm}>
-                        <Text>확인</Text>
-                    </Button>
-                </ButtonWrap>
-            </ModalWrap>
+            <ModalWrap>{children}</ModalWrap>
         </Container>
     );
 };
