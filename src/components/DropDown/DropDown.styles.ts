@@ -33,7 +33,7 @@ const Menu = styled.div.attrs<DropDownProps>((props) => {
     width: 100px; //컴포넌트마다 수정하기
     text-align: center;
     box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.2);
-    border-radius: 16px;
+    border-radius: 14px;
     background-color: white;
 
     opacity: 0;

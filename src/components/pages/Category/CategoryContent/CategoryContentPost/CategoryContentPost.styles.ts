@@ -44,7 +44,7 @@ const CircleButton = styled.button`
 const ActionButtonWrap = styled.div`
     display: flex;
     justify-content: space-evenly;
-    margin-top: 130px;
+    margin-top: 36px;
 `;
 
 const ActionButton = styled.button<{ type: string }>`
