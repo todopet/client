@@ -64,6 +64,7 @@ const LoginBtnGroup = styled.button`
     background: #fff;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 `;
 
 const GoogleImage = styled.div`

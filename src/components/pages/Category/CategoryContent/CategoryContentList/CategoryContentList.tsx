@@ -10,7 +10,7 @@ interface CategoryListProps {
 const CategoryContentList: React.FC<CategoryListProps> = ({ categoryList }) => {
     return (
         <Wrap>
-            <Text>일반</Text>
+            <Text>진행 중인 목표</Text>
             <ButtonWrap>
                 {categoryList.length > 0 &&
                     categoryList.map((category) => {

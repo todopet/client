@@ -14,7 +14,7 @@ import { UserInfo } from "@/components/pages/MyPage/UserInfo/UserInfo";
 import Activity from "@/components/pages/MyPage/Activity/Activity";
 import { res, myUser } from "@/@types/index";
 import axiosRequest from "@/api";
-import { setKoreaTime } from "@/libs/utils/global";
+import { formatDateToString, setKoreaTime } from "@/libs/utils/global";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
@@ -91,7 +91,7 @@ export default function MyPage() {
     const handleConfirmWithdraw = async () => {
         try {
             const response: AxiosResponse = await axios.post(
-                "https://kdt-sw-5-2-team14.elicecoding.com/api/v1/withdraw"
+                "http://localhost:3001/api/v1/withdraw"
             );
             if (response.status === 200) {
                 alert("회원 탈퇴 처리되었습니다. ");
@@ -121,13 +121,13 @@ export default function MyPage() {
     }, []);
 
     const navigate = useNavigate();
-
+    // console.log(userInfo);
     return (
         <MyPageWrapper>
             <UserInfo
                 picture={userInfo.picture}
                 name={userInfo.nickname}
-                date={setKoreaTime(userInfo.createdAt)}
+                date={formatDateToString(userInfo.createdAt)}
             ></UserInfo>
             <ActivityWrapper>
                 <Activity
@@ -187,7 +187,7 @@ export default function MyPage() {
                                         영원히 서비스를 이용할 수 없어요 😥
                                     </SpanText>
                                     <SpanText isred={"false"}>
-                                        그래도탈퇴하시겠어요?`
+                                        그래도 탈퇴하시겠어요?
                                     </SpanText>
                                 </>
                             }

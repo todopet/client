@@ -29,6 +29,7 @@ const PlusButton = styled.button`
     height: 20px;
     padding: 4px 0px;
     margin-left: 10px;
+    cursor: pointer;
 `;
 
 export { CategoryStyles, Text, PlusButton };

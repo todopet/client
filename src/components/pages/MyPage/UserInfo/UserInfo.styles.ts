@@ -8,7 +8,7 @@ const UserInfoWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 4rem;
+    gap: 2.7rem;
     width: 100%;
     height: 15%;
 `;
@@ -31,20 +31,20 @@ const UserIcon = styled.div<ImagePathProps>`
         0px 0px 12.5px rgba(0, 0, 0, 0.03),
         0px 0px 23.4px rgba(0, 0, 0, 0.036),
         0px 0px 56px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
 `;
 
 const UserInfoArea = styled.div`
     display: flex;
     flex-direction: column;
     height: 80px;
+    width: 40%;
 `;
 
 const UserName = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50%;
+    height: 55%;
 `;
 
 const UpdateIcon = styled(Icon)`
@@ -139,6 +139,9 @@ const UpdateButton = styled(ModalButton)`
 const JoinDate = styled.p`
     margin: 10px 0;
     height: 50%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 4px;
 `;
 
 export {
