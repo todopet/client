@@ -32,8 +32,6 @@ export default function ActionModal({
     quantity
 }: modalTypeProps) {
     const [itemData, setItemData] = useContext(ItemDataContext);
-
-    const [openModal, setOpenModal] = useState<boolean>(true);
     const [itemCount, setItemCount] = useState(1);
 
     async function receiveItemData() {
@@ -78,69 +76,65 @@ export default function ActionModal({
 
     return (
         <>
-            {openModal && (
-                <ModalBg
-                    onClick={() => {
-                        setOpenModal(false);
-                        setState(!state);
-                    }}
-                >
-                    <ModalWrap onClick={(e) => e.stopPropagation()}>
-                        <Item>
-                            <div>
-                                {modaltype === "useModal" ? "사용할" : "버리는"}
-                            </div>
-                            <div>도구: {name}</div>
-                        </Item>
-                        <Quantity>
-                            <ChangeQtyBtn
-                                modaltype={modaltype}
-                                operationType="decrease"
-                                onClick={() =>
-                                    itemCount > 1
-                                        ? setItemCount(itemCount - 1)
-                                        : false
-                                }
-                                iscountpositivenum={itemCount > 1}
-                            />
-                            <div>{itemCount}</div>
-                            <ChangeQtyBtn
-                                modaltype={modaltype}
-                                operationType="increase"
-                                onClick={() =>
-                                    itemCount < quantity
-                                        ? setItemCount(itemCount + 1)
-                                        : false
-                                }
-                                iscountpositivenum={itemCount < quantity}
-                            />
-                        </Quantity>
-                        <BtnWrap>
-                            <EditBtn
-                                modaltype={modaltype}
-                                btntype="confirm"
-                                onClick={() => {
-                                    if (modaltype === "useModal") {
-                                        handleUseItem(itemId);
-                                        setOpenModal(false);
-                                    } else if (modaltype === "discardModal") {
-                                        handleDumpItem(itemId);
-                                        setOpenModal(false);
-                                    }
-                                }}
-                            />
-                            <EditBtn
-                                modaltype={modaltype}
-                                btntype="cancel"
-                                onClick={() => {
-                                    setOpenModal(false);
+            <ModalBg
+                onClick={() => {
+                    setState(!state);
+                }}
+            >
+                <ModalWrap onClick={(e) => e.stopPropagation()}>
+                    <Item>
+                        <div>
+                            {modaltype === "useModal" ? "사용할" : "버리는"}
+                        </div>
+                        <div>도구: {name}</div>
+                    </Item>
+                    <Quantity>
+                        <ChangeQtyBtn
+                            modaltype={modaltype}
+                            operationType="decrease"
+                            onClick={() =>
+                                itemCount > 1
+                                    ? setItemCount(itemCount - 1)
+                                    : false
+                            }
+                            iscountpositivenum={itemCount > 1}
+                        />
+                        <div>{itemCount}</div>
+                        <ChangeQtyBtn
+                            modaltype={modaltype}
+                            operationType="increase"
+                            onClick={() =>
+                                itemCount < quantity
+                                    ? setItemCount(itemCount + 1)
+                                    : false
+                            }
+                            iscountpositivenum={itemCount < quantity}
+                        />
+                    </Quantity>
+                    <BtnWrap>
+                        <EditBtn
+                            modaltype={modaltype}
+                            btntype="confirm"
+                            onClick={() => {
+                                if (modaltype === "useModal") {
+                                    handleUseItem(itemId);
                                     setState(!state);
-                                }}
-                            />
-                        </BtnWrap>
-                    </ModalWrap>
-                </ModalBg>
-            )}
+                                } else if (modaltype === "discardModal") {
+                                    handleDumpItem(itemId);
+                                    setState(!state);
+                                }
+                            }}
+                        />
+                        <EditBtn
+                            modaltype={modaltype}
+                            btntype="cancel"
+                            onClick={() => {
+                                setState(!state);
+                            }}
+                        />
+                    </BtnWrap>
+                </ModalWrap>
+            </ModalBg>
         </>
     );
 }
