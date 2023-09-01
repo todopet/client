@@ -45,8 +45,6 @@ export default function TodoForm({
                 },
                 { "x-custom-data": Date.now() * 4 + 1000 }
             );
-            console.log(response);
-            // console.log("투두입력!", response);
         } catch (error) {
             console.error(error);
         }
@@ -66,7 +64,6 @@ export default function TodoForm({
                 },
                 { "x-custom-data": Date.now() * 4 + 1000 }
             );
-            // console.log("투두수정!", response);
         } catch (error) {
             console.error(error);
         }
@@ -94,8 +91,6 @@ export default function TodoForm({
 
     //input form 외부 클릭시 제출
     function handleClickOutside(e: MouseEvent) {
-        // console.log("외부클릭!");
-
         if (formRef.current && !formRef.current.contains(e.target as Node)) {
             submitForm();
             finishEdit && finishEdit();
