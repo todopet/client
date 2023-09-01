@@ -1,51 +1,76 @@
+import React, { useContext, useState, useEffect } from "react";
+
 import Toast from "@/components/Toast/Toast";
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
+//type
+import { ToastTypes } from "@/@types/todo";
 import { ToastStyle } from "./MiniPetToast.styles";
 
-export enum ToastTypes {
-    SPECIAL = "special",
-    NORMAL = "normal",
-    RECEIVED = "received",
-    ALL_RECEIVED = "all-received"
-}
+export default function MiniPetToast() {
+    const { message, isActiveToast } = useContext(TodoContext);
 
-interface MiniPetToastProps {
-    toastType: ToastTypes;
-    isActive: boolean;
-    itemName: string;
-}
-export default function MiniPetToast({
-    toastType,
-    isActive,
-    itemName
-}: MiniPetToastProps) {
-    let content: string[];
-    let bgColor: "black" | "white" = "white";
-
-    //보상에 따라 content, bgColor 변경
-    switch (toastType) {
+    let content: React.ReactNode;
+    let bgcolor: "black" | "white" = "white";
+    const [fullMessage, setFullMessage] = useState<string>("");
+    useEffect(() => {
+        if (message?.inventoryCount === 50) {
+            setFullMessage("인벤토리가 가득 찼습니다❗️");
+        }
+    }, [message]);
+    //보상에 따라 content, bgcolor 변경
+    switch (message?.type) {
         case ToastTypes.SPECIAL:
-            content = ["특별한 보상으로", `${itemName}(을)를 받았습니다 🥳`];
-            bgColor = "black";
+            content = (
+                <>
+                    특별한 보상으로
+                    <br />
+                    {message.reward}(을)를 받았습니다 🥳
+                    <br />
+                    <span style={{ color: "red" }}>{fullMessage}</span>
+                </>
+            );
+            bgcolor = "black";
 
             break;
         case ToastTypes.NORMAL:
-            content = ["할 일을 완료하여", `${itemName}(을)를 받았습니다 🍀`];
+            content = (
+                <>
+                    할 일을 완료하여
+                    <br />
+                    {message.reward}(을)를 받았습니다 🍀
+                    <br />
+                    <span style={{ color: "red" }}>{fullMessage}</span>
+                </>
+            );
 
             break;
         case ToastTypes.RECEIVED:
-            content = ["이미 보상을 받았습니다 😅"];
+            content = <>이미 보상을 받았습니다 😅</>;
             break;
         case ToastTypes.ALL_RECEIVED:
-            content = ["일일 보상 횟수를 초과하였습니다 😅"];
+            content = <>일일 보상 횟수를 초과하였습니다 😅</>;
+            break;
+        case ToastTypes.FULL:
+            content = (
+                <>
+                    인벤토리 공간이 부족하여
+                    <br />
+                    보상이 지급되지 않습니다 🥲
+                </>
+            );
             break;
         default:
-            content = ["에러가 발생했습니다 🙀"];
+            content = <>에러가 발생했습니다 🙀</>;
             break;
     }
 
     return (
         <ToastStyle>
-            <Toast isActive={isActive} bgColor={bgColor} content={content} />
+            <Toast
+                isActive={isActiveToast}
+                bgcolor={bgcolor}
+                content={content}
+            />
         </ToastStyle>
     );
 }
