@@ -9,7 +9,7 @@ export const BRONZE_COLOR = "#cd7f32";
 export const TopThreeContainer = styled.div`
     display: flex;
     justify-content: space-around;
-    margin-bottom: 30px;
+    margin-bottom: 12px;
     min-height: 11rem;
 `;
 
@@ -19,14 +19,13 @@ export const RankInfoContainer = styled.div`
     text-align: center;
     width: auto;
     height: auto;
-    justify-content: space-between;
     align-items: center;
 `;
 
 export const RankNumber = styled.span`
     font-size: 18px;
     font-weight: bold;
-    /* margin-bottom: 2rem; */
+    margin-bottom: 32px;
 `;
 
 export const CircleIcon = styled.div`
@@ -54,7 +53,7 @@ export const Crown = styled.div`
     height: 1.3rem;
     position: absolute;
     top: -1rem;
-`
+`;
 
 export const ProfileImage = styled.img`
     height: inherit;
@@ -66,5 +65,5 @@ export const RankNickname = styled.span`
     display: block;
     font-size: 14px;
     font-weight: 600;
-    /* margin-top: 2rem; */
+    margin-top: 20px;
 `;
