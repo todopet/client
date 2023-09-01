@@ -64,10 +64,10 @@ export default function Month() {
             );
         }
         setDates(newDates);
-        fetchData(newDates);
+        fetchData(newDates, firstDate);
     }
 
-    const fetchData = (newDates: Date[]) => {
+    const fetchData = (newDates: Date[], firstDate: Date) => {
         const start = formatDate(newDates[firstDate.getDay()]);
         const end = formatDate(newDates[newDates.length - 1]);
         updateStartEnd(start, end);
@@ -87,12 +87,12 @@ export default function Month() {
             category.todos.forEach((todo: any) => {
                 const newDate = new Date(todo.createdAt);
                 if (todo.status === "completed")
-                    todoDates.push(newDate.getDay());
+                    todoDates.push(newDate.getDate());
             })
         );
         return todoDates.reduce(
             (acc, cur) => {
-                acc[cur] = acc[cur] + 1;
+                acc[cur - 1 + firstDate.getDay()] += 1;
                 return acc;
             },
             Array.from({ length: dates.length }, () => 0)
@@ -100,9 +100,8 @@ export default function Month() {
     }, [periodTodos]);
 
     useEffect(() => {
-        getMonthDates(firstDate);
+        getMonthDates(firstDateOfThisMonth);
     }, []);
-
 
     const handleLeftClick = () => {
         const newFirstDate = new Date(

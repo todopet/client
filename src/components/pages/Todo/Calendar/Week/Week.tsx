@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect, useMemo } from "react";
 import * as Styles from "./Week.styles";
+import { useState, useContext, useEffect, useMemo } from "react";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
@@ -34,7 +34,7 @@ async function getTodos(startDate: string, endDate: string) {
 }
 
 export default function Week() {
-    const [currentSunday, setCurrentSunday] = useState(lastSunday);
+    const [currentSunday, setCurrentSunday] = useState(new Date(lastSunday));
     const [titleData, setTitleData] = useState({
         year: today.getFullYear(),
         month: today.getMonth(),
@@ -43,7 +43,8 @@ export default function Week() {
     const [clicked, setClicked] = useState(-1);
     const [dates, setDates] = useState<Date[]>([]);
 
-    const { updateSelectedDate, updateStartEnd, periodTodos, setPeriodTodos } = useContext(TodoContext);
+    const { updateSelectedDate, updateStartEnd, periodTodos, setPeriodTodos } =
+        useContext(TodoContext);
 
     // 날짜 형식 yyyy-mm-dd 지정 함수
     const formatDate = (date: Date) => {
@@ -53,14 +54,17 @@ export default function Week() {
         return `${year}-${month}-${day}`;
     };
 
-    const getWeekDates = () => {
+    const getWeekDates = (sunday: Date | null = null) => {
         setDates([]);
+        if (sunday === null) {
+            sunday = currentSunday;
+        }
         const newDates = [];
         for (let i = 0; i < 7; ++i) {
             const d = new Date(
-                currentSunday.getFullYear(),
-                currentSunday.getMonth(),
-                currentSunday.getDate() + i
+                sunday.getFullYear(),
+                sunday.getMonth(),
+                sunday.getDate() + i
             );
             newDates.push(d);
         }
@@ -80,15 +84,15 @@ export default function Week() {
         }
 
         // 매해 12월에서 1월로 넘어가는 부분의 월&주차 오류 처리
-        if (currentSunday.getMonth() === 11) {
+        if (sunday.getMonth() === 11) {
             if (newDates.map((date, i) => date.getDate()).includes(31)) {
                 if (newDates[6].getDate() !== 31) {
                     specialCaseOfYearEnd = true;
                 }
             }
         }
-        
-        fetchData();        
+
+        fetchData();
     };
 
     const fetchData = () => {
@@ -108,8 +112,8 @@ export default function Week() {
             })
             .catch((error) => {
                 console.error("promise chain 내의 에러: ", error);
-            })
-    }
+            });
+    };
 
     const completedTodosByDay = useMemo(() => {
         const todoDates: number[] = [];
@@ -130,7 +134,8 @@ export default function Week() {
     }, [periodTodos]);
 
     useEffect(() => {
-        getWeekDates();
+        setCurrentSunday(new Date(lastSunday));
+        getWeekDates(lastSunday);
     }, []);
 
     function calculateWeekCount() {
