@@ -15,6 +15,17 @@ const WeekStyle = styled.div`
     margin-left: 4px;
 `;
 
+const Title = styled.span`
+    margin: 0px 30px 0px 30px;
+    font-family: Pretendard;
+`;
+
+const TitleWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
 const DayWrap = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -62,7 +73,7 @@ const Cell = styled.div<CellProps>`
             ? "#1d861c"
             : props.completed >= 11
             ? "#046900"
-            : "red"};
+            : "white"};
 `;
 
 const Date = styled.div<DateProps>`
@@ -80,17 +91,6 @@ const Date = styled.div<DateProps>`
     justify-content: center;
     align-items: center;
     text-align: center;
-`;
-
-const Title = styled.span`
-    margin: 0px 20px 0px 20px;
-    font-family: Pretendard;
-`;
-
-const TitleWrap = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `;
 
 export {
