@@ -5,14 +5,25 @@ interface CellProps {
 }
 
 interface DateProps {
-    isToday: boolean;
-    isClicked: boolean;
+    $istoday: boolean;
+    $isclicked: boolean;
     id: number;
 }
 
 const MonthStyle = styled.div`
     width: 380px;
     margin-left: 4px;
+`;
+
+const Title = styled.span`
+    margin: 0px 30px 0px 30px;
+    font-family: Pretendard;
+`;
+
+const TitleWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const DayWrap = styled.div`
@@ -46,7 +57,6 @@ const Cell = styled.div<CellProps>`
     width: 22px;
     height: 22px;
     border-radius: 3px;
-    background-color: lightgray;
     margin: 10px 10px 2px 10px;
     background-color: ${(props) =>
         props.completed === 0
@@ -63,7 +73,7 @@ const Cell = styled.div<CellProps>`
             ? "#1d861c"
             : props.completed >= 11
             ? "#046900"
-            : "red"};
+            : "white"};
 `;
 
 const Date = styled.div<DateProps>`
@@ -74,24 +84,13 @@ const Date = styled.div<DateProps>`
     font-size: 14px;
     font-family: Pretendard;
     color: ${(props) =>
-        props.isClicked ? "white" : props.isToday ? "white" : "black"};
+        props.$isclicked ? "white" : props.$istoday ? "white" : "black"};
     background-color: ${(props) =>
-        props.isClicked ? "#556FE9" : props.isToday ? "black" : ""};
+        props.$isclicked ? "#556FE9" : props.$istoday ? "black" : ""};
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-`;
-
-const Title = styled.span`
-    margin: 0px 40px 0px 40px;
-    font-family: Pretendard;
-`;
-
-const TitleWrap = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `;
 
 export {
