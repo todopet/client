@@ -9,6 +9,8 @@ import levelStar from '@/assets/icons/levelStar.svg';
 
 const MainArea = styled.main`
     height: 100%;
+	min-height: 700px;
+	overflow-y: scroll;
 	width: 100%;
     background-image: url(${petRoom});
 	background-repeat: no-repeat;
@@ -59,7 +61,8 @@ const MainHeader = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-    flex-basis: 22%;
+    width: 100%;
+	height: 22%;
 `
 
 const StatusInfo = styled.div`
@@ -67,6 +70,7 @@ const StatusInfo = styled.div`
 	flex-direction: column;
 	width: 50%;
 	margin-left: 1.5%;
+	height: 100%;
 `
 
 const LevelInfo = styled.div`
@@ -127,19 +131,21 @@ const PetName = styled.p`
 `
 
 const MainBody = styled.div`
-	flex-basis: 58%;
+	width: 100%;
+	height: 58%;
 `
 
 const MainFooter = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	flex-basis: 20%;
-	padding: 0 25px;
+	width: 100%;
+	height: 20%;
 `
 
 const MainFooterButton = styled(FooterButton)`
 	cursor: pointer;
+	margin-right: 6%;
 	&:hover {
 		filter: brightness(110%);
 	}
@@ -153,9 +159,9 @@ const InventoryFullImg = styled.div`
 	background-color: white;
 	border-radius: 50%;
 	position: absolute;
-	width: 7.1%;
-	height: 3.85%;
-	bottom: 12.3%;
+	width: 1.7rem;
+	height: 1.7rem;
+	bottom: 11.6%;
 	right: 5.5%;
 `
 

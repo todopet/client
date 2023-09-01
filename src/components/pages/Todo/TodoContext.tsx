@@ -107,11 +107,16 @@ export default function TodoContextProvider({
 
                 const response: res<todo> = await axiosRequest.requestAxios<
                     res<todo>
-                >("patch", `/todoContents/${contentId}`, {
-                    contentId: contentId,
-                    todo: content,
-                    status: checkStatus
-                });
+                >(
+                    "patch",
+                    `/todoContents/${contentId}`,
+                    {
+                        contentId: contentId,
+                        todo: content,
+                        status: checkStatus
+                    },
+                    { "x-custom-data": Date.now() * 4 + 1000 }
+                );
 
                 setMessage(response.data.message);
                 setIsActiveToast(true);
@@ -125,11 +130,16 @@ export default function TodoContextProvider({
             } else {
                 const response: res<todo> = await axiosRequest.requestAxios<
                     res<todo>
-                >("patch", `/todoContents/${contentId}`, {
-                    contentId: contentId,
-                    todo: content,
-                    status: checkStatus
-                });
+                >(
+                    "patch",
+                    `/todoContents/${contentId}`,
+                    {
+                        contentId: contentId,
+                        todo: content,
+                        status: checkStatus
+                    },
+                    { "x-custom-data": Date.now() * 4 + 1000 }
+                );
             }
         } catch (error) {
             console.error(error);

@@ -4,6 +4,7 @@ import {
     RankNumber,
     CircleIcon,
     FirstPlaceIcon,
+    Crown,
     RankNickname,
     ProfileImage,
     GOLD_COLOR,
@@ -36,6 +37,7 @@ const TopThree = ({ userTopThreeList }: RankInfoProps) => {
                     <RankInfoContainer key={list.userInfo._id}>
                         <RankNumber>{list.rank}</RankNumber>
                         <IconComponent color={borderColor}>
+                            {list.rank === 1 && <Crown />}
                             <ProfileImage
                                 src={list.userInfo.picture}
                                 alt={list.userInfo.nickname}

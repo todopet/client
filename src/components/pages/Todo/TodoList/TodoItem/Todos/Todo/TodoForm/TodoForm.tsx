@@ -35,11 +35,17 @@ export default function TodoForm({
         try {
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
-            >("post", `/todoContents`, {
-                categoryId: categoryId,
-                todo: value,
-                date: selectedDate
-            });
+            >(
+                "post",
+                `/todoContents`,
+                {
+                    categoryId: categoryId,
+                    todo: value,
+                    date: selectedDate
+                },
+                { "x-custom-data": Date.now() * 4 + 1000 }
+            );
+            console.log(response);
             // console.log("투두입력!", response);
         } catch (error) {
             console.error(error);
