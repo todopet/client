@@ -1,5 +1,5 @@
-import * as Styles from "./Week.styles";
 import { useState, useContext, useEffect, useMemo } from "react";
+import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
