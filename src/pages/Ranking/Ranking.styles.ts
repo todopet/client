@@ -8,12 +8,12 @@ export const Title = styled.div`
     margin-bottom: 20px;
 `;
 
-export const Span = styled.span`
+export const Information = styled.span`
     display: flex;
     justify-content: flex-end;
     color: #b1aeae;
-    margin-bottom: 8px;
-    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-right: 24px;
     font-size: 12px;
 `;
 

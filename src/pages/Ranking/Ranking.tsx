@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosRequest from "@/api/index";
-import { Title, RankingContainer, Span } from "./Ranking.styles";
+import { Title, RankingContainer, Information } from "./Ranking.styles";
 import { res, RankInfo } from "@/@types/index";
 import TopThree from "@/components/pages/Ranking/TopThree/TopThree";
 import RankInfoList from "@/components/pages/Ranking/RankInfoList/RankInfoList";
@@ -41,7 +41,7 @@ const Ranking: React.FC = () => {
         <RankingContainer>
             <Title>Top Week's Ranking</Title>
             <TopThree userTopThreeList={userTopThreeList}></TopThree>
-            <Span>매주 일요일 초기화</Span>
+            <Information>※ 매주 일요일 초기화</Information>
             <RankInfoList userRankList={userRankList}></RankInfoList>
         </RankingContainer>
     );
