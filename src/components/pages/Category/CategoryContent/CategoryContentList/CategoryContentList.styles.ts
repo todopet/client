@@ -25,13 +25,15 @@ const ButtonWrap = styled.div`
 
 const CircleButton = styled.button`
     /* width: 4.8125rem; */
-    height: 2rem;
+    min-height: 2rem;
+    height: auto;
+    max-width: 18rem;
     flex-shrink: 0;
     border-radius: 1rem;
     background: #f5f5f5;
     border: none;
     margin: 10px 0;
-    padding: 0 18px;
+    padding: 2px 18px;
     /* margin-right: 230px; */
 
     &:last-child {
@@ -51,7 +53,9 @@ const ActionButton = styled.button`
     border-radius: 0.5rem;
     background: #f5f5f5;
 `;
-
+const CategorySpan = styled.span`
+    word-wrap: break-word;
+`;
 const StyledLink = styled(Link)`
     margin-left: auto;
     font-weight: 500;
@@ -76,6 +80,7 @@ export {
     ActionButtonWrap,
     ActionButton,
     Wrap,
+    CategorySpan,
     StyledLink,
     ItemWrap
 };
