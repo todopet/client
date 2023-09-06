@@ -1,9 +1,6 @@
 //react hook
 import { useState, useContext, useEffect } from "react";
 import { TodoContext } from "@/components/pages/Todo/TodoContext";
-//api, interface
-import axiosRequest from "@/api/index";
-import { res, todo } from "@/@types/index";
 //icons
 import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";
 import { ReactComponent as CheckIcon } from "@/assets/icons/checkboxChecked.svg";
@@ -28,17 +25,7 @@ interface TodoProps {
 }
 
 export default function Todo({ content, status, contentId }: TodoProps) {
-    const { updateStatus, getTodos, selectedDate } = useContext(TodoContext);
-    //투두 delete 요청
-    async function deleteTodo() {
-        try {
-            const response: res<todo[]> = await axiosRequest.requestAxios<
-                res<todo[]>
-            >("delete", `/todoContents/${contentId}`);
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    const { updateStatus, deleteTodo } = useContext(TodoContext);
 
     const [newcheckstatus, setNewcheckstatus] = useState<string>(status);
     useEffect(() => {
@@ -58,8 +45,6 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         setNewcheckstatus(checkStatus);
         //patch요청
         updateStatus(contentId, content, checkStatus);
-        //todo get요청
-        getTodos(selectedDate, selectedDate);
     };
     //DropDown의 props
     const listItems = [
@@ -71,9 +56,8 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         },
         {
             content: "삭제",
-            handleClick: async () => {
-                await deleteTodo();
-                getTodos(selectedDate, selectedDate);
+            handleClick: () => {
+                deleteTodo(contentId);
             }
         }
     ];
