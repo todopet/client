@@ -1,11 +1,10 @@
 import { styled } from "styled-components";
 
 const StyledTodo = styled.div`
-    height: 20px;
-    margin: 20px 2px;
+    height: auto;
+    margin: 10px 2px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 `;
 const TodoWrap = styled.div`
     flex: 1;
@@ -14,7 +13,6 @@ const TodoWrap = styled.div`
 const TodoDiv = styled.div`
     display: flex;
     justify-content: flex-start;
-    align-items: center;
 `;
 
 interface TodoProps {
@@ -40,6 +38,16 @@ const Text = styled.span<TodoProps>`
         props.newcheckstatus === "completed" ? "line-through" : "none"};
     color: ${(props) =>
         props.newcheckstatus === "unchecked" ? "#000000" : "#ADADAD"};
+
+    max-width: 85%;
+    word-wrap: break-word;
 `;
 
-export { StyledTodo, TodoDiv, StyledCheckbox, Text, TodoWrap };
+const DropDownWrap = styled.div`
+    width: 19px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+`;
+
+export { StyledTodo, TodoDiv, StyledCheckbox, Text, TodoWrap, DropDownWrap };
