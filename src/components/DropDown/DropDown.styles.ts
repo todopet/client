@@ -8,6 +8,7 @@ const Wrapper = styled.div`
     justify-content: space-around;
     font-size: 16px;
     font-weight: 500;
+    align-items: center;
 `;
 
 const DropdownContainer = styled.div`

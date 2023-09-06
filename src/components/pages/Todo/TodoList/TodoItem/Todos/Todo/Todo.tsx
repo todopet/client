@@ -15,7 +15,8 @@ import {
     TodoDiv,
     StyledCheckbox,
     Text,
-    TodoWrap
+    TodoWrap,
+    DropDownWrap
 } from "./Todo.styles";
 
 interface TodoProps {
@@ -87,9 +88,11 @@ export default function Todo({ content, status, contentId }: TodoProps) {
                     </TodoDiv>
                 )}
             </TodoWrap>
-            <DropDown list={listItems}>
-                <MenuIcon />
-            </DropDown>
+            <DropDownWrap>
+                <DropDown list={listItems}>
+                    <MenuIcon />
+                </DropDown>
+            </DropDownWrap>
         </StyledTodo>
     );
 }

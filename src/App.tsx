@@ -59,10 +59,10 @@ const App: React.FC = () => {
 
     const [isAuth, setIsAuth] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const checkAuth = async () => {
-        try {
-            setIsLoading(true); // api 호출하는 동안만
 
+    const checkAuth = async () => {
+        setIsLoading(true); // api 호출하는 동안만
+        try {
             const response: res<auth> = await axiosRequest.requestAxios<
                 res<auth>
             >("get", `/users/auth`);
@@ -76,7 +76,7 @@ const App: React.FC = () => {
             navigate("/");
             console.error("Failed to check auth.", error);
         }
-
+        setIsLoading(false);
         setIsAuth(false);
         navigate("/");
     };
