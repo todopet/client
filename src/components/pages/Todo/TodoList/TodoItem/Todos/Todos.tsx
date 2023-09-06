@@ -1,12 +1,13 @@
 import Todo from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/Todo";
 import { todo } from "@/@types/index";
+import { TodosWrap } from "./Todos.styles";
 
 interface TodosProps {
     todos: todo[];
 }
 export default function Todos({ todos }: TodosProps) {
     return (
-        <div>
+        <TodosWrap>
             {todos &&
                 todos.map((todo) => {
                     return (
@@ -18,6 +19,6 @@ export default function Todos({ todos }: TodosProps) {
                         />
                     );
                 })}
-        </div>
+        </TodosWrap>
     );
 }
