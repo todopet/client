@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { GlobalStyle, LayoutWrapper } from "@/App.styles";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
-import Todo from "@/pages/Todo/Todo";
-import Login from "@/pages/Login/Login";
-import Ranking from "@/pages/Ranking/Ranking";
-import Pet from "@/pages/Pet/Pet";
-import MyPage from "@/pages/MyPage/MyPage";
-import CategoryList from "@/pages/Category/CategoryList/CategoryList";
-import CategoryPost from "@/pages/Category/CategoryPost/CategoryPost";
 import Loading from "./components/Loading/Loading";
 import { StyleSheetManager } from "styled-components";
 import axiosRequest from "./api";
 import { res } from "./@types";
 // import NotFound from "@/pages/NotFound";
+
+const Todo = lazy(() => import("@/pages/Todo/Todo"));
+const Login = lazy(() => import("@/pages/Login/Login"));
+const Ranking = lazy(() => import("@/pages/Ranking/Ranking"));
+const Pet = lazy(() => import("@/pages/Pet/Pet"));
+const MyPage = lazy(() => import("@/pages/MyPage/MyPage"));
+const CategoryList = lazy(
+    () => import("@/pages/Category/CategoryList/CategoryList")
+);
+const CategoryPost = lazy(
+    () => import("@/pages/Category/CategoryPost/CategoryPost")
+);
 
 const routeLogin = {
     path: "/",
@@ -88,35 +93,12 @@ const App: React.FC = () => {
     return (
         <>
             <GlobalStyle />
-            {isLoading && <Loading />}
-            <Routes>
-                {!isAuth && (
-                    <Route
-                        path={routeLogin.path}
-                        element={
-                            <StyleSheetManager
-                                shouldForwardProp={(prop) =>
-                                    !["withheader", "withfooter"].includes(prop)
-                                }
-                            >
-                                <LayoutWrapper
-                                    withheader={routeLogin.withHeader.toString()}
-                                    withfooter={routeLogin.withFooter.toString()}
-                                >
-                                    {routeLogin.withHeader && <Header />}
-                                    {routeLogin.element}
-                                    {routeLogin.withFooter && <Footer />}
-                                </LayoutWrapper>
-                            </StyleSheetManager>
-                        }
-                    />
-                )}
-
-                {isAuth &&
-                    routePaths.map((data) => (
+            {/* {isLoading && <Loading />} */}
+            <Suspense fallback={isLoading && <Loading />}>
+                <Routes>
+                    {!isAuth && (
                         <Route
-                            key={data.path}
-                            path={data.path}
+                            path={routeLogin.path}
                             element={
                                 <StyleSheetManager
                                     shouldForwardProp={(prop) =>
@@ -126,18 +108,46 @@ const App: React.FC = () => {
                                     }
                                 >
                                     <LayoutWrapper
-                                        withheader={data.withHeader.toString()}
-                                        withfooter={data.withFooter.toString()}
+                                        withheader={routeLogin.withHeader.toString()}
+                                        withfooter={routeLogin.withFooter.toString()}
                                     >
-                                        {data.withHeader && <Header />}
-                                        {data.element}
-                                        {data.withFooter && <Footer />}
+                                        {routeLogin.withHeader && <Header />}
+                                        {routeLogin.element}
+                                        {routeLogin.withFooter && <Footer />}
                                     </LayoutWrapper>
                                 </StyleSheetManager>
                             }
                         />
-                    ))}
-            </Routes>
+                    )}
+
+                    {isAuth &&
+                        routePaths.map((data) => (
+                            <Route
+                                key={data.path}
+                                path={data.path}
+                                element={
+                                    <StyleSheetManager
+                                        shouldForwardProp={(prop) =>
+                                            ![
+                                                "withheader",
+                                                "withfooter"
+                                            ].includes(prop)
+                                        }
+                                    >
+                                        <LayoutWrapper
+                                            withheader={data.withHeader.toString()}
+                                            withfooter={data.withFooter.toString()}
+                                        >
+                                            {data.withHeader && <Header />}
+                                            {data.element}
+                                            {data.withFooter && <Footer />}
+                                        </LayoutWrapper>
+                                    </StyleSheetManager>
+                                }
+                            />
+                        ))}
+                </Routes>
+            </Suspense>
         </>
     );
 };
