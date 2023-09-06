@@ -13,7 +13,7 @@ import axiosRequest from "@/api";
 import { res, useItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
 import { ItemDataContext } from "../../Inventory";
-import axios from "axios";
+import { MyContext } from "@/pages/Pet/Pet";
 
 interface modalTypeProps {
     modaltype: "useModal" | "discardModal";
@@ -33,6 +33,7 @@ export default function ActionModal({
 }: modalTypeProps) {
     const [itemData, setItemData] = useContext(ItemDataContext);
     const [itemCount, setItemCount] = useState(1);
+    const receivePetData = useContext(MyContext);
 
     async function receiveItemData() {
         try {
@@ -55,6 +56,7 @@ export default function ActionModal({
                 "x-custom-data": Date.now() * 4 + 1000
             });
             receiveItemData();
+            receivePetData();
         } catch (error) {
             console.log("Error fetching pet data: ", error);
         }

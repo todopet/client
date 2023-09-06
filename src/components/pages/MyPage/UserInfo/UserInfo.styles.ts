@@ -8,7 +8,7 @@ const UserInfoWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2.7rem;
+    gap: .5rem;
     width: 100%;
     height: 15%;
 `;
@@ -37,12 +37,13 @@ const UserInfoArea = styled.div`
     display: flex;
     flex-direction: column;
     height: 80px;
-    width: 40%;
+    width: 50%;
 `;
 
 const UserName = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: .3rem;
     align-items: center;
     height: 55%;
 `;
@@ -84,7 +85,7 @@ const ModalBackdrop = styled.div`
 
 const Modal = styled.div`
     width: 80%;
-    height: 185px;
+    height: 190px;
     border-radius: 25px;
     background-color: white;
     margin-bottom: 60px;
@@ -100,14 +101,46 @@ const ModalTitle = styled.p`
     margin-bottom: 0;
 `;
 
+const ModalInputArea = styled.div`
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .3rem;
+`
+
 const ModalInput = styled.input`
     width: 75%;
-    height: 23%;
+    height: 45%;
     border: 2px solid #bff2bd;
     border-radius: 20px;
-    margin: 0 auto;
+    margin: 10px auto 0;
     padding: 0 10px;
+
+    &:focus {
+        outline: none; /* 포커스 아웃라인 제거 */
+    }
 `;
+
+// const ErrorText = styled.span`
+//     height: 14px;
+//     width: 100%;
+//     color: red;
+//     font-size: 10.5px;
+//     // padding-left: 12%;
+//     text-align: center;
+// `
+const ErrorText = styled.span<{ error: string }>`
+    opacity: ${props => props.error ? 1 : 0};
+    height: 14px;
+    width: 100%;
+    color: red;
+    font-size: 10.5px;
+    // padding-left: 12%;
+    text-align: center;
+`
 
 const ModalButtonArea = styled.div`
     display: flex;
@@ -153,7 +186,9 @@ export {
     ModalBackdrop,
     Modal,
     ModalTitle,
+    ModalInputArea,
     ModalInput,
+    ErrorText,
     ModalButtonArea,
     DeleteButton,
     UpdateButton,

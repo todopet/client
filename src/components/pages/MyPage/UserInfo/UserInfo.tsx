@@ -7,14 +7,16 @@ import {
     ModalBackdrop,
     Modal,
     ModalTitle,
+    ModalInputArea,
     ModalInput,
+    ErrorText,
     ModalButtonArea,
     DeleteButton,
     UpdateButton,
     JoinDate
 } from "./UserInfo.styles";
 import NickName from "../NickName/NickName";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosRequest from "@/api";
 import { res, myUser } from "@/@types/index";
@@ -28,6 +30,7 @@ interface userinfoType {
 export function UserInfo({ picture, name, date }: userinfoType) {
     const [isNicknameModal, setIsNicknameModal] = useState(false);
     const [nickname, setNickname] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const getUserName = async () => {
         try {
@@ -39,6 +42,63 @@ export function UserInfo({ picture, name, date }: userinfoType) {
             alert("오류가 발생했습니다. 다시 시도해 주세요.");
         }
     };
+
+    // const changeNickname = (e: any) => {
+    //     const inputValue = e.target.value;
+    //     setNickname(inputValue);
+
+    //      // 유효성 검사를 수행합니다.
+    //     if (/[^a-zA-Z0-9가-힣]/.test(nickname) || nickname.length > 12) {
+    //         setError('닉네임은 12글자 이하의 영문, 숫자, 한글로 이루어져야 합니다.');
+    //     } else {
+    //         setError('');
+    //     }
+
+    //     console.log(nickname);
+    //     console.log(error);
+    // }
+
+    // useEffect(() => {
+    //     // 상태가 변경될 때마다 실행되는 코드
+    //     if (nickname.length > 6) {
+    //         setError('닉네임은 6글자 이하여야 합니다.');
+    //     } else {
+    //         setError('');
+    //     }
+    // }, [nickname]);
+
+    const [charCount, setCharCount] = useState(0);
+
+    useEffect(() => {
+        if (charCount > 6) {
+        setError('닉네임은 한글 6자, 영어 12자까지 입력 가능합니다.');
+        } else {
+        setError('');
+        }
+    }, [charCount]);
+
+    const changeNickname = ({ target }: ChangeEvent<HTMLInputElement>) => {
+        const { value } = target;
+        // const inputValue = e.target.value;
+        setNickname(value);
+
+        let count = 0;
+        for (let i = 0; i < value.length; i++) {
+            // 한글 여부를 판단하여 카운트 증가
+            if (/[ㄱ-ㅎ가-힣]/.test(value[i])) {
+                count += 1;
+            } 
+            if (/[a-zA-Z]/.test(value[i])) {
+                count += 0.5;
+            }
+        }
+
+        setCharCount(count);
+    };
+
+    console.log(nickname);
+    console.log(error);
+    console.log(charCount);
 
     const handleClick = () => {
         getUserName();
@@ -54,8 +114,14 @@ export function UserInfo({ picture, name, date }: userinfoType) {
             const response: res<myUser> = await axiosRequest.requestAxios<
                 res<myUser>
             >("patch", "/users/myInfo", { nickname });
-            alert("닉네임이 수정되었습니다!"); // 사용자에게 알림
-            navigate(0); // 페이지 새로고침
+
+            if(response.data) {  // 닉네임이 제대로 변경이 되었을 때
+                alert("닉네임이 수정되었습니다!");
+            }
+            else {  // 글자 제한을 통과하지 못해 변경이 되지 않았을때
+                return;  // 닉네임 변경 버튼 눌러도 반응없음
+            }
+            navigate(0);  // 페이지 새로고침
         } catch (error) {
             alert("오류가 발생했습니다. 다시 시도해 주세요.");
         }
@@ -74,13 +140,19 @@ export function UserInfo({ picture, name, date }: userinfoType) {
                         <ModalBackdrop>
                             <Modal>
                                 <ModalTitle>닉네임 변경하기</ModalTitle>
-                                <ModalInput
-                                    type="text"
-                                    value={nickname}
-                                    onChange={(e: any) =>
-                                        setNickname(e.target.value)
-                                    }
-                                />
+                                <ModalInputArea>
+                                    <ModalInput
+                                        type="text"
+                                        value={nickname}
+                                        onChange={changeNickname}
+                                        // onChange={(e: any) =>
+                                        //     setNickname(e.target.value)
+                                        // }
+                                        style={{ borderColor: error ? 'red' : '' }}
+                                    />
+                                    <ErrorText error={error}>{error}</ErrorText>
+                                    {/* {error && <ErrorText>{error}</ErrorText>} */}
+                                </ModalInputArea>
                                 <ModalButtonArea>
                                     <DeleteButton
                                         className=""
