@@ -21,6 +21,7 @@ export interface TodoContextProps {
         checkStatus: string,
         content: string
     ) => void;
+    deleteTodo: (contentId: string) => void;
     message: Message | null;
     isActiveToast: boolean;
 }
@@ -41,6 +42,7 @@ export const TodoContext = createContext<TodoContextProps>({
         checkStatus: string,
         content: string
     ) => {},
+    deleteTodo: (contentId: string) => {},
     message: { reward: null, type: ToastTypes.NORMAL, inventoryCount: 0 },
     isActiveToast: false
 });
@@ -139,6 +141,7 @@ export default function TodoContextProvider({
                         setIsActiveToast(false);
                     }, 5500)
                 );
+                getTodos(selectedDate, selectedDate);
                 getTodos(startDate, endDate);
             } else {
                 const response: res<todo> = await axiosRequest.requestAxios<
@@ -153,8 +156,21 @@ export default function TodoContextProvider({
                     },
                     { "x-custom-data": Date.now() * 4 + 1000 }
                 );
+                getTodos(selectedDate, selectedDate);
                 getTodos(startDate, endDate);
             }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function deleteTodo(contentId: string) {
+        try {
+            const response: res<todo[]> = await axiosRequest.requestAxios<
+                res<todo[]>
+            >("delete", `/todoContents/${contentId}`);
+            getTodos(selectedDate, selectedDate);
+            getTodos(startDate, endDate);
         } catch (error) {
             console.error(error);
         }
@@ -171,6 +187,7 @@ export default function TodoContextProvider({
         updateSelectedDate,
         updateStartEnd,
         updateStatus,
+        deleteTodo,
         message,
         isActiveToast
     };
