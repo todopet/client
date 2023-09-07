@@ -10,7 +10,6 @@ const ModalBg = styled.div`
     justify-content: center;
     align-items: center;
     z-index: 15;
-    // backdrop-filter: blur(10px);
 `;
 
 const ModalWrap = styled.div<{on: boolean}>`

@@ -31,21 +31,22 @@ export default function ActionModal({
     name,
     quantity
 }: modalTypeProps) {
-    const [itemData, setItemData] = useContext(ItemDataContext);
+    // const [itemData, setItemData] = useContext(ItemDataContext);
+    const receiveItemData = useContext(ItemDataContext);
     const [itemCount, setItemCount] = useState(1);
     const receivePetData = useContext(MyContext);
 
-    async function receiveItemData() {
-        try {
-            const response: res<myItems> = await axiosRequest.requestAxios<
-                res<myItems>
-            >("get", "/inventories", {});
-            const itemArray = response.data.items;
-            setItemData(itemArray);
-        } catch (error) {
-            console.error("Error fetching pet data: ", error);
-        }
-    }
+    // async function receiveItemData() {
+    //     try {
+    //         const response: res<myItems> = await axiosRequest.requestAxios<
+    //             res<myItems>
+    //         >("get", "/inventories", {});
+    //         const itemArray = response.data.items;
+    //         setItemData(itemArray);
+    //     } catch (error) {
+    //         console.error("Error fetching pet data: ", error);
+    //     }
+    // }
 
     async function handleUseItem(itemId: string) {
         try {
@@ -58,6 +59,7 @@ export default function ActionModal({
             receiveItemData();
             receivePetData();
         } catch (error) {
+            alert("아이템 사용중 에러가 발생했습니다. 다시 시도해주세요.");
             console.log("Error fetching pet data: ", error);
         }
     }
@@ -72,6 +74,7 @@ export default function ActionModal({
             });
             receiveItemData();
         } catch (error) {
+            alert("아이템을 버리는중 에러가 발생했습니다. 다시 시도해주세요.");
             console.error("Error fetching pet data: ", error);
         }
     }

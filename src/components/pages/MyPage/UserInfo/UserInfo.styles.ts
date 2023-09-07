@@ -53,8 +53,8 @@ const UpdateIcon = styled(Icon)`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    width: 20px;
-    height: 25px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
 
     &:hover {
@@ -112,33 +112,26 @@ const ModalInputArea = styled.div`
 `
 
 const ModalInput = styled.input`
-    width: 75%;
+    width: 70%;
     height: 45%;
     border: 2px solid #bff2bd;
     border-radius: 20px;
     margin: 10px auto 0;
-    padding: 0 10px;
+    padding: 0 16px;
+    font-size: 16px;
 
     &:focus {
         outline: none; /* 포커스 아웃라인 제거 */
     }
 `;
 
-// const ErrorText = styled.span`
-//     height: 14px;
-//     width: 100%;
-//     color: red;
-//     font-size: 10.5px;
-//     // padding-left: 12%;
-//     text-align: center;
-// `
-const ErrorText = styled.span<{ error: string }>`
-    opacity: ${props => props.error ? 1 : 0};
+const ErrorText = styled.span<{ color: string }>`
+    opacity: ${props => props.color ? 1 : 0};
     height: 14px;
     width: 100%;
-    color: red;
+    color: ${props => props.color};
     font-size: 10.5px;
-    // padding-left: 12%;
+    // padding-left: 5rem;
     text-align: center;
 `
 
