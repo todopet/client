@@ -8,7 +8,6 @@ const StyledTodo = styled.div`
 `;
 const TodoWrap = styled.div`
     flex: 1;
-    padding-right: 8px;
 `;
 const TodoDiv = styled.div`
     display: flex;

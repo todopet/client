@@ -88,11 +88,13 @@ export default function Todo({ content, status, contentId }: TodoProps) {
                     </TodoDiv>
                 )}
             </TodoWrap>
-            <DropDownWrap>
-                <DropDown list={listItems}>
-                    <MenuIcon />
-                </DropDown>
-            </DropDownWrap>
+            {!isEditing && (
+                <DropDownWrap>
+                    <DropDown list={listItems}>
+                        <MenuIcon />
+                    </DropDown>
+                </DropDownWrap>
+            )}
         </StyledTodo>
     );
 }
