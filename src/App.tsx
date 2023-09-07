@@ -77,6 +77,7 @@ const App: React.FC = () => {
                 return;
             }
         } catch (error) {
+            alert("토큰 인증 에러가 발생했습니다. 새로고침해 주세요.");
             setIsAuth(false);
             navigate("/");
             console.error("Failed to check auth.", error);
