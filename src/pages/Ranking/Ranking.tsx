@@ -19,6 +19,9 @@ const Ranking: React.FC = () => {
             setUserRankList(response.data);
             setUserTopThreeList(setTopThree(response.data));
         } catch (error) {
+            alert(
+                "데이터를 가져오던 중 에러가 발생했습니다. 다시 시도해 주세요."
+            );
             console.error("Error fetching pet data: ", error);
         }
     };
