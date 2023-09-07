@@ -28,18 +28,20 @@ const ButtonWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
-    height: 15%;
+    gap: 1rem;
+    width: 85%;
+    margin-top: 30px;
 `;
 
 const MypageButton = styled(MyButton)`
     background-color: ${(props) => props.color};
     border: none;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    width: 140px;
-    height: 55px;
+    width: 50%;
+    height: 48px;
     border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
 `;
 
 const AlertText = styled.div`
