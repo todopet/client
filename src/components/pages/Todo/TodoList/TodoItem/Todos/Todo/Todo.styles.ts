@@ -39,7 +39,7 @@ const Text = styled.span<TodoProps>`
     color: ${(props) =>
         props.newcheckstatus === "unchecked" ? "#000000" : "#ADADAD"};
 
-    max-width: 85%;
+    max-width: 240px;
     word-wrap: break-word;
 `;
 

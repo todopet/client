@@ -6,7 +6,7 @@ import {
     CategorySpan
 } from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentList.styles";
 
-import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";
+import { ReactComponent as UpdateIcon } from "@/assets/icons/update.svg";
 
 interface CategoryProps {
     category: category;
@@ -23,7 +23,7 @@ const CategoryContentListItem: React.FC<CategoryProps> = ({ category }) => {
                     <StyledLink
                         to={`/category/post?categoryId=${category._id}`}
                     >
-                        <MenuIcon />
+                        <UpdateIcon />
                     </StyledLink>
                 </ItemWrap>
             }

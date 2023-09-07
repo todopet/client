@@ -26,6 +26,9 @@ export default function MiniPet() {
             setPetlevel(response.data.level);
         } catch (error) {
             console.error(error);
+            alert(
+                "데이터를 가져오던 중 에러가 발생했습니다. 다시 시도해 주세요."
+            );
         }
     }
     useEffect(() => {
@@ -48,6 +51,9 @@ export default function MiniPet() {
             setItemsCount(response.data.count);
         } catch (error) {
             console.error(error);
+            alert(
+                "데이터를 가져오던 중 에러가 발생했습니다. 다시 시도해 주세요."
+            );
         }
     }
     const [itemsCount, setItemsCount] = useState<number>(0);
