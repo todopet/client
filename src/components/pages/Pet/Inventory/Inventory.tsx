@@ -46,7 +46,6 @@ export default function InventoryModal({ on }: parameterType) {
     // 펫 화면에서 인벤토리창을 열면 아이템 정보 조회 api 호출, 인벤토리창을 닫으면 펫 정보 조회 api 호출
     useEffect(() => {
         if (on) receiveItemData();
-        if (!on) receivePetData();
     }, [on]);
 
     const findTargetedCategory = () => {
