@@ -93,6 +93,7 @@ export default function TodoContextProvider({
             return response.data;
         } catch (error) {
             console.error(error);
+            alert("데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요.");
         }
     }
 
@@ -161,6 +162,9 @@ export default function TodoContextProvider({
             }
         } catch (error) {
             console.error(error);
+            alert(
+                "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
+            );
         }
     }
 
@@ -173,6 +177,9 @@ export default function TodoContextProvider({
             getTodos(startDate, endDate);
         } catch (error) {
             console.error(error);
+            alert(
+                "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
+            );
         }
     }
 
