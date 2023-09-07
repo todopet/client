@@ -19,9 +19,6 @@ interface parameterType {
     on: boolean;
 }
 
-// export const ItemDataContext = createContext<
-//     [items[], Dispatch<SetStateAction<items[]>>]
-// >([[], () => {}]);
 export const ItemDataContext = createContext<() => Promise<void>>(async () => {});
 
 export default function InventoryModal({ on }: parameterType) {
@@ -74,7 +71,6 @@ export default function InventoryModal({ on }: parameterType) {
     itemData.map((el) => (totalItemAmount += el.quantity));
 
     return (
-        // <ItemDataContext.Provider value={[itemData, setItemData]}>
         <ItemDataContext.Provider value={receiveItemData}>
             <ModalWrap on={on}>  {/* 모달창이 밑에서 위로 올라오는 애니메이션이 적용되도록 props로 visibility를 결정 */}
                 {/* PetArea의 State를 받음. true면 모달창 on, false면 off */}
