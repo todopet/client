@@ -50,6 +50,7 @@ export default function TodoForm({
             );
         } catch (error) {
             console.error(error);
+            alert("할 일 생성 중 에러가 발생했습니다. 다시 시도해 주세요.");
         }
     }
     //투두 patch요청(투두내용수정)
@@ -69,6 +70,7 @@ export default function TodoForm({
             );
         } catch (error) {
             console.error(error);
+            alert("데이터 수정 중 에러가 발생했습니다. 다시 시도해 주세요.");
         }
     }
 
