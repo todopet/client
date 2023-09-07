@@ -31,22 +31,9 @@ export default function ActionModal({
     name,
     quantity
 }: modalTypeProps) {
-    // const [itemData, setItemData] = useContext(ItemDataContext);
     const receiveItemData = useContext(ItemDataContext);
     const [itemCount, setItemCount] = useState(1);
     const receivePetData = useContext(MyContext);
-
-    // async function receiveItemData() {
-    //     try {
-    //         const response: res<myItems> = await axiosRequest.requestAxios<
-    //             res<myItems>
-    //         >("get", "/inventories", {});
-    //         const itemArray = response.data.items;
-    //         setItemData(itemArray);
-    //     } catch (error) {
-    //         console.error("Error fetching pet data: ", error);
-    //     }
-    // }
 
     async function handleUseItem(itemId: string) {
         try {
