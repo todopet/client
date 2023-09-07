@@ -108,7 +108,7 @@ const ModalInputArea = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: .3rem;
+    gap: .4rem;
 `
 
 const ModalInput = styled.input`
@@ -131,8 +131,8 @@ const ErrorText = styled.span<{ color: string }>`
     width: 100%;
     color: ${props => props.color};
     font-size: 10.5px;
-    // padding-left: 5rem;
-    text-align: center;
+    padding-left: 5rem;
+    // text-align: center;
 `
 
 const ModalButtonArea = styled.div`

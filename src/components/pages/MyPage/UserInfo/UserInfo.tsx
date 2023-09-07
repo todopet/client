@@ -70,7 +70,7 @@ export function UserInfo({ picture, name, date }: userinfoType) {
     }
 
     const textColor = () => {
-        if (error === "올바른 닉네임입니다.") return "#8afd85";
+        if (error === "올바른 닉네임입니다.") return "#5bd756";
         if (error === "닉네임을 입력하세요.") return "#ababab";
         return "#ff1919";
     }
