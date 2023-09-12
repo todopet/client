@@ -252,6 +252,7 @@ export function PetArea({
             >("get", "/inventories/itemsCount", {});
             setIsFull(response.data.count >= maxVolume);
         } catch (error) {
+            alert("아이템 개수 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요.");
             console.error("Error fetching pet data: ", error);
         }
     };

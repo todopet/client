@@ -13,6 +13,7 @@ const CategoryStyles = styled.div<CategoryStylesProps>`
     align-items: center;
     padding-right: ${(props) => (props.$isEnded ? "14px" : "10px")};
     padding-left: 14px;
+    margin-bottom: 10px;
 `;
 
 const Text = styled.span`

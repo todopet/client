@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 //api, interface
 import { todoCategory } from "@/@types/index";
 
@@ -6,6 +6,7 @@ import { todoCategory } from "@/@types/index";
 import Category from "./Category/Category";
 import Todos from "./Todos/Todos";
 import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
+import { TodoContext } from "@/components/pages/Todo/TodoContext";
 
 //styles
 import { TodoItemStyles } from "./TodoItem.styles";
@@ -16,8 +17,21 @@ interface TodoItemProps {
 export default function TodoItem({ todos }: TodoItemProps) {
     const [openInputForm, setOpenInputForm] = useState<boolean>(false);
     const handleClick = () => {
-        !todos.ended && setOpenInputForm(!openInputForm);
+        !todos.ended && setOpenInputForm(!openInputForm); //종료되지 않은 투두 클릭시 실행
     };
+
+    const { dateTodos } = useContext(TodoContext);
+
+    const todoFormRef = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+        if (todoFormRef.current) {
+            // todoForm이 생성될 때마다 스크롤을 아래로 내립니다.
+            todoFormRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+    }, [dateTodos]);
     return (
         <TodoItemStyles>
             <>
@@ -28,10 +42,12 @@ export default function TodoItem({ todos }: TodoItemProps) {
                 />
                 <Todos todos={todos.todos} />
                 {openInputForm && (
-                    <TodoForm
-                        categoryId={todos._id}
-                        finishEdit={() => setOpenInputForm(false)}
-                    />
+                    <div ref={todoFormRef}>
+                        <TodoForm
+                            categoryId={todos._id}
+                            finishEdit={() => setOpenInputForm(false)}
+                        />
+                    </div>
                 )}
             </>
         </TodoItemStyles>

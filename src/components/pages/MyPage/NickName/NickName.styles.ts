@@ -13,7 +13,7 @@ const UserName = styled.p`
     font-weight: bold;
     width: 85%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 `
 
