@@ -14,19 +14,14 @@ import {
 import axiosRequest from "@/api";
 import { myItems, res } from "@/@types";
 import { items } from "@/@types/myItems";
-import { MyContext } from "@/pages/Pet/Pet";
 
 interface parameterType {
     on: boolean;
 }
 
-export const ItemDataContext = createContext<
-    [items[], Dispatch<SetStateAction<items[]>>]
->([[], () => {}]);
+export const ItemDataContext = createContext<() => Promise<void>>(async () => {});
 
 export default function InventoryModal({ on }: parameterType) {
-    const receivePetData = useContext(MyContext);
-
     const [activeCategory, setActiveCategory] = useState("feed");
     const [itemData, setItemData] = useState<items[]>([]);
     let totalItemAmount = 0;
@@ -39,6 +34,7 @@ export default function InventoryModal({ on }: parameterType) {
             const itemArray = response.data.items;
             setItemData(itemArray);
         } catch (error) {
+            alert("아이템 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요.");
             console.error("Error fetching pet data: ", error);
         }
     }
@@ -46,7 +42,6 @@ export default function InventoryModal({ on }: parameterType) {
     // 펫 화면에서 인벤토리창을 열면 아이템 정보 조회 api 호출, 인벤토리창을 닫으면 펫 정보 조회 api 호출
     useEffect(() => {
         if (on) receiveItemData();
-        if (!on) receivePetData();
     }, [on]);
 
     const findTargetedCategory = () => {
@@ -76,9 +71,8 @@ export default function InventoryModal({ on }: parameterType) {
     itemData.map((el) => (totalItemAmount += el.quantity));
 
     return (
-        <ItemDataContext.Provider value={[itemData, setItemData]}>
-            <ModalWrap on={on}>
-                {" "}
+        <ItemDataContext.Provider value={receiveItemData}>
+            <ModalWrap on={on}>  {/* 모달창이 밑에서 위로 올라오는 애니메이션이 적용되도록 props로 visibility를 결정 */}
                 {/* PetArea의 State를 받음. true면 모달창 on, false면 off */}
                 <Header>
                     <Title>도구</Title>

@@ -7,6 +7,7 @@ export const RankList = styled.div`
     /* display: flex;
     flex-direction: column;
     align-items: center; */
+    padding: 0 24px;
 `;
 export const UserRankInfo = styled.div`
     /* margin-bottom: 5px; */
@@ -40,17 +41,22 @@ export const MedalImgWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 
-export const MedalImg = styled.div<{ranking: number}>`
-    background-image: url(${props => props.ranking === 1 ? goldMedal : props.ranking === 2 ? silverMedal : bronzeMedal});
+export const MedalImg = styled.div<{ ranking: number }>`
+    background-image: url(${(props) =>
+        props.ranking === 1
+            ? goldMedal
+            : props.ranking === 2
+            ? silverMedal
+            : bronzeMedal});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     width: 1.5rem;
     height: 2rem;
-    margin-top: .35rem;
-`
+    margin-top: 0.35rem;
+`;
 
 export const NickName = styled.span`
     text-align: center;

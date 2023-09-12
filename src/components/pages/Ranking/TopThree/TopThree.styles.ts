@@ -9,7 +9,6 @@ export const BRONZE_COLOR = "#cd7f32";
 export const TopThreeContainer = styled.div`
     display: flex;
     justify-content: space-around;
-    margin-bottom: 12px;
     min-height: 11rem;
 `;
 
@@ -17,7 +16,7 @@ export const RankInfoContainer = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: 25%;
+    width: 33%;
     height: auto;
     align-items: center;
 `;

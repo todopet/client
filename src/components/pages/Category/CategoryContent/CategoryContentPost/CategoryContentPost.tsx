@@ -69,6 +69,9 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 setInputValue(response.data.category);
                 onTextSend(response.data.category);
             } catch (error) {
+                alert(
+                    "데이터를 가져오던 중 에러가 발생했습니다. 다시 시도해 주세요."
+                );
                 console.error("Failed to fetch categories:", error);
             }
         }
@@ -102,7 +105,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 }
             } catch (error) {
                 console.error("Failed to end category:", error);
-                alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                alert("목표를 종료하지 못했습니다. 다시 시도해 주세요.");
             }
         }
     };
@@ -123,7 +126,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 }
             } catch (error) {
                 console.error("Failed to delete category:", error);
-                alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                alert("목표를 삭제하지 못했습니다. 다시 시도해 주세요.");
             }
         }
     };

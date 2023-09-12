@@ -41,14 +41,6 @@ const ItemIcon = styled(Button)<{ imageurl: string }>`
 
     &:hover { opacity: .6 }
 `
-// const StyledCakeIcon = styled(cakeIcon)`
-//     width: 100px;
-//     height: 96px;
-//     margin-right: 18px;
-//     cursor: pointer;
-
-//     &:hover { opacity: .6 }
-// `;
 const ItemName = styled.div`
     font-size: 20px;
     color: #545353;
@@ -80,7 +72,6 @@ export {
     ItemWrap,
     ItemInfo,
     ItemInfoRow,
-    // StyledCakeIcon,
     ItemIcon,
     ItemName,
     Itemdescription,

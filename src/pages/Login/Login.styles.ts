@@ -6,7 +6,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     height: inherit;
 `;
 
@@ -15,15 +15,7 @@ const Main = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: inherit;
-    height: 70vh;
-`;
-
-const MainImage = styled.div`
-    background: url(${mainImage});
-    width: 250px;
-    height: 200px;
-    background-repeat: no-repeat;
-    margin-bottom: -100px;
+    margin-bottom: 30%;
 `;
 
 const TitleGroup = styled.div`
@@ -37,7 +29,6 @@ const Title = styled.div`
     font-size: 2.5rem;
     font-style: normal;
     font-weight: 800;
-    // margin-bottom: 8px;
 `;
 
 const Img = styled.img`
@@ -60,7 +51,6 @@ const LoginBtnGroup = styled.button`
     flex-shrink: 0;
     border-radius: 0.8rem;
     border: 0.08rem solid #c9c9c9;
-    margin-bottom: 2.7rem;
     background: #fff;
     align-items: center;
     justify-content: center;
@@ -94,7 +84,6 @@ const LoginContent = styled.div`
 export {
     Container,
     Main,
-    MainImage,
     LoginBtnGroup,
     GoogleImage,
     LoginContent,

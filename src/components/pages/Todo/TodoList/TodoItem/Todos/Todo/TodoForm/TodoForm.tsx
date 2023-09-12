@@ -25,6 +25,9 @@ export default function TodoForm({
 }: TodoFormProps) {
     const { getTodos, selectedDate } = useContext(TodoContext);
 
+    //체크 가능여부
+    const [disabledChecked, setDisabledChecked] = useState<boolean>(true);
+
     //input value 관리
     const [value, setValue] = useState<string>(
         existingContent ? existingContent : ""
@@ -47,6 +50,7 @@ export default function TodoForm({
             );
         } catch (error) {
             console.error(error);
+            alert("할 일 생성 중 에러가 발생했습니다. 다시 시도해 주세요.");
         }
     }
     //투두 patch요청(투두내용수정)
@@ -66,15 +70,18 @@ export default function TodoForm({
             );
         } catch (error) {
             console.error(error);
+            alert("데이터 수정 중 에러가 발생했습니다. 다시 시도해 주세요.");
         }
     }
 
     //투두 생성 or 수정
     const submitForm = async () => {
         if (existingContent) {
+            setDisabledChecked(true); //체크박스 지우기
             await changeTodoContent();
             finishEdit && finishEdit(); //수정이 끝나면 form 닫힘
         } else if (value) {
+            setDisabledChecked(true); //체크박스 지우기
             await postTodo();
         }
         getTodos(selectedDate, selectedDate);
@@ -111,7 +118,7 @@ export default function TodoForm({
 
     return (
         <Form ref={formRef} onSubmit={handleSubmit}>
-            <StyledCheckbox />
+            {!disabledChecked && <StyledCheckbox />}
             <Input
                 placeholder="할 일 입력"
                 onChange={handleChange}

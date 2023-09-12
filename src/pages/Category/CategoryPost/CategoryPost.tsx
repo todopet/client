@@ -28,7 +28,7 @@ const CategoryPost = () => {
                 throw new Error("목표 등록에 실패했습니다.");
             }
         } catch (error) {
-            alert(error);
+            alert("목표 등록에 실패했습니다. 다시 시도해 주세요.");
             console.error("Failed to fetch categories:", error);
         }
     };
@@ -49,6 +49,7 @@ const CategoryPost = () => {
                 throw new Error("목표 수정에 실패했습니다.");
             }
         } catch (error) {
+            alert("목표 수정에 실패했습니다. 다시 시도해 주세요.");
             console.error("Failed to fetch categories:", error);
         }
     };

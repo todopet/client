@@ -5,7 +5,7 @@ const Form = styled.form`
     flex-direction: row;
     height: 30px;
 
-    margin: 20px 2px;
+    margin: 10px 2px;
 `;
 const StyledCheckbox = styled.div`
     width: 22px;
