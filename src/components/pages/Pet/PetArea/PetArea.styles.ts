@@ -84,7 +84,13 @@ const PetLevelNameArea = styled.div`
 	margin-top: 15px;
 	height: 20%;
 	width: 100%;
+`
+
+const StarWrapper = styled.div`
+	width: 15px;
+	height: 27px;
 	position: relative;
+	background-color: white;
 `
 
 const LevelStar = styled.div`
@@ -92,13 +98,13 @@ const LevelStar = styled.div`
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
-	width: 25%;
-	height: 110%;
+	width: 40px;
+	height: 35px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	right: 0; top: -4px;
 	position: absolute;
-	left: 10%;
 `
 
 const Level = styled.p`
@@ -111,22 +117,21 @@ const Level = styled.p`
 
 const PetNameBox = styled.div`
 	background-color: white;
-	border-radius: 8px;
-	width: 70%;
-	height: 90%;
-	margin-left: 10%;
+	border-radius: 0 8px 8px 0;
+	width: 60%;
+	height: 27px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin: 0 -21px 0 -9px;
 `
 
 const PetName = styled.p`
 	font-size: 1rem;
 	font-weight: bold;
 	margin: 0;
-	height: 30px;
-	line-height: 30px;
-	padding-left: 6%;
+	height: 27px;
+	line-height: 27px;
 `
 
 const MainBody = styled.div`
@@ -214,6 +219,7 @@ export {
 	PetLevelNameArea, 
 	LevelStar,
 	Level,
+	StarWrapper,
 	PetNameBox,
 	PetName,
 	MainBody, 
