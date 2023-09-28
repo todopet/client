@@ -2,6 +2,8 @@ import { useState } from "react";
 import {
     ItemWrap,
     ItemInfo,
+    ItemImage,
+    ItemDes,
     ItemInfoRow,
     ItemIcon,
     ItemName,
@@ -27,23 +29,20 @@ export default function Item({ url, name, des, _id, quantity }: itemPropsType) {
     return (
         <ItemWrap>
             <ItemInfo onClick={() => setUse(!use)}>
-                <ItemIcon imageurl={url} />
-                <ItemQtyLabel count={quantity} />
+                <ItemImage>
+                    <ItemIcon imageurl={url} />
+                    <ItemQtyLabel count={quantity} />
+                </ItemImage>
+                <ItemDes>
+                    <ItemInfoRow>
+                        <ItemName>{name}</ItemName>
+                    </ItemInfoRow>
+                    <Itemdescription>{des}</Itemdescription>
+                </ItemDes>
             </ItemInfo>
-            <ItemInfo>
-                <ItemInfoRow>
-                    <ItemName>{name}</ItemName>
-                    <DiscardBtnStyled>
-                        <DiscardBtn
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setDiscard(!discard);
-                            }}
-                        />
-                    </DiscardBtnStyled>
-                </ItemInfoRow>
-                <Itemdescription>{des}</Itemdescription>
-            </ItemInfo>
+            <DiscardBtnStyled>
+                <DiscardBtn onClick={() => setDiscard(!discard) } />
+            </DiscardBtnStyled>
             {/* 사용하거나 버릴때 호출하는 api 경로의 파라미터는 _id */}
             {discard && (
                 <ActionModal
