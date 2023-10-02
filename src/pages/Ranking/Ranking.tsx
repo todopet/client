@@ -11,11 +11,11 @@ const Ranking: React.FC = () => {
     const [userRankList, setUserRankList] = useState<RankInfo[]>([]);
     const [userTopThreeList, setUserTopThreeList] = useState<RankInfo[]>([]);
 
-    const getUserRankList = async () => {
+    const getUserRankList = async (count: number) => {
         try {
             const response: res<RankInfo[]> = await axiosRequest.requestAxios<
                 res<RankInfo[]>
-            >("get", "/users/rank", {});
+            >("get", `/users/rank/${count}`, {});
             setUserRankList(response.data);
             setUserTopThreeList(setTopThree(response.data));
         } catch (error) {
@@ -37,7 +37,7 @@ const Ranking: React.FC = () => {
     };
 
     useEffect(() => {
-        getUserRankList();
+        getUserRankList(2);
     }, []);
 
     return (
