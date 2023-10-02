@@ -12,6 +12,7 @@ import {
     PetLevelNameArea,
     LevelStar,
     Level,
+    StarWrapper,
     PetNameBox,
     PetName,
     MainFooterButton,
@@ -296,9 +297,9 @@ export function PetArea({
                 <LevelInfo>
                     <Stars level={level} />
                     <PetLevelNameArea>
-                        <LevelStar>
-                            <Level>{level}</Level>
-                        </LevelStar>
+                        <StarWrapper>
+                            <LevelStar><Level>{level}</Level></LevelStar>
+                        </StarWrapper>
                         <PetNameBox>
                             <PetName>{petName}</PetName>
                         </PetNameBox>

@@ -1,7 +1,12 @@
-import Button from "@/components/Button/Button";
 import styled from "styled-components";
 
-const ItemInfo = styled.div``;
+const ItemInfo = styled.div`
+    display: flex;
+    cursor: pointer;
+    
+    &:hover { opacity: .6 }
+`;
+
 const ItemWrap = styled.div`
     box-sizing: border-box;
     width: 100%;
@@ -9,55 +14,60 @@ const ItemWrap = styled.div`
     padding: 18px 18px;
     display: flex;
     flex-direction: row;
-
-    & > ${ItemInfo}:nth-child(1) {
-        position: relative;
-        & > div {
-            position: absolute;
-            bottom: 6px;
-        }
-    }
-    & > ${ItemInfo}:nth-child(2) {
-        display: flex;
-        flex-direction: column;
-    }
+    position: relative;
 `;
+
+const ItemImage = styled.div`
+    position: relative;
+    & > div:nth-child(2) {
+        position: absolute;
+        bottom: 6px;
+    }
+`
+
+const ItemDes = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
 const ItemInfoRow = styled.div`
     height: 50%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 `;
-const ItemIcon = styled(Button)<{ imageurl: string }>`
+
+const ItemIcon = styled.div<{ imageurl: string }>`
     background-image: url(${props => props.imageurl});
     background-repeat: no-repeat;
     background-position: center;
     width: 100px;
     height: 96px;
     margin-right: 18px;
-    cursor: pointer;
     border: 0;
     background-color: transparent;
-
-    &:hover { opacity: .6 }
 `
+
 const ItemName = styled.div`
     font-size: 20px;
     color: #545353;
     align-self: flex-end;
 `;
+
 const Itemdescription = styled.div`
     font-size: 15px;
     color: #545353;
 `;
+
 const DiscardBtnStyled = styled.div`
-    align-self: center;
-    position: relative;
-    flex-basis: 15%;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items; center;
+    position: absolute;
+    width: 50px; height: 50px;
+    right: 8px; top: 17px;
     & > button {
-        position: absolute;
-        top: 3px; left: 5px;
+        width: 100%; height: 100%;
         border: 0;
         background-color: transparent;
         z-index: 2;
@@ -68,9 +78,12 @@ const DiscardBtnStyled = styled.div`
         }
     }
 `;
+
 export {
     ItemWrap,
     ItemInfo,
+    ItemImage,
+    ItemDes,
     ItemInfoRow,
     ItemIcon,
     ItemName,
