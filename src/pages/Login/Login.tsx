@@ -18,8 +18,8 @@ const Login = () => {
     const handleLoginClick = async () => {
         // 백엔드에서 리다이렉트
         // TODO: 발표 전 수정
-        // document.location.href = "https://kdt-sw-5-2-team14.elicecoding.com/api/v1/login";
-        document.location.href = "http://localhost:3001/api/v1/login";
+        document.location.href = "https://todopet.vercel.app/api/v1/login";
+        // document.location.href = "http://localhost:3001/api/v1/login";
     };
     const location = useLocation();
     useEffect(() => {
