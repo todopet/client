@@ -69,7 +69,7 @@ const axiosRequest: AxiosRequest = {
         try {
             const response = await axios({
                 method,
-                url: `/${url}`,
+                url: `${axios.defaults.baseURL}/${url}`,
                 data,
                 headers // 아이템, 인벤토리 호출할때만 넣기. 주요 기능에만 제한하는 것은 어떨지
             });
