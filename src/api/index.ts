@@ -2,7 +2,9 @@ import axios, { AxiosHeaders } from "axios";
 
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
 // TODO: 발표 전 수정
-axios.defaults.baseURL = "http://localhost:3001/api/v1";
+axios.defaults.baseURL =
+    "https://port-0-todopet-server-3prof2llkz3atwx.sel4.cloudtype.app/api/v1";
+// axios.defaults.baseURL = "http://localhost:3001/api/v1";
 // axios.defaults.baseURL = "https://kdt-sw-5-2-team14.elicecoding.com/api/v1";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -69,7 +71,7 @@ const axiosRequest: AxiosRequest = {
         try {
             const response = await axios({
                 method,
-                url: `${axios.defaults.baseURL}${url}`,
+                url: `/${url}`,
                 data,
                 headers // 아이템, 인벤토리 호출할때만 넣기. 주요 기능에만 제한하는 것은 어떨지
             });
