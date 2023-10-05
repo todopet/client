@@ -53,6 +53,5 @@
     "@types/node": "^20.4.10",
     "@types/styled-components": "^5.1.26",
     "cross-env": "^7.0.3"
-  },
-  "proxy": "https://port-0-todopet-server-3prof2llkz3atwx.sel4.cloudtype.app/api/v1/"
+  }
 }
