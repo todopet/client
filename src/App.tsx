@@ -8,50 +8,7 @@ import { StyleSheetManager } from "styled-components";
 import axiosRequest from "./api";
 import { res } from "./@types";
 // import NotFound from "@/pages/NotFound";
-
-const Todo = lazy(() => import("@/pages/Todo/Todo"));
-const Login = lazy(() => import("@/pages/Login/Login"));
-const Ranking = lazy(() => import("@/pages/Ranking/Ranking"));
-const Pet = lazy(() => import("@/pages/Pet/Pet"));
-const MyPage = lazy(() => import("@/pages/MyPage/MyPage"));
-const CategoryList = lazy(
-    () => import("@/pages/Category/CategoryList/CategoryList")
-);
-const CategoryPost = lazy(
-    () => import("@/pages/Category/CategoryPost/CategoryPost")
-);
-
-const routeLogin = {
-    path: "/",
-    element: <Login />,
-    withHeader: false,
-    withFooter: false
-};
-
-const routePaths = [
-    {
-        path: "/",
-        element: <Login />,
-        withHeader: false,
-        withFooter: false
-    },
-    {
-        path: "/category/list",
-        element: <CategoryList />,
-        withHeader: false,
-        withFooter: false
-    },
-    {
-        path: "/category/post",
-        element: <CategoryPost />,
-        withHeader: false,
-        withFooter: false
-    },
-    { path: "/todo", element: <Todo />, withHeader: true, withFooter: true },
-    { path: "/pet", element: <Pet />, withHeader: true, withFooter: true },
-    { path: "/rank", element: <Ranking />, withHeader: true, withFooter: true },
-    { path: "/mypage", element: <MyPage />, withHeader: true, withFooter: true }
-];
+import { routeLogin, routePaths } from "@/routers/index";
 
 interface auth {
     status: number;
@@ -72,7 +29,12 @@ const App: React.FC = () => {
                 res<auth>
             >("get", `/users/auth`);
             setIsLoading(false);
+            console.log(response);
+            console.log(response.data);
+            console.log(response.data.status);
+            alert('aa');
             if (response.data.status === 200) {
+                alert('bb');
                 setIsAuth(true);
                 return;
             }
@@ -82,9 +44,10 @@ const App: React.FC = () => {
             navigate("/");
             console.error("Failed to check auth.", error);
         }
+        alert('cc');
         setIsLoading(false);
         setIsAuth(false);
-        navigate("/");
+        // navigate("/");
     };
 
     useEffect(() => {

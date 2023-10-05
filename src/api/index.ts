@@ -3,9 +3,7 @@ import axios, { AxiosHeaders } from "axios";
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
 // TODO: 발표 전 수정
 axios.defaults.baseURL =
-    "https://port-0-todopet-server-3prof2llkz3atwx.sel4.cloudtype.app/api/v1";
-// axios.defaults.baseURL = "http://localhost:3001/api/v1";
-// axios.defaults.baseURL = "https://kdt-sw-5-2-team14.elicecoding.com/api/v1";
+    process.env.REACT_APP_API_URL || "http://localhost:3001/api/v1";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
