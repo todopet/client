@@ -41,7 +41,7 @@ const App: React.FC = () => {
         }
         setIsLoading(false);
         setIsAuth(false);
-        navigate("/");
+        // navigate("/");
     };
 
     useEffect(() => {
