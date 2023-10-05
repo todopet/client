@@ -29,7 +29,9 @@ const App: React.FC = () => {
                 res<auth>
             >("get", `/users/auth`);
             setIsLoading(false);
+            alert('aa');
             if (response.data.status === 200) {
+                alert('bb');
                 setIsAuth(true);
                 return;
             }
@@ -39,6 +41,7 @@ const App: React.FC = () => {
             navigate("/");
             console.error("Failed to check auth.", error);
         }
+        alert('cc');
         setIsLoading(false);
         setIsAuth(false);
         // navigate("/");
