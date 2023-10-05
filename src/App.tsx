@@ -29,6 +29,9 @@ const App: React.FC = () => {
                 res<auth>
             >("get", `/users/auth`);
             setIsLoading(false);
+            console.log(response);
+            console.log(response.data);
+            console.log(response.data.status);
             alert('aa');
             if (response.data.status === 200) {
                 alert('bb');
