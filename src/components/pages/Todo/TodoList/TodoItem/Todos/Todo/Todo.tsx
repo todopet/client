@@ -19,6 +19,9 @@ import {
     DropDownWrap
 } from "./Todo.styles";
 
+// common scripts
+import { formatDateToString } from "@/libs/utils/global";
+
 interface TodoProps {
     content: string;
     status: string;
@@ -26,7 +29,7 @@ interface TodoProps {
 }
 
 export default function Todo({ content, status, contentId }: TodoProps) {
-    const { updateStatus, deleteTodo } = useContext(TodoContext);
+    const { selectedDate, updateStatus, deleteTodo } = useContext(TodoContext);
 
     const [newcheckstatus, setNewcheckstatus] = useState<string>(status);
     useEffect(() => {
@@ -45,8 +48,12 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         //상태 업데이트
         setNewcheckstatus(checkStatus);
         //patch요청
-        updateStatus(contentId, content, checkStatus);
+        updateStatus(contentId, content, checkStatus, selectedDate);
     };
+    const isSelectedDate: boolean =
+        new Date(selectedDate).toString() ===
+        new Date(formatDateToString(new Date())).toString();
+
     //DropDown의 props
     const listItems = [
         {
@@ -62,7 +69,23 @@ export default function Todo({ content, status, contentId }: TodoProps) {
             }
         }
     ];
-
+    if (status !== "completed") {
+        listItems.push({
+            content: isSelectedDate ? "내일하기" : "오늘하기",
+            handleClick: () => {
+                updateStatus(
+                    contentId,
+                    content,
+                    newcheckstatus,
+                    isSelectedDate
+                        ? formatDateToString(
+                              new Date(Date.now() + 24 * 60 * 60 * 1000)
+                          )
+                        : formatDateToString(new Date())
+                );
+            }
+        });
+    }
     //input 상태
     const [isEditing, setIsEditig] = useState<boolean>(false);
 
