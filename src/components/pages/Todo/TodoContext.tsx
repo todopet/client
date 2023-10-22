@@ -118,8 +118,6 @@ export default function TodoContextProvider({
         date: string
     ) {
         try {
-            console.log(contentId, content, checkStatus, date);
-
             if (checkStatus === "completed") {
                 //이전 토스트를 꺼줍니다.
                 setIsActiveToast(false);
@@ -152,8 +150,6 @@ export default function TodoContextProvider({
                 getTodos(selectedDate, selectedDate);
                 getTodos(startDate, endDate);
             } else {
-                console.log(contentId, content, checkStatus, date);
-
                 const response: res<todo> = await axiosRequest.requestAxios<
                     res<todo>
                 >(

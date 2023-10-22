@@ -1,5 +1,6 @@
 export interface todo {
     categoryId: string;
+    todoDate: Date;
     createdAt: Date;
     message: Message | null;
     status: string;
