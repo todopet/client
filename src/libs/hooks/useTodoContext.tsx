@@ -53,7 +53,6 @@ export default function TodoContextProvider({
             const response = await axiosRequest.requestAxios<
                 res<todoCategory[]>
             >("get", `/todoContents?start=${startDate}&end=${endDate}`);
-            console.log("response: ", response);
             // setPeriodTodos(response.data);
         } catch (error) {
             console.error("error: ", error);
@@ -76,7 +75,7 @@ export default function TodoContextProvider({
                 todo: content,
                 status: checkStatus
             });
-            console.log("체크!", response.data.message);
+            // console.log("체크!", response.data.message);
             setIsActiveToast(true);
             setTimeout(() => {
                 setIsActiveToast(false);
