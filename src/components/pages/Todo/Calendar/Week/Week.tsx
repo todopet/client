@@ -46,7 +46,6 @@ export default function Week() {
 
     const { updateSelectedDate, updateStartEnd, periodTodos, setPeriodTodos } =
         useContext(TodoContext);
-
     // 날짜 형식 yyyy-mm-dd 지정 함수
     const formatDate = (date: Date) => {
         const year = date.getFullYear();
@@ -113,7 +112,9 @@ export default function Week() {
             })
             .catch((error) => {
                 console.error(error);
-                alert("데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요.");
+                alert(
+                    "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
+                );
             });
     };
 
@@ -121,7 +122,7 @@ export default function Week() {
         const todoDates: number[] = [];
         periodTodos?.forEach((category: any) =>
             category.todos.forEach((todo: any) => {
-                const newDate = new Date(todo.createdAt);
+                const newDate = new Date(todo.todoDate);
                 if (todo.status === "completed")
                     todoDates.push(newDate.getDay());
             })
