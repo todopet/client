@@ -89,7 +89,7 @@ export default function Month() {
         const todoDates: number[] = [];
         periodTodos?.forEach((category: any) =>
             category.todos.forEach((todo: any) => {
-                const newDate = new Date(todo.createdAt);
+                const newDate = new Date(todo.todoDate);
                 if (todo.status === "completed")
                     todoDates.push(newDate.getDate());
             })
