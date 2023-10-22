@@ -19,7 +19,8 @@ export interface TodoContextProps {
     updateStatus: (
         contentId: string,
         checkStatus: string,
-        content: string
+        content: string,
+        date: string
     ) => void;
     deleteTodo: (contentId: string) => void;
     message: Message | null;
@@ -40,7 +41,8 @@ export const TodoContext = createContext<TodoContextProps>({
     updateStatus: (
         contentId: string,
         checkStatus: string,
-        content: string
+        content: string,
+        date: string
     ) => {},
     deleteTodo: (contentId: string) => {},
     message: { reward: null, type: ToastTypes.NORMAL, inventoryCount: 0 },
@@ -93,7 +95,9 @@ export default function TodoContextProvider({
             return response.data;
         } catch (error) {
             console.error(error);
-            alert("데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요.");
+            alert(
+                "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
+            );
         }
     }
 
@@ -110,9 +114,12 @@ export default function TodoContextProvider({
     async function updateStatus(
         contentId: string,
         content: string,
-        checkStatus: string
+        checkStatus: string,
+        date: string
     ) {
         try {
+            console.log(contentId, content, checkStatus, date);
+
             if (checkStatus === "completed") {
                 //이전 토스트를 꺼줍니다.
                 setIsActiveToast(false);
@@ -126,9 +133,9 @@ export default function TodoContextProvider({
                     "patch",
                     `/todoContents/${contentId}`,
                     {
-                        contentId: contentId,
                         todo: content,
-                        status: checkStatus
+                        status: checkStatus,
+                        date: date
                     },
                     { "x-custom-data": Date.now() * 4 + 1000 }
                 );
@@ -145,15 +152,17 @@ export default function TodoContextProvider({
                 getTodos(selectedDate, selectedDate);
                 getTodos(startDate, endDate);
             } else {
+                console.log(contentId, content, checkStatus, date);
+
                 const response: res<todo> = await axiosRequest.requestAxios<
                     res<todo>
                 >(
                     "patch",
                     `/todoContents/${contentId}`,
                     {
-                        contentId: contentId,
                         todo: content,
-                        status: checkStatus
+                        status: checkStatus,
+                        date: date
                     },
                     { "x-custom-data": Date.now() * 4 + 1000 }
                 );
