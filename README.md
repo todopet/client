@@ -42,13 +42,14 @@
 
 <details><summary>3. 랭킹 페이지</summary>
 
-![메인](https://github.com/are-you-T/client/assets/87935496/67737a45-65f4-4dae-96d3-d122a2695867)
-
-- 상단 햄버거 버튼을 누르면 사이드 바가 표시된다.
-- 사이드 바 관련 기능은 1번 참고.
-- 테스트 하러 가기 : 버튼을 클릭하면 MBTI 유형 검사 문답이 표시되고, 유저는 검사를 할 수 있다.
-- 통계 보러 가기 : 전체 통계 페이지로 이동한다.
-- 담벼락 보러 가기 : MBTI 전체 담벼락 페이지로 이동한다.
+![랭킹페이지](https://github.com/todopet/client/assets/63568239/be7192eb-c97a-4456-beab-c31781a524f3)
+- 랭킹 조회
+  - 주간 별로 투두를 해결한 순서대로 랭킹을 부여한다.
+  - 주간 투두 해결 1위, 2위, 3위 유저는 명예의 전당에 올라 프로필 사진 또한 표시한다.
+    - ![주간랭킹](https://github.com/todopet/client/assets/63568239/9dbe3913-967d-4837-8b91-0cc3bad76d61)
+  - 하단 영역에는 주간 투두 해결을 많이 진행한 상위 n명에 대하여 닉네임과 해결 횟수를 표시한다.
+    - 주간 투두 해결 1위, 2위, 3위 유저는 순위 대신 메달을 표시하고, 나머지 유저들은 순위를 표시한다.
+  - 주간 투두 해결 횟수가 같은 유저에 대한 랭킹 표시는 최근에 투두를 해결한 유저에 대하여 우선 순위를 부여한다.
 
 </details>
 
@@ -70,7 +71,7 @@
 - [https://todopet.vercel.app/](https://todopet.vercel.app/)
 <div>
 
-![로고](https://github.com/are-you-T/client/assets/87935496/80e136df-e092-4592-a06f-605e3a2a18ce)
+![로고](https://github.com/todopet/client/assets/63568239/15ba9d33-15df-49ff-a522-4116a3632254)
 
  </div>
 
@@ -372,7 +373,7 @@ const historySchema = new Schema(
 ## Collaboration Tools
 
 - Notion : 스터디 기간, 사용 기술 스택, 참고 문서, 업무 진행 사항, 회의록
-- Gather Town : 음성 채팅방 활용 의견 제시및 문제 해결
+- Gather Town : 음성 채팅방 활용 의견 제시 및 문제 해결, 화면 공유
 - GitHub : Code Repository
 - Postman Teams : API 테스트 진행
 
