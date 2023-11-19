@@ -18,14 +18,36 @@
 
 #### (todopet) MBTI 유형별 분석, 통계, 담벼락 등 MBTI 포털 사이트의 핵심 기능을 구현합니다.
 
-<details><summary>1. 피드 페이지 </summary>
+<details><summary>1. 피드 페이지</summary>
+<img src="https://github.com/todopet/client/assets/51261847/d3e75b33-3eb3-4a81-aac4-48df296c6af9" width="300" />
 
-![헤더](https://github.com/are-you-T/client/assets/87935496/54f36f44-67a9-490a-be68-4a663a8a76f2)
+#### 미니펫 창
+- 캐릭터 애니메이션(점프하며 오른쪽으로 이동)을 적용했습니다.
+- 펫 레벨에 따라 캐릭터가 변화합니다.
+- 토스트 알림
+	- 투두를 체크할 때마다 보상에 관련된 알림이 나타났다가 사라집니다.
+	- 일반 보상
+	- 특별한 보상(히든 아이템)
+	- 이미 받은 보상
+	- 일일 보상 최대치를 초과한 경우
+	- 인벤토리를 모두 채운 순간
+	- <img src="https://github.com/todopet/client/assets/51261847/9d0ff67b-bb43-4833-952b-0747cff026ef" width="300" />
+ 
+	- 인벤토리 공간이 없어서 아이템을 받지 못하는 경우
+		- 공간이 없을 때 투두를 완료한 경우
+		- 피드 페이지 진입 시 알림
+		- <img src="https://github.com/todopet/client/assets/51261847/553ae2d1-e3b0-4213-a9d9-51849d05a448" width="300" />
+		- <img src="https://github.com/todopet/client/assets/51261847/223823d8-4592-4316-a30d-c76703d86dab" width="300" />
 
-- 로고를 클릭하여 메인 페이지로 이동한다.
-- 햄버거 버튼을 클릭하여 사이드 바를 표시한다.
-- 하단의 깃허브 아이콘을 클릭하여 깃허브 페이지로 이동한다.
-- 하단의 공유 아이콘을 클릭하여 화면의 링크를 복사한다.
+#### 캘린더
+- 토글 버튼으로 주간 캘린더 모드, 월간 캘린더 모드를 전환 가능합니다.
+- ![image](https://github.com/todopet/client/assets/51261847/9f4345cc-113b-4085-9bef-5d714d4418fd)
+- 날짜를 클릭 시 해당 날짜로 이동하며, 그 날의 Todo만 표시합니다.
+- 
+#### 캘린더
+
+#### 캘린더
+
 
 </details>
 
