@@ -18,51 +18,127 @@
 
 #### (todopet) MBTI 유형별 분석, 통계, 담벼락 등 MBTI 포털 사이트의 핵심 기능을 구현합니다.
 
-<details><summary>1. 피드 페이지 </summary>
+<details><summary>1. 피드 페이지</summary>
+<img src="https://github.com/todopet/client/assets/51261847/d3e75b33-3eb3-4a81-aac4-48df296c6af9" width="250" />
 
-![헤더](https://github.com/are-you-T/client/assets/87935496/54f36f44-67a9-490a-be68-4a663a8a76f2)
+#### 미니펫 창
+- 캐릭터 애니메이션(점프하며 오른쪽으로 이동) 적용
+- 펫 레벨에 따라 캐릭터 변화
+- 토스트 알림: 투두를 체크할 때마다 보상에 관련된 알림이 나타났다가 사라진다
+	- 일반 보상
+	- 특별한 보상(히든 아이템)
+	- 이미 받은 보상
+	- 일일 보상 최대치를 초과한 경우
+	- 인벤토리를 모두 채운 순간
+	- <img src="https://github.com/todopet/client/assets/51261847/9d0ff67b-bb43-4833-952b-0747cff026ef" width="250" />
+	- 인벤토리 공간이 없어서 아이템을 받지 못하는 경우
+		- 공간이 없을 때 투두를 완료한 경우
+		- 피드 페이지 진입 시 알림
+		- <img src="https://github.com/todopet/client/assets/51261847/553ae2d1-e3b0-4213-a9d9-51849d05a448" width="250" />
+		- <img src="https://github.com/todopet/client/assets/51261847/223823d8-4592-4316-a30d-c76703d86dab" width="250" />
 
-- 로고를 클릭하여 메인 페이지로 이동한다.
-- 햄버거 버튼을 클릭하여 사이드 바를 표시한다.
-- 하단의 깃허브 아이콘을 클릭하여 깃허브 페이지로 이동한다.
-- 하단의 공유 아이콘을 클릭하여 화면의 링크를 복사한다.
 
+
+#### 캘린더
+- 토글 버튼으로 주간 캘린더 모드, 월간 캘린더 모드를 전환 가능
+- ![image](https://github.com/todopet/client/assets/51261847/9f4345cc-113b-4085-9bef-5d714d4418fd)
+- 날짜를 클릭 시 해당 날짜로 이동하며, 그 날의 Todo만 표시
+- 각 날짜의 완료한 Todo개수를 색깔로 나타내며, 개수가 많을 수록 색이 진해진다
+- <img src="https://github.com/todopet/client/assets/51261847/fbf7278b-47f0-44c3-ada3-9745fd834f58" width="250" />
+- 오늘 날짜는 검정 동그라미, 선택한 날짜는 파란색 동그라미로 나타낸다.
+- 날짜를 선택할 경우 선택한 날짜에 해당하는 Todo만 표시된다.
+- <img src="https://github.com/todopet/client/assets/51261847/90d13f3c-a721-4e73-898f-4a5ba4155910" width="250" />
+
+
+#### Todo List
+- 카테고리별 투두 생성
+  - 투두 카테고리 버튼을 클릭하면 투두를 작성할 수 있는 폼이 나타난다
+  - <img src="https://github.com/todopet/client/assets/51261847/a2625225-8981-495e-9ff4-5b04783d64dc" width="100" />
+
+- 투두 생성 폼
+  - 할 일을 입력하고 enter를 누르면 투두 리스트에 등록되고 새로운 폼이 아래에 나타난다
+  - 할 일을 입력하고 폼 이외의 영역을 클릭하면 투두 리스트에 등록된다
+  - <img src="https://github.com/todopet/client/assets/51261847/50780f4f-34eb-4a94-89b4-561086408f3a" width="250" />
+
+- 투두 삭제/수정
+  - 투두를 삭제하거나 수정할 수 있는 버튼이며, 클릭 시 삭제/수정 드롭다운이 나온다
+  - <img src="https://github.com/todopet/client/assets/51261847/f525c7bd-0fc3-425a-bd2d-c2cb3f743c65" width="30" />
+
+<br/>
 </details>
+
 
 <details><summary>2. 펫 페이지</summary>
 
-![사이드바](https://github.com/are-you-T/client/assets/87935496/51f9686d-5d2f-4a6d-acd3-24f28715e231)
+<img src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/d64403ae-998a-485f-95bb-029d94fb20ca/%ED%8E%AB%ED%99%94%EB%A9%B4.png?id=b9a9a354-f77e-4029-a846-5e60ac148268&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=qnkdXpzlN281P6MRchg5iOxUOotXaD8nycSfJuKUYps&downloadName=%ED%8E%AB%ED%99%94%EB%A9%B4.png" width="250px" title="펫 화면"/><br>
+- 펫의 상태 정보(포만감, 친밀도, 컨디션, 청결도, 경험치, 레벨 등)를 확인할 수 있다.
+- 펫의 4가지 상태(포만감, 친밀도, 컨디션, 청결도)는 1분에 0.05씩 감소한다.
 
-- “테스트 하러가기” 버튼을 클릭하여 테스트 페이지로 이동한다.
-- “통계 보러가기” 버튼을 클릭하여 통계 페이지로 이동한다.
-- “담벼락 보러가기” 버튼을 클릭하여 담벼락 페이지로 이동한다.
-- 하단의 링크를 클릭하여 깃허브 페이지로 이동한다.
+<img src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/5549d9bd-6cda-4d40-bb76-dd374335c6c7/%ED%95%98%ED%8A%B8.png?id=7d1b5e02-5551-4836-b78f-c91211df18b6&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=wnoqtppExH34egdfFbsHCUxWcxyT5So4LAf6o1Wv2_o&downloadName=%ED%95%98%ED%8A%B8.png" width="150" height="200" title="감정표현_하트"/>
+<img src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/dd558ef0-87e5-4da6-bc58-5d0c3cdd9a67/%E3%85%A0%E3%85%A0.png?id=a8914076-2d2d-4208-98e7-a99d47a0bd44&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=e7YikjbQ9IhoDij0NNW3DBKxldde9xfMWS3igz5wqzU&downloadName=%E3%85%A0%E3%85%A0.png" width="150" height="200" title="감정표현_ㅜㅜ"/>
+<img src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/4182be0a-3856-445d-9685-fb60c2c9fd70/%EA%B7%B8%EB%83%A5.png?id=17c4ee89-9679-4895-96c4-c83385a2e482&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=Zq1zlhtgPEdWp8pt823wFxwfhcQo_MuK40egHE1VGfE&downloadName=%EA%B7%B8%EB%83%A5.png" width="150" height="200" title="감정표현_없음"/>
+
+- 펫의 4가지 상태에 따라 펫의 감정표현을 확인할 수 있다.
+
+  > - 상태 4가지 모두 80% 이상 : 하트
+  > - 상태중 하나라도 30% 이하 : ㅜㅜ
+  > - 그 외 : 표현 없음
+
+<img src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/de6a9ba5-c3f2-468c-8b28-74f1b979fe38/%EC%9D%B8%EB%B2%A4%ED%86%A0%EB%A6%AC.png?id=8f773549-e4fa-4d21-a95b-5f31e14f4ffe&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=EGsWKMxqWQ_5bLh0KDe8QCmQjPfzGN2-78t0NWF6UmI&downloadName=%EC%9D%B8%EB%B2%A4%ED%86%A0%EB%A6%AC.png" width="250px" title="인벤토리 화면"/><br>
+- 인벤토리에서 보유중인 아이템을 확인할 수 있다.
+- 아이템은 5가지 종류가 있고, 종류별로 회복시키는 상태가 다르다.
+
+  > - 먹이 : 포만감 회복
+  > - 놀이 : 친밀도 회복
+  > - 휴식 : 컨디션 회복
+  > - 씻기 : 청결도 회복
+  > - 히든 : 모든 상태 회복
+- 종류별로 상태 회복량이 20, 30, 40인 아이템이 하나씩 있다.
+
+<img src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/a9527506-f7a8-4ff7-9808-8b185cef42fd/%EC%95%84%EC%9D%B4%ED%85%9C_%EC%82%AC%EC%9A%A9.png?id=bc3bdb13-4d5e-4242-93dd-3b336faf7dfb&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=bZ504M8fb62hdtRC4k_EUKuxT9K0cG2E6CyKOKr8oY0&downloadName=%EC%95%84%EC%9D%B4%ED%85%9C+%EC%82%AC%EC%9A%A9.png" width="250px" title="아이템 사용"/>
+<img src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/9da3205a-d551-45fb-9140-841de875effd/%EC%95%84%EC%9D%B4%ED%85%9C_%EB%B2%84%EB%A6%AC%EA%B8%B0.png?id=05b833fd-65a5-4adb-977d-219d9b1a7165&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=ghfd3KB90whmviWWf2FxmQrRCPK9e0AtN_GGXVDORdo&downloadName=%EC%95%84%EC%9D%B4%ED%85%9C+%EB%B2%84%EB%A6%AC%EA%B8%B0.png" width="250px" title="아이템 드랍"/><br>
+
+- 아이템 이미지나 설명부분을 클릭하여 아이템을 사용하거나, 휴지통 아이콘을 클릭하여 아이템을 버릴 수 있다.
 
 </details>
 
 <details><summary>3. 랭킹 페이지</summary>
 
-![랭킹페이지](https://github.com/todopet/client/assets/63568239/be7192eb-c97a-4456-beab-c31781a524f3)
+<img width="250" alt="랭킹페이지" src="https://github.com/todopet/client/assets/63568239/be7192eb-c97a-4456-beab-c31781a524f3">
+
 - 랭킹 조회
   - 주간 별로 투두를 해결한 순서대로 랭킹을 부여한다.
   - 주간 투두 해결 1위, 2위, 3위 유저는 명예의 전당에 올라 프로필 사진 또한 표시한다.
-    - ![주간랭킹](https://github.com/todopet/client/assets/63568239/9dbe3913-967d-4837-8b91-0cc3bad76d61)
+    - <img width="250" alt="주간랭킹" src="https://github.com/todopet/client/assets/63568239/9dbe3913-967d-4837-8b91-0cc3bad76d61">
   - 하단 영역에는 주간 투두 해결을 많이 진행한 상위 n명에 대하여 닉네임과 해결 횟수를 표시한다.
     - 주간 투두 해결 1위, 2위, 3위 유저는 순위 대신 메달을 표시하고, 나머지 유저들은 순위를 표시한다.
   - 주간 투두 해결 횟수가 같은 유저에 대한 랭킹 표시는 최근에 투두를 해결한 유저에 대하여 우선 순위를 부여한다.
 
 </details>
 
+
 <details><summary>4. 마이 페이지</summary>
 
-<img width="100" alt="테스트" src="https://github.com/are-you-T/client/assets/87935496/faf49015-323c-40e1-83e0-a46ec7c4cfbd">
+<img width="250" alt="테스트" src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/8f1432c5-06d2-4d49-9546-5b93cb0321e8/Untitled.png?id=dd15998c-b963-49e1-af7c-04f5c3491f73&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=d6WwdsaW1YjtyZHADyaWLz7tjdpJgvihyO4azOJqOpQ&downloadName=Untitled.png">
+<img width="250" alt="테스트" src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/8e3152b7-7f89-4e19-be58-978114d04302/Untitled.png?id=c8cc12e4-0db5-4520-acbd-396b1c017336&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=lsHbDpEhmWQRBnjni-RspGmf64Zn6hI-wBDgAYa4OZ4&downloadName=Untitled.png">
 
-- MBTI 유형 검사 페이지입니다.
-- 16개 문항으로 이루어져 있으며, 1문항당 2개의 선택지가 있습니다.
-- 선택지(TestCard)
-- 프로그레스 바
+- 프로필 사진 : 구글 계정의 프로필 사진이 표시된다.
+- 닉네임 : 구글 계정의 닉네임이 표시된다.
+	- 닉네임 수정 버튼 : 닉네임 수정을 위한 모달이 나타난다.
+- 가입일 : 가입일자를 표시한다.
+- 카드
+	- 펫 카드 : 가입 일로부터 서비스를 이용한 시간을 날짜로 표시한다.
+	- todo 달성 날짜 카드 : todo 달성한 날짜를 표시한다.
+	- todo 완료 카드 :  완료한 todo 개수를 표시한다.
+<img width="250" alt="테스트" src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/e79cfb6d-36a3-4ee8-9c4c-00212bd1adb8/Untitled.png?id=0ad9d60a-c991-42e6-9900-2bf064725741&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=I0HCU510qt_GFVF2Y94E-9WoPXpsG8Yygw5ZAlLHdK4&downloadName=Untitled.png">
+<img width="250" alt="테스트" src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/a9eddec2-1c3f-4759-9664-44413e197b13/Untitled.png?id=0f8322c6-3d47-4b98-aa3f-2109ab97eba7&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=mUXgS47wznxh6Nrr48W8m7AmrYB_Vw8tXgQUdI8o0KQ&downloadName=Untitled.png">
+
+- 로그아웃 버튼 : 로그아웃 확인 모달이 나타나고, 실행 시 로그인 페이지로 이동한다.
+- 회원 탈퇴 버튼 : 회원 탈퇴 확인 모달이 나타난다.
 
 </details>
+
+	
 
 <br />
 
@@ -92,11 +168,11 @@
 | 담당자 | 업무                            | 비고                                                                                                                                        |
 | ------ | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | 원종석 | API 개발 </br> 공통 코드 개발 </br> 랭킹 페이지 개발      | 투두, 보상 처리 API 개발 </br> 스키마 및 데이터 타입 정의 </br> API 호출 공통 함수 개발 </br> 랭킹 페이지 개발             |
-| 안보란 | 캘린더 컴포넌트 개발 </br> 투두 페이지에 연동     | 주/월 선택 및 투두 해결 수에 따른 실시간 색상 표시 </br>투두 컴포넌트와 연결                                                      |
-| 문수민 | 투두(피드) 페이지 개발             |  </br>투두 CRUD </br>투두 해결에 따른 알림 토스트 창 표시 </br>캘린더 컴포넌트와 연결                                                          |
-| 최태관 | API 개발 </br> 소셜 로그인        | 아이템 사용에 따른 펫 상태 업데이트, 보상 지급 로직 개발 </br> 구글 소셜 로그인                                                                  |
-| 전재욱 | 펫 관리 페이지 및 인벤토리 컴포넌트 개발     | 아이템 사용 로직 적용 </br> 인벤토리 아이템 관리                                                                                     |
-| 이남경 | 목표 페이지 개발, PPT 제작              | 투두 목표 관리 CRUD 페이지 개발, 발표 PPT 자료 제작                                                                                     |
+| 안보란 | 캘린더 컴포넌트 개발 </br> 투두 페이지에 연동     | 주간/월간 전환 및 투두 해결 수에 따른 실시간 색상 표시 </br>투두 컴포넌트와 연결                                                      |
+| 문수민 | 투두(피드) 페이지 개발             |  투두 CRUD </br>투두 해결에 따른 알림 토스트 창 표시 </br>캘린더 컴포넌트와 연결                                                          |
+| 최태관 | API 개발 </br> 소셜 로그인        | 아이템 사용에 따른 펫 상태 업데이트 로직 개발 </br> 보상 지급 로직 개발 </br> 구글 소셜 로그인                                                                  |
+| 전재욱 | 펫 관리 페이지 및 인벤토리 컴포넌트 개발     | 펫 페이지에 캐릭터 및 상태 표시 </br> 아이템 사용 로직 적용 </br> 인벤토리 아이템 관리                                                                                     |
+| 이남경 | 목표 페이지 개발, PPT 제작              | 투두 목표 관리 CRUD 페이지 개발 </br> 발표 PPT 자료 제작                                                                                     |
 
 <br />
 
