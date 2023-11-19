@@ -17,7 +17,7 @@
 
 ## 기능 구현 리스트
 
-#### (todopet) MBTI 유형별 분석, 통계, 담벼락 등 MBTI 포털 사이트의 핵심 기능을 구현합니다.
+#### Todo를 해결하여 날짜 별로 진행도를 확인하고, 펫을 키우며 다른 사람의 해결 정보를 확인할 수 있는 서비스를 기능 구현합니다.
 
 <details><summary>1. 피드 페이지</summary>
 <img src="https://github.com/todopet/client/assets/51261847/d3e75b33-3eb3-4a81-aac4-48df296c6af9" width="250" />
