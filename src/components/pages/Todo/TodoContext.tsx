@@ -129,7 +129,7 @@ export default function TodoContextProvider({
                     res<todo>
                 >(
                     "patch",
-                    `/todoContents/${contentId}`,
+                    `todoContents/${contentId}`,
                     {
                         todo: content,
                         status: checkStatus,
@@ -154,7 +154,7 @@ export default function TodoContextProvider({
                     res<todo>
                 >(
                     "patch",
-                    `/todoContents/${contentId}`,
+                    `todoContents/${contentId}`,
                     {
                         todo: content,
                         status: checkStatus,
@@ -177,7 +177,7 @@ export default function TodoContextProvider({
         try {
             const response: res<todo[]> = await axiosRequest.requestAxios<
                 res<todo[]>
-            >("delete", `/todoContents/${contentId}`);
+            >("delete", `todoContents/${contentId}`);
             getTodos(selectedDate, selectedDate);
             getTodos(startDate, endDate);
         } catch (error) {

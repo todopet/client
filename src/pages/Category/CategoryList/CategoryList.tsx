@@ -18,7 +18,7 @@ const CategoryList = () => {
         try {
             const response: res<category[]> = await axiosRequest.requestAxios<
                 res<category[]>
-            >("get", "/todoCategories");
+            >("get", "todoCategories");
             setCategoryList(response.data);
         } catch (error) {
             alert(

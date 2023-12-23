@@ -65,7 +65,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
             try {
                 const response: res<category> = await axiosRequest.requestAxios<
                     res<category>
-                >("get", `/todoCategories/${id}`);
+                >("get", `todoCategories/${id}`);
                 setInputValue(response.data.category);
                 onTextSend(response.data.category);
             } catch (error) {
@@ -96,7 +96,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 // PATCH 요청으로 목표를 종료
                 const response: res<category> = await axiosRequest.requestAxios<
                     res<category>
-                >("patch", `/todoCategories/endCategory/${id}`);
+                >("patch", `todoCategories/endCategory/${id}`);
                 if (!response.error) {
                     alert("목표가 종료되었습니다.");
                     navigate("/category/list");
@@ -117,7 +117,7 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 // PATCH 요청으로 목표를 종료
                 const response: res<category> = await axiosRequest.requestAxios<
                     res<category>
-                >("delete", `/todoCategories/${id}`);
+                >("delete", `todoCategories/${id}`);
                 if (!response.error) {
                     alert("목표가 삭제되었습니다.");
                     navigate("/category/list");

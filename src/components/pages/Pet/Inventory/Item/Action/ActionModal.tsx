@@ -40,7 +40,7 @@ export default function ActionModal({
             const data = { quantity: itemCount };
             const response: res<useItemRes> = await axiosRequest.requestAxios<
                 res<useItemRes>
-            >("post", `/inventories/${itemId}/put`, data, {
+            >("post", `inventories/${itemId}/put`, data, {
                 "x-custom-data": Date.now() * 4 + 1000
             });
             receiveItemData();
@@ -56,7 +56,7 @@ export default function ActionModal({
             const data = { quantity: itemCount * -1 };
             const response: res<dumpItemRes> = await axiosRequest.requestAxios<
                 res<dumpItemRes>
-            >("patch", `/inventories/items/${itemId}`, data, {
+            >("patch", `inventories/items/${itemId}`, data, {
                 "x-custom-data": Date.now() * 4 + 1000
             });
             receiveItemData();

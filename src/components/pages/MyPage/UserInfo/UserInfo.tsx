@@ -36,7 +36,7 @@ export function UserInfo({ picture, name, date }: userinfoType) {
         try {
             const response: res<myUser> = await axiosRequest.requestAxios<
                 res<myUser>
-            >("get", "/users/user");
+            >("get", "users/user");
             setNickname(response.data.nickname);
         } catch (error) {
             alert(
@@ -90,7 +90,7 @@ export function UserInfo({ picture, name, date }: userinfoType) {
         try {
             const response: res<myUser> = await axiosRequest.requestAxios<
                 res<myUser>
-            >("patch", "/users/myInfo", { nickname });
+            >("patch", "users/myInfo", { nickname });
             if (response.data) {
                 // 닉네임이 제대로 변경이 되었을 때
                 alert("닉네임이 수정되었습니다!");

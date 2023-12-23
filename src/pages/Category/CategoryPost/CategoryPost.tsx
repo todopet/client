@@ -19,7 +19,7 @@ const CategoryPost = () => {
         try {
             const response: res<category> = await axiosRequest.requestAxios<
                 res<category>
-            >("post", "/todoCategories", { category });
+            >("post", "todoCategories", { category });
 
             if (!response.error) {
                 alert("목표가 등록되었습니다.");
@@ -40,7 +40,7 @@ const CategoryPost = () => {
         try {
             const response: res<category> = await axiosRequest.requestAxios<
                 res<category>
-            >("patch", `/todoCategories/${id}`, { category });
+            >("patch", `todoCategories/${id}`, { category });
 
             if (!response.error) {
                 alert("목표가 수정되었습니다.");
