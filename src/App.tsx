@@ -27,7 +27,7 @@ const App: React.FC = () => {
         try {
             const response: res<auth> = await axiosRequest.requestAxios<
                 res<auth>
-            >("get", `/users/auth`);
+            >("get", `users/auth`);
             setIsLoading(false);
             if (response.data.status === 200) {
                 setIsAuth(true);
