@@ -52,7 +52,7 @@ export default function TodoContextProvider({
         try {
             const response = await axiosRequest.requestAxios<
                 res<todoCategory[]>
-            >("get", `/todoContents?start=${startDate}&end=${endDate}`);
+            >("get", `todoContents?start=${startDate}&end=${endDate}`);
             // setPeriodTodos(response.data);
         } catch (error) {
             console.error("error: ", error);
