@@ -18,7 +18,7 @@ async function getTodos(startDate: string, endDate: string) {
     try {
         const response: res<todoCategory[]> = await axiosRequest.requestAxios<
             res<todoCategory[]>
-        >("get", `/todoContents?start=${startDate}&end=${endDate}`);
+        >("get", `todoContents?start=${startDate}&end=${endDate}`);
         return response.data;
     } catch (error) {
         console.error(error);
