@@ -15,7 +15,7 @@ const Ranking: React.FC = () => {
         try {
             const response: res<RankInfo[]> = await axiosRequest.requestAxios<
                 res<RankInfo[]>
-            >("get", `/users/rank/${count}`, {});
+            >("get", `users/rank/${count}`, {});
             setUserRankList(response.data);
             setUserTopThreeList(setTopThree(response.data));
         } catch (error) {

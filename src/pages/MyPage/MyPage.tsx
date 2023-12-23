@@ -109,7 +109,7 @@ export default function MyPage() {
         try {
             const response: res<myUser> = await axiosRequest.requestAxios<
                 res<myUser>
-            >("get", "/users", {});
+            >("get", "users", {});
             setUserInfo(response.data);
         } catch (error) {
             alert(

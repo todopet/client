@@ -70,7 +70,7 @@ export default function TodoContextProvider({
         try {
             const response: res<todo> = await axiosRequest.requestAxios<
                 res<todo>
-            >("patch", `/todoContents/${contentId}`, {
+            >("patch", `todoContents/${contentId}`, {
                 contentId: contentId,
                 todo: content,
                 status: checkStatus

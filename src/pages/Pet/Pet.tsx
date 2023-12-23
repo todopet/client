@@ -20,7 +20,7 @@ export default function Pet() {
         try {
             const response: res<myPet> = await axiosRequest.requestAxios<
                 res<myPet>
-            >("get", "/myPets", {});
+            >("get", "myPets", {});
             const petInfo = response.data.pet;
             const petLevel: number | null = petInfo.level;
             // const petLevel: number = 5;
@@ -52,7 +52,9 @@ export default function Pet() {
                 petName: petInfo.petName
             });
         } catch (error) {
-            alert("펫 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요.");
+            alert(
+                "펫 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요."
+            );
             console.error("Error fetching pet data: ", error);
         }
     }

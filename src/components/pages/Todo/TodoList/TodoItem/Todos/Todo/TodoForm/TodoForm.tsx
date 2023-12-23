@@ -40,7 +40,7 @@ export default function TodoForm({
                 res<todo[]>
             >(
                 "post",
-                `/todoContents`,
+                `todoContents`,
                 {
                     categoryId: categoryId,
                     todo: value,
@@ -60,7 +60,7 @@ export default function TodoForm({
                 res<todo[]>
             >(
                 "patch",
-                `/todoContents/${contentId}`,
+                `todoContents/${contentId}`,
                 {
                     contentId: contentId,
                     todo: value,

@@ -19,7 +19,9 @@ interface parameterType {
     on: boolean;
 }
 
-export const ItemDataContext = createContext<() => Promise<void>>(async () => {});
+export const ItemDataContext = createContext<() => Promise<void>>(
+    async () => {}
+);
 
 export default function InventoryModal({ on }: parameterType) {
     const [activeCategory, setActiveCategory] = useState("feed");
@@ -30,11 +32,13 @@ export default function InventoryModal({ on }: parameterType) {
         try {
             const response: res<myItems> = await axiosRequest.requestAxios<
                 res<myItems>
-            >("get", "/inventories", {});
+            >("get", "inventories", {});
             const itemArray = response.data.items;
             setItemData(itemArray);
         } catch (error) {
-            alert("아이템 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요.");
+            alert(
+                "아이템 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요."
+            );
             console.error("Error fetching pet data: ", error);
         }
     }
@@ -72,7 +76,9 @@ export default function InventoryModal({ on }: parameterType) {
 
     return (
         <ItemDataContext.Provider value={receiveItemData}>
-            <ModalWrap on={on}>  {/* 모달창이 밑에서 위로 올라오는 애니메이션이 적용되도록 props로 visibility를 결정 */}
+            <ModalWrap on={on}>
+                {" "}
+                {/* 모달창이 밑에서 위로 올라오는 애니메이션이 적용되도록 props로 visibility를 결정 */}
                 {/* PetArea의 State를 받음. true면 모달창 on, false면 off */}
                 <Header>
                     <Title>도구</Title>

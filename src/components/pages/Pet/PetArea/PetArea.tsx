@@ -250,10 +250,12 @@ export function PetArea({
         try {
             const response: res<itemsCount> = await axiosRequest.requestAxios<
                 res<itemsCount>
-            >("get", "/inventories/itemsCount", {});
+            >("get", "inventories/itemsCount", {});
             setIsFull(response.data.count >= maxVolume);
         } catch (error) {
-            alert("아이템 개수 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요.");
+            alert(
+                "아이템 개수 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요."
+            );
             console.error("Error fetching pet data: ", error);
         }
     };
@@ -298,7 +300,9 @@ export function PetArea({
                     <Stars level={level} />
                     <PetLevelNameArea>
                         <StarWrapper>
-                            <LevelStar><Level>{level}</Level></LevelStar>
+                            <LevelStar>
+                                <Level>{level}</Level>
+                            </LevelStar>
                         </StarWrapper>
                         <PetNameBox>
                             <PetName>{petName}</PetName>
