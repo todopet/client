@@ -40,8 +40,9 @@ const App: React.FC = () => {
             console.error("Failed to check auth.", error);
         }
         setIsLoading(false);
-        setIsAuth(false);
-        navigate("/");
+        // 2023-12-23 주석처리
+        // setIsAuth(false);
+        // navigate("/");
     };
 
     useEffect(() => {
