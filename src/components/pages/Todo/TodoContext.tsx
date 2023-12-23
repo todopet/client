@@ -85,7 +85,7 @@ export default function TodoContextProvider({
             const response: res<todoCategory[]> =
                 await axiosRequest.requestAxios<res<todoCategory[]>>(
                     "get",
-                    `/todoContents?start=${startDate}&end=${endDate}`
+                    `todoContents?start=${startDate}&end=${endDate}`
                 );
             if (startDate === endDate) {
                 setDateTodos(response.data);
