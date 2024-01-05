@@ -120,8 +120,8 @@
 
 <details><summary>4. 마이 페이지</summary>
 
-<img width="250" alt="테스트" src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/8f1432c5-06d2-4d49-9546-5b93cb0321e8/Untitled.png?id=dd15998c-b963-49e1-af7c-04f5c3491f73&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=d6WwdsaW1YjtyZHADyaWLz7tjdpJgvihyO4azOJqOpQ&downloadName=Untitled.png">
-<img width="250" alt="테스트" src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/8e3152b7-7f89-4e19-be58-978114d04302/Untitled.png?id=c8cc12e4-0db5-4520-acbd-396b1c017336&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=lsHbDpEhmWQRBnjni-RspGmf64Zn6hI-wBDgAYa4OZ4&downloadName=Untitled.png">
+<img width="250" alt="테스트" src="https://github.com/todopet/client/assets/125293472/987b4952-068c-49c8-a09e-3f1aaad34dc7">
+<img width="250" alt="테스트" src="https://github.com/todopet/client/assets/125293472/64d91823-4145-44b7-8d2f-7ce8245512b3">
 
 - 프로필 사진 : 구글 계정의 프로필 사진이 표시된다.
 - 닉네임 : 구글 계정의 닉네임이 표시된다.
@@ -131,8 +131,8 @@
 	- 펫 카드 : 가입 일로부터 서비스를 이용한 시간을 날짜로 표시한다.
 	- todo 달성 날짜 카드 : todo 달성한 날짜를 표시한다.
 	- todo 완료 카드 :  완료한 todo 개수를 표시한다.
-<img width="250" alt="테스트" src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/e79cfb6d-36a3-4ee8-9c4c-00212bd1adb8/Untitled.png?id=0ad9d60a-c991-42e6-9900-2bf064725741&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=I0HCU510qt_GFVF2Y94E-9WoPXpsG8Yygw5ZAlLHdK4&downloadName=Untitled.png">
-<img width="250" alt="테스트" src="https://file.notion.so/f/f/87775b30-7ef6-4a3d-8786-09b3ec722695/a9eddec2-1c3f-4759-9664-44413e197b13/Untitled.png?id=0f8322c6-3d47-4b98-aa3f-2109ab97eba7&table=block&spaceId=87775b30-7ef6-4a3d-8786-09b3ec722695&expirationTimestamp=1700467200000&signature=mUXgS47wznxh6Nrr48W8m7AmrYB_Vw8tXgQUdI8o0KQ&downloadName=Untitled.png">
+<img width="250" alt="로그아웃" src="https://github.com/todopet/client/assets/125293472/b21b6a82-5329-48ee-ac10-58d76a56bb41">
+<img width="250" alt="테스트" src="https://github.com/todopet/client/assets/125293472/d80fc85a-f5f3-435b-8bb9-dbc5e1eb30f9">
 
 - 로그아웃 버튼 : 로그아웃 확인 모달이 나타나고, 실행 시 로그인 페이지로 이동한다.
 - 회원 탈퇴 버튼 : 회원 탈퇴 확인 모달이 나타난다.
