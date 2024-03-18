@@ -1,13 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 
 import Toast from "@/components/Toast/Toast";
-import { TodoContext } from "@/components/pages/Todo/TodoContext";
+import useTodosStore from "@/store/todo";
+
 //type
 import { ToastTypes } from "@/@types/todo";
 import { ToastStyle } from "./MiniPetToast.styles";
 
 export default function MiniPetToast() {
-    const { message, isActiveToast } = useContext(TodoContext);
+    const { message, isActiveToast } = useTodosStore((state) => state);
 
     let content: React.ReactNode;
     let bgcolor: "black" | "white" = "white";
