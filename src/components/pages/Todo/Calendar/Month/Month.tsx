@@ -2,10 +2,9 @@ import * as Styles from "./Month.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import { useState, useContext, useEffect, useMemo } from "react";
-import { TodoContext } from "@/components/pages/Todo/TodoContext";
-import axiosRequest from "@/api/index";
-import { res, todoCategory } from "@/@types/index";
+import { useState, useEffect, useMemo } from "react";
+import useTodosStore from "@/store/todo";
+import { formatDateToString } from "@/libs/utils/global";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
 const today = new Date();
@@ -14,34 +13,13 @@ const todayMonth = today.getMonth();
 const firstDateOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 
-async function getTodos(startDate: string, endDate: string) {
-    try {
-        const response: res<todoCategory[]> = await axiosRequest.requestAxios<
-            res<todoCategory[]>
-        >("get", `todoContents?start=${startDate}&end=${endDate}`);
-        return response.data;
-    } catch (error) {
-        console.error(error);
-        alert("데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요.");
-        return [];
-    }
-}
-
 export default function Month() {
     const [firstDate, setFirstDate] = useState(firstDateOfThisMonth);
     const [clicked, setClicked] = useState(-1);
-    const [dates, setDates] = useState<Date[]>([]);
+    const [datesOfMonth, setDatesOfMonth] = useState<Date[]>([]);
 
-    const { updateSelectedDate, updateStartEnd, periodTodos, setPeriodTodos } =
-        useContext(TodoContext);
-
-    // 날짜 형식 yyyy-mm-dd 지정 함수
-    const formatDate = (date: Date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    };
+    const { setSelectedDate, setStartEndDate, periodTodos, setTodos } =
+        useTodosStore((state) => state);
 
     function getMonthDates(firstDate: Date) {
         const newDates = [];
@@ -64,25 +42,15 @@ export default function Month() {
                 new Date(firstDate.getFullYear(), firstDate.getMonth(), 1 + i)
             );
         }
-        setDates(newDates);
+        setDatesOfMonth(newDates);
         fetchData(newDates, firstDate);
     }
 
     const fetchData = (newDates: Date[], firstDate: Date) => {
-        const start = formatDate(newDates[firstDate.getDay()]);
-        const end = formatDate(newDates[newDates.length - 1]);
-        updateStartEnd(start, end);
-        const todos = getTodos(start, end);
-        todos
-            .then((value) => {
-                setPeriodTodos(value);
-            })
-            .catch((error) => {
-                console.error(error);
-                alert(
-                    "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
-                );
-            });
+        const start = formatDateToString(newDates[firstDate.getDay()]);
+        const end = formatDateToString(newDates[newDates.length - 1]);
+        setStartEndDate(start, end);
+        setTodos(start, end);
     };
 
     const completedTodosByDay = useMemo(() => {
@@ -99,7 +67,7 @@ export default function Month() {
                 acc[cur - 1 + firstDate.getDay()] += 1;
                 return acc;
             },
-            Array.from({ length: dates.length }, () => 0)
+            Array.from({ length: datesOfMonth.length }, () => 0)
         );
     }, [periodTodos]);
 
@@ -129,7 +97,7 @@ export default function Month() {
 
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
-        updateSelectedDate(formatDate(dates[idx]));
+        setSelectedDate(formatDateToString(datesOfMonth[idx]));
     };
 
     return (
@@ -151,7 +119,7 @@ export default function Month() {
                 ))}
             </Styles.DayWrap>
             <Styles.DateCellWrap>
-                {dates.map((date, i) =>
+                {datesOfMonth.map((date, i) =>
                     date.getFullYear() === 9999 ? (
                         <Styles.DateCell key={i}></Styles.DateCell>
                     ) : (
