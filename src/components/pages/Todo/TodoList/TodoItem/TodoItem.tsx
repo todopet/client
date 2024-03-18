@@ -6,7 +6,7 @@ import { todoCategory } from "@/@types/index";
 import Category from "./Category/Category";
 import Todos from "./Todos/Todos";
 import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
-import { TodoContext } from "@/components/pages/Todo/TodoContext";
+import useTodosStore from "@/store/todo";
 
 //styles
 import { TodoItemStyles } from "./TodoItem.styles";
@@ -20,8 +20,7 @@ export default function TodoItem({ todos }: TodoItemProps) {
         !todos.ended && setOpenInputForm(!openInputForm); //종료되지 않은 투두 클릭시 실행
     };
 
-    const { dateTodos } = useContext(TodoContext);
-
+    const { dateTodos } = useTodosStore((state) => state);
     const todoFormRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
         if (todoFormRef.current) {
