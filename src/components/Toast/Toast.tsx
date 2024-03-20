@@ -1,15 +1,16 @@
-import { ToastWrap } from "./Toast.styles";
+import ReactDom from "react-dom";
+import useToastsStore from "../../store/toastStore";
 
-interface ToastProps {
-    content: React.ReactNode;
-    bgcolor: "black" | "white";
-    isActive: boolean;
-}
+const Toast = () => {
+    const { toast, isShow } = useToastsStore();
 
-export default function Toast({ content, bgcolor, isActive }: ToastProps) {
-    return isActive ? (
-        <ToastWrap $show={isActive} bgcolor={bgcolor}>
-            {content}
-        </ToastWrap>
-    ) : null;
-}
+    if (!toast) return null;
+    const { Component, props } = toast;
+
+    return ReactDom.createPortal(
+        <div>{isShow && <Component {...props} />}</div>,
+        document.getElementsByClassName("toast-wrapper")[0]
+    );
+};
+
+export default Toast;

@@ -12,6 +12,7 @@ import Toast from "@/components/Toast/Toast";
 import { MiniPetWrap, Bg, MyPet } from "./MiniPet.styles";
 //util
 import getPetSize from "@/libs/utils/getPetSize";
+import useToastsStore from "@/store/toastStore";
 
 interface Petlevel {
     level: number | null;
@@ -56,23 +57,13 @@ export default function MiniPet() {
         }
     }
 
+    const { showToast } = useToastsStore();
     const [itemsCount, setItemsCount] = useState<number>(0);
-    const [isActiveToast, setIsActiveToast] = useState<boolean>(false);
-    const [toastContent, setToastContent] = useState<React.ReactNode | null>(
-        null
-    );
 
     useEffect(() => {
         getItemsCount();
         if (itemsCount >= 50) {
-            setToastContent(
-                <>
-                    인벤토리가 가득찼습니다.
-                    <br />
-                    아이템을 정리하여 다음 보상을 받으세요 🙂
-                </>
-            );
-            setIsActiveToast(true);
+            showToast(MiniPetToast, {});
         }
     }, [itemsCount]);
 
@@ -130,16 +121,8 @@ export default function MiniPet() {
     const { petImgWidth, petImgHeight } = getPetSize(petlevel);
 
     return (
-        <MiniPetWrap ref={miniPetWrapperRef}>
-            {isActiveToast && (
-                <Toast
-                    isActive={isActiveToast}
-                    bgcolor={"black"}
-                    content={toastContent}
-                />
-            )}
-
-            <MiniPetToast />
+        <MiniPetWrap className="toast-wrapper" ref={miniPetWrapperRef}>
+            <Toast />
             <MyPet
                 ref={miniPetRef}
                 petlevel={petlevel}
