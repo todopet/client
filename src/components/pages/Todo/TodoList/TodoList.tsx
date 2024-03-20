@@ -1,5 +1,5 @@
 //react hook
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import useTodosStore from "@/store/todo";
 //components
 import TodoItem from "./TodoItem/TodoItem";
