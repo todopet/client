@@ -1,6 +1,6 @@
 //react hook
 import { useState, useEffect } from "react";
-import useTodosStore from "@/store/todo";
+import useTodosStore from "@/store/todoStore";
 
 //icons
 import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";

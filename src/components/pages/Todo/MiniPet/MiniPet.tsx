@@ -5,19 +5,19 @@ import axiosRequest from "@/api/index";
 import { res } from "@/@types/index";
 //img
 import background from "@/assets/images/miniPetBackground.png";
-import miniPet from "@/assets/images/pet-0.png";
 //components
 import MiniPetToast from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 import Toast from "@/components/Toast/Toast";
-
 //styles
 import { MiniPetWrap, Bg, MyPet } from "./MiniPet.styles";
+//util
+import getPetSize from "@/libs/utils/getPetSize";
+import useToastsStore from "@/store/toastStore";
 
 interface Petlevel {
     level: number | null;
 }
 export default function MiniPet() {
-    //마이펫 레벨 get
     async function getPetlevel() {
         try {
             const response: res<Petlevel> = await axiosRequest.requestAxios<
@@ -31,11 +31,11 @@ export default function MiniPet() {
             );
         }
     }
+
     useEffect(() => {
         getPetlevel();
     }, []);
 
-    //마이펫 레벨
     const [petlevel, setPetlevel] = useState<number | null>(null);
 
     interface ItemsCount {
@@ -56,24 +56,17 @@ export default function MiniPet() {
             );
         }
     }
+
+    const { showToast } = useToastsStore();
     const [itemsCount, setItemsCount] = useState<number>(0);
-    const [isActiveToast, setIsActiveToast] = useState<boolean>(false);
-    const [toastContent, setToastContent] = useState<React.ReactNode | null>(
-        null
-    );
+
     useEffect(() => {
         getItemsCount();
         if (itemsCount >= 50) {
-            setToastContent(
-                <>
-                    인벤토리가 가득찼습니다.
-                    <br />
-                    아이템을 정리하여 다음 보상을 받으세요 🙂
-                </>
-            );
-            setIsActiveToast(true);
+            showToast(MiniPetToast, {});
         }
     }, [itemsCount]);
+
     //새싹이 관련
     const miniPetWrapperRef = useRef<HTMLDivElement | null>(null);
     const miniPetRef = useRef<HTMLImageElement | null>(null);
@@ -125,43 +118,11 @@ export default function MiniPet() {
         return () => clearInterval(intervalId);
     }, [xPosition]);
 
-    // 펫이 레벨별로 이미지 사이즈 지정
-    let petImgSize = { petImgWidth: 50, petImgHeight: 50 };
-    switch (petlevel) {
-        case 0:
-            petImgSize = { petImgWidth: 31, petImgHeight: 37.4 };
-            break;
-        case 1:
-            petImgSize = { petImgWidth: 53, petImgHeight: 37.4 };
-            break;
-        case 2:
-            petImgSize = { petImgWidth: 59.2, petImgHeight: 34.4 };
-            break;
-        case 3:
-            petImgSize = { petImgWidth: 59.2, petImgHeight: 50 };
-            break;
-        case 4:
-            petImgSize = { petImgWidth: 71.8, petImgHeight: 56.2 };
-            break;
-        case 5:
-            petImgSize = { petImgWidth: 93.6, petImgHeight: 62.4 };
-            break;
-    }
-    const { petImgWidth, petImgHeight } = petImgSize as {
-        petImgWidth: number;
-        petImgHeight: number;
-    };
-    return (
-        <MiniPetWrap ref={miniPetWrapperRef}>
-            {isActiveToast && (
-                <Toast
-                    isActive={isActiveToast}
-                    bgcolor={"black"}
-                    content={toastContent}
-                />
-            )}
+    const { petImgWidth, petImgHeight } = getPetSize(petlevel);
 
-            <MiniPetToast />
+    return (
+        <MiniPetWrap className="toast-wrapper" ref={miniPetWrapperRef}>
+            <Toast />
             <MyPet
                 ref={miniPetRef}
                 petlevel={petlevel}
