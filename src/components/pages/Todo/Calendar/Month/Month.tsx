@@ -3,7 +3,7 @@ import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
 import { useState, useEffect, useMemo } from "react";
-import useTodosStore from "@/store/todo";
+import useTodosStore from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜

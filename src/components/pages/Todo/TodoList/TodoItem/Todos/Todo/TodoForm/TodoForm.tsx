@@ -5,7 +5,7 @@ import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
 //icons
 //components
-import useTodosStore from "@/store/todo";
+import useTodosStore from "@/store/todoStore";
 //styles
 import { Form, StyledCheckbox, Input } from "./TodoForm.styles";
 

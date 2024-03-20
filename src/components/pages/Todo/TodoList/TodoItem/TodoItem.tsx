@@ -6,7 +6,7 @@ import { todoCategory } from "@/@types/index";
 import Category from "./Category/Category";
 import Todos from "./Todos/Todos";
 import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
-import useTodosStore from "@/store/todo";
+import useTodosStore from "@/store/todoStore";
 
 //styles
 import { TodoItemStyles } from "./TodoItem.styles";
