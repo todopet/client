@@ -3,6 +3,8 @@ import { res, todo, todoCategory } from "@/@types/index";
 import axiosRequest from "@/api/index";
 import { Message, ToastTypes } from "@/@types/todo";
 import { formatDateToString } from "@/libs/utils/global";
+import useToastsStore from "./toastStore";
+import MiniPetToast from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 
 const today = new Date();
 
@@ -12,7 +14,7 @@ export interface Todos {
     endDate: string;
     dateTodos?: todoCategory[];
     periodTodos?: todoCategory[];
-    message: Message | null;
+    message: Message;
     isActiveToast: boolean;
     timer: NodeJS.Timeout | null;
     setSelectedDate: (date: string) => void;
@@ -93,13 +95,10 @@ const useTodosStore = create<Todos>((set) => ({
     ) => {
         try {
             if (checkStatus === "completed") {
+                const { closeToast, showToast } = useToastsStore.getState();
                 //이전 토스트를 꺼줍니다.
-                set({ isActiveToast: false });
-                const { timer } = useTodosStore.getState();
-                if (timer) {
-                    // 이전 타이머가 있으면 취소합니다.
-                    clearTimeout(timer);
-                }
+                closeToast();
+
                 const response: res<todo> = await axiosRequest.requestAxios<
                     res<todo>
                 >(
@@ -113,14 +112,8 @@ const useTodosStore = create<Todos>((set) => ({
                     { "x-custom-data": Date.now() * 4 + 1000 }
                 );
 
-                set({ message: response.data.message || null });
-                set({ isActiveToast: true });
-
-                // 새로운 타이머를 설정합니다.
-                set({
-                    timer: setTimeout(() => {
-                        set({ isActiveToast: false });
-                    }, 5500)
+                showToast(MiniPetToast, {
+                    message: response.data.message
                 });
 
                 const { selectedDate, startDate, endDate } =
