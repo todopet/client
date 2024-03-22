@@ -1,5 +1,5 @@
 //hook
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 //api, interface
 import axiosRequest from "@/api/index";
 import { res } from "@/@types/index";
@@ -9,7 +9,7 @@ import background from "@/assets/images/miniPetBackground.png";
 import MiniPetToast from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 import Toast from "@/components/Toast/Toast";
 //styles
-import { MiniPetWrap, Bg, MyPet } from "./MiniPet.styles";
+import { MiniPetWrap, Bg, MyPet, MyPetWrap } from "./MiniPet.styles";
 //util
 import getPetSize from "@/libs/utils/getPetSize";
 import useToastsStore from "@/store/toastStore";
@@ -68,67 +68,18 @@ export default function MiniPet() {
     }, [itemsCount]);
 
     //새싹이 관련
-    const miniPetWrapperRef = useRef<HTMLDivElement | null>(null);
-    const miniPetRef = useRef<HTMLImageElement | null>(null);
-    const [yDirection, setYDirection] = useState(1); // 1 :up, -1 :down, 0 :stay
-    const [xPosition, setXPosition] = useState(0);
-    const [yPosition, setYPosition] = useState(5);
-
-    useEffect(() => {
-        //새싹이 이동패턴
-        const moveSessak = () => {
-            if (miniPetRef.current && miniPetWrapperRef.current) {
-                //배경, 새싹 너비와 높이
-                const containerWidth = miniPetWrapperRef.current.offsetWidth;
-                const sessakWidth = miniPetRef.current.offsetWidth;
-                const containerHeight = miniPetWrapperRef.current.offsetHeight;
-                const sessakHeight = miniPetRef.current.offsetHeight;
-
-                //x축 이동
-                setXPosition(xPosition + 5);
-                if (xPosition > containerWidth) {
-                    setXPosition(-sessakWidth);
-                }
-
-                //y축 이동
-                if (yDirection === 1) {
-                    setYPosition(yPosition + 5);
-                } else if (yDirection === -1) {
-                    setYPosition(yPosition - 5);
-                }
-
-                //container영역으로 이동 제한
-                if (
-                    yPosition + sessakHeight >= containerHeight ||
-                    yPosition - 5 === 5
-                ) {
-                    setYDirection(-yDirection);
-                    setXPosition(xPosition + 5);
-                    setXPosition(xPosition + 5);
-                    setXPosition(xPosition + 5);
-                }
-
-                miniPetRef.current.style.left = xPosition + "px";
-                miniPetRef.current.style.bottom = yPosition + "px";
-            }
-        };
-
-        const intervalId = setInterval(moveSessak, 250);
-
-        return () => clearInterval(intervalId);
-    }, [xPosition]);
-
     const { petImgWidth, petImgHeight } = getPetSize(petlevel);
 
     return (
-        <MiniPetWrap className="toast-wrapper" ref={miniPetWrapperRef}>
+        <MiniPetWrap className="toast-wrapper">
             <Toast />
-            <MyPet
-                ref={miniPetRef}
-                petlevel={petlevel}
-                width={petImgWidth}
-                height={petImgHeight}
-            />
+            <MyPetWrap>
+                <MyPet
+                    petlevel={petlevel}
+                    width={petImgWidth}
+                    height={petImgHeight}
+                />
+            </MyPetWrap>
             <Bg src={background} alt="background" />
         </MiniPetWrap>
     );
