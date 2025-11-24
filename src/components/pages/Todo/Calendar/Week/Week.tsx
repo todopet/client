@@ -3,9 +3,8 @@ import * as Styles from "./Week.styles";
 import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
 import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
 import ArrowButton from "../Button/ArrowButton";
-import { TodoContext } from "@/components/pages/Todo/TodoContext";
-import axiosRequest from "@/api/index";
-import { res, todoCategory } from "@/@types/index";
+import useTodosStore from "@/store/todoStore";
+import { formatDateToString } from "@/libs/utils/global";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
 const today = new Date();
@@ -21,19 +20,6 @@ const lastSunday = new Date(todayYear, todayMonth, todayDate - todayDay);
 let isFirstDateIncluded = false;
 let specialCaseOfYearEnd = false;
 
-async function getTodos(startDate: string, endDate: string) {
-    try {
-        const response: res<todoCategory[]> = await axiosRequest.requestAxios<
-            res<todoCategory[]>
-        >("get", `todoContents?start=${startDate}&end=${endDate}`);
-        return response.data;
-    } catch (error) {
-        console.error(error);
-        alert("데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요.");
-        return [];
-    }
-}
-
 export default function Week() {
     const [currentSunday, setCurrentSunday] = useState(new Date(lastSunday));
     const [titleData, setTitleData] = useState({
@@ -44,15 +30,8 @@ export default function Week() {
     const [clicked, setClicked] = useState(-1);
     const [dates, setDates] = useState<Date[]>([]);
 
-    const { updateSelectedDate, updateStartEnd, periodTodos, setPeriodTodos } =
-        useContext(TodoContext);
-    // 날짜 형식 yyyy-mm-dd 지정 함수
-    const formatDate = (date: Date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    };
+    const { setSelectedDate, setStartEndDate, periodTodos, setTodos } =
+        useTodosStore((state) => state);
 
     const getWeekDates = (sunday: Date | null = null) => {
         setDates([]);
@@ -96,26 +75,16 @@ export default function Week() {
     };
 
     const fetchData = () => {
-        const start = formatDate(currentSunday);
-        const end = formatDate(
+        const start = formatDateToString(currentSunday);
+        const end = formatDateToString(
             new Date(
                 currentSunday.getFullYear(),
                 currentSunday.getMonth(),
                 currentSunday.getDate() + 6
             )
         );
-        updateStartEnd(start, end);
-        const todos = getTodos(start, end);
-        todos
-            .then((value) => {
-                setPeriodTodos(value);
-            })
-            .catch((error) => {
-                console.error(error);
-                alert(
-                    "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
-                );
-            });
+        setStartEndDate(start, end);
+        setTodos(start, end);
     };
 
     const completedTodosByDay = useMemo(() => {
@@ -199,7 +168,7 @@ export default function Week() {
 
     const handleDateCellClick = (idx: number) => {
         setClicked(idx ?? -1);
-        updateSelectedDate(formatDate(dates[idx]));
+        setSelectedDate(formatDateToString(dates[idx]));
     };
 
     return (

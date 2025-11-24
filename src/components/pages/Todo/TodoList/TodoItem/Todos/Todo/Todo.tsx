@@ -1,6 +1,7 @@
 //react hook
-import { useState, useContext, useEffect } from "react";
-import { TodoContext } from "@/components/pages/Todo/TodoContext";
+import { useState, useEffect } from "react";
+import useTodosStore from "@/store/todoStore";
+
 //icons
 import { ReactComponent as MenuIcon } from "@/assets/icons/meatballsMenu.svg";
 import { ReactComponent as CheckIcon } from "@/assets/icons/checkboxChecked.svg";
@@ -29,7 +30,9 @@ interface TodoProps {
 }
 
 export default function Todo({ content, status, contentId }: TodoProps) {
-    const { selectedDate, updateStatus, deleteTodo } = useContext(TodoContext);
+    const { selectedDate, deleteTodo, setStatus } = useTodosStore(
+        (state) => state
+    );
 
     const [newcheckstatus, setNewcheckstatus] = useState<string>(status);
     useEffect(() => {
@@ -48,7 +51,7 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         //상태 업데이트
         setNewcheckstatus(checkStatus);
         //patch요청
-        updateStatus(contentId, content, checkStatus, selectedDate);
+        setStatus(contentId, content, checkStatus, selectedDate);
     };
     const isSelectedDate: boolean =
         new Date(selectedDate).toString() ===
@@ -73,7 +76,7 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         listItems.push({
             content: isSelectedDate ? "내일하기" : "오늘하기",
             handleClick: () => {
-                updateStatus(
+                setStatus(
                     contentId,
                     content,
                     newcheckstatus,

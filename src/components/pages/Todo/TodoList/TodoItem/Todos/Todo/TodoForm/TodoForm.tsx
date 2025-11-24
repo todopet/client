@@ -1,11 +1,11 @@
 //react hook
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect } from "react";
 //api, interface
 import axiosRequest from "@/api/index";
 import { res, todo } from "@/@types/index";
 //icons
 //components
-import { TodoContext } from "@/components/pages/Todo/TodoContext";
+import useTodosStore from "@/store/todoStore";
 //styles
 import { Form, StyledCheckbox, Input } from "./TodoForm.styles";
 
@@ -23,8 +23,7 @@ export default function TodoForm({
     status,
     finishEdit
 }: TodoFormProps) {
-    const { getTodos, selectedDate } = useContext(TodoContext);
-
+    const { selectedDate, setTodos } = useTodosStore((state) => state);
     //체크 가능여부
     const [disabledChecked, setDisabledChecked] = useState<boolean>(true);
 
@@ -84,7 +83,7 @@ export default function TodoForm({
             setDisabledChecked(true); //체크박스 지우기
             await postTodo();
         }
-        getTodos(selectedDate, selectedDate);
+        setTodos(selectedDate, selectedDate);
         setValue("");
     };
 
