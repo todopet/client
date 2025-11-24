@@ -1,13 +1,4 @@
 import { RankInfo } from "@/@types/index";
-import {
-    RankList,
-    UserRankInfo,
-    Rank,
-    MedalImgWrapper,
-    MedalImg,
-    NickName,
-    CompletedTodo
-} from "./RankInfoList.styles";
 import { ReactComponent as GoldMedal } from "@/assets/icons/goldmedal.svg";
 import { ReactComponent as SilverMedal } from "@/assets/icons/silvermedal.svg";
 import { ReactComponent as BronzeMedal } from "@/assets/icons/bronzemedal.svg";
@@ -41,24 +32,27 @@ const RankInfoList = ({ userRankList }: RankInfoProps) => {
     //     )
     // };
     return (
-        <RankList>
-            <Divider key={0} category={() => ""}></Divider>
+        <div className="px-6">
+            <Divider key={0} category={() => ""} />
             {userRankList.map((list, index) => (
                 <React.Fragment key={`fragment${index}`}>
-                    <UserRankInfo>
+                    <div className="text-base font-semibold flex justify-around items-center h-[45px]">
                         {list.rank <= 3 ? (
-                            // <>{medal[list.rank]()}</>
-                            <MedalImgWrapper><MedalImg ranking={list.rank} /></MedalImgWrapper>
+                            <div className="min-w-[3rem] h-full flex items-center justify-center">
+                                {list.rank === 1 && <GoldMedal />}
+                                {list.rank === 2 && <SilverMedal />}
+                                {list.rank === 3 && <BronzeMedal />}
+                            </div>
                         ) : (
-                            <Rank>{list.rank}</Rank>
+                            <span className="min-w-[3rem] text-center h-full flex items-center justify-center">{list.rank}</span>
                         )}
-                        <NickName>{list.userInfo?.nickname}</NickName>
-                        <CompletedTodo>{list.count}</CompletedTodo>
-                    </UserRankInfo>
-                    <Divider category={() => ""}></Divider>
+                        <span className="text-center w-32 h-full flex items-center justify-center">{list.userInfo?.nickname}</span>
+                        <span className="min-w-[3rem] text-right h-full flex items-center justify-center">{list.count}</span>
+                    </div>
+                    <Divider category={() => ""} />
                 </React.Fragment>
             ))}
-        </RankList>
+        </div>
     );
 };
 

@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import Star from "@/components/Star/Star";
 
 interface StarsProps {
@@ -21,15 +19,10 @@ export default function Stars({ level }: StarsProps) {
     }
 
     return (
-        <StarWrap>
-            {starStatus.map((status, idx) => {
-                return <Star key={idx} status={status} />;
-            })}
-        </StarWrap>
+        <div className="flex gap-[6px]">
+            {starStatus.map((status, idx) => (
+                <Star key={idx} status={status} />
+            ))}
+        </div>
     );
 }
-
-const StarWrap = styled.div`
-    display: flex;
-    gap: 6px;
-`;

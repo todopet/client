@@ -1,11 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../Logo";
-import {
-    HeaderContainer,
-    LogoContainer,
-    ButtonCatainer
-} from "./Header.styles";
 import Dropdown from "@/components/DropDown/DropDown";
 import { ReactComponent as HeaderMenuIcon } from "@/assets/icons/headerMenu.svg";
 import { ReactComponent as PlusIcon } from "@/assets/icons/plus.svg";
@@ -28,19 +23,19 @@ export default function Header() {
     const isDropDown = location.pathname === "/todo";
 
     return (
-        <HeaderContainer>
-            <LogoContainer>
-                <Link to="/todo">
+        <header className="fixed top-0 z-10 w-[390px] left-1/2 -translate-x-1/2 h-[60px] bg-white flex items-center justify-between px-0 box-border">
+            <div>
+                <Link to="/todo" className="no-underline">
                     <Logo />
                 </Link>
-            </LogoContainer>
-            <ButtonCatainer>
+            </div>
+            <div className="mr-4">
                 {isDropDown && (
                     <Dropdown list={listItems}>
                         <HeaderMenuIcon />
                     </Dropdown>
                 )}
-            </ButtonCatainer>
-        </HeaderContainer>
+            </div>
+        </header>
     );
 }

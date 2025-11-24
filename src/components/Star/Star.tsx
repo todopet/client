@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { ReactComponent as StarIcon } from "@/assets/icons/star.svg";
 
 const fullColor = "#FFE210";
@@ -10,10 +9,7 @@ interface StarProps {
 }
 
 function Star({ status }: StarProps) {
-    return <StyledStarIcon status={status} />;
+    const fill = status === "full" ? fullColor : emptyColor;
+    return <StarIcon style={{ fill }} />;
 }
-
-const StyledStarIcon = styled(StarIcon)<StarProps>`
-    fill: ${(props) => (props.status === "full" ? fullColor : emptyColor)};
-`;
 export default Star;

@@ -1,10 +1,8 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import { GlobalStyle, LayoutWrapper } from "@/App.styles";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
 import Loading from "./components/Loading/Loading";
-import { StyleSheetManager } from "styled-components";
 import axiosRequest from "./api";
 import { res } from "./@types";
 // import NotFound from "@/pages/NotFound";
@@ -50,64 +48,60 @@ const App: React.FC = () => {
     }, []);
 
     return (
-        <>
-            <GlobalStyle />
-            {/* {isLoading && <Loading />} */}
-            <Suspense fallback={isLoading && <Loading />}>
-                <Routes>
-                    {!isAuth && (
-                        <Route
-                            path={routeLogin.path}
-                            element={
-                                <StyleSheetManager
-                                    shouldForwardProp={(prop) =>
-                                        !["withheader", "withfooter"].includes(
-                                            prop
-                                        )
-                                    }
-                                >
-                                    <LayoutWrapper
-                                        withheader={routeLogin.withHeader.toString()}
-                                        withfooter={routeLogin.withFooter.toString()}
+        <div className="min-h-screen flex items-center justify-center">
+            <div className="w-[390px] min-w-[375px] h-screen">
+                {/* {isLoading && <Loading />} */}
+                <Suspense fallback={isLoading && <Loading />}>
+                    <Routes>
+                        {!isAuth && (
+                            <Route
+                                path={routeLogin.path}
+                                element={
+                                    <div
+                                        className={[
+                                            routeLogin.withHeader ? "mt-[60px]" : "mt-0",
+                                            routeLogin.withHeader && routeLogin.withFooter
+                                                ? "h-[calc(100vh-130px)]"
+                                                : "h-screen",
+                                            routeLogin.withFooter ? "mb-[70px]" : "mb-0",
+                                            "overflow-y-scroll overflow-x-hidden [scrollbar-width:none]"
+                                        ].join(" ")}
                                     >
                                         {routeLogin.withHeader && <Header />}
                                         {routeLogin.element}
                                         {routeLogin.withFooter && <Footer />}
-                                    </LayoutWrapper>
-                                </StyleSheetManager>
-                            }
-                        />
-                    )}
+                                    </div>
+                                }
+                            />
+                        )}
 
-                    {isAuth &&
-                        routePaths.map((data) => (
-                            <Route
-                                key={data.path}
-                                path={data.path}
-                                element={
-                                    <StyleSheetManager
-                                        shouldForwardProp={(prop) =>
-                                            ![
-                                                "withheader",
-                                                "withfooter"
-                                            ].includes(prop)
-                                        }
-                                    >
-                                        <LayoutWrapper
-                                            withheader={data.withHeader.toString()}
-                                            withfooter={data.withFooter.toString()}
+                        {isAuth &&
+                            routePaths.map((data) => (
+                                <Route
+                                    key={data.path}
+                                    path={data.path}
+                                    element={
+                                        <div
+                                            className={[
+                                                data.withHeader ? "mt-[60px]" : "mt-0",
+                                                data.withHeader && data.withFooter
+                                                    ? "h-[calc(100vh-130px)]"
+                                                    : "h-screen",
+                                                data.withFooter ? "mb-[70px]" : "mb-0",
+                                                "overflow-y-scroll overflow-x-hidden [scrollbar-width:none]"
+                                            ].join(" ")}
                                         >
                                             {data.withHeader && <Header />}
                                             {data.element}
                                             {data.withFooter && <Footer />}
-                                        </LayoutWrapper>
-                                    </StyleSheetManager>
-                                }
-                            />
-                        ))}
-                </Routes>
-            </Suspense>
-        </>
+                                        </div>
+                                    }
+                                />
+                            ))}
+                    </Routes>
+                </Suspense>
+            </div>
+        </div>
     );
 };
 
