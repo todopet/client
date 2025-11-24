@@ -1,57 +1,36 @@
 {
   "name": "front-end",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^7.1.0",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/react": "^18.2.20",
-    "@types/react-dom": "^18.2.7",
     "axios": "^1.4.0",
-    "dotenv": "^16.3.1",
     "prettier": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1",
     "react-router-dom": "^6.15.0",
-    "react-scripts": "5.0.1",
-    "styled-components": "^6.0.7",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4",
     "zustand": "^4.4.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "cross-env REACT_APP_GENERATE_SOURCEMAP=false craco build",
-    "test": "craco test"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit --watch"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/node": "^20.4.10",
-    "@types/styled-components": "^5.1.26",
-    "cross-env": "^7.0.3"
+    "@types/node": "^20.19.25",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.1.1",
+    "rollup-plugin-visualizer": "^6.0.5",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "typescript": "^4.9.5",
+    "tailwindcss": "^3.4.16",
+    "vite": "^7.2.4",
+    "vite-plugin-node-polyfills": "^0.24.0",
+    "vite-plugin-svgr": "^4.5.0",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }
