@@ -1,7 +1,9 @@
-import { ButtonWrap } from "./Button.styles";
+import React from "react";
 
-export default function Button({ ...props }) {
-    return <ButtonWrap {...props}></ButtonWrap>;
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & { className?: string };
+
+export default function Button({ className = "cursor-pointer", ...props }: Props) {
+    return <button className={className} {...props} />;
 }
 // interface ButtonProps {
 //     type?: "button" | "submit" | "reset";

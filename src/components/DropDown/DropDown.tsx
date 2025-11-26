@@ -1,16 +1,5 @@
 import useDetectClose from "@/libs/hooks/useDetectClose";
-import {
-    Wrapper,
-    DropdownContainer,
-    DropdownButton,
-    Menu,
-    Ul,
-    Li,
-    Label,
-    Link
-} from "./DropDown.styles";
 import { PropsWithChildren } from "react";
-import { StyleSheetManager } from "styled-components";
 
 interface ListItem {
     content: string;
@@ -24,40 +13,52 @@ interface ListProps extends PropsWithChildren {
 
 //사용하려는 카테고리 목록(list)을 props로 전달, 버튼으로 사용할 컴포넌트(children)를 추가해주세요.
 const Dropdown = ({ list, children }: ListProps) => {
-    const [categoryIsOpen, categoryRef, categoryHandler] =
-        useDetectClose(false);
+    const [categoryIsOpen, categoryRef, categoryHandler] = useDetectClose(false);
     const hasAnySvg = list.some((item) => !!item.svg);
     return (
-        <Wrapper>
-            <DropdownContainer>
-                <DropdownButton onClick={categoryHandler} ref={categoryRef}>
+        <div className="flex justify-around text-base font-medium items-center">
+            <div className="text-center">
+                <div
+                    onClick={categoryHandler}
+                    ref={categoryRef}
+                    className="flex items-center justify-center relative cursor-pointer"
+                >
                     {children}
-                    <Menu $isDropped={categoryIsOpen}>
-                        <Ul>
-                            <StyleSheetManager
-                                shouldForwardProp={(prop) =>
-                                    !["centercontent"].includes(prop)
-                                }
-                            >
-                                {list.map((item, index) => (
-                                    <Li
-                                        key={index}
-                                        centercontent={hasAnySvg}
-                                        onClick={item.handleClick}
+                    <div
+                        className={[
+                            "absolute top-[-10px] left-[-106px] w-[100px] text-center shadow-[2px_2px_8px_2px_rgba(0,0,0,0.2)] rounded-[14px] bg-white z-[9] transition-all duration-300",
+                            categoryIsOpen
+                                ? "opacity-100 visible translate-y-0"
+                                : "opacity-0 invisible -translate-y-5"
+                        ].join(" ")}
+                    >
+                        <ul className="list-none p-0 m-0 flex flex-col items-center">
+                            {list.map((item, index) => (
+                                <li
+                                    key={index}
+                                    onClick={item.handleClick}
+                                    className={[
+                                        "box-border border-b border-[#d9d9d9] w-full",
+                                        hasAnySvg
+                                            ? "flex flex-row justify-between items-center px-1"
+                                            : "flex flex-row justify-center items-center px-1",
+                                        index === list.length - 1 ? "border-b-0" : ""
+                                    ].join(" ")}
+                                >
+                                    <a
+                                        href={item.href}
+                                        className="flex justify-inherit no-underline text-black py-[6px] px-[12px] w-full"
                                     >
-                                        <Link href={item.href}>
-                                            <Label>{item.content}</Label>
-                                            {item.svg && item.svg}
-                                        </Link>
-                                        {/* {item.svg && item.svg} */}
-                                    </Li>
-                                ))}
-                            </StyleSheetManager>
-                        </Ul>
-                    </Menu>
-                </DropdownButton>
-            </DropdownContainer>
-        </Wrapper>
+                                        <label className="cursor-pointer">{item.content}</label>
+                                        {item.svg && item.svg}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 

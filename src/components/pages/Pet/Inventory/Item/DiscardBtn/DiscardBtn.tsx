@@ -1,6 +1,5 @@
-import { ReactComponent as DiscardIcon } from "@/assets/icons/trash.svg";
-
-import { ButtonStyled } from "./DiscardBtn.styles";
+import { DiscardIcon } from "@/modules/icons";
+import Button from "@/components/Button/Button";
 
 interface parameterType {
     onClick(e: any): void;
@@ -8,8 +7,8 @@ interface parameterType {
 
 export default function ThrowBtn({ onClick }: parameterType) {
     return (
-        <ButtonStyled onClick={onClick}>
-            <DiscardIcon />
-        </ButtonStyled>
+        <Button className="p-0" onClick={onClick}>
+            <img src={DiscardIcon} alt="discard" />
+        </Button>
     );
 }

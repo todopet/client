@@ -1,20 +1,4 @@
-import {
-    UserInfoWrapper,
-    UserIcon,
-    UserInfoArea,
-    UserName,
-    UpdateIcon,
-    ModalBackdrop,
-    Modal,
-    ModalTitle,
-    ModalInputArea,
-    ModalInput,
-    ErrorText,
-    ModalButtonArea,
-    DeleteButton,
-    UpdateButton,
-    JoinDate
-} from "./UserInfo.styles";
+import { updateIcon } from "@/modules/icons";
 import NickName from "../NickName/NickName";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -106,55 +90,56 @@ export function UserInfo({ picture, name, date }: userinfoType) {
     };
 
     return (
-        <UserInfoWrapper>
-            <UserIcon imagepath={picture}></UserIcon>
-            <UserInfoArea>
-                <UserName>
-                    <NickName name={name}></NickName>
-                    <UpdateIcon
-                        className={""}
+        <div className="flex justify-center items-center gap-2 w-full h-[15%]">
+            <div
+                className="w-20 h-20 rounded-[15px] bg-center bg-cover shadow"
+                style={{ backgroundImage: `url(${picture})` }}
+            />
+            <div className="flex flex-col h-20 w-1/2">
+                <div className="flex justify-end items-center gap-1 h-[55%]">
+                    <NickName name={name} />
+                    <div
+                        className="w-[18px] h-[18px] bg-center bg-cover cursor-pointer hover:opacity-50"
+                        style={{ backgroundImage: `url(${updateIcon})` }}
                         onClick={handleClick}
-                    ></UpdateIcon>
+                    />
                     {isNicknameModal && (
-                        <ModalBackdrop>
-                            <Modal>
-                                <ModalTitle>닉네임 변경하기</ModalTitle>
-                                <ModalInputArea>
-                                    <ModalInput
+                        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-[rgba(0,0,0,0.58)] backdrop-blur-sm w-[390px] h-screen left-1/2 -translate-x-1/2">
+                            <div className="w-[80%] h-[190px] rounded-[25px] bg-white mb-[60px] flex flex-col justify-between">
+                                <p className="font-bold text-[1.1rem] pl-[10%] mb-0">닉네임 변경하기</p>
+                                <div className="w-full h-1/2 flex flex-col justify-center items-center gap-1">
+                                    <input
                                         type="text"
                                         value={nickname}
-                                        // onChange={changeNickname}
-                                        onChange={(
-                                            e: ChangeEvent<HTMLInputElement>
-                                        ) => setNickname(e.target.value)}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setNickname(e.target.value)}
+                                        className="w-[70%] h-[45%] rounded-[20px] mt-2 px-4 text-[16px] outline-none border-2"
                                         style={{ borderColor: inputColor() }}
                                     />
-                                    <ErrorText color={textColor()}>
+                                    <span className="h-[14px] w-full text-[10.5px] pl-20" style={{ color: textColor(), opacity: textColor() ? 1 : 0 }}>
                                         {error}
-                                    </ErrorText>
-                                    {/* {error && <ErrorText>{error}</ErrorText>} */}
-                                </ModalInputArea>
-                                <ModalButtonArea>
-                                    <DeleteButton
-                                        className=""
+                                    </span>
+                                </div>
+                                <div className="flex justify-end items-center gap-[0.7rem] px-[30px] pb-5">
+                                    <button
+                                        className="w-[45px] h-[35px] rounded-[15px] bg-[#aaeea8] text-[#28b666] border-0 cursor-pointer"
                                         onClick={handleClose}
                                     >
                                         취소
-                                    </DeleteButton>
-                                    <UpdateButton
-                                        className=""
+                                    </button>
+                                    <button
+                                        className="w-[100px] h-[35px] rounded-[15px] bg-[#e7e8ea] border-0 cursor-pointer"
                                         onClick={handleNicknameChange}
                                     >
                                         닉네임 변경
-                                    </UpdateButton>
-                                </ModalButtonArea>
-                            </Modal>
-                        </ModalBackdrop>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     )}
-                </UserName>
-                <JoinDate>가입일 : {date}</JoinDate>
-            </UserInfoArea>
-        </UserInfoWrapper>
+                </div>
+                <p className="my-[10px] h-1/2 flex justify-end pr-1">가입일 : {date}</p>
+            </div>
+        </div>
     );
 }
 
@@ -164,14 +149,4 @@ interface classType {
     children?: React.ReactNode;
 }
 
-export function Icon({ className, onClick }: classType) {
-    return <div className={className} onClick={onClick}></div>;
-}
-
-export function ModalButton({ className, onClick, children }: classType) {
-    return (
-        <button className={className} onClick={onClick}>
-            {children}
-        </button>
-    );
-}
+// removed styled-component helper exports

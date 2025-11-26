@@ -6,7 +6,7 @@ import {
     CategorySpan
 } from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentList.styles";
 
-import { ReactComponent as UpdateIcon } from "@/assets/icons/update.svg";
+import { UpdateIcon } from "@/modules/icons";
 
 interface CategoryProps {
     category: category;
@@ -20,10 +20,8 @@ const CategoryContentListItem: React.FC<CategoryProps> = ({ category }) => {
                     <CircleButton key={category._id}>
                         <CategorySpan>{category.category}</CategorySpan>
                     </CircleButton>
-                    <StyledLink
-                        to={`/category/post?categoryId=${category._id}`}
-                    >
-                        <UpdateIcon />
+                    <StyledLink to={`/category/post?categoryId=${category._id}`}>
+                        <img src={UpdateIcon} alt="update" />
                     </StyledLink>
                 </ItemWrap>
             }

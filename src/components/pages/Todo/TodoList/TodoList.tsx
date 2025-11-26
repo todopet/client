@@ -1,11 +1,9 @@
 //react hook
-import { useEffect, useContext } from "react";
-import useTodosStore from "@/store/todo";
+import { useEffect } from "react";
+import useTodosStore from "@/store/todoStore";
 //components
 import TodoItem from "./TodoItem/TodoItem";
 
-//styles
-import { TodoListStyles } from "./TodoList.styles";
 
 export default function TodoList() {
     const { selectedDate, setTodos, dateTodos } = useTodosStore(
@@ -17,10 +15,10 @@ export default function TodoList() {
     }, [selectedDate]);
 
     return (
-        <TodoListStyles>
-            {dateTodos?.map((todos) => {
-                return <TodoItem key={todos._id} todos={todos} />;
-            })}
-        </TodoListStyles>
+        <div className="w-[390px]">
+            {dateTodos?.map((todos) => (
+                <TodoItem key={todos._id} todos={todos} />
+            ))}
+        </div>
     );
 }
