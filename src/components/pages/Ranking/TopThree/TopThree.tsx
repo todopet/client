@@ -1,4 +1,4 @@
-import crown from "@/assets/icons/owner.svg";
+import { crown } from "@/modules/icons";
 export const GOLD_COLOR = "#ffd700";
 export const SILVER_COLOR = "#c0c0c0";
 export const BRONZE_COLOR = "#cd7f32";

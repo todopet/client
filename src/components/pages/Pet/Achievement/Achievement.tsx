@@ -1,4 +1,3 @@
-import { ModalBackdrop } from '../../MyPage/UserInfo/UserInfo.styles';
 import { AchBox, AchStatus, AchInfo, AchName, TotalBar, CurrentBar, AchIcon, AchModalBackdrop } from './Achievement.styles';
 
 interface parameterType {

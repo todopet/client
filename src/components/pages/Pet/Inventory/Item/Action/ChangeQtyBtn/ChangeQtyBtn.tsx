@@ -1,7 +1,5 @@
-import { ButtonStyled } from "./ChangeQtyBtn.styles";
-
-import { ReactComponent as IncreaseIcon } from "@/assets/icons/increase.svg";
-import { ReactComponent as DecreaseIcon } from "@/assets/icons/decrease.svg";
+import { IncreaseIcon, DecreaseIcon } from "@/modules/icons";
+import CircleButton from "@/components/CircleButton/CircleButton";
 
 interface ChangeQtyBtnProps {
   modaltype: "useModal" | "discardModal";
@@ -25,15 +23,22 @@ export default function ChangeQtyBtn({
     border += "#d9d9d9";
   }
 
+
   return (
-    <ButtonStyled
-      modaltype={modaltype}
+    <CircleButton
       border={border}
       color="#ffffff"
       onClick={onClick}
-      iscountpositivenum={iscountpositivenum}
+      className={[
+        "w-[62px] h-[62px] flex items-center justify-center",
+        iscountpositivenum ? "hover:opacity-70" : "",
+      ].join(" ")}
     >
-      {operationType === "increase" ? <IncreaseIcon /> : <DecreaseIcon />}
-    </ButtonStyled>
+      {operationType === "increase" ? (
+        <img src={IncreaseIcon} alt="increase" />
+      ) : (
+        <img src={DecreaseIcon} alt="decrease" />
+      )}
+    </CircleButton>
   );
 }

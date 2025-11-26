@@ -1,6 +1,4 @@
-import heart from "@/assets/icons/mypage_heart.svg";
-import calendar from "@/assets/icons/calendar.svg";
-import check from "@/assets/icons/check.svg";
+import { heart, calendar, check } from "@/modules/icons";
 
 interface activityInfo {
     activityType: string;

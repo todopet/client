@@ -1,11 +1,4 @@
 import { useContext, useState } from "react";
-import {
-    ModalBg,
-    ModalWrap,
-    Item,
-    Quantity,
-    BtnWrap
-} from "./ActionModal.styles";
 import EditBtn from "@/components/pages/Pet/Inventory/Item/Action/EditBtn/EditBtn";
 import ChangeQtyBtn from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn/ChangeQtyBtn";
 import { items, myItems } from "@/@types/myItems";
@@ -68,30 +61,30 @@ export default function ActionModal({
 
     return (
         <>
-            <ModalBg
+            <div
+                className="fixed top-0 bottom-0 left-1/2 -translate-x-1/2 h-screen w-[390px] bg-[rgba(0,0,0,0.58)] backdrop-blur-sm flex justify-center items-center z-[1000]"
                 onClick={() => {
                     setState(!state);
                 }}
             >
-                <ModalWrap onClick={(e) => e.stopPropagation()}>
-                    <Item>
-                        <div>
-                            {modaltype === "useModal" ? "사용할" : "버리는"}
-                        </div>
+                <div
+                    className="absolute w-[292px] h-[390px] rounded-[20px] bg-white flex flex-col justify-center items-center z-10"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <div className="text-[20px] font-normal flex flex-row">
+                        <div>{modaltype === "useModal" ? "사용할" : "버리는"}</div>
                         <div>도구: {name}</div>
-                    </Item>
-                    <Quantity>
+                    </div>
+                    <div className="flex flex-row items-center gap-[30px] my-[46px]">
                         <ChangeQtyBtn
                             modaltype={modaltype}
                             operationType="decrease"
                             onClick={() =>
-                                itemCount > 1
-                                    ? setItemCount(itemCount - 1)
-                                    : false
+                                itemCount > 1 ? setItemCount(itemCount - 1) : false
                             }
                             iscountpositivenum={itemCount > 1}
                         />
-                        <div>{itemCount}</div>
+                        <div className="text-[48px] font-normal">{itemCount}</div>
                         <ChangeQtyBtn
                             modaltype={modaltype}
                             operationType="increase"
@@ -102,8 +95,8 @@ export default function ActionModal({
                             }
                             iscountpositivenum={itemCount < quantity}
                         />
-                    </Quantity>
-                    <BtnWrap>
+                    </div>
+                    <div className="flex flex-col gap-1">
                         <EditBtn
                             modaltype={modaltype}
                             btntype="confirm"
@@ -124,9 +117,9 @@ export default function ActionModal({
                                 setState(!state);
                             }}
                         />
-                    </BtnWrap>
-                </ModalWrap>
-            </ModalBg>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

@@ -1,38 +1,54 @@
-import React from "react";
-
-import {
-    NavWrap,
-    StyledFeedIcon,
-    StyledHeartIcon,
-    StyledRestIcon,
-    StyledWashIcon,
-    StyledHiddenIcon,
-    ButtonStyled
-} from "./Nav.styles";
+import { NavWrap, ButtonStyled } from "./Nav.styles";
+import { FeedIcon, HeartIcon, RestIcon, WashIcon, HiddenIcon } from "@/modules/icons";
 
 interface categoryType {
-    activeCategory: string;
-    setActiveCategory(categoryName: string): void;
+  activeCategory: string;
+  setActiveCategory(categoryName: string): void;
 }
 
 export default function Nav({ activeCategory, setActiveCategory }: categoryType) {
-    return (
-        <NavWrap>
-            <ButtonStyled on={activeCategory === "feed"} onClick={() => {setActiveCategory("feed")}}>
-                <StyledFeedIcon />
-            </ButtonStyled>
-            <ButtonStyled on={activeCategory === "play"} onClick={() => {setActiveCategory("play")}}>
-                <StyledHeartIcon />
-            </ButtonStyled>
-            <ButtonStyled on={activeCategory === "rest"} onClick={() => {setActiveCategory("rest")}}>
-                <StyledRestIcon />
-            </ButtonStyled>
-            <ButtonStyled on={activeCategory === "wash"} onClick={() => {setActiveCategory("wash")}}>
-                <StyledWashIcon />
-            </ButtonStyled>
-            <ButtonStyled on={activeCategory === "hidden"} onClick={() => {setActiveCategory("hidden")}}>
-                <StyledHiddenIcon />
-            </ButtonStyled>
-        </NavWrap>
-    );
+  return (
+    <NavWrap>
+      <ButtonStyled
+        on={activeCategory === "feed"}
+        onClick={() => {
+          setActiveCategory("feed");
+        }}
+      >
+        <img src={FeedIcon} alt="feed" />
+      </ButtonStyled>
+      <ButtonStyled
+        on={activeCategory === "play"}
+        onClick={() => {
+          setActiveCategory("play");
+        }}
+      >
+        <img src={HeartIcon} alt="play" />
+      </ButtonStyled>
+      <ButtonStyled
+        on={activeCategory === "rest"}
+        onClick={() => {
+          setActiveCategory("rest");
+        }}
+      >
+        <img src={RestIcon} alt="rest" />
+      </ButtonStyled>
+      <ButtonStyled
+        on={activeCategory === "wash"}
+        onClick={() => {
+          setActiveCategory("wash");
+        }}
+      >
+        <img src={WashIcon} alt="wash" />
+      </ButtonStyled>
+      <ButtonStyled
+        on={activeCategory === "hidden"}
+        onClick={() => {
+          setActiveCategory("hidden");
+        }}
+      >
+        <img src={HiddenIcon} alt="hidden" />
+      </ButtonStyled>
+    </NavWrap>
+  );
 }

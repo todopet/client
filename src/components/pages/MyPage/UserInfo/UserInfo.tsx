@@ -1,4 +1,4 @@
-import updateIcon from "@/assets/icons/update.svg";
+import { updateIcon } from "@/modules/icons";
 import NickName from "../NickName/NickName";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

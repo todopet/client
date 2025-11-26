@@ -1,5 +1,5 @@
 import Spinner from "@/assets/images/spinner.gif";
-import googleIcon from "@/assets/icons/google.svg";
+import { googleIcon } from "@/modules/icons";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
