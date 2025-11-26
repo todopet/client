@@ -1,7 +1,6 @@
-import { useState, useContext, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import * as Styles from "./Week.styles";
-import { ReactComponent as LeftSvg } from "@/assets/icons/leftButton.svg";
-import { ReactComponent as RightSvg } from "@/assets/icons/rightButton.svg";
+import { LeftSvg, RightSvg } from "@/modules/icons";
 import ArrowButton from "../Button/ArrowButton";
 import useTodosStore from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
@@ -21,204 +20,181 @@ let isFirstDateIncluded = false;
 let specialCaseOfYearEnd = false;
 
 export default function Week() {
-    const [currentSunday, setCurrentSunday] = useState(new Date(lastSunday));
-    const [titleData, setTitleData] = useState({
-        year: today.getFullYear(),
-        month: today.getMonth(),
-        weekCount: calculateWeekCount()
-    });
-    const [clicked, setClicked] = useState(-1);
-    const [dates, setDates] = useState<Date[]>([]);
+  const [currentSunday, setCurrentSunday] = useState(new Date(lastSunday));
+  const [titleData, setTitleData] = useState({
+    year: today.getFullYear(),
+    month: today.getMonth(),
+    weekCount: calculateWeekCount(),
+  });
+  const [clicked, setClicked] = useState(-1);
+  const [dates, setDates] = useState<Date[]>([]);
 
-    const { setSelectedDate, setStartEndDate, periodTodos, setTodos } =
-        useTodosStore((state) => state);
+  const { setSelectedDate, setStartEndDate, periodTodos, setTodos } = useTodosStore(
+    (state) => state
+  );
 
-    const getWeekDates = (sunday: Date | null = null) => {
-        setDates([]);
-        if (sunday === null) {
-            sunday = currentSunday;
-        }
-        const newDates = [];
-        for (let i = 0; i < 7; ++i) {
-            const d = new Date(
-                sunday.getFullYear(),
-                sunday.getMonth(),
-                sunday.getDate() + i
-            );
-            newDates.push(d);
-        }
-        setDates(newDates);
+  const getWeekDates = (sunday: Date | null = null) => {
+    setDates([]);
+    if (sunday === null) {
+      sunday = currentSunday;
+    }
+    const newDates = [];
+    for (let i = 0; i < 7; ++i) {
+      const d = new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + i);
+      newDates.push(d);
+    }
+    setDates(newDates);
 
-        // 예외처리를 위한 boolean 변수 2개
-        isFirstDateIncluded = false;
-        specialCaseOfYearEnd = false;
+    // 예외처리를 위한 boolean 변수 2개
+    isFirstDateIncluded = false;
+    specialCaseOfYearEnd = false;
 
-        // 현재 주에 1일이 포함되었는지 확인
-        isFirstDateIncluded = newDates
-            .map((date) => date.getDate())
-            .includes(1);
-        if (newDates[0].getDate() === 1) {
-            // 1일이 일요일인 경우의 예외처리
-            isFirstDateIncluded = false;
-        }
-
-        // 매해 12월에서 1월로 넘어가는 부분의 월&주차 오류 처리
-        if (sunday.getMonth() === 11) {
-            if (newDates.map((date, i) => date.getDate()).includes(31)) {
-                if (newDates[6].getDate() !== 31) {
-                    specialCaseOfYearEnd = true;
-                }
-            }
-        }
-
-        fetchData();
-    };
-
-    const fetchData = () => {
-        const start = formatDateToString(currentSunday);
-        const end = formatDateToString(
-            new Date(
-                currentSunday.getFullYear(),
-                currentSunday.getMonth(),
-                currentSunday.getDate() + 6
-            )
-        );
-        setStartEndDate(start, end);
-        setTodos(start, end);
-    };
-
-    const completedTodosByDay = useMemo(() => {
-        const todoDates: number[] = [];
-        periodTodos?.forEach((category: any) =>
-            category.todos.forEach((todo: any) => {
-                const newDate = new Date(todo.todoDate);
-                if (todo.status === "completed")
-                    todoDates.push(newDate.getDay());
-            })
-        );
-        return todoDates?.reduce(
-            (acc, cur) => {
-                acc[cur] = acc[cur] + 1;
-                return acc;
-            },
-            Array.from({ length: dates.length }, () => 0)
-        );
-    }, [periodTodos]);
-
-    useEffect(() => {
-        setCurrentSunday(new Date(lastSunday));
-        getWeekDates(lastSunday);
-    }, []);
-
-    function calculateWeekCount() {
-        const firstDayOfMonth = new Date(
-            currentSunday.getFullYear(),
-            currentSunday.getMonth(),
-            1
-        ).getDay();
-
-        const currentDate = currentSunday.getDate();
-        const weekCount = Math.ceil((currentDate + firstDayOfMonth) / 7);
-        return weekCount;
+    // 현재 주에 1일이 포함되었는지 확인
+    isFirstDateIncluded = newDates.map((date) => date.getDate()).includes(1);
+    if (newDates[0].getDate() === 1) {
+      // 1일이 일요일인 경우의 예외처리
+      isFirstDateIncluded = false;
     }
 
-    const calculateMonth = () => {
-        if (specialCaseOfYearEnd && isFirstDateIncluded) {
-            return 0;
-        } else if (isFirstDateIncluded) {
-            return currentSunday.getMonth() + 1;
-        } else {
-            return currentSunday.getMonth();
+    // 매해 12월에서 1월로 넘어가는 부분의 월&주차 오류 처리
+    if (sunday.getMonth() === 11) {
+      if (newDates.map((date, i) => date.getDate()).includes(31)) {
+        if (newDates[6].getDate() !== 31) {
+          specialCaseOfYearEnd = true;
         }
-    };
+      }
+    }
 
-    const handleLeftClick = () => {
-        const newCurrentSunday = new Date(
-            currentSunday.setDate(currentSunday.getDate() - 7)
-        );
-        setCurrentSunday(newCurrentSunday);
-        setTimeout(() => {
-            setTitleData({
-                year: specialCaseOfYearEnd
-                    ? newCurrentSunday.getFullYear() + 1
-                    : newCurrentSunday.getFullYear(),
-                month: calculateMonth(),
-                weekCount: isFirstDateIncluded ? 1 : calculateWeekCount()
-            });
-        }, 0);
-        getWeekDates();
-    };
+    fetchData();
+  };
 
-    const handleRightClick = () => {
-        const newCurrentSunday = new Date(
-            currentSunday.setDate(currentSunday.getDate() + 7)
-        );
-        setCurrentSunday(newCurrentSunday);
-        setTimeout(() => {
-            setTitleData({
-                year: specialCaseOfYearEnd
-                    ? newCurrentSunday.getFullYear() + 1
-                    : newCurrentSunday.getFullYear(),
-                month: calculateMonth(),
-                weekCount: isFirstDateIncluded ? 1 : calculateWeekCount()
-            });
-        }, 0);
-        getWeekDates();
-    };
+  const fetchData = () => {
+    const start = formatDateToString(currentSunday);
+    const end = formatDateToString(
+      new Date(currentSunday.getFullYear(), currentSunday.getMonth(), currentSunday.getDate() + 6)
+    );
+    setStartEndDate(start, end);
+    setTodos(start, end);
+  };
 
-    const handleDateCellClick = (idx: number) => {
-        setClicked(idx ?? -1);
-        setSelectedDate(formatDateToString(dates[idx]));
-    };
+  const completedTodosByDay = useMemo(() => {
+    const todoDates: number[] = [];
+    periodTodos?.forEach((category: any) =>
+      category.todos.forEach((todo: any) => {
+        const newDate = new Date(todo.todoDate);
+        if (todo.status === "completed") todoDates.push(newDate.getDay());
+      })
+    );
+    return todoDates?.reduce(
+      (acc, cur) => {
+        acc[cur] = acc[cur] + 1;
+        return acc;
+      },
+      Array.from({ length: dates.length }, () => 0)
+    );
+  }, [periodTodos]);
 
-    return (
-        <Styles.WeekStyle>
-            <Styles.TitleWrap>
-                <ArrowButton onClick={handleLeftClick}>
-                    <LeftSvg />
-                </ArrowButton>
-                <Styles.Title>
-                    {titleData.year}년 {titleData.month + 1}월
-                    {/* {" "}{titleData.weekCount}주차 */}
-                </Styles.Title>
-                <ArrowButton onClick={handleRightClick}>
-                    <RightSvg />
-                </ArrowButton>
-            </Styles.TitleWrap>
-            <div>
-                <Styles.DayWrap>
-                    {dayText.map((day, i) => (
-                        <Styles.Day key={i}>{day}</Styles.Day>
-                    ))}
-                </Styles.DayWrap>
-                <Styles.DateCellWrap>
-                    {dates.map((date, i) => (
-                        <Styles.DateCell
-                            key={i}
-                            onClick={() => handleDateCellClick(i)}
-                        >
-                            <Styles.Cell
-                                completed={
-                                    Array.isArray(completedTodosByDay)
-                                        ? completedTodosByDay[i]
-                                        : 0
-                                }
-                            />
+  useEffect(() => {
+    setCurrentSunday(new Date(lastSunday));
+    getWeekDates(lastSunday);
+  }, []);
+
+  function calculateWeekCount() {
+    const firstDayOfMonth = new Date(
+      currentSunday.getFullYear(),
+      currentSunday.getMonth(),
+      1
+    ).getDay();
+
+    const currentDate = currentSunday.getDate();
+    const weekCount = Math.ceil((currentDate + firstDayOfMonth) / 7);
+    return weekCount;
+  }
+
+  const calculateMonth = () => {
+    if (specialCaseOfYearEnd && isFirstDateIncluded) {
+      return 0;
+    } else if (isFirstDateIncluded) {
+      return currentSunday.getMonth() + 1;
+    } else {
+      return currentSunday.getMonth();
+    }
+  };
+
+  const handleLeftClick = () => {
+    const newCurrentSunday = new Date(currentSunday.setDate(currentSunday.getDate() - 7));
+    setCurrentSunday(newCurrentSunday);
+    setTimeout(() => {
+      setTitleData({
+        year: specialCaseOfYearEnd
+          ? newCurrentSunday.getFullYear() + 1
+          : newCurrentSunday.getFullYear(),
+        month: calculateMonth(),
+        weekCount: isFirstDateIncluded ? 1 : calculateWeekCount(),
+      });
+    }, 0);
+    getWeekDates();
+  };
+
+  const handleRightClick = () => {
+    const newCurrentSunday = new Date(currentSunday.setDate(currentSunday.getDate() + 7));
+    setCurrentSunday(newCurrentSunday);
+    setTimeout(() => {
+      setTitleData({
+        year: specialCaseOfYearEnd
+          ? newCurrentSunday.getFullYear() + 1
+          : newCurrentSunday.getFullYear(),
+        month: calculateMonth(),
+        weekCount: isFirstDateIncluded ? 1 : calculateWeekCount(),
+      });
+    }, 0);
+    getWeekDates();
+  };
+
+  const handleDateCellClick = (idx: number) => {
+    setClicked(idx ?? -1);
+    setSelectedDate(formatDateToString(dates[idx]));
+  };
+
+  return (
+    <Styles.WeekStyle>
+      <Styles.TitleWrap>
+        <ArrowButton onClick={handleLeftClick}>
+          <LeftSvg />
+        </ArrowButton>
+        <Styles.Title>
+          {titleData.year}년 {titleData.month + 1}월{/* {" "}{titleData.weekCount}주차 */}
+        </Styles.Title>
+        <ArrowButton onClick={handleRightClick}>
+          <RightSvg />
+        </ArrowButton>
+      </Styles.TitleWrap>
+      <div>
+        <Styles.DayWrap>
+          {dayText.map((day, i) => (
+            <Styles.Day key={i}>{day}</Styles.Day>
+          ))}
+        </Styles.DayWrap>
+        <Styles.DateCellWrap>
+          {dates.map((date, i) => (
+            <Styles.DateCell key={i} onClick={() => handleDateCellClick(i)}>
+              <Styles.Cell
+                completed={Array.isArray(completedTodosByDay) ? completedTodosByDay[i] : 0}
+              />
                             <Styles.Date
-                                id={i}
                                 $istoday={
                                     date.getFullYear() === todayYear &&
                                     date.getMonth() === todayMonth &&
                                     date.getDate() === today.getDate()
                                 }
-                                $isclicked={clicked === i}
-                            >
-                                {date.getDate()}
-                            </Styles.Date>
-                        </Styles.DateCell>
-                    ))}
-                </Styles.DateCellWrap>
-            </div>
-        </Styles.WeekStyle>
-    );
+                $isclicked={clicked === i}
+              >
+                {date.getDate()}
+              </Styles.Date>
+            </Styles.DateCell>
+          ))}
+        </Styles.DateCellWrap>
+      </div>
+    </Styles.WeekStyle>
+  );
 }

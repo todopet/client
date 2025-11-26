@@ -1,5 +1,4 @@
 import React, { ChangeEvent, ChangeEventHandler, useState } from "react";
-import { InputContainer, InputText } from "./Input.styles";
 
 interface InputProps {
     value: string;
@@ -8,14 +7,14 @@ interface InputProps {
 
 function InputComponent({ value, onChange }: InputProps) {
     return (
-        <InputContainer>
-            <InputText
+        <div className="flex flex-col justify-center items-center">
+            <input
                 type="text"
                 value={value}
                 onChange={onChange}
-                style={{ padding: "10px", fontSize: "16px" }}
+                className="w-[20.9375rem] h-6 flex-col justify-center shrink-0 text-base border-0 border-b-2 border-[#ccc] px-[10px]"
             />
-        </InputContainer>
+        </div>
     );
 }
 

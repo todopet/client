@@ -1,5 +1,4 @@
 import { FC, SyntheticEvent, useState } from "react";
-import { ToggleDiv, ToggleWrapper, Switch } from "./ToggleButton.styles";
 
 interface ToggleButtonProps {
     onToggle?: (isToggled: boolean) => void;
@@ -16,11 +15,24 @@ const ToggleButton: FC<ToggleButtonProps> = ({ onToggle }) => {
     }
 
     return (
-        <ToggleDiv>
-            <ToggleWrapper active={isToggled} onClick={handleChangeToggle}>
-                <Switch active={isToggled}>{isToggled ? "월" : "주"}</Switch>
-            </ToggleWrapper>
-        </ToggleDiv>
+        <div className="relative">
+            <div
+                onClick={handleChangeToggle}
+                className={[
+                    "w-11 h-[22px] rounded-[15px] flex items-center cursor-pointer transition-colors duration-300 relative mt-5 ml-[330px] top-[22px]",
+                    isToggled ? "bg-[#EBEBEB] justify-end" : "bg-[#CBCACA] justify-start",
+                ].join(" ")}
+            >
+                <div
+                    className={[
+                        "w-[19px] h-[19px] bg-white rounded-full absolute left-[1.4px] transition-all duration-400 text-[12px] font-bold flex items-center justify-center",
+                        isToggled ? "left-[calc(100%-20.5px)]" : "left-[1.4px]",
+                    ].join(" ")}
+                >
+                    {isToggled ? "월" : "주"}
+                </div>
+            </div>
+        </div>
     );
 }
 

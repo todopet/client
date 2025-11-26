@@ -1,10 +1,4 @@
 import React from "react";
-import {
-    StyledRanker,
-    RankLabel,
-    NicknameText,
-    SolvedPlansText
-} from "./Ranker.styles";
 import Icon from "./Icon";
 import Label from "./Label";
 import Text from "./Text";
@@ -16,12 +10,12 @@ interface RankerProps {
 }
 
 export default function Ranker({ rank, nickname, solvedPlans }: RankerProps) {
-    return (
-        <StyledRanker>
-            {rank <= 3 && <Icon rank={rank} />}
-            <RankLabel>{rank}</RankLabel>
-            <NicknameText>{nickname}</NicknameText>
-            <SolvedPlansText>{solvedPlans}</SolvedPlansText>
-        </StyledRanker>
-    );
+  return (
+    <div className="my-[50px] flex items-center justify-center text-black text-[18px] font-semibold">
+      {rank <= 3 && <Icon rank={rank} />}
+      <span className="mr-10">{rank}</span>
+      <span className="mr-[200px]">{nickname}</span>
+      <span>{solvedPlans}</span>
+    </div>
+  );
 }

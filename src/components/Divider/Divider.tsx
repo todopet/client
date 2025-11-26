@@ -1,6 +1,4 @@
 import React from "react";
-
-import { DividerWrap, Line } from "./Divider.styles";
 interface DividerProps {
     category: () => string | undefined;
 }
@@ -9,10 +7,10 @@ export default function Divider({ category }: DividerProps) {
     const itemCategory = category();
     const haslength = !!itemCategory;
     return (
-        <DividerWrap>
-            <Line haslength={haslength.toString()}></Line>
-            {haslength && <div>{itemCategory}</div>}
-            <Line haslength={haslength.toString()}></Line>
-        </DividerWrap>
+        <div className="w-full flex flex-row items-center justify-between basis-[3%]">
+            <div className={haslength ? "w-[45%] h-px bg-[#dfdfdf]" : "w-1/2 h-px bg-[#dfdfdf]"} />
+            {haslength && <div className="text-xs text-[#b1aeae]">{itemCategory}</div>}
+            <div className={haslength ? "w-[45%] h-px bg-[#dfdfdf]" : "w-1/2 h-px bg-[#dfdfdf]"} />
+        </div>
     );
 }

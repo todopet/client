@@ -1,5 +1,4 @@
-import ranking from "@/assets/icons/ranking.svg";
-import inventory from "@/assets/icons/inventory.svg";
+import { ranking, inventory } from "@/modules/icons";
 import {
     MainFooter,
     MainArea,
@@ -28,7 +27,6 @@ import Exp from "@/components/pages/Pet/Exp/Exp";
 import Status from "@/components/pages/Pet/Status/Status";
 import Stars from "@/components/pages/Pet/Stars/Stars";
 import { useState, useEffect } from "react";
-import { ModalBackdrop } from "@/components/pages/MyPage/UserInfo/UserInfo.styles";
 import Achievement from "@/components/pages/Pet/Achievement/Achievement";
 import InventoryModal from "@/components/pages/Pet/Inventory/Inventory";
 import { ModalBg } from "../Inventory/Inventory.styles";
@@ -398,6 +396,12 @@ export function FooterButton({
 
 export function MainModalBackdrop({ className, onClick }: modalBackdrop) {
     return (
-        <ModalBackdrop className={className} onClick={onClick}></ModalBackdrop>
+        <div
+            className={[
+                "fixed inset-0 z-[1000] flex items-center justify-center bg-[rgba(0,0,0,0.58)] backdrop-blur-sm w-[390px] h-screen left-1/2 -translate-x-1/2",
+                className,
+            ].join(" ")}
+            onClick={onClick}
+        />
     );
 }
