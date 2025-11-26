@@ -1,19 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-import { ReactComponent as StarIcon } from "@/assets/icons/star.svg";
-
-const fullColor = "#FFE210";
-const emptyColor = "#F2F2F2";
+import { StarIcon } from "@/modules/icons";
 
 interface StarProps {
     status: "full" | "empty";
 }
 
 function Star({ status }: StarProps) {
-    return <StyledStarIcon status={status} />;
+    const style: React.CSSProperties = status === "full" ? {} : { filter: "grayscale(1) opacity(0.6)" };
+    return <img src={StarIcon} alt="star" style={style} />;
 }
-
-const StyledStarIcon = styled(StarIcon)<StarProps>`
-    fill: ${(props) => (props.status === "full" ? fullColor : emptyColor)};
-`;
 export default Star;

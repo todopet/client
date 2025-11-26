@@ -1,14 +1,4 @@
-import {
-    MyPageWrapper,
-    ActivityWrapper,
-    ButtonWrapper,
-    MypageButton,
-    Text,
-    ModalButtonWrap,
-    ModalButton,
-    ModalText,
-    SpanText
-} from "./MyPage.styles";
+import React from "react";
 import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
 import { UserInfo } from "@/components/pages/MyPage/UserInfo/UserInfo";
 import Activity from "@/components/pages/MyPage/Activity/Activity";
@@ -25,24 +15,28 @@ interface ConfirmContentProps {
     onConfirm: MouseEventHandler<HTMLButtonElement>;
 }
 
-const ConfirmContent: React.FC<ConfirmContentProps> = ({
-    message,
-    onCancel,
-    onConfirm
-}) => {
-    return (
-        <>
-            <ModalText>{message}</ModalText>
-            <ModalButtonWrap>
-                <ModalButton onClick={onCancel}>
-                    <Text>취소</Text>
-                </ModalButton>
-                <ModalButton onClick={onConfirm}>
-                    <Text>확인</Text>
-                </ModalButton>
-            </ModalButtonWrap>
-        </>
-    );
+const ConfirmContent: React.FC<ConfirmContentProps> = ({ message, onCancel, onConfirm }) => {
+  return (
+    <>
+      <div className="flex h-[3.8125rem] flex-col justify-center shrink-0 text-black text-center text-[0.875rem] font-normal whitespace-pre-wrap">
+        {message}
+      </div>
+      <div className="flex flex-row justify-evenly">
+        <button
+          onClick={onCancel}
+          className="w-[7.07894rem] h-8 shrink-0 rounded-[0.5rem] bg-[#e7e8ea] border-0"
+        >
+          <p className="text-[15px] m-0">취소</p>
+        </button>
+        <button
+          onClick={onConfirm}
+          className="w-[7.07894rem] h-8 shrink-0 rounded-[0.5rem] bg-[#e7e8ea] border-0"
+        >
+          <p className="text-[15px] m-0">확인</p>
+        </button>
+      </div>
+    </>
+  );
 };
 
 export default function MyPage() {
@@ -125,13 +119,13 @@ export default function MyPage() {
 
     const navigate = useNavigate();
     return (
-        <MyPageWrapper>
+        <div className="w-full h-full min-h-[700px] relative flex flex-col gap-8 justify-center items-center">
             <UserInfo
                 picture={userInfo.picture}
                 name={userInfo.nickname}
                 date={formatDateToString(userInfo.createdAt)}
             ></UserInfo>
-            <ActivityWrapper>
+            <div className="flex flex-col w-[85%] h-1/2 justify-center gap-8">
                 <Activity
                     activityType="heart"
                     data={userInfo.withPetDate.toString()}
@@ -144,62 +138,53 @@ export default function MyPage() {
                     activityType="check"
                     data={userInfo.todoCount.toString()}
                 ></Activity>
-            </ActivityWrapper>
-            <ButtonWrapper>
-                <MypageButton
-                    className=""
-                    color="#F5F5F5"
-                    text="로그아웃"
-                    onClick={handleConfirmLogoutModal}
-                />
-                <MypageButton
-                    className=""
-                    color="#F5F5F5"
-                    text="회원탈퇴"
-                    onClick={handleConfirmWithdrawModal}
-                />
-                {isLogoutModalOpen && (
-                    <ConfirmModal>
-                        <ConfirmContent
-                            message={
-                                <>
-                                    <SpanText isred={"false"}>
-                                        로그아웃 하시겠습니까?
-                                    </SpanText>
-                                </>
-                            }
-                            onConfirm={handleConfirmLogout}
-                            onCancel={handleCloseModal}
-                        />
-                    </ConfirmModal>
-                )}
-                {isWithdrawModalOpen && (
-                    <ConfirmModal>
-                        <ConfirmContent
-                            message={
-                                <>
-                                    <SpanText isred={"false"}>
-                                        {userInfo.nickname}님의 펫이 기다리고
-                                        있어요!
-                                    </SpanText>
-                                    <SpanText isred={"true"}>
-                                        회원 탈퇴시 해당 계정으로
-                                    </SpanText>
-                                    <SpanText isred={"true"}>
-                                        영원히 서비스를 이용할 수 없어요 😥
-                                    </SpanText>
-                                    <SpanText isred={"false"}>
-                                        그래도 탈퇴하시겠어요?
-                                    </SpanText>
-                                </>
-                            }
-                            onConfirm={handleConfirmWithdraw}
-                            onCancel={handleCloseModal}
-                        />
-                    </ConfirmModal>
-                )}
-            </ButtonWrapper>
-        </MyPageWrapper>
+            </div>
+            <div className="flex justify-center items-center gap-4 w-[85%] mt-[30px]">
+                <button
+                  className="w-1/2 h-12 rounded-[10px] text-[16px] font-medium"
+                  style={{ backgroundColor: '#F5F5F5' }}
+                  onClick={handleConfirmLogoutModal}
+                >
+                  로그아웃
+                </button>
+                <button
+                  className="w-1/2 h-12 rounded-[10px] text-[16px] font-medium"
+                  style={{ backgroundColor: '#F5F5F5' }}
+                  onClick={handleConfirmWithdrawModal}
+                >
+                  회원탈퇴
+                </button>
+            </div>
+            {isLogoutModalOpen && (
+                <ConfirmModal>
+                    <ConfirmContent
+                        message={
+                            <>
+                                    <span className="mb-[5px] text-black">로그아웃 하시겠습니까?</span>
+                            </>
+                        }
+                        onConfirm={handleConfirmLogout}
+                        onCancel={handleCloseModal}
+                    />
+                </ConfirmModal>
+            )}
+            {isWithdrawModalOpen && (
+                <ConfirmModal>
+                    <ConfirmContent
+                        message={
+                            <>
+                                    <span className="mb-[5px] text-black">{userInfo.nickname}님의 펫이 기다리고 있어요!</span>
+                                    <span className="mb-[5px] text-red-500">회원 탈퇴시 해당 계정으로</span>
+                                    <span className="mb-[5px] text-red-500">영원히 서비스를 이용할 수 없어요 😥</span>
+                                    <span className="mb-[5px] text-black">그래도 탈퇴하시겠어요?</span>
+                            </>
+                        }
+                        onConfirm={handleConfirmWithdraw}
+                        onCancel={handleCloseModal}
+                    />
+                </ConfirmModal>
+            )}
+        </div>
     );
 }
 
@@ -211,13 +196,9 @@ interface classtype {
 }
 
 export function MyButton({ className, onClick, color, text }: classtype) {
-    return (
-        <button
-            className={className}
-            onClick={onClick}
-            style={{ backgroundColor: color }}
-        >
-            {text}
-        </button>
-    );
+  return (
+    <button className={className} onClick={onClick} style={{ backgroundColor: color }}>
+      {text}
+    </button>
+  );
 }
