@@ -103,13 +103,12 @@ const useTodosStore = create<Todos>((set) => ({
                     res<todo>
                 >(
                     "patch",
-                    `todoContents/${contentId}`,
+                    `todoContents/${contentId}?_=${Date.now()}`,
                     {
                         todo: content,
                         status: checkStatus,
                         date: date
-                    },
-                    { "x-custom-data": Date.now() * 4 + 1000 }
+                    }
                 );
 
                 showToast(MiniPetToast, {
@@ -125,13 +124,12 @@ const useTodosStore = create<Todos>((set) => ({
                     res<todo>
                 >(
                     "patch",
-                    `todoContents/${contentId}`,
+                    `todoContents/${contentId}?_=${Date.now()}`,
                     {
                         todo: content,
                         status: checkStatus,
                         date: date
-                    },
-                    { "x-custom-data": Date.now() * 4 + 1000 }
+                    }
                 );
                 const { selectedDate, startDate, endDate } =
                     useTodosStore.getState();
