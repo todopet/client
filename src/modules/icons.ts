@@ -24,7 +24,7 @@ import SilverMedal from "@/assets/icons/silvermedal.svg";
 import BronzeMedal from "@/assets/icons/bronzemedal.svg";
 
 import HeaderMenuIcon from "@/assets/icons/headerMenu.svg";
-import PlusIcon from "@/assets/icons/plus.svg";
+import BluePlusIcon from "@/assets/icons/plus.svg";
 import StarIcon from "@/assets/icons/star.svg";
 
 import ranking from "@/assets/icons/ranking.svg";
@@ -67,7 +67,7 @@ export {
   SilverMedal,
   BronzeMedal,
   HeaderMenuIcon,
-  PlusIcon,
+  BluePlusIcon,
   StarIcon,
   ranking,
   inventory,

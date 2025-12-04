@@ -1,5 +1,5 @@
 import React from "react";
-import { LeftArrowIcon, PlusSvg } from "@/modules/icons";
+import { LeftArrowIcon, BluePlusIcon } from "@/modules/icons";
 import { Container, Button, Text, ActionContainer } from "./CategoryHeader.styles";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick })
     관리: () => {
       return (
         <Button onClick={handleClick}>
-          <img src={PlusSvg} alt="add" />
+          <img src={BluePlusIcon} alt="add" />
         </Button>
       );
     },

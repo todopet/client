@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../Logo";
 import Dropdown from "@/components/DropDown/DropDown";
-import { HeaderMenuIcon, PlusIcon } from "@/modules/icons";
+import { HeaderMenuIcon, BluePlusIcon } from "@/modules/icons";
 
 export default function Header() {
   const location = useLocation();
@@ -10,7 +10,7 @@ export default function Header() {
     {
       content: "목표등록",
       href: "/category/post", // 경로 설정
-      svg: <img src={PlusIcon} alt="add" />,
+      svg: <img src={BluePlusIcon} alt="add" />,
     },
     {
       content: "목표관리",
