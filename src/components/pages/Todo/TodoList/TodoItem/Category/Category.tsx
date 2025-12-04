@@ -1,4 +1,4 @@
-import { PlusSvg } from "@/modules/icons";
+import { PlusButtonIcon } from "@/modules/icons";
 import { CategoryStyles, Text, PlusButton } from "./Category.styles";
 
 interface CategoryProps {
@@ -12,7 +12,7 @@ export default function Category({ category, handleClick, isEnded }: CategoryPro
       <Text>{category}</Text>
       {!isEnded && (
         <PlusButton>
-          <PlusSvg />
+          <img src={PlusButtonIcon} alt="add" />
         </PlusButton>
       )}
     </CategoryStyles>

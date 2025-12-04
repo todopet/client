@@ -1,5 +1,5 @@
 import * as Styles from "./Month.styles";
-import { LeftSvg, RightSvg } from "@/modules/icons";
+import { LeftArrowIcon, RightArrowIcon } from "@/modules/icons";
 import ArrowButton from "../Button/ArrowButton";
 import { useState, useEffect, useMemo } from "react";
 import useTodosStore from "@/store/todoStore";
@@ -85,13 +85,13 @@ export default function Month() {
     <Styles.MonthStyle>
       <Styles.TitleWrap>
         <ArrowButton onClick={handleLeftClick}>
-          <img src={LeftSvg} alt="left" />
+          <img src={LeftArrowIcon} alt="left" />
         </ArrowButton>
         <Styles.Title>
           {firstDate.getFullYear()}년 {firstDate.getMonth() + 1}월
         </Styles.Title>
         <ArrowButton onClick={handleRightClick}>
-          <img src={RightSvg} alt="right" />
+          <img src={RightArrowIcon} alt="right" />
         </ArrowButton>
       </Styles.TitleWrap>
       <Styles.DayWrap>

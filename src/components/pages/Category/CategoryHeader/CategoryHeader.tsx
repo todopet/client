@@ -1,5 +1,5 @@
 import React from "react";
-import { LeftSvg, PlusSvg } from "@/modules/icons";
+import { LeftArrowIcon, PlusSvg } from "@/modules/icons";
 import { Container, Button, Text, ActionContainer } from "./CategoryHeader.styles";
 import { useNavigate } from "react-router-dom";
 
@@ -46,7 +46,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick })
     <Container>
       <ActionContainer>
         <Button onClick={navigation[subject]}>
-          <img src={LeftSvg} alt="back" />
+          <img src={LeftArrowIcon} alt="back" />
         </Button>
         <Text>목표 {subject}</Text>
         {subjects[subject]()}

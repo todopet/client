@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import * as Styles from "./Week.styles";
-import { LeftSvg, RightSvg } from "@/modules/icons";
+import { LeftArrowIcon, RightArrowIcon } from "@/modules/icons";
 import ArrowButton from "../Button/ArrowButton";
 import useTodosStore from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
@@ -160,13 +160,13 @@ export default function Week() {
     <Styles.WeekStyle>
       <Styles.TitleWrap>
         <ArrowButton onClick={handleLeftClick}>
-          <LeftSvg />
+          <img src={LeftArrowIcon} alt="left" />
         </ArrowButton>
         <Styles.Title>
           {titleData.year}년 {titleData.month + 1}월{/* {" "}{titleData.weekCount}주차 */}
         </Styles.Title>
         <ArrowButton onClick={handleRightClick}>
-          <RightSvg />
+          <img src={RightArrowIcon} alt="right" />
         </ArrowButton>
       </Styles.TitleWrap>
       <div>
