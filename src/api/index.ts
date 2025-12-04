@@ -1,4 +1,5 @@
-import axios, { AxiosHeaders } from "axios";
+// import axios, { AxiosHeaders } from "axios";
+import axios from "axios";
 
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
 // TODO: 발표 전 수정
