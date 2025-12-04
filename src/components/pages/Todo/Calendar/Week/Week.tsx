@@ -58,7 +58,7 @@ export default function Week() {
 
     // 매해 12월에서 1월로 넘어가는 부분의 월&주차 오류 처리
     if (sunday.getMonth() === 11) {
-      if (newDates.map((date, i) => date.getDate()).includes(31)) {
+      if (newDates.map((date) => date.getDate()).includes(31)) {
         if (newDates[6].getDate() !== 31) {
           specialCaseOfYearEnd = true;
         }
@@ -107,8 +107,7 @@ export default function Week() {
     ).getDay();
 
     const currentDate = currentSunday.getDate();
-    const weekCount = Math.ceil((currentDate + firstDayOfMonth) / 7);
-    return weekCount;
+    return Math.ceil((currentDate + firstDayOfMonth) / 7);
   }
 
   const calculateMonth = () => {
