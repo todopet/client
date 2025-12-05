@@ -1,8 +1,8 @@
 import { FC, useCallback, useState } from "react";
-import Week from "@/components/pages/Todo/Calendar/Week/Week";
-import Month from "./Month/Month";
+import { Week } from "@/components/pages/Todo/Calendar/Week/Week";
+import { Month } from "./Month/Month";
 import { CalendarStyles } from "./Calendar.styles";
-import ToggleButton from "@/components/ToggleButton/ToggleButton";
+import { ToggleButton } from "@/components/ToggleButton/ToggleButton";
 
 export interface CalendarProps {
     defaultMode?: "week" | "month";
@@ -21,7 +21,7 @@ const CalendarBody: FC<CalendarBodyProps> = ({ mode }) => {
     );
 };
 
-const Calendar: FC<CalendarProps> = (props) => {
+export const Calendar: FC<CalendarProps> = (props) => {
     const { defaultMode = "week" } = props;
     const [mode, setMode] = useState(defaultMode);
 
@@ -37,5 +37,3 @@ const Calendar: FC<CalendarProps> = (props) => {
         </CalendarStyles>
     );
 };
-
-export default Calendar;

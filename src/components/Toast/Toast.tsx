@@ -1,7 +1,7 @@
 import ReactDom from "react-dom";
 import useToastsStore from "../../store/toastStore";
 
-const Toast = () => {
+export const Toast = () => {
     const { toast, isShow } = useToastsStore();
 
     if (!toast) return null;
@@ -12,5 +12,3 @@ const Toast = () => {
         document.getElementsByClassName("toast-wrapper")[0]
     );
 };
-
-export default Toast;

@@ -1,6 +1,6 @@
-import { RankInfo } from "@/@types/index";
+import { RankInfo } from "@/@types";
 import { GoldMedal, SilverMedal, BronzeMedal } from "@/modules/icons";
-import Divider from "@/components/Divider/Divider";
+import { Divider } from "@/components/Divider/Divider";
 import React from "react";
 
 interface RankInfoProps {

@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import { res, todo, todoCategory } from "@/@types/index";
-import axiosRequest from "@/api/index";
+import { res, todo, todoCategory } from "@/@types";
+import { axiosRequest } from "@/api";
 import { Message, ToastTypes } from "@/@types/todo";
 import { formatDateToString } from "@/libs/utils/global";
 import useToastsStore from "./toastStore";
-import MiniPetToast from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
+import { MiniPetToast } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 
 const today = new Date();
 
@@ -43,7 +43,8 @@ const initialState = {
     isActiveToast: false,
     timer: null
 };
-const useTodosStore = create<Todos>((set) => ({
+
+export const useTodosStore = create<Todos>((set) => ({
     ...initialState,
     setSelectedDate: (date) => set({ selectedDate: date }),
     setStartEndDate: (start, end) => {
@@ -144,4 +145,3 @@ const useTodosStore = create<Todos>((set) => ({
         }
     }
 }));
-export default useTodosStore;

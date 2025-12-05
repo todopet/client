@@ -1,10 +1,10 @@
 import React from "react";
-import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
+import { ConfirmModal } from "@/components/ConfirmModal/ConfirmModal";
 import { UserInfo } from "@/components/pages/MyPage/UserInfo/UserInfo";
-import Activity from "@/components/pages/MyPage/Activity/Activity";
-import { res, myUser } from "@/@types/index";
-import axiosRequest from "@/api";
-import { formatDateToString, setKoreaTime } from "@/libs/utils/global";
+import { Activity } from "@/components/pages/MyPage/Activity/Activity";
+import { res, myUser } from "@/@types";
+import { axiosRequest } from "@/api";
+import { formatDateToString } from "@/libs/utils/global";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +38,7 @@ const ConfirmContent: React.FC<ConfirmContentProps> = ({ message, onCancel, onCo
   );
 };
 
-export default function MyPage() {
+export const MyPage = () => {
   const [userInfo, setUserInfo] = useState<myUser>({
     _id: "",
     nickname: "",
@@ -176,14 +176,14 @@ export default function MyPage() {
   );
 }
 
-interface classtype {
+interface classType {
   className: string;
   onClick(): void;
   color: string;
   text: string;
 }
 
-export function MyButton({ className, onClick, color, text }: classtype) {
+export const MyButton = ({ className, onClick, color, text }: classType) => {
   return (
     <button className={className} onClick={onClick} style={{ backgroundColor: color }}>
       {text}

@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & { className?: string };
 
-export default function Button({ className = "cursor-pointer", ...props }: Props) {
+export const Button = ({ className = "cursor-pointer", ...props }: Props) => {
     return <button className={className} {...props} />;
 }
 // interface ButtonProps {

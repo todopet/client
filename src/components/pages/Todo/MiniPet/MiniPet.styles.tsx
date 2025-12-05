@@ -9,11 +9,11 @@ const MiniPetWrap = ({ className = "", ...props }: DivProps) => (
   />
 );
 
-const MyPet = ({ petlevel, width, height, className = "", style, ...props }: DivProps & { petlevel: number | null; width: number; height: number }) => (
+const MyPet = ({ petLevel, width, height, className = "", style, ...props }: DivProps & { petLevel: number | null; width: number; height: number }) => (
   <div
     className={["bg-no-repeat bg-center bg-contain", className].join(" ")}
     style={{
-      backgroundImage: `url(/petImages/pet-${petlevel}.png)`,
+      backgroundImage: `url(/petImages/pet-${petLevel}.png)`,
       width: `${width}px`,
       height: `${height}px`,
       animation: `miniPetJump 0.6s alternate infinite`,
@@ -32,7 +32,7 @@ const MyPetWrap = ({ className = "", style, ...props }: DivProps) => (
 );
 
 const Bg = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-  <img {...props} className={["w-[390px] h-[50px]", props.className || ""].join(" ")} />
+  <img {...props} className={["w-[390px] h-[50px]", props.className || ""].join(" ")} alt="miniPetBackground" />
 );
 
 export { MiniPetWrap, Bg, MyPet, MyPetWrap };

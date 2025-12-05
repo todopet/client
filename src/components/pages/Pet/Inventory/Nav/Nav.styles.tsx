@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "@/components/Button/Button";
+import { Button } from "@/components/Button/Button";
 
 type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 

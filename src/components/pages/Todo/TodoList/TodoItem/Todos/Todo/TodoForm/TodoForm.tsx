@@ -1,11 +1,11 @@
 //react hook
 import { useState, useRef, useEffect } from "react";
 //api, interface
-import axiosRequest from "@/api/index";
-import { res, todo } from "@/@types/index";
+import { axiosRequest } from "@/api";
+import { res, todo } from "@/@types";
 //icons
 //components
-import useTodosStore from "@/store/todoStore";
+import { useTodosStore } from "@/store/todoStore";
 //styles
 import { Form, StyledCheckbox, Input } from "./TodoForm.styles";
 
@@ -16,13 +16,13 @@ interface TodoFormProps {
   status?: string;
   finishEdit?: () => void;
 }
-export default function TodoForm({
+export const TodoForm = ({
   categoryId,
   contentId,
   existingContent,
   status,
   finishEdit,
-}: TodoFormProps) {
+}: TodoFormProps) => {
   const { selectedDate, setTodos } = useTodosStore((state) => state);
   //체크 가능여부
   const [disabledChecked, setDisabledChecked] = useState<boolean>(true);
@@ -31,7 +31,7 @@ export default function TodoForm({
   const [value, setValue] = useState<string>(existingContent ? existingContent : "");
 
   //투두 post요청(투두 생성)
-  async function postTodo() {
+  const postTodo = async () => {
     try {
       const response: res<todo[]> = await axiosRequest.requestAxios<res<todo[]>>(
         "post",
@@ -48,7 +48,7 @@ export default function TodoForm({
     }
   }
   //투두 patch요청(투두내용수정)
-  async function changeTodoContent() {
+  const changeTodoContent = async () => {
     try {
       const response: res<todo[]> = await axiosRequest.requestAxios<res<todo[]>>(
         "patch",
@@ -88,7 +88,7 @@ export default function TodoForm({
   const formRef = useRef<HTMLFormElement>(null);
 
   //input form 외부 클릭시 제출
-  function handleClickOutside(e: MouseEvent) {
+  const handleClickOutside = (e: MouseEvent) => {
     if (formRef.current && !formRef.current.contains(e.target as Node)) {
       submitForm();
       finishEdit && finishEdit();

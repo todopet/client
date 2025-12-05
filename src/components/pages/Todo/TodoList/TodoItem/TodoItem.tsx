@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 //api, interface
-import { todoCategory } from "@/@types/index";
+import { todoCategory } from "@/@types";
 
 //components
-import Category from "./Category/Category";
-import Todos from "./Todos/Todos";
-import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
-import useTodosStore from "@/store/todoStore";
+import { Category } from "./Category/Category";
+import { Todos } from "./Todos/Todos";
+import { TodoForm } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
+import { useTodosStore } from "@/store/todoStore";
 
 //styles
 import { TodoItemStyles } from "./TodoItem.styles";
@@ -14,7 +14,7 @@ import { TodoItemStyles } from "./TodoItem.styles";
 interface TodoItemProps {
     todos: todoCategory;
 }
-export default function TodoItem({ todos }: TodoItemProps) {
+export const TodoItem = ({ todos }: TodoItemProps) => {
     const [openInputForm, setOpenInputForm] = useState<boolean>(false);
     const handleClick = () => {
         !todos.ended && setOpenInputForm(!openInputForm); //종료되지 않은 투두 클릭시 실행

@@ -1,10 +1,10 @@
 import React from "react";
 
-type FormProps = React.FormHTMLAttributes<HTMLFormElement> & { className?: string };
+type FormProps = React.FormHTMLAttributes<HTMLFormElement> & { className?: string, ref?: React.RefObject<HTMLFormElement> };
 type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & { className?: string };
 
-const Form = ({ className = "", ...props }: FormProps) => (
+const Form = ({ className = "", ref, ...props }: FormProps) => (
   <form className={["flex flex-row h-[30px] my-[10px] mx-[2px]", className].join(" ")} {...props} />
 );
 

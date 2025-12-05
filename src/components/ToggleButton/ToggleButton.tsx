@@ -5,7 +5,7 @@ interface ToggleButtonProps {
     active?: boolean;
 }
 
-const ToggleButton: FC<ToggleButtonProps> = ({ onToggle }) => {
+export const ToggleButton: FC<ToggleButtonProps> = ({ onToggle }) => {
     const [isToggled, setIsToggled] = useState(false);
 
     const handleChangeToggle = (e:SyntheticEvent) => {
@@ -35,5 +35,3 @@ const ToggleButton: FC<ToggleButtonProps> = ({ onToggle }) => {
         </div>
     );
 }
-
-export default ToggleButton;

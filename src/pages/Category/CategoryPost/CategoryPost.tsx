@@ -1,8 +1,10 @@
-import CategoryHeader from "@/components/pages/Category/CategoryHeader/CategoryHeader";
-import CategoryContentPost from "@/components/pages/Category/CategoryContent/CategoryContentPost/CategoryContentPost";
+import { CategoryHeader } from "@/components/pages/Category/CategoryHeader/CategoryHeader";
+import {
+  CategoryContentPost,
+} from "@/components/pages/Category/CategoryContent/CategoryContentPost/CategoryContentPost";
 import { useState } from "react";
 import { category, res } from "@/@types";
-import axiosRequest from "@/api";
+import { axiosRequest } from "@/api";
 import { useSearchParams, useNavigate } from "react-router-dom";
 const CategoryPost = () => {
     const [searchParams] = useSearchParams();

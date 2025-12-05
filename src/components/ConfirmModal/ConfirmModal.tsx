@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 
 interface ConfirmModalProps extends PropsWithChildren {}
 
-const ConfirmModal: React.FC<ConfirmModalProps> = (props) => {
+export const ConfirmModal: React.FC<ConfirmModalProps> = (props) => {
   const { children } = props;
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-[rgba(0,0,0,0.58)] backdrop-blur-sm w-[390px] h-screen left-1/2 -translate-x-1/2">
@@ -12,5 +12,3 @@ const ConfirmModal: React.FC<ConfirmModalProps> = (props) => {
     </div>
   );
 };
-
-export default ConfirmModal;

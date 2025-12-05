@@ -41,7 +41,7 @@ interface AxiosRequest {
   requestAxios: <T>(method: string, url: string, data?: {}, headers?: {}) => Promise<T>;
 }
 
-const axiosRequest: AxiosRequest = {
+export const axiosRequest: AxiosRequest = {
   /**
    * 작성자명   : 원종석
    * 작성일자   : 2023.08.02.(수)
@@ -75,5 +75,3 @@ const axiosRequest: AxiosRequest = {
     }
   },
 };
-
-export default axiosRequest;

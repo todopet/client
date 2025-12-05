@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axiosRequest from "@/api/index";
-import { res, RankInfo } from "@/@types/index";
+import { axiosRequest } from "@/api";
+import { res, RankInfo } from "@/@types";
 import TopThree from "@/components/pages/Ranking/TopThree/TopThree";
 import RankInfoList from "@/components/pages/Ranking/RankInfoList/RankInfoList";
 

@@ -6,7 +6,9 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   border?: string;
 };
 
-export default function CircleButton({ url, color, border, className = "", style, ...props }: Props) {
+export const CircleButton = ({
+  url, color, border, className = "", style, ...props
+}: Props) => {
   const mergedStyle: React.CSSProperties = {
     backgroundImage: url ? `url(${url})` : undefined,
     backgroundRepeat: 'no-repeat',

@@ -1,11 +1,11 @@
-import Todo from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/Todo";
-import { todo } from "@/@types/index";
+import { Todo } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/Todo";
+import { todo } from "@/@types";
 import { TodosWrap } from "./Todos.styles";
 
 interface TodosProps {
     todos: todo[];
 }
-export default function Todos({ todos }: TodosProps) {
+export const Todos = ({ todos }: TodosProps) => {
     return (
         <TodosWrap>
             {todos &&

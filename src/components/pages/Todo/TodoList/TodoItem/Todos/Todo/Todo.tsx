@@ -1,13 +1,13 @@
 //react hook
 import { useState, useEffect } from "react";
-import useTodosStore from "@/store/todoStore";
+import { useTodosStore } from "@/store/todoStore";
 
 //icons
 import { MenuIcon, CheckIcon } from "@/modules/icons";
 
 //components
-import DropDown from "@/components/DropDown/DropDown";
-import TodoForm from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
+import { DropDown } from "@/components/DropDown/DropDown";
+import { TodoForm } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm";
 
 //styles
 import { StyledTodo, TodoDiv, StyledCheckbox, Text, TodoWrap, DropDownWrap } from "./Todo.styles";
@@ -21,12 +21,14 @@ interface TodoProps {
   contentId: string;
 }
 
-export default function Todo({ content, status, contentId }: TodoProps) {
+export const Todo = ({
+  content, status, contentId
+}: TodoProps) => {
   const { selectedDate, deleteTodo, setStatus } = useTodosStore((state) => state);
 
-  const [newcheckstatus, setNewcheckstatus] = useState<string>(status);
+  const [newCheckStatus, setNewCheckStatus] = useState<string>(status);
   useEffect(() => {
-    setNewcheckstatus(status);
+    setNewCheckStatus(status);
   }, [status]);
 
   const handleCheckClick = async () => {
@@ -39,7 +41,7 @@ export default function Todo({ content, status, contentId }: TodoProps) {
       checkStatus = "completed";
     }
     //상태 업데이트
-    setNewcheckstatus(checkStatus);
+    setNewCheckStatus(checkStatus);
     //patch요청
     setStatus(contentId, content, checkStatus, selectedDate);
   };
@@ -68,7 +70,7 @@ export default function Todo({ content, status, contentId }: TodoProps) {
         setStatus(
           contentId,
           content,
-          newcheckstatus,
+          newCheckStatus,
           isSelectedDate
             ? formatDateToString(new Date(Date.now() + 24 * 60 * 60 * 1000))
             : formatDateToString(new Date())
@@ -91,10 +93,10 @@ export default function Todo({ content, status, contentId }: TodoProps) {
           />
         ) : (
           <TodoDiv>
-            <StyledCheckbox onClick={handleCheckClick} newcheckstatus={newcheckstatus}>
-              {newcheckstatus === "completed" && <img src={CheckIcon} alt="checked" />}
+            <StyledCheckbox onClick={handleCheckClick} newCheckStatus={newCheckStatus}>
+              {newCheckStatus === "completed" && <img src={CheckIcon} alt="checked" />}
             </StyledCheckbox>
-            <Text newcheckstatus={newcheckstatus}>{content}</Text>
+            <Text newCheckStatus={newCheckStatus}>{content}</Text>
           </TodoDiv>
         )}
       </TodoWrap>

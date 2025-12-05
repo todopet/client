@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import * as Styles from "./Week.styles";
+import { useTodosStore } from "@/store/todoStore";
 import { LeftArrowIcon, RightArrowIcon } from "@/modules/icons";
-import ArrowButton from "../Button/ArrowButton";
-import useTodosStore from "@/store/todoStore";
+import { ArrowButton } from "../Button/ArrowButton";
 import { formatDateToString } from "@/libs/utils/global";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
@@ -19,15 +19,21 @@ const lastSunday = new Date(todayYear, todayMonth, todayDate - todayDay);
 let isFirstDateIncluded = false;
 let specialCaseOfYearEnd = false;
 
-export default function Week() {
+export const Week = () => {
   const [currentSunday, setCurrentSunday] = useState(new Date(lastSunday));
+  const [clicked, setClicked] = useState(-1);
+  const [dates, setDates] = useState<Date[]>([]);
+  const calculateWeekCount = () => {
+    const firstDayOfMonth = new Date(
+      currentSunday.getFullYear(),
+      currentSunday.getMonth(), 1).getDay();
+    return Math.ceil((currentSunday.getDate() + firstDayOfMonth) / 7);
+  }
   const [titleData, setTitleData] = useState({
     year: today.getFullYear(),
     month: today.getMonth(),
     weekCount: calculateWeekCount(),
   });
-  const [clicked, setClicked] = useState(-1);
-  const [dates, setDates] = useState<Date[]>([]);
 
   const { setSelectedDate, setStartEndDate, periodTodos, setTodos } = useTodosStore(
     (state) => state
@@ -98,17 +104,6 @@ export default function Week() {
     setCurrentSunday(new Date(lastSunday));
     getWeekDates(lastSunday);
   }, []);
-
-  function calculateWeekCount() {
-    const firstDayOfMonth = new Date(
-      currentSunday.getFullYear(),
-      currentSunday.getMonth(),
-      1
-    ).getDay();
-
-    const currentDate = currentSunday.getDate();
-    return Math.ceil((currentDate + firstDayOfMonth) / 7);
-  }
 
   const calculateMonth = () => {
     if (specialCaseOfYearEnd && isFirstDateIncluded) {

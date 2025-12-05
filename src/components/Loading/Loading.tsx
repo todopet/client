@@ -1,6 +1,6 @@
 import Spinner from "@/assets/images/spinner.gif";
 
-export default function Loading() {
+export const Loading = () => {
     return (
         <div className="flex justify-center items-center relative w-full h-full">
             <img

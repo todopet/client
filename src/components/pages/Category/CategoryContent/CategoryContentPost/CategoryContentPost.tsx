@@ -1,13 +1,10 @@
 import React, { MouseEventHandler, useEffect, useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import Input from "@/components/Input/Input";
-import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
+import { useNavigate } from "react-router-dom";
+import { ConfirmModal } from "@/components/ConfirmModal/ConfirmModal";
 import {
     InputContainer,
     StyledInput,
     Text,
-    CircleButton,
-    ButtonWrap,
     ActionButtonWrap,
     ActionButton,
     ModalText,
@@ -15,8 +12,8 @@ import {
     ModalButton,
     SpanText
 } from "./CategoryContentPost.styles";
-import axiosRequest from "@/api";
-import { category, res } from "@/@types/index";
+import { axiosRequest } from "@/api";
+import { category, res } from "@/@types";
 
 interface CategoryPostProps {
     subject: string;
@@ -50,7 +47,7 @@ const ConfirmContent: React.FC<ConfirmContentProps> = ({
     );
 };
 
-const CategoryContentPost: React.FC<CategoryPostProps> = ({
+export const CategoryContentPost: React.FC<CategoryPostProps> = ({
     subject,
     onTextSend,
     id
@@ -214,5 +211,3 @@ const CategoryContentPost: React.FC<CategoryPostProps> = ({
         </>
     );
 };
-
-export default CategoryContentPost;

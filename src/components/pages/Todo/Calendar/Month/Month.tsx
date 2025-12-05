@@ -1,8 +1,8 @@
 import * as Styles from "./Month.styles";
 import { LeftArrowIcon, RightArrowIcon } from "@/modules/icons";
-import ArrowButton from "../Button/ArrowButton";
+import { ArrowButton } from "../Button/ArrowButton";
 import { useState, useEffect, useMemo } from "react";
-import useTodosStore from "@/store/todoStore";
+import { useTodosStore } from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
@@ -12,7 +12,7 @@ const todayMonth = today.getMonth();
 const firstDateOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 
-export default function Month() {
+export const Month = () => {
   const [firstDate, setFirstDate] = useState(firstDateOfThisMonth);
   const [clicked, setClicked] = useState(-1);
   const [datesOfMonth, setDatesOfMonth] = useState<Date[]>([]);
@@ -21,7 +21,7 @@ export default function Month() {
     (state) => state
   );
 
-  function getMonthDates(firstDate: Date) {
+  const getMonthDates = (firstDate: Date) => {
     const newDates = [];
     const firstDateOfMonth = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
     const lastDateOfMonth = new Date(firstDate.getFullYear(), firstDate.getMonth() + 1, 0);

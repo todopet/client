@@ -18,7 +18,7 @@ interface CategoryHeaderProps {
   handleClick: () => void;
 }
 
-const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick }) => {
+export const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick }) => {
   const navigate = useNavigate();
 
   const subjects: Subjects = {
@@ -54,5 +54,3 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick })
     </Container>
   );
 };
-
-export default CategoryHeader;

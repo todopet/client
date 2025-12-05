@@ -6,7 +6,7 @@ interface categoryType {
   setActiveCategory(categoryName: string): void;
 }
 
-export default function Nav({ activeCategory, setActiveCategory }: categoryType) {
+export const Nav = ({ activeCategory, setActiveCategory }: categoryType) => {
   return (
     <NavWrap>
       <ButtonStyled

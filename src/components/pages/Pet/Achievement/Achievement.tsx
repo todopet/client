@@ -8,7 +8,9 @@ interface parameterType {
     currentCount: number;
 }
 
-export default function Achievement({ achName, isRewarded, achDone, totalCount, currentCount }: parameterType) {
+export const Achievement = ({
+  achName, isRewarded, achDone, totalCount, currentCount
+}: parameterType) => {
     return (
         <AchBox achDone={achDone}>
             <AchStatus achDone={achDone}></AchStatus>

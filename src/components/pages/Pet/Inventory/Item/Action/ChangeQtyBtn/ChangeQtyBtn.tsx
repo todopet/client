@@ -1,5 +1,5 @@
 import { IncreaseIcon, DecreaseIcon } from "@/modules/icons";
-import CircleButton from "@/components/CircleButton/CircleButton";
+import { CircleButton } from "@/components/CircleButton/CircleButton";
 
 interface ChangeQtyBtnProps {
   modaltype: "useModal" | "discardModal";
@@ -9,12 +9,12 @@ interface ChangeQtyBtnProps {
 }
 
 //모달종류(아이템사용/아이템버리기), 연산종류(+,-)에 따라서 색과 내용이 달라짐
-export default function ChangeQtyBtn({
+export const ChangeQtyBtn = ({
   modaltype,
   operationType,
   onClick,
   iscountpositivenum,
-}: ChangeQtyBtnProps) {
+}: ChangeQtyBtnProps) => {
   let border = "3px solid";
 
   if (modaltype === "useModal") {

@@ -5,7 +5,7 @@ interface InputProps {
     onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-function InputComponent({ value, onChange }: InputProps) {
+const InputComponent = ({ value, onChange }: InputProps) => {
     return (
         <div className="flex flex-col justify-center items-center">
             <input
@@ -18,7 +18,7 @@ function InputComponent({ value, onChange }: InputProps) {
     );
 }
 
-const Input: React.FC = () => {
+export const Input: React.FC = () => {
     const [inputValue, setInputValue] = useState("");
 
     const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -31,5 +31,3 @@ const Input: React.FC = () => {
         </div>
     );
 };
-
-export default Input;

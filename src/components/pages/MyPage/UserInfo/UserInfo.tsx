@@ -1,9 +1,9 @@
 import { updateIcon } from "@/modules/icons";
-import NickName from "../NickName/NickName";
+import { NickName } from "../NickName/NickName";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosRequest from "@/api";
-import { res, myUser } from "@/@types/index";
+import { axiosRequest } from "@/api";
+import { res, myUser } from "@/@types";
 
 interface userinfoType {
     picture: string;
@@ -11,7 +11,7 @@ interface userinfoType {
     date: string;
 }
 
-export function UserInfo({ picture, name, date }: userinfoType) {
+export const UserInfo = ({ picture, name, date }: userinfoType) => {
     const [isNicknameModal, setIsNicknameModal] = useState(false);
     const [nickname, setNickname] = useState("");
     const [error, setError] = useState("");
@@ -143,10 +143,10 @@ export function UserInfo({ picture, name, date }: userinfoType) {
     );
 }
 
-interface classType {
-    className: string;
-    onClick(): void;
-    children?: React.ReactNode;
-}
+// interface classType {
+//     className: string;
+//     onClick(): void;
+//     children?: React.ReactNode;
+// }
 
 // removed styled-component helper exports

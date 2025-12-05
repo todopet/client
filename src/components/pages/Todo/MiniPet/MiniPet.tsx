@@ -1,29 +1,29 @@
 //hook
 import { useState, useEffect } from "react";
 //api, interface
-import axiosRequest from "@/api/index";
-import { res } from "@/@types/index";
+import { axiosRequest } from "@/api";
+import { res } from "@/@types";
 //img
 import background from "@/assets/images/miniPetBackground.png";
 //components
-import MiniPetToast from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
-import Toast from "@/components/Toast/Toast";
+import { MiniPetToast } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
+import { Toast } from "@/components/Toast/Toast";
 //styles
 import { MiniPetWrap, Bg, MyPet, MyPetWrap } from "./MiniPet.styles";
 //util
 import getPetSize from "@/libs/utils/getPetSize";
 import useToastsStore from "@/store/toastStore";
 
-interface Petlevel {
+interface PetLevel {
     level: number | null;
 }
-export default function MiniPet() {
-    async function getPetlevel() {
+export const MiniPet = () => {
+  const getPetLevel = async () => {
         try {
-            const response: res<Petlevel> = await axiosRequest.requestAxios<
-                res<Petlevel>
+            const response: res<PetLevel> = await axiosRequest.requestAxios<
+                res<PetLevel>
             >("get", `myPets/myPet/level`);
-            setPetlevel(response.data.level);
+            setPetLevel(response.data.level);
         } catch (error) {
             console.error(error);
             alert(
@@ -33,17 +33,17 @@ export default function MiniPet() {
     }
 
     useEffect(() => {
-        getPetlevel();
+        getPetLevel();
     }, []);
 
-    const [petlevel, setPetlevel] = useState<number | null>(null);
+    const [PetLevel, setPetLevel] = useState<number | null>(null);
 
     interface ItemsCount {
         count: number;
     }
 
     //인벤토리 아이템 수량 조회
-    async function getItemsCount() {
+   const getItemsCount = async () => {
         try {
             const response: res<ItemsCount> = await axiosRequest.requestAxios<
                 res<ItemsCount>
@@ -68,14 +68,14 @@ export default function MiniPet() {
     }, [itemsCount]);
 
     //새싹이 관련
-    const { petImgWidth, petImgHeight } = getPetSize(petlevel);
+    const { petImgWidth, petImgHeight } = getPetSize(PetLevel);
 
     return (
         <MiniPetWrap className="toast-wrapper">
             <Toast />
             <MyPetWrap>
                 <MyPet
-                    petlevel={petlevel}
+                    petLevel={PetLevel}
                     width={petImgWidth}
                     height={petImgHeight}
                 />

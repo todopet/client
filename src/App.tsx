@@ -1,12 +1,12 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Footer from "@/layout/Footer/Footer";
-import Header from "@/layout/Header/Header";
-import Loading from "./components/Loading/Loading";
-import axiosRequest from "./api";
+import { Header } from "@/layout/Header/Header";
+import { Loading } from "./components/Loading/Loading";
+import { axiosRequest } from "./api";
 import { res } from "./@types";
 // import NotFound from "@/pages/NotFound";
-import { routeLogin, routePaths } from "@/routers/index";
+import { routeLogin, routePaths } from "@/routers";
 
 interface auth {
   status: number;

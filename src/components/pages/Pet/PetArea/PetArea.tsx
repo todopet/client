@@ -1,4 +1,4 @@
-import { ranking, inventory } from "@/modules/icons";
+import { inventory } from "@/modules/icons";
 import {
     MainFooter,
     MainArea,
@@ -17,21 +17,16 @@ import {
     MainFooterButton,
     InventoryFullImg,
     AchModalBackdrop,
-    AchModal,
-    AchModalTitle,
-    AchArea,
-    AchWrapper
 } from "./PetArea.styles";
-import CircleButton from "@/components/CircleButton/CircleButton";
-import Exp from "@/components/pages/Pet/Exp/Exp";
-import Status from "@/components/pages/Pet/Status/Status";
-import Stars from "@/components/pages/Pet/Stars/Stars";
+import { CircleButton } from "@/components/CircleButton/CircleButton";
+import { Exp } from "@/components/pages/Pet/Exp/Exp";
+import { Status } from "@/components/pages/Pet/Status/Status";
+import { Stars } from "@/components/pages/Pet/Stars/Stars";
 import { useState, useEffect } from "react";
-import Achievement from "@/components/pages/Pet/Achievement/Achievement";
-import InventoryModal from "@/components/pages/Pet/Inventory/Inventory";
+import { InventoryModal } from "@/components/pages/Pet/Inventory/Inventory";
 import { ModalBg } from "../Inventory/Inventory.styles";
 import { itemsCount, res } from "@/@types";
-import axiosRequest from "@/api";
+import { axiosRequest } from "@/api";
 import { maxVolume } from "@/libs/constants";
 
 interface petAreaProps {
@@ -69,7 +64,7 @@ interface PetExperienceProps {
     maxExperience?: number;
 }
 
-export function PetArea({
+export const PetArea = ({
     hungerInfo,
     affectionInfo,
     conditionInfo,
@@ -77,7 +72,7 @@ export function PetArea({
     expInfo,
     levelInfo,
     petName
-}: petAreaProps) {
+}: petAreaProps) => {
     const [achState, setAchState] = useState(false);
     const [invState, setInvState] = useState(false);
     const toggleAchState = () => {
@@ -266,32 +261,32 @@ export function PetArea({
 
     return (
         <MainArea>
-            <Exp totalcount={maxExperience} currentcount={curExperience}></Exp>
+            <Exp totalCount={maxExperience} currentCount={curExperience}></Exp>
             <MainHeader>
                 <StatusInfo>
                     <Status
                         name="포만감"
                         color="#FF5156"
-                        totalcount={maxHunger}
-                        currentcount={curHunger}
+                        totalCount={maxHunger}
+                        currentCount={curHunger}
                     ></Status>
                     <Status
                         name="친밀도"
                         color="#FFE210"
-                        totalcount={maxAffection}
-                        currentcount={curAffection}
+                        totalCount={maxAffection}
+                        currentCount={curAffection}
                     ></Status>
                     <Status
                         name="컨디션"
                         color="#45E397"
-                        totalcount={maxCondition}
-                        currentcount={curCondition}
+                        totalCount={maxCondition}
+                        currentCount={curCondition}
                     ></Status>
                     <Status
                         name="청결도"
                         color="#0190FE"
-                        totalcount={maxCleanliness}
-                        currentcount={curCleanliness}
+                        totalCount={maxCleanliness}
+                        currentCount={curCleanliness}
                     ></Status>
                 </StatusInfo>
                 <LevelInfo>
@@ -376,13 +371,13 @@ interface modalBackdrop {
     onClick(): void;
 }
 
-export function FooterButton({
+export const FooterButton = ({
     className,
     url,
     color,
     border,
     onClick
-}: footerButton) {
+}: footerButton) => {
     return (
         <CircleButton
             className={className}
@@ -394,7 +389,7 @@ export function FooterButton({
     );
 }
 
-export function MainModalBackdrop({ className, onClick }: modalBackdrop) {
+export const MainModalBackdrop = ({ className, onClick }: modalBackdrop) => {
     return (
         <div
             className={[

@@ -6,7 +6,7 @@ interface CategoryProps {
   handleClick: () => void;
   isEnded: boolean;
 }
-export default function Category({ category, handleClick, isEnded }: CategoryProps) {
+export const Category = ({ category, handleClick, isEnded }: CategoryProps) => {
   return (
     <CategoryStyles onClick={handleClick} $isEnded={isEnded}>
       <Text>{category}</Text>

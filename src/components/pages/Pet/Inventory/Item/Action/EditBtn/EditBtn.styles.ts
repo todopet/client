@@ -1,6 +1,6 @@
 export interface EditBtnProps {
-    modaltype: "useModal" | "discardModal";
-    btntype: "confirm" | "cancel";
+    modalType: "useModal" | "discardModal";
+    btnType: "confirm" | "cancel";
 }
 
 // migrated to Tailwind in EditBtn.tsx; styled-components removed

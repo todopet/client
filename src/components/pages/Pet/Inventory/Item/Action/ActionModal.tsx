@@ -1,34 +1,34 @@
 import { useContext, useState } from "react";
-import EditBtn from "@/components/pages/Pet/Inventory/Item/Action/EditBtn/EditBtn";
-import ChangeQtyBtn from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn/ChangeQtyBtn";
-import { items, myItems } from "@/@types/myItems";
-import axiosRequest from "@/api";
+import { EditBtn } from "@/components/pages/Pet/Inventory/Item/Action/EditBtn/EditBtn";
+import { ChangeQtyBtn } from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn/ChangeQtyBtn";
+// import { items, myItems } from "@/@types/myItems";
+import { axiosRequest } from "@/api";
 import { res, useItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
 import { ItemDataContext } from "../../Inventory";
 import { MyContext } from "@/pages/Pet/Pet";
 
 interface modalTypeProps {
-    modaltype: "useModal" | "discardModal";
+    modalType: "useModal" | "discardModal";
     state: boolean;
     setState(state: boolean): void;
     itemId: string;
     name: string;
     quantity: number;
 }
-export default function ActionModal({
-    modaltype,
+export const ActionModal = ({
+    modalType,
     state,
     setState,
     itemId,
     name,
     quantity
-}: modalTypeProps) {
+}: modalTypeProps) => {
     const receiveItemData = useContext(ItemDataContext);
     const [itemCount, setItemCount] = useState(1);
     const receivePetData = useContext(MyContext);
 
-    async function handleUseItem(itemId: string) {
+const handleUseItem = async (itemId: string) => {
         try {
             const data = { quantity: itemCount };
             const response: res<useItemRes> = await axiosRequest.requestAxios<
@@ -42,7 +42,7 @@ export default function ActionModal({
         }
     }
 
-    async function handleDumpItem(itemId: string) {
+    const handleDumpItem = async (itemId: string) => {
         try {
             const data = { quantity: itemCount * -1 };
             const response: res<dumpItemRes> = await axiosRequest.requestAxios<
@@ -68,12 +68,12 @@ export default function ActionModal({
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="text-[20px] font-normal flex flex-row">
-                        <div>{modaltype === "useModal" ? "사용할" : "버리는"}</div>
+                        <div>{modalType === "useModal" ? "사용할" : "버리는"}</div>
                         <div>도구: {name}</div>
                     </div>
                     <div className="flex flex-row items-center gap-[30px] my-[46px]">
                         <ChangeQtyBtn
-                            modaltype={modaltype}
+                            modalType={modalType}
                             operationType="decrease"
                             onClick={() =>
                                 itemCount > 1 ? setItemCount(itemCount - 1) : false
@@ -82,7 +82,7 @@ export default function ActionModal({
                         />
                         <div className="text-[48px] font-normal">{itemCount}</div>
                         <ChangeQtyBtn
-                            modaltype={modaltype}
+                            modalType={modalType}
                             operationType="increase"
                             onClick={() =>
                                 itemCount < quantity
@@ -94,21 +94,21 @@ export default function ActionModal({
                     </div>
                     <div className="flex flex-col gap-1">
                         <EditBtn
-                            modaltype={modaltype}
-                            btntype="confirm"
+                            modalType={modalType}
+                            btnType="confirm"
                             onClick={() => {
-                                if (modaltype === "useModal") {
+                                if (modalType === "useModal") {
                                     handleUseItem(itemId);
                                     setState(!state);
-                                } else if (modaltype === "discardModal") {
+                                } else if (modalType === "discardModal") {
                                     handleDumpItem(itemId);
                                     setState(!state);
                                 }
                             }}
                         />
                         <EditBtn
-                            modaltype={modaltype}
-                            btntype="cancel"
+                            modalType={modalType}
+                            btnType="cancel"
                             onClick={() => {
                                 setState(!state);
                             }}

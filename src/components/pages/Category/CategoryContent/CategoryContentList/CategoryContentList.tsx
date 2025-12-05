@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, ButtonWrap, Wrap } from "./CategoryContentList.styles";
-import { category } from "@/@types/index";
+import { category } from "@/@types";
 import CategoryContentListItem from "./CategoryContentListItem/CategoryContentListItem";
 
 interface CategoryListProps {
     categoryList: category[];
 }
 
-const CategoryContentList: React.FC<CategoryListProps> = ({ categoryList }) => {
+export const CategoryContentList: React.FC<CategoryListProps> = ({ categoryList }) => {
     return (
         <Wrap>
             <Text>진행 중인 목표</Text>
@@ -41,5 +41,3 @@ const CategoryContentList: React.FC<CategoryListProps> = ({ categoryList }) => {
         </Wrap>
     );
 };
-
-export default CategoryContentList;
