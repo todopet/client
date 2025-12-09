@@ -37,11 +37,18 @@ const ActionButtonWrap = ({ className = "", ...props }: DivProps) => (
   <div className={["flex justify-evenly mt-9", className].join(" ")} {...props} />
 );
 
-type ActionBtnProps = BtnProps & { type?: string };
-const ActionButton = ({ className = "", type, style, ...props }: ActionBtnProps) => (
+type ActionBtnProps = BtnProps & { variant?: "exit" | "delete" };
+const ActionButton = ({
+  className = "",
+  style,
+  variant = "exit",
+  type = "button",
+  ...props
+}: ActionBtnProps) => (
   <button
     className={["w-[10.1875rem] h-[2.375rem] shrink-0 border-0 rounded-md bg-[#f5f5f5] font-normal cursor-pointer", className].join(" ")}
-    style={{ color: type === "exit" ? "black" : "#FA4D28", ...(style || {}) }}
+    style={{ color: variant === "exit" ? "black" : "#FA4D28", ...(style || {}) }}
+    type={type}
     {...props}
   />
 );

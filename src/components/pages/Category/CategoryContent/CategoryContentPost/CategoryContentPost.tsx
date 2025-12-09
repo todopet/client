@@ -142,11 +142,11 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
             subject === "수정" && (
                 <>
                     <ActionButtonWrap>
-                        <ActionButton type="exit" onClick={handleOpenEndModal}>
+                        <ActionButton variant="exit" onClick={handleOpenEndModal}>
                             종료하기
                         </ActionButton>
                         <ActionButton
-                            type="delete"
+                            variant="delete"
                             onClick={handleOpenDeleteModal}
                         >
                             삭제

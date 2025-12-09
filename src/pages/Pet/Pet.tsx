@@ -5,7 +5,7 @@ import { res, myPet } from "@/@types";
 
 export const MyContext = createContext<() => Promise<void>>(async () => {});
 
-export const Pet = () => {
+const Pet = () => {
     const [petData, setPetData] = useState({
         hungerInfo: {},
         affectionInfo: {},
@@ -78,3 +78,5 @@ export const Pet = () => {
         </MyContext.Provider>
     );
 }
+
+export default Pet;

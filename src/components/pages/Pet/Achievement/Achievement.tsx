@@ -17,7 +17,7 @@ export const Achievement = ({
             <AchInfo>
                 <AchName>{achName}</AchName>
                 <TotalBar>
-                    <CurrentBar totalcount={totalCount} currentcount={currentCount} color={"#1AAB17"}></CurrentBar>
+                    <CurrentBar totalCount={totalCount} currentCount={currentCount} color={"#1AAB17"}></CurrentBar>
                     <p>{currentCount}/{totalCount}</p>
                 </TotalBar>
             </AchInfo>

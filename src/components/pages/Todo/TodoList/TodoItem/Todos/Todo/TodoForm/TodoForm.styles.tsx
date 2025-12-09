@@ -1,12 +1,16 @@
 import React from "react";
 
-type FormProps = React.FormHTMLAttributes<HTMLFormElement> & { className?: string, ref?: React.RefObject<HTMLFormElement> };
+type FormProps = React.FormHTMLAttributes<HTMLFormElement> & { className?: string };
 type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & { className?: string };
 
-const Form = ({ className = "", ref, ...props }: FormProps) => (
-  <form className={["flex flex-row h-[30px] my-[10px] mx-[2px]", className].join(" ")} {...props} />
-);
+const Form = React.forwardRef<HTMLFormElement, FormProps>(({ className = "", ...props }, ref) => (
+  <form
+    ref={ref}
+    className={["flex flex-row h-[30px] my-[10px] mx-[2px]", className].join(" ")}
+    {...props}
+  />
+));
 
 const StyledCheckbox = ({ className = "", ...props }: DivProps) => (
   <div className={["w-[22px] h-[22px] mr-2 border-0 rounded-[3px] bg-[#e7e8ea]", className].join(" ")} {...props} />

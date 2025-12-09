@@ -36,9 +36,12 @@ const TotalBar = ({ className = "", children, ...props }: DivProps & { children?
 const CurrentBar = ({
   totalCount, currentCount, className = "", style, ...props
 }: DivProps & {
-  totalCount: number; currentCount: number; color?: string
+  totalCount?: number; currentCount?: number; color?: string
 }) => {
-  const widthPercent = Math.round((currentCount / totalCount) * 100);
+  let widthPercent = 0;
+  if (totalCount && currentCount) {
+    widthPercent = Math.round((currentCount / totalCount) * 100);
+  }
   return (
     <div
       className={["h-full rounded-[6px]", className].join(" ")}

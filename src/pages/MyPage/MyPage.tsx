@@ -38,7 +38,7 @@ const ConfirmContent: React.FC<ConfirmContentProps> = ({ message, onCancel, onCo
   );
 };
 
-export const MyPage = () => {
+const MyPage = () => {
   const [userInfo, setUserInfo] = useState<myUser>({
     _id: "",
     nickname: "",
@@ -175,6 +175,8 @@ export const MyPage = () => {
     </div>
   );
 }
+
+export default MyPage;
 
 interface classType {
   className: string;
