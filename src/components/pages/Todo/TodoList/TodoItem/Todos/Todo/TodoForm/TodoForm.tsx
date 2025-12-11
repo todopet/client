@@ -33,7 +33,7 @@ export const TodoForm = ({
   //투두 post요청(투두 생성)
   const postTodo = async () => {
     try {
-      const response: res<todo[]> = await axiosRequest.requestAxios<res<todo[]>>(
+      const response = await axiosRequest.requestAxios<res<todo[]>>(
         "post",
         `todoContents?_=${Date.now()}`,
         {
@@ -42,6 +42,7 @@ export const TodoForm = ({
           date: selectedDate,
         }
       );
+      console.log(response); // "유효하지 않은 토큰입니다" 에러 발생
     } catch (error) {
       console.error(error);
       alert("할 일 생성 중 에러가 발생했습니다. 다시 시도해 주세요.");
@@ -50,7 +51,7 @@ export const TodoForm = ({
   //투두 patch요청(투두내용수정)
   const changeTodoContent = async () => {
     try {
-      const response: res<todo[]> = await axiosRequest.requestAxios<res<todo[]>>(
+      await axiosRequest.requestAxios<res<todo[]>>(
         "patch",
         `todoContents/${contentId}?_=${Date.now()}`,
         {
