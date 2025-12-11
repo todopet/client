@@ -11,7 +11,7 @@ export const Category = ({ category, handleClick, isEnded }: CategoryProps) => {
     <CategoryStyles onClick={handleClick} $isEnded={isEnded}>
       <Text>{category}</Text>
       {!isEnded && (
-        <PlusButton>
+        <PlusButton className="flex justify-center">
           <img src={PlusButtonIcon} alt="add" />
         </PlusButton>
       )}
