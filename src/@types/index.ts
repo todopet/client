@@ -9,8 +9,9 @@ import { useItemRes } from "./useItemRes";
 import { itemsCount } from "./itemsCount";
 
 interface res<D> {
-    error: string | null;
-    data: D;
+  status: number;
+  error: string | null;
+  data: D;
 }
 
 export type {

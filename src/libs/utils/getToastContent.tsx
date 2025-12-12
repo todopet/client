@@ -1,8 +1,9 @@
 import { Message, ToastTypes } from "@/@types/todo";
+import React from "react";
 
 const getToastContent = (message?: Message) => {
     let content: React.ReactNode;
-    let bgcolor: "black" | "white" = "white";
+    let bgColor: "black" | "white" = "white";
 
     //피드 페이지 진입시
     if (!message) {
@@ -13,10 +14,10 @@ const getToastContent = (message?: Message) => {
                 아이템을 정리하여 다음 보상을 받으세요 🙂
             </>
         );
-        return { content, bgcolor };
+        return { content, bgColor };
     }
 
-    //보상에 따라 content, bgcolor 변경
+    //보상에 따라 content, bgColor 변경
     switch (message?.type) {
         case ToastTypes.SPECIAL:
             content = (
@@ -32,7 +33,7 @@ const getToastContent = (message?: Message) => {
                     )}
                 </>
             );
-            bgcolor = "black";
+            bgColor = "black";
 
             break;
         case ToastTypes.NORMAL:
@@ -70,7 +71,7 @@ const getToastContent = (message?: Message) => {
             break;
     }
 
-    return { content, bgcolor };
+    return { content, bgColor };
 };
 
 export default getToastContent;

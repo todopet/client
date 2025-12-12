@@ -8,14 +8,16 @@ interface parameterType {
     currentCount: number;
 }
 
-export default function Achievement({ achName, isRewarded, achDone, totalCount, currentCount }: parameterType) {
+export const Achievement = ({
+  achName, isRewarded, achDone, totalCount, currentCount
+}: parameterType) => {
     return (
         <AchBox achDone={achDone}>
             <AchStatus achDone={achDone}></AchStatus>
             <AchInfo>
                 <AchName>{achName}</AchName>
                 <TotalBar>
-                    <CurrentBar totalcount={totalCount} currentcount={currentCount} color={"#1AAB17"}></CurrentBar>
+                    <CurrentBar totalCount={totalCount} currentCount={currentCount} color={"#1AAB17"}></CurrentBar>
                     <p>{currentCount}/{totalCount}</p>
                 </TotalBar>
             </AchInfo>

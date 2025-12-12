@@ -1,7 +1,9 @@
 import { category, res } from "@/@types";
-import axiosRequest from "@/api";
-import CategoryContentList from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentList";
-import CategoryHeader from "@/components/pages/Category/CategoryHeader/CategoryHeader";
+import { axiosRequest } from "@/api";
+import {
+  CategoryContentList,
+} from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentList";
+import { CategoryHeader } from "@/components/pages/Category/CategoryHeader/CategoryHeader";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

@@ -12,7 +12,7 @@ interface ListProps extends PropsWithChildren {
 }
 
 //사용하려는 카테고리 목록(list)을 props로 전달, 버튼으로 사용할 컴포넌트(children)를 추가해주세요.
-const Dropdown = ({ list, children }: ListProps) => {
+export const DropDown = ({ list, children }: ListProps) => {
     const [categoryIsOpen, categoryRef, categoryHandler] = useDetectClose(false);
     const hasAnySvg = list.some((item) => !!item.svg);
     return (
@@ -61,5 +61,3 @@ const Dropdown = ({ list, children }: ListProps) => {
         </div>
     );
 };
-
-export default Dropdown;

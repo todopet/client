@@ -1,17 +1,9 @@
 import { ModalWrap, Title, Count, Header, ItemList } from "./Inventory.styles";
-
-import Item from "@/components/pages/Pet/Inventory/Item/Item";
-import Divider from "@/components/Divider/Divider";
-import Nav from "@/components/pages/Pet/Inventory/Nav/Nav";
-import {
-    useState,
-    useEffect,
-    useContext,
-    createContext,
-    Dispatch,
-    SetStateAction
-} from "react";
-import axiosRequest from "@/api";
+import { Item } from "@/components/pages/Pet/Inventory/Item/Item";
+import { Divider } from "@/components/Divider/Divider";
+import { Nav } from "@/components/pages/Pet/Inventory/Nav/Nav";
+import { useState, useEffect, createContext } from "react";
+import { axiosRequest } from "@/api";
 import { myItems, res } from "@/@types";
 import { items } from "@/@types/myItems";
 
@@ -23,12 +15,12 @@ export const ItemDataContext = createContext<() => Promise<void>>(
     async () => {}
 );
 
-export default function InventoryModal({ on }: parameterType) {
+export const InventoryModal = ({ on }: parameterType) => {
     const [activeCategory, setActiveCategory] = useState("feed");
     const [itemData, setItemData] = useState<items[]>([]);
     let totalItemAmount = 0;
 
-    async function receiveItemData() {
+    const receiveItemData = async () => {
         try {
             const response: res<myItems> = await axiosRequest.requestAxios<
                 res<myItems>

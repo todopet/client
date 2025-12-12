@@ -1,5 +1,5 @@
 import React from "react";
-import { LeftSvg, PlusSvg } from "@/modules/icons";
+import { LeftArrowIcon, BluePlusIcon } from "@/modules/icons";
 import { Container, Button, Text, ActionContainer } from "./CategoryHeader.styles";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ interface CategoryHeaderProps {
   handleClick: () => void;
 }
 
-const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick }) => {
+export const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick }) => {
   const navigate = useNavigate();
 
   const subjects: Subjects = {
@@ -28,7 +28,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick })
     관리: () => {
       return (
         <Button onClick={handleClick}>
-          <img src={PlusSvg} alt="add" />
+          <img src={BluePlusIcon} alt="add" />
         </Button>
       );
     },
@@ -46,7 +46,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick })
     <Container>
       <ActionContainer>
         <Button onClick={navigation[subject]}>
-          <img src={LeftSvg} alt="back" />
+          <img src={LeftArrowIcon} alt="back" />
         </Button>
         <Text>목표 {subject}</Text>
         {subjects[subject]()}
@@ -54,5 +54,3 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick })
     </Container>
   );
 };
-
-export default CategoryHeader;

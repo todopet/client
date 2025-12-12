@@ -5,7 +5,7 @@ interface activityInfo {
     data: string;
 }
 
-export default function Activity({ activityType, data }: activityInfo) {
+export const Activity = ({ activityType, data }: activityInfo) => {
   const color = activityType === "heart" ? "#FCF5FF" : activityType === "calendar" ? "#F6FFF7" : "#F3FDFF";
   const icon = activityType === "heart" ? heart : activityType === "calendar" ? calendar : check;
   const text = activityType === "heart"

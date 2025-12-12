@@ -1,11 +1,9 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface LabelProps {
     children: ReactNode;
 }
 
-function Label({ children }: LabelProps) {
+export const Label = ({ children }: LabelProps) => {
     return <span className="label">{children}</span>;
 }
-
-export default Label;

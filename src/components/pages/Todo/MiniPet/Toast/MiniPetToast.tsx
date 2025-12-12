@@ -6,13 +6,13 @@ import useToastsStore from "@/store/toastStore";
 interface ToastProps {
     message: Message;
 }
-export default function MiniPetToast({ message }: ToastProps) {
+export const MiniPetToast = ({ message }: ToastProps) => {
     const { isShow } = useToastsStore();
-    const { content, bgcolor } = getToastContent(message);
+    const { content, bgColor } = getToastContent(message);
 
     return (
         <>
-            <ToastWrap $show={isShow} bgcolor={bgcolor}>
+            <ToastWrap $show={isShow} bgcolor={bgColor}>
                 {content}
             </ToastWrap>
         </>

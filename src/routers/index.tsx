@@ -5,12 +5,8 @@ const Login = lazy(() => import("@/pages/Login/Login"));
 const Ranking = lazy(() => import("@/pages/Ranking/Ranking"));
 const Pet = lazy(() => import("@/pages/Pet/Pet"));
 const MyPage = lazy(() => import("@/pages/MyPage/MyPage"));
-const CategoryList = lazy(
-    () => import("@/pages/Category/CategoryList/CategoryList")
-);
-const CategoryPost = lazy(
-    () => import("@/pages/Category/CategoryPost/CategoryPost")
-);
+const CategoryList = lazy(() => import("@/pages/Category/CategoryList/CategoryList"));
+const CategoryPost = lazy(() => import("@/pages/Category/CategoryPost/CategoryPost"));
 
 export const routeLogin = {
   path: "/",

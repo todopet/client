@@ -37,7 +37,7 @@ const Login = () => {
                 onClick={handleLoginClick}
                 className="flex w-[19rem] h-14 rounded-[0.8rem] border border-[#c9c9c9] bg-white items-center justify-center cursor-pointer"
             >
-                <img src={googleIcon} alt="Google" className="w-[45px] h-[45px] mt-3 -ml-[10px]" />
+                <img src={googleIcon} alt="Google" className="w-[45px] h-[45px] mt-0.5 ml-[10px]" />
                 <div className="flex w-[13rem] text-lg font-medium tracking-[0.03375rem] text-[#5e5e5e] text-center items-center justify-center">
                     구글 계정으로 로그인
                 </div>

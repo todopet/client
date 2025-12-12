@@ -1,10 +1,10 @@
-import Star from "@/components/Star/Star";
+import { Star } from "@/components/Star/Star";
 
 interface StarsProps {
     level: number | null;
 }
 
-export default function Stars({ level }: StarsProps) {
+export const Stars = ({ level }: StarsProps) => {
     const starStatus: ("empty" | "full")[] = [
         "empty",
         "empty",

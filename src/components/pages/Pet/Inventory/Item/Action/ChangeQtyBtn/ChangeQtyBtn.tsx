@@ -1,23 +1,23 @@
 import { IncreaseIcon, DecreaseIcon } from "@/modules/icons";
-import CircleButton from "@/components/CircleButton/CircleButton";
+import { CircleButton } from "@/components/CircleButton/CircleButton";
 
 interface ChangeQtyBtnProps {
-  modaltype: "useModal" | "discardModal";
+  modalType: "useModal" | "discardModal";
   operationType: "increase" | "decrease";
   onClick(): void;
-  iscountpositivenum: boolean;
+  isCountPositiveNum: boolean;
 }
 
 //모달종류(아이템사용/아이템버리기), 연산종류(+,-)에 따라서 색과 내용이 달라짐
-export default function ChangeQtyBtn({
-  modaltype,
+export const ChangeQtyBtn = ({
+  modalType,
   operationType,
   onClick,
-  iscountpositivenum,
-}: ChangeQtyBtnProps) {
+  isCountPositiveNum,
+}: ChangeQtyBtnProps) => {
   let border = "3px solid";
 
-  if (modaltype === "useModal") {
+  if (modalType === "useModal") {
     border += "#c5f4c4";
   } else {
     border += "#d9d9d9";
@@ -31,7 +31,7 @@ export default function ChangeQtyBtn({
       onClick={onClick}
       className={[
         "w-[62px] h-[62px] flex items-center justify-center",
-        iscountpositivenum ? "hover:opacity-70" : "",
+        isCountPositiveNum ? "hover:opacity-70" : "",
       ].join(" ")}
     >
       {operationType === "increase" ? (

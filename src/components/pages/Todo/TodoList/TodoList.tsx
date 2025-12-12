@@ -1,11 +1,11 @@
 //react hook
 import { useEffect } from "react";
-import useTodosStore from "@/store/todoStore";
+import { useTodosStore } from "@/store/todoStore";
 //components
-import TodoItem from "./TodoItem/TodoItem";
+import { TodoItem } from "./TodoItem/TodoItem";
 
 
-export default function TodoList() {
+export const TodoList = () => {
     const { selectedDate, setTodos, dateTodos } = useTodosStore(
         (state) => state
     );

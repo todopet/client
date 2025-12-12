@@ -1,6 +1,4 @@
-import React from "react";
-
-export default function Logo() {
+export const Logo = () => {
     return (
         <div className="flex justify-center items-center">
             <button

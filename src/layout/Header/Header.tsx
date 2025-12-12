@@ -1,16 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../Logo";
-import Dropdown from "@/components/DropDown/DropDown";
-import { HeaderMenuIcon, PlusIcon } from "@/modules/icons";
+import { Logo } from "../Logo";
+import { DropDown } from "@/components/DropDown/DropDown";
+import { HeaderMenuIcon, BluePlusIcon } from "@/modules/icons";
 
-export default function Header() {
+export const Header = () => {
   const location = useLocation();
   //DropDown의 props
   const listItems = [
     {
       content: "목표등록",
       href: "/category/post", // 경로 설정
-      svg: <img src={PlusIcon} alt="add" />,
+      svg: <img src={BluePlusIcon} alt="add" />,
     },
     {
       content: "목표관리",
@@ -29,9 +29,9 @@ export default function Header() {
       </div>
       <div className="mr-4">
         {isDropDown && (
-          <Dropdown list={listItems}>
+          <DropDown list={listItems}>
             <img src={HeaderMenuIcon} alt="menu" />
-          </Dropdown>
+          </DropDown>
         )}
       </div>
     </header>

@@ -1,11 +1,11 @@
 import { useEffect, useState, createContext } from "react";
 import { PetArea } from "@/components/pages/Pet/PetArea/PetArea";
-import axiosRequest from "@/api";
+import { axiosRequest } from "@/api";
 import { res, myPet } from "@/@types";
 
 export const MyContext = createContext<() => Promise<void>>(async () => {});
 
-export default function Pet() {
+const Pet = () => {
     const [petData, setPetData] = useState({
         hungerInfo: {},
         affectionInfo: {},
@@ -16,7 +16,7 @@ export default function Pet() {
         petName: ""
     });
 
-    async function receivePetData() {
+    const receivePetData = async () => {
         try {
             const response: res<myPet> = await axiosRequest.requestAxios<
                 res<myPet>
@@ -78,3 +78,5 @@ export default function Pet() {
         </MyContext.Provider>
     );
 }
+
+export default Pet;

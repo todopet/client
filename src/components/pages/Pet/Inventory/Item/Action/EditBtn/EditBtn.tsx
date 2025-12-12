@@ -1,25 +1,28 @@
-import Button from "@/components/Button/Button";
+import { Button } from "@/components/Button/Button";
+import { EditBtnProps } from "@/components/pages/Pet/Inventory/Item/Action/EditBtn/EditBtn.styles.ts";
 
 interface propsType extends EditBtnProps {
     onClick(): void;
 }
 
-export default function EditBtn({ modaltype, btntype, onClick }: propsType) {
+export const EditBtn = ({
+  modalType, btnType, onClick
+}: propsType) => {
     let btnContent = "";
-    if (btntype === "confirm") {
-        if (modaltype === "useModal") btnContent = "사용하기";
+    if (btnType === "confirm") {
+        if (modalType === "useModal") btnContent = "사용하기";
         else btnContent = "버리기";
-    } else if (btntype === "cancel") {
+    } else if (btnType === "cancel") {
         btnContent = "취소";
     }
     const wrapBg =
-        btntype === "cancel"
+        btnType === "cancel"
             ? "#ffffff"
-            : modaltype === "useModal"
+            : modalType === "useModal"
             ? "#aaeea8"
             : "#d9d9d9";
     const textColor =
-        btntype === "confirm" ? "#000000" : modaltype === "useModal" ? "#2dc770" : "#adadad";
+        btnType === "confirm" ? "#000000" : modalType === "useModal" ? "#2dc770" : "#adadad";
 
     return (
         <div

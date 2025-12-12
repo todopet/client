@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import * as Styles from "./Week.styles";
-import { LeftSvg, RightSvg } from "@/modules/icons";
-import ArrowButton from "../Button/ArrowButton";
-import useTodosStore from "@/store/todoStore";
+import { useTodosStore } from "@/store/todoStore";
+import { LeftArrowIcon, RightArrowIcon } from "@/modules/icons";
+import { ArrowButton } from "../Button/ArrowButton";
 import { formatDateToString } from "@/libs/utils/global";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
@@ -19,15 +19,21 @@ const lastSunday = new Date(todayYear, todayMonth, todayDate - todayDay);
 let isFirstDateIncluded = false;
 let specialCaseOfYearEnd = false;
 
-export default function Week() {
+export const Week = () => {
   const [currentSunday, setCurrentSunday] = useState(new Date(lastSunday));
+  const [clicked, setClicked] = useState(-1);
+  const [dates, setDates] = useState<Date[]>([]);
+  const calculateWeekCount = () => {
+    const firstDayOfMonth = new Date(
+      currentSunday.getFullYear(),
+      currentSunday.getMonth(), 1).getDay();
+    return Math.ceil((currentSunday.getDate() + firstDayOfMonth) / 7);
+  }
   const [titleData, setTitleData] = useState({
     year: today.getFullYear(),
     month: today.getMonth(),
     weekCount: calculateWeekCount(),
   });
-  const [clicked, setClicked] = useState(-1);
-  const [dates, setDates] = useState<Date[]>([]);
 
   const { setSelectedDate, setStartEndDate, periodTodos, setTodos } = useTodosStore(
     (state) => state
@@ -58,7 +64,7 @@ export default function Week() {
 
     // 매해 12월에서 1월로 넘어가는 부분의 월&주차 오류 처리
     if (sunday.getMonth() === 11) {
-      if (newDates.map((date, i) => date.getDate()).includes(31)) {
+      if (newDates.map((date) => date.getDate()).includes(31)) {
         if (newDates[6].getDate() !== 31) {
           specialCaseOfYearEnd = true;
         }
@@ -98,18 +104,6 @@ export default function Week() {
     setCurrentSunday(new Date(lastSunday));
     getWeekDates(lastSunday);
   }, []);
-
-  function calculateWeekCount() {
-    const firstDayOfMonth = new Date(
-      currentSunday.getFullYear(),
-      currentSunday.getMonth(),
-      1
-    ).getDay();
-
-    const currentDate = currentSunday.getDate();
-    const weekCount = Math.ceil((currentDate + firstDayOfMonth) / 7);
-    return weekCount;
-  }
 
   const calculateMonth = () => {
     if (specialCaseOfYearEnd && isFirstDateIncluded) {
@@ -160,13 +154,13 @@ export default function Week() {
     <Styles.WeekStyle>
       <Styles.TitleWrap>
         <ArrowButton onClick={handleLeftClick}>
-          <LeftSvg />
+          <img src={LeftArrowIcon} alt="left" />
         </ArrowButton>
         <Styles.Title>
           {titleData.year}년 {titleData.month + 1}월{/* {" "}{titleData.weekCount}주차 */}
         </Styles.Title>
         <ArrowButton onClick={handleRightClick}>
-          <RightSvg />
+          <img src={RightArrowIcon} alt="right" />
         </ArrowButton>
       </Styles.TitleWrap>
       <div>

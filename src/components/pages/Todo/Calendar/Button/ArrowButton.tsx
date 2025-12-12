@@ -1,4 +1,4 @@
-export default function ArrowButton({ className = "", style = undefined, ...props }) {
+export const ArrowButton = ({ className = "", style = undefined, ...props }) => {
   return (
     <button
       className={[

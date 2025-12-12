@@ -1,4 +1,5 @@
-import axios, { AxiosHeaders } from "axios";
+// import axios, { AxiosHeaders } from "axios";
+import axios from "axios";
 
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
 // TODO: 발표 전 수정
@@ -40,7 +41,7 @@ interface AxiosRequest {
   requestAxios: <T>(method: string, url: string, data?: {}, headers?: {}) => Promise<T>;
 }
 
-const axiosRequest: AxiosRequest = {
+export const axiosRequest: AxiosRequest = {
   /**
    * 작성자명   : 원종석
    * 작성일자   : 2023.08.02.(수)
@@ -74,5 +75,3 @@ const axiosRequest: AxiosRequest = {
     }
   },
 };
-
-export default axiosRequest;

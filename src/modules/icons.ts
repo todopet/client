@@ -10,21 +10,21 @@ import WashIcon from "@/assets/icons/wash.svg";
 import HiddenIcon from "@/assets/icons/hidden.svg";
 
 import UpdateIcon from "@/assets/icons/update.svg";
-import PlusSvg from "@/assets/icons/plusButton.svg";
+import PlusButtonIcon from "@/assets/icons/plusButton.svg";
 import MenuIcon from "@/assets/icons/meatballsMenu.svg";
 import CheckIcon from "@/assets/icons/checkboxChecked.svg";
 import IncreaseIcon from "@/assets/icons/increase.svg";
 import DecreaseIcon from "@/assets/icons/decrease.svg";
 import DiscardIcon from "@/assets/icons/trash.svg";
-import LeftSvg from "@/assets/icons/leftButton.svg";
-import RightSvg from "@/assets/icons/rightButton.svg";
+import LeftArrowIcon from "@/assets/icons/leftButton.svg";
+import RightArrowIcon from "@/assets/icons/rightButton.svg";
 
 import GoldMedal from "@/assets/icons/goldmedal.svg";
 import SilverMedal from "@/assets/icons/silvermedal.svg";
 import BronzeMedal from "@/assets/icons/bronzemedal.svg";
 
 import HeaderMenuIcon from "@/assets/icons/headerMenu.svg";
-import PlusIcon from "@/assets/icons/plus.svg";
+import BluePlusIcon from "@/assets/icons/plus.svg";
 import StarIcon from "@/assets/icons/star.svg";
 
 import ranking from "@/assets/icons/ranking.svg";
@@ -55,19 +55,19 @@ export {
   WashIcon,
   HiddenIcon,
   UpdateIcon,
-  PlusSvg,
+  PlusButtonIcon,
   MenuIcon,
   CheckIcon,
   IncreaseIcon,
   DecreaseIcon,
   DiscardIcon,
-  LeftSvg,
-  RightSvg,
+  LeftArrowIcon,
+  RightArrowIcon,
   GoldMedal,
   SilverMedal,
   BronzeMedal,
   HeaderMenuIcon,
-  PlusIcon,
+  BluePlusIcon,
   StarIcon,
   ranking,
   inventory,

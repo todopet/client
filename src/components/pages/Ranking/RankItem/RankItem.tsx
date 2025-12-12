@@ -1,4 +1,4 @@
-export default function RankItem() {
+export const RankItem = () => {
     return (
         <div>
             <div>RankItem</div>
