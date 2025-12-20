@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
-import { EditBtn } from "@/components/pages/Pet/Inventory/Item/Action/EditBtn/EditBtn";
-import { ChangeQtyBtn } from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn/ChangeQtyBtn";
+import { EditBtn } from "@/components/pages/Pet/Inventory/Item/Action/EditBtn";
+import { ChangeQtyBtn } from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn";
 // import { items, myItems } from "@/@types/myItems";
 import { axiosRequest } from "@/api";
 import { res, useItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
-import { ItemDataContext } from "../../Inventory";
-import { MyContext } from "@/pages/Pet/Pet";
+import { ItemDataContext } from "@/components/pages/Pet/Inventory";
+import { MyContext } from "@/pages/Pet";
 
 interface modalTypeProps {
   modalType: "useModal" | "discardModal";
@@ -20,13 +20,13 @@ interface modalTypeProps {
 }
 
 export const ActionModal = ({
-                              modalType,
-                              state,
-                              setState,
-                              itemId,
-                              name,
-                              quantity,
-                            }: modalTypeProps) => {
+  modalType,
+  state,
+  setState,
+  itemId,
+  name,
+  quantity,
+}: modalTypeProps) => {
   const receiveItemData = useContext(ItemDataContext);
   const [itemCount, setItemCount] = useState(1);
   const receivePetData = useContext(MyContext);
@@ -34,9 +34,11 @@ export const ActionModal = ({
   const handleUseItem = async (itemId: string) => {
     try {
       const data = { quantity: itemCount };
-      await axiosRequest.requestAxios<
-        res<useItemRes>
-      >("post", `inventories/${itemId}/put?_=${Date.now()}`, data);
+      await axiosRequest.requestAxios<res<useItemRes>>(
+        "post",
+        `inventories/${itemId}/put?_=${Date.now()}`,
+        data
+      );
       await receiveItemData();
       await receivePetData();
     } catch (error) {
@@ -48,9 +50,11 @@ export const ActionModal = ({
   const handleDumpItem = async (itemId: string) => {
     try {
       const data = { quantity: itemCount * -1 };
-      await axiosRequest.requestAxios<
-        res<dumpItemRes>
-      >("patch", `inventories/items/${itemId}?_=${Date.now()}`, data);
+      await axiosRequest.requestAxios<res<dumpItemRes>>(
+        "patch",
+        `inventories/items/${itemId}?_=${Date.now()}`,
+        data
+      );
       await receiveItemData();
     } catch (error) {
       alert("아이템을 버리는중 에러가 발생했습니다. 다시 시도해주세요.");
@@ -78,20 +82,14 @@ export const ActionModal = ({
             <ChangeQtyBtn
               modalType={modalType}
               operationType="decrease"
-              onClick={() =>
-                itemCount > 1 ? setItemCount(itemCount - 1) : false
-              }
+              onClick={() => (itemCount > 1 ? setItemCount(itemCount - 1) : false)}
               isCountPositiveNum={itemCount > 1}
             />
             <div className="text-[48px] font-normal">{itemCount}</div>
             <ChangeQtyBtn
               modalType={modalType}
               operationType="increase"
-              onClick={() =>
-                itemCount < quantity
-                  ? setItemCount(itemCount + 1)
-                  : false
-              }
+              onClick={() => (itemCount < quantity ? setItemCount(itemCount + 1) : false)}
               isCountPositiveNum={itemCount < quantity}
             />
           </div>

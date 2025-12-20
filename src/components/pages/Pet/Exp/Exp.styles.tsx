@@ -1,5 +1,5 @@
 import React from 'react';
-import { TotalBar, CurrentBar } from '../Achievement/Achievement.styles';
+import { TotalBar, CurrentBar } from '@/components/pages/Pet/Achievement/Achievement.styles';
 
 type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string, totalCount?: number; currentCount?: number; };
 
