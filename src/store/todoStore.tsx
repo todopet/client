@@ -3,7 +3,7 @@ import { res, todo, todoCategory } from "@/@types";
 import { axiosRequest } from "@/api";
 import { Message, ToastTypes } from "@/@types/todo";
 import { formatDateToString } from "@/libs/utils/global";
-import useToastsStore from "./toastStore";
+import useToastsStore from "@/store/toastStore";
 import { MiniPetToast } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 
 const today = new Date();

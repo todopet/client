@@ -1,12 +1,12 @@
 import { lazy } from "react";
 
-const Todo = lazy(() => import("@/pages/Todo/Todo"));
-const Login = lazy(() => import("@/pages/Login/Login"));
-const Ranking = lazy(() => import("@/pages/Ranking/Ranking"));
-const Pet = lazy(() => import("@/pages/Pet/Pet"));
-const MyPage = lazy(() => import("@/pages/MyPage/MyPage"));
-const CategoryList = lazy(() => import("@/pages/Category/CategoryList/CategoryList"));
-const CategoryPost = lazy(() => import("@/pages/Category/CategoryPost/CategoryPost"));
+const Todo = lazy(() => import("@/pages/Todo"));
+const Login = lazy(() => import("@/pages/Login"));
+const Ranking = lazy(() => import("@/pages/Ranking"));
+const Pet = lazy(() => import("@/pages/Pet"));
+const MyPage = lazy(() => import("@/pages/MyPage"));
+const CategoryList = lazy(() => import("@/pages/Category/CategoryList"));
+const CategoryPost = lazy(() => import("@/pages/Category/CategoryPost"));
 
 export const routeLogin = {
   path: "/",

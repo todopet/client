@@ -1,6 +1,6 @@
 import getToastContent from "@/libs/utils/getToastContent";
 import { Message } from "@/@types/todo";
-import { ToastWrap } from "./MiniPetToast.styles";
+import { ToastWrap } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast.styles";
 import useToastsStore from "@/store/toastStore";
 
 interface ToastProps {
