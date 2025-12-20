@@ -4,12 +4,22 @@ type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 
 const MiniPetWrap = ({ className = "", ...props }: DivProps) => (
   <div
-    className={["w-[390px] h-[80px] bg-white z-[5] relative flex flex-col justify-end overflow-x-hidden", className].join(" ")}
+    className={[
+      "w-full h-[80px] bg-white z-[5] relative flex flex-col justify-end overflow-x-hidden",
+      className,
+    ].join(" ")}
     {...props}
   />
 );
 
-const MyPet = ({ petLevel, width, height, className = "", style, ...props }: DivProps & { petLevel: number | null; width: number; height: number }) => (
+const MyPet = ({
+  petLevel,
+  width,
+  height,
+  className = "",
+  style,
+  ...props
+}: DivProps & { petLevel: number | null; width: number; height: number }) => (
   <div
     className={["bg-no-repeat bg-center bg-contain", className].join(" ")}
     style={{
@@ -32,7 +42,11 @@ const MyPetWrap = ({ className = "", style, ...props }: DivProps) => (
 );
 
 const Bg = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-  <img {...props} className={["w-[390px] h-[50px]", props.className || ""].join(" ")} alt="miniPetBackground" />
+  <img
+    {...props}
+    className={["w-full h-[50px]", props.className || ""].join(" ")}
+    alt="miniPetBackground"
+  />
 );
 
 export { MiniPetWrap, Bg, MyPet, MyPetWrap };

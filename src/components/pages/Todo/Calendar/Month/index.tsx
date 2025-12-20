@@ -1,6 +1,4 @@
 import * as Styles from "@/components/pages/Todo/Calendar/Month/Month.styles";
-import { LeftArrowIcon, RightArrowIcon } from "@/modules/icons";
-import { ArrowButton } from "@/components/pages/Todo/Calendar/Button/ArrowButton";
 import { useState, useEffect, useMemo } from "react";
 import { useTodosStore } from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
@@ -12,7 +10,11 @@ const todayMonth = today.getMonth();
 const firstDateOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 const dayText = ["일", "월", "화", "수", "목", "금", "토"];
 
-export const Month = () => {
+interface MonthProps {
+  onHeaderChange?: (header: { title: string; onPrev?: () => void; onNext?: () => void }) => void;
+}
+
+export const Month = ({ onHeaderChange }: MonthProps) => {
   const [firstDate, setFirstDate] = useState(firstDateOfThisMonth);
   const [clicked, setClicked] = useState(-1);
   const [datesOfMonth, setDatesOfMonth] = useState<Date[]>([]);
@@ -76,6 +78,14 @@ export const Month = () => {
     getMonthDates(newFirstDate);
   };
 
+  useEffect(() => {
+    onHeaderChange?.({
+      title: `${firstDate.getFullYear()}년 ${firstDate.getMonth() + 1}월`,
+      onPrev: handleLeftClick,
+      onNext: handleRightClick,
+    });
+  }, [onHeaderChange, firstDate]);
+
   const handleDateCellClick = (idx: number) => {
     setClicked(idx ?? -1);
     setSelectedDate(formatDateToString(datesOfMonth[idx]));
@@ -83,17 +93,6 @@ export const Month = () => {
 
   return (
     <Styles.MonthStyle>
-      <Styles.TitleWrap>
-        <ArrowButton onClick={handleLeftClick}>
-          <img src={LeftArrowIcon} alt="left" />
-        </ArrowButton>
-        <Styles.Title>
-          {firstDate.getFullYear()}년 {firstDate.getMonth() + 1}월
-        </Styles.Title>
-        <ArrowButton onClick={handleRightClick}>
-          <img src={RightArrowIcon} alt="right" />
-        </ArrowButton>
-      </Styles.TitleWrap>
       <Styles.DayWrap>
         {dayText.map((day, i) => (
           <Styles.Day key={i}>{day}</Styles.Day>

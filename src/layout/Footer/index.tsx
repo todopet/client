@@ -30,7 +30,7 @@ export const FooterItem: React.FC<FooterItemProps> = ({ to, icon, label }) => {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="fixed bottom-0 z-10 w-[390px] left-1/2 -translate-x-1/2 h-[70px] bg-white flex justify-around items-center">
+    <footer className="fixed bottom-0 z-10 w-full left-1/2 -translate-x-1/2 h-[70px] bg-white flex justify-around items-center">
       <FooterItem to="/todo" icon={HomeIcon} label="피드" />
       <FooterItem to="/pet" icon={GrowIcon} label="키우기" />
       <FooterItem to="/rank" icon={RankingIcon} label="랭킹" />

@@ -7,6 +7,8 @@ import { axiosRequest } from "@/api";
 import { formatDateToString } from "@/libs/utils/global";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "@/libs/hooks/useModal";
+import { Confirm } from "@/components/Confirm";
 
 interface ConfirmContentProps {
   message: React.ReactNode;
@@ -39,6 +41,8 @@ const ConfirmContent: React.FC<ConfirmContentProps> = ({ message, onCancel, onCo
 };
 
 const MyPage = () => {
+  const { openModal, closeModal } = useModal();
+
   const [userInfo, setUserInfo] = useState<myUser>({
     _id: "",
     nickname: "",
@@ -49,19 +53,13 @@ const MyPage = () => {
     historyCount: 0,
   });
 
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
-
-  const handleConfirmLogoutModal = () => {
-    setIsLogoutModalOpen(true);
-  };
 
   const handleConfirmWithdrawModal = () => {
     setIsWithdrawModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsLogoutModalOpen(false);
     setIsWithdrawModalOpen(false);
   };
 
@@ -130,7 +128,17 @@ const MyPage = () => {
         <button
           className="w-1/2 h-12 rounded-[10px] text-[16px] font-medium"
           style={{ backgroundColor: "#F5F5F5" }}
-          onClick={handleConfirmLogoutModal}
+          onClick={() => {
+            openModal(
+              <Confirm
+                message="로그아웃 하시겠습니까?"
+                yesCallback={handleConfirmLogout}
+                commonCallback={closeModal}
+              />,
+              null,
+              "로그아웃 안내"
+            );
+          }}
         >
           로그아웃
         </button>
@@ -142,19 +150,6 @@ const MyPage = () => {
           회원탈퇴
         </button>
       </div>
-      {isLogoutModalOpen && (
-        <ConfirmModal>
-          <ConfirmContent
-            message={
-              <>
-                <span className="mb-[5px] text-black">로그아웃 하시겠습니까?</span>
-              </>
-            }
-            onConfirm={handleConfirmLogout}
-            onCancel={handleCloseModal}
-          />
-        </ConfirmModal>
-      )}
       {isWithdrawModalOpen && (
         <ConfirmModal>
           <ConfirmContent

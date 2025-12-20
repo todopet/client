@@ -21,7 +21,7 @@ export const Header = () => {
   const isDropDown = location.pathname === "/todo";
 
   return (
-    <header className="fixed top-0 z-10 w-[390px] left-1/2 -translate-x-1/2 h-[60px] bg-white flex items-center justify-between px-0 box-border">
+    <header className="fixed top-0 z-10 w-full left-1/2 -translate-x-1/2 h-[60px] bg-white flex items-center justify-between px-0 box-border">
       <div>
         <Link to="/todo" className="no-underline">
           <Logo />
@@ -36,4 +36,4 @@ export const Header = () => {
       </div>
     </header>
   );
-}
+};

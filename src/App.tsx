@@ -46,8 +46,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="w-[390px] min-w-[375px] h-screen">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="h-screen w-full min-w-[320px] max-w-[640px]">
         {/* {isLoading && <Loading />} */}
         <Suspense fallback={isLoading && <Loading />}>
           <Routes>

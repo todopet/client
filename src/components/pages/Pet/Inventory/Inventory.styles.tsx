@@ -5,7 +5,7 @@ type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 const ModalBg = ({ className = "", ...props }: DivProps) => (
   <div
     className={[
-      "fixed top-[60px] bottom-[70px] w-[390px] bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-[15]",
+      "fixed top-[60px] bottom-[70px] w-full bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-[15]",
       className,
     ].join(" ")}
     {...props}

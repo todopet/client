@@ -1,8 +1,6 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import * as Styles from "@/components/pages/Todo/Calendar/Week/Week.styles";
 import { useTodosStore } from "@/store/todoStore";
-import { LeftArrowIcon, RightArrowIcon } from "@/modules/icons";
-import { ArrowButton } from "@/components/pages/Todo/Calendar/Button/ArrowButton";
 import { formatDateToString } from "@/libs/utils/global";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
@@ -19,7 +17,11 @@ const lastSunday = new Date(todayYear, todayMonth, todayDate - todayDay);
 let isFirstDateIncluded = false;
 let specialCaseOfYearEnd = false;
 
-export const Week = () => {
+interface WeekProps {
+  onHeaderChange?: (header: { title: string; onPrev?: () => void; onNext?: () => void }) => void;
+}
+
+export const Week = ({ onHeaderChange }: WeekProps) => {
   const [currentSunday, setCurrentSunday] = useState(new Date(lastSunday));
   const [clicked, setClicked] = useState(-1);
   const [dates, setDates] = useState<Date[]>([]);
@@ -115,7 +117,7 @@ export const Week = () => {
     }
   };
 
-  const handleLeftClick = () => {
+  const handleLeftClick = useCallback(() => {
     const newCurrentSunday = new Date(currentSunday.setDate(currentSunday.getDate() - 7));
     setCurrentSunday(newCurrentSunday);
     setTimeout(() => {
@@ -128,9 +130,9 @@ export const Week = () => {
       });
     }, 0);
     getWeekDates();
-  };
+  }, [currentSunday]);
 
-  const handleRightClick = () => {
+  const handleRightClick = useCallback(() => {
     const newCurrentSunday = new Date(currentSunday.setDate(currentSunday.getDate() + 7));
     setCurrentSunday(newCurrentSunday);
     setTimeout(() => {
@@ -143,7 +145,15 @@ export const Week = () => {
       });
     }, 0);
     getWeekDates();
-  };
+  }, [currentSunday]);
+
+  useEffect(() => {
+    onHeaderChange?.({
+      title: `${titleData.year}년 ${titleData.month + 1}월`,
+      onPrev: handleLeftClick,
+      onNext: handleRightClick,
+    });
+  }, [onHeaderChange, titleData, handleLeftClick, handleRightClick]);
 
   const handleDateCellClick = (idx: number) => {
     setClicked(idx ?? -1);
@@ -152,17 +162,6 @@ export const Week = () => {
 
   return (
     <Styles.WeekStyle>
-      <Styles.TitleWrap>
-        <ArrowButton onClick={handleLeftClick}>
-          <img src={LeftArrowIcon} alt="left" />
-        </ArrowButton>
-        <Styles.Title>
-          {titleData.year}년 {titleData.month + 1}월{/* {" "}{titleData.weekCount}주차 */}
-        </Styles.Title>
-        <ArrowButton onClick={handleRightClick}>
-          <img src={RightArrowIcon} alt="right" />
-        </ArrowButton>
-      </Styles.TitleWrap>
       <div>
         <Styles.DayWrap>
           {dayText.map((day, i) => (

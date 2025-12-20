@@ -1,19 +1,19 @@
 import React from "react";
 
 interface CellProps {
-    completed: number;
+  completed: number;
 }
 
 interface DateProps {
-    $istoday: boolean;
-    $isclicked: boolean;
+  $istoday: boolean;
+  $isclicked: boolean;
 }
 
 type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 type SpanProps = React.HTMLAttributes<HTMLSpanElement> & { className?: string };
 
 const MonthStyle = ({ className = "", ...props }: DivProps) => (
-  <div className={["w-[380px] ml-[4px]", className].join(" ")} {...props} />
+  <div className={["w-full ml-[4px]", className].join(" ")} {...props} />
 );
 
 const Title = ({ className = "", ...props }: SpanProps) => (
@@ -59,7 +59,9 @@ const Cell = ({ completed, className = "", style, ...props }: DivProps & CellPro
   else if (completed >= 11) bg = "#046900";
   return (
     <div
-      className={["w-[22px] h-[22px] rounded-[3px] my-[10px] mx-[10px] mb-[2px]", className].join(" ")}
+      className={["w-[22px] h-[22px] rounded-[3px] my-[10px] mx-[10px] mb-[2px]", className].join(
+        " "
+      )}
       style={{ backgroundColor: bg, ...(style || {}) }}
       {...props}
     />
@@ -68,7 +70,10 @@ const Cell = ({ completed, className = "", style, ...props }: DivProps & CellPro
 
 const Date = ({ $istoday, $isclicked, className = "", style, ...props }: DivProps & DateProps) => (
   <div
-    className={["w-5 h-5 rounded-[10px] my-[9px] mx-[10px] mb-[2px] text-[14px] font-[Pretendard] flex justify-center items-center text-center", className].join(" ")}
+    className={[
+      "w-5 h-5 rounded-[10px] my-[9px] mx-[10px] mb-[2px] text-[14px] font-[Pretendard] flex justify-center items-center text-center",
+      className,
+    ].join(" ")}
     style={{
       color: $isclicked ? "white" : $istoday ? "white" : "black",
       backgroundColor: $isclicked ? "#556FE9" : $istoday ? "black" : "",
@@ -78,14 +83,4 @@ const Date = ({ $istoday, $isclicked, className = "", style, ...props }: DivProp
   />
 );
 
-export {
-    MonthStyle,
-    Day,
-    DateCellWrap,
-    DayWrap,
-    DateCell,
-    Cell,
-    Date,
-    Title,
-    TitleWrap,
-};
+export { MonthStyle, Day, DateCellWrap, DayWrap, DateCell, Cell, Date, Title, TitleWrap };
