@@ -5,13 +5,19 @@ type BtnProps = React.ButtonHTMLAttributes<HTMLButtonElement> & { className?: st
 
 const Container = ({ className = "", ...props }: DivProps) => (
   <div
-    className={["flex flex-col justify-center w-[390px] h-[30px] px-[15px] mt-5 box-border", className].join(" ")}
+    className={[
+      "flex flex-col justify-center w-full h-[30px] px-[15px] mt-5 box-border",
+      className,
+    ].join(" ")}
     {...props}
   />
 );
 
 const ActionContainer = ({ className = "", ...props }: DivProps) => (
-  <div className={["flex justify-center items-center w-full relative", className].join(" ")} {...props} />
+  <div
+    className={["flex justify-center items-center w-full relative", className].join(" ")}
+    {...props}
+  />
 );
 
 const Button = ({ className = "", ...props }: BtnProps) => (

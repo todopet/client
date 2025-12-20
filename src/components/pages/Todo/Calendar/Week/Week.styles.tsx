@@ -13,7 +13,7 @@ type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 type SpanProps = React.HTMLAttributes<HTMLSpanElement> & { className?: string };
 
 const WeekStyle = ({ className = "", ...props }: DivProps) => (
-  <div className={["w-[380px] ml-[4px]", className].join(" ")} {...props} />
+  <div className={["w-full ml-[4px]", className].join(" ")} {...props} />
 );
 
 const Title = ({ className = "", ...props }: SpanProps) => (

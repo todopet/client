@@ -65,7 +65,7 @@ export const ActionModal = ({
   return (
     <>
       <div
-        className="fixed top-0 bottom-0 left-1/2 -translate-x-1/2 h-screen w-[390px] bg-[rgba(0,0,0,0.58)] backdrop-blur-sm flex justify-center items-center z-[1000]"
+        className="fixed top-0 bottom-0 left-1/2 -translate-x-1/2 h-screen w-full bg-[rgba(0,0,0,0.58)] backdrop-blur-sm flex justify-center items-center z-[1000]"
         onClick={() => {
           setState(!state);
         }}
