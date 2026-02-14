@@ -1,40 +1,53 @@
-// import axios, { AxiosHeaders } from "axios";
 import axios from "axios";
+import { useLoadingStore } from "@/store/loadingStore";
 
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
-// TODO: 발표 전 수정
+
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001/api/v1/";
-
 axios.defaults.headers.post["Content-Type"] = "application/json";
-
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 5000;
 
-// axios 인스턴스화 - 따로 만들어야 수정하기도 편함
-// export const api1 = axios.create({ baseURL: "http://api1" });
-// export const api2 = axios.create({ baseURL: "http://api2" });
+// 요청 인터셉터
+axios.interceptors.request.use(
+  (config) => {
+    // 로딩 시작
+    useLoadingStore.getState().startLoading();
 
-// TODO: interceptor 적용
-// 요청 보내다가 취소해야되는 경우에도 사용함 / 서버 다 끊어버릴때 사용. 헤더값에 키 심어놓고 이 키를 변수로 놓음.
-// 서버 죽을때/죽일때 추적하고있는 키값을 통해 현재 요청중인 request를 다 취소시키고 죽인다.
-// client ------- interceptor ----- [server]
-// axios.interceptors.request.use(
-//   (req) => {
-//       if (req.data instanceof FormData) {
-//           req.headers["Content-Type"] = "multipart/form-data";
-//       }
-//       return req;
-//   },
-//   (err) => {}
-// );
+    // FormData인 경우 Content-Type 자동 설정
+    if (config.data instanceof FormData) {
+      config.headers["Content-Type"] = "multipart/form-data";
+    }
 
-// clinet <----- interceptor ----- [server]
-// axios.interceptors.response.use(
-//   (res) => {
-//       return res.data; // {}
-//   },
-//   (err) => {}
-// );
+    return config;
+  },
+  (error) => {
+    // 로딩 종료
+    useLoadingStore.getState().stopLoading();
+    return Promise.reject(error);
+  }
+);
+
+// 응답 인터셉터
+axios.interceptors.response.use(
+  (response) => {
+    // 로딩 종료
+    useLoadingStore.getState().stopLoading();
+    return response;
+  },
+  (error) => {
+    // 로딩 종료
+    useLoadingStore.getState().stopLoading();
+
+    // 401 인증 에러 처리
+    if (error.response?.status === 401) {
+      // 로그인 페이지로 리다이렉트 (인터셉터에서는 경고만 출력)
+      console.warn('[Auth Error] 인증이 만료되었습니다.');
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 // 정의된 함수 시그니처에 맞게 인터페이스 생성
 interface AxiosRequest {
@@ -66,11 +79,7 @@ export const axiosRequest: AxiosRequest = {
 
       return response.data as T;
     } catch (error) {
-      //TODO: 에러 처리를 클라이언트에서 바로 할 수 있도록 구성 해야 한다.
-      // react error boundary?
-      // 클라이언트에서 직접 응답을 처리할 수 있도록 axios 훅을 만들면 좋을 것 같다.
-      // 리액트 쿼리, SWR
-      console.log(error);
+      // 에러는 인터셉터에서 처리되므로 그대로 throw
       throw error;
     }
   },
