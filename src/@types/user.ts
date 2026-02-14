@@ -1,14 +1,21 @@
-export interface user {
+import { UserStatus } from './enums';
+
+export interface InventoryItem {
+    itemId: string;
+    quantity: number;
+}
+
+export interface User {
     id: string;
     name: string;
-    status: string;
-    inventory: string[]; // TODO: 정의된 타입에 대해 수정 필요. 임시로 설정해 놓았음.
+    status: UserStatus;
+    inventory: InventoryItem[];
     createdAt: Date;
 }
 
-export interface myUser {
+export interface MyUser {
     _id: string;
-    googldId?: string;
+    googleId?: string;
     nickname: string;
     membershipStatus?: string;
     picture: string;
@@ -18,3 +25,10 @@ export interface myUser {
     todoCount: number;
     historyCount: number;
 }
+
+// 하위 호환성을 위한 타입 별칭 (추후 제거 예정)
+/** @deprecated Use User instead */
+export type user = User;
+
+/** @deprecated Use MyUser instead */
+export type myUser = MyUser;
