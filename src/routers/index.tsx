@@ -17,12 +17,6 @@ export const routeLogin = {
 
 export const routePaths = [
   {
-    path: "/",
-    element: <Login />,
-    withHeader: false,
-    withFooter: false,
-  },
-  {
     path: "/category/list",
     element: <CategoryList />,
     withHeader: false,

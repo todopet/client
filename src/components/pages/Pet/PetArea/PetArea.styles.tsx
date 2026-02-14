@@ -1,7 +1,7 @@
 import React from "react";
 import { FooterButton, MainModalBackdrop } from "@/components/pages/Pet/PetArea";
-import joyEmotion from "@/assets/images/joyEmotion.png.png";
-import sadEmotion from "@/assets/images/sadEmotion.png.png";
+import joyEmotion from "@/assets/images/joyEmotion.png";
+import sadEmotion from "@/assets/images/sadEmotion.png";
 import { petRoom, exclamationMark, levelStar } from "@/modules/icons";
 
 type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Footer from "@/layout/Footer";
 import { Header } from "@/layout/Header";
@@ -20,30 +20,28 @@ const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const checkAuth = async () => {
-    setIsLoading(true); // api 호출하는 동안만
+  const checkAuth = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response: res<auth> = await axiosRequest.requestAxios<res<auth>>("get", `users/auth`);
-      setIsLoading(false);
       if (response.data.status === 200) {
         setIsAuth(true);
-        return;
+      } else {
+        setIsAuth(false);
+        navigate("/");
       }
     } catch (error) {
-      alert("토큰 인증 에러가 발생했습니다. 새로고침해 주세요.");
       setIsAuth(false);
       navigate("/");
       console.error("Failed to check auth.", error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-    // 2023-12-23 주석처리
-    // setIsAuth(false);
-    // navigate("/");
-  };
+  }, [navigate]);
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   return (
     <div className="flex min-h-screen items-center justify-center">
