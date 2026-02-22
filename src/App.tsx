@@ -5,6 +5,8 @@ import { Header } from "@/layout/Header";
 import { Loading } from "@/components/Loading";
 import { axiosRequest } from "@/api";
 import { res } from "@/@types";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Toast } from "@/components/Toast";
 // import NotFound from "@/pages/NotFound";
 import { routeLogin, routePaths } from "@/routers";
 
@@ -43,58 +45,64 @@ const App: React.FC = () => {
   }, [checkAuth]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="h-screen w-full min-w-[320px] max-w-[640px]">
-        {/* {isLoading && <Loading />} */}
-        <Suspense fallback={isLoading && <Loading />}>
-          <Routes>
-            {!isAuth && (
-              <Route
-                path={routeLogin.path}
-                element={
-                  <div
-                    className={[
-                      routeLogin.withHeader ? "mt-[60px]" : "mt-0",
-                      routeLogin.withHeader && routeLogin.withFooter
-                        ? "h-[calc(100vh-130px)]"
-                        : "h-screen",
-                      routeLogin.withFooter ? "mb-[70px]" : "mb-0",
-                      "overflow-y-scroll overflow-x-hidden [scrollbar-width:none]",
-                    ].join(" ")}
-                  >
-                    {routeLogin.withHeader && <Header />}
-                    {routeLogin.element}
-                    {routeLogin.withFooter && <Footer />}
-                  </div>
-                }
-              />
-            )}
-
-            {isAuth &&
-              routePaths.map((data) => (
+    <ErrorBoundary>
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-screen w-full min-w-[320px] max-w-[640px]">
+          {/* {isLoading && <Loading />} */}
+          <Suspense fallback={isLoading && <Loading />}>
+            <Routes>
+              {!isAuth && (
                 <Route
-                  key={data.path}
-                  path={data.path}
+                  path={routeLogin.path}
                   element={
                     <div
                       className={[
-                        data.withHeader ? "mt-[60px]" : "mt-0",
-                        data.withHeader && data.withFooter ? "h-[calc(100vh-130px)]" : "h-screen",
-                        data.withFooter ? "mb-[70px]" : "mb-0",
+                        routeLogin.withHeader ? "mt-[60px]" : "mt-0",
+                        routeLogin.withHeader && routeLogin.withFooter
+                          ? "h-[calc(100vh-130px)]"
+                          : "h-screen",
+                        routeLogin.withFooter ? "mb-[70px]" : "mb-0",
                         "overflow-y-scroll overflow-x-hidden [scrollbar-width:none]",
                       ].join(" ")}
                     >
-                      {data.withHeader && <Header />}
-                      {data.element}
-                      {data.withFooter && <Footer />}
+                      {routeLogin.withHeader && <Header />}
+                      {routeLogin.element}
+                      {routeLogin.withFooter && <Footer />}
                     </div>
                   }
                 />
-              ))}
-          </Routes>
-        </Suspense>
+              )}
+
+              {isAuth &&
+                routePaths.map((data) => (
+                  <Route
+                    key={data.path}
+                    path={data.path}
+                    element={
+                      <div
+                        className={[
+                          data.withHeader ? "mt-[60px]" : "mt-0",
+                          data.withHeader && data.withFooter
+                            ? "h-[calc(100vh-130px)]"
+                            : "h-screen",
+                          data.withFooter ? "mb-[70px]" : "mb-0",
+                          "overflow-y-scroll overflow-x-hidden [scrollbar-width:none]",
+                        ].join(" ")}
+                      >
+                        {data.withHeader && <Header />}
+                        {data.element}
+                        {data.withFooter && <Footer />}
+                      </div>
+                    }
+                  />
+                ))}
+            </Routes>
+          </Suspense>
+        </div>
       </div>
-    </div>
+      <div className="toast-wrapper" />
+      <Toast />
+    </ErrorBoundary>
   );
 };
 

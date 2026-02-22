@@ -14,6 +14,7 @@ import {
 } from "@/components/pages/Category/CategoryContent/CategoryContentPost/CategoryContentPost.styles";
 import { axiosRequest } from "@/api";
 import { category, res } from "@/@types";
+import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
 
 interface CategoryPostProps {
     subject: string;
@@ -66,10 +67,10 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 setInputValue(response.data.category);
                 onTextSend(response.data.category);
             } catch (error) {
-                alert(
+                notifyApiError(
+                    error,
                     "데이터를 가져오던 중 에러가 발생했습니다. 다시 시도해 주세요."
                 );
-                console.error("Failed to fetch categories:", error);
             }
         }
     };
@@ -95,14 +96,13 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
                     res<category>
                 >("patch", `todoCategories/endCategory/${id}`);
                 if (!response.error) {
-                    alert("목표가 종료되었습니다.");
+                    notifySuccessMessage("목표가 종료되었습니다.");
                     navigate("/category/list");
                 } else {
                     throw new Error("목표 종료를 실패했습니다.");
                 }
             } catch (error) {
-                console.error("Failed to end category:", error);
-                alert("목표를 종료하지 못했습니다. 다시 시도해 주세요.");
+                notifyApiError(error, "목표를 종료하지 못했습니다. 다시 시도해 주세요.");
             }
         }
     };
@@ -116,14 +116,13 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
                     res<category>
                 >("delete", `todoCategories/${id}`);
                 if (!response.error) {
-                    alert("목표가 삭제되었습니다.");
+                    notifySuccessMessage("목표가 삭제되었습니다.");
                     navigate("/category/list");
                 } else {
                     throw new Error("목표 삭제를 실패했습니다.");
                 }
             } catch (error) {
-                console.error("Failed to delete category:", error);
-                alert("목표를 삭제하지 못했습니다. 다시 시도해 주세요.");
+                notifyApiError(error, "목표를 삭제하지 못했습니다. 다시 시도해 주세요.");
             }
         }
     };

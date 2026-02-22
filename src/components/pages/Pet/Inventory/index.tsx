@@ -6,6 +6,7 @@ import { useState, useEffect, createContext } from "react";
 import { axiosRequest } from "@/api";
 import { myItems, res } from "@/@types";
 import { items } from "@/@types/myItems";
+import { notifyApiError } from "@/libs/utils/notifyApiError";
 
 interface parameterType {
     on: boolean;
@@ -28,10 +29,10 @@ export const InventoryModal = ({ on }: parameterType) => {
             const itemArray = response.data.items;
             setItemData(itemArray);
         } catch (error) {
-            alert(
+            notifyApiError(
+                error,
                 "아이템 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요."
             );
-            console.error("Error fetching pet data: ", error);
         }
     }
 

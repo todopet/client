@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosRequest } from "@/api";
 import { res, myUser } from "@/@types";
+import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
 
 interface userinfoType {
   picture: string;
@@ -24,8 +25,7 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
       );
       setNickname(response.data.nickname);
     } catch (error) {
-      alert("회원 정보를 가져오는중 에러가 발생했습니다. 다시 시도해 주세요.");
-      console.log("Error fetching pet data: ", error);
+      notifyApiError(error, "회원 정보를 가져오는중 에러가 발생했습니다. 다시 시도해 주세요.");
     }
   };
 
@@ -78,15 +78,14 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
       );
       if (response.data) {
         // 닉네임이 제대로 변경이 되었을 때
-        alert("닉네임이 수정되었습니다!");
+        notifySuccessMessage("닉네임이 수정되었습니다!");
       } else {
         // 글자 제한을 통과하지 못해 변경이 되지 않았을때
         return; // 닉네임 변경 버튼 눌러도 반응없음
       }
       navigate(0); // 페이지 새로고침
     } catch (error) {
-      alert("닉네임 변경중 에러가 발생했습니다. 다시 시도해 주세요.");
-      console.log("Error fetching pet data: ", error);
+      notifyApiError(error, "닉네임 변경중 에러가 발생했습니다. 다시 시도해 주세요.");
     }
   };
 

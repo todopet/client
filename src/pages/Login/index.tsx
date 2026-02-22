@@ -2,6 +2,7 @@ import Spinner from "@/assets/images/spinner.gif";
 import { googleIcon } from "@/modules/icons";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { notifyErrorMessage } from "@/libs/utils/notifyApiError";
 
 const Login = () => {
     const handleLoginClick = async () => {
@@ -17,7 +18,7 @@ const Login = () => {
             const queries = uri.split("&");
             const queryParams = queries.map((el) => el.split("="));
             const reason = queryParams[2][1];
-            alert(reason);
+            notifyErrorMessage(reason);
         }
     }, [location.hash]);
 

@@ -7,6 +7,7 @@ import { res, useItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
 import { ItemDataContext } from "@/components/pages/Pet/Inventory";
 import { MyContext } from "@/pages/Pet";
+import { notifyApiError } from "@/libs/utils/notifyApiError";
 
 interface modalTypeProps {
   modalType: "useModal" | "discardModal";
@@ -42,8 +43,7 @@ export const ActionModal = ({
       await receiveItemData();
       await receivePetData();
     } catch (error) {
-      alert("아이템 사용중 에러가 발생했습니다. 다시 시도해주세요.");
-      console.log("Error fetching pet data: ", error);
+      notifyApiError(error, "아이템 사용중 에러가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -57,8 +57,7 @@ export const ActionModal = ({
       );
       await receiveItemData();
     } catch (error) {
-      alert("아이템을 버리는중 에러가 발생했습니다. 다시 시도해주세요.");
-      console.error("Error fetching pet data: ", error);
+      notifyApiError(error, "아이템을 버리는중 에러가 발생했습니다. 다시 시도해주세요.");
     }
   };
 

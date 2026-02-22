@@ -6,6 +6,7 @@ import { res, todo } from "@/@types";
 //icons
 //components
 import { useTodosStore } from "@/store/todoStore";
+import { notifyApiError } from "@/libs/utils/notifyApiError";
 //styles
 import { Form, StyledCheckbox, Input } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm.styles";
 
@@ -44,8 +45,7 @@ export const TodoForm = ({
       );
       console.log(response); // "유효하지 않은 토큰입니다" 에러 발생
     } catch (error) {
-      console.error(error);
-      alert("할 일 생성 중 에러가 발생했습니다. 다시 시도해 주세요.");
+      notifyApiError(error, "할 일 생성 중 에러가 발생했습니다. 다시 시도해 주세요.");
     }
   }
   //투두 patch요청(투두내용수정)
@@ -61,8 +61,7 @@ export const TodoForm = ({
         }
       );
     } catch (error) {
-      console.error(error);
-      alert("데이터 수정 중 에러가 발생했습니다. 다시 시도해 주세요.");
+      notifyApiError(error, "데이터 수정 중 에러가 발생했습니다. 다시 시도해 주세요.");
     }
   }
 

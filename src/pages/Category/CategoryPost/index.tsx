@@ -6,6 +6,11 @@ import { useState } from "react";
 import { category, res } from "@/@types";
 import { axiosRequest } from "@/api";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import {
+    notifyApiError,
+    notifyErrorMessage,
+    notifySuccessMessage
+} from "@/libs/utils/notifyApiError";
 const CategoryPost = () => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("categoryId");
@@ -24,14 +29,13 @@ const CategoryPost = () => {
             >("post", "todoCategories", { category });
 
             if (!response.error) {
-                alert("목표가 등록되었습니다.");
+                notifySuccessMessage("목표가 등록되었습니다.");
                 navigate("/category/list");
             } else {
                 throw new Error("목표 등록에 실패했습니다.");
             }
         } catch (error) {
-            alert("목표 등록에 실패했습니다. 다시 시도해 주세요.");
-            console.error("Failed to fetch categories:", error);
+            notifyApiError(error, "목표 등록에 실패했습니다. 다시 시도해 주세요.");
         }
     };
 
@@ -45,20 +49,19 @@ const CategoryPost = () => {
             >("patch", `todoCategories/${id}`, { category });
 
             if (!response.error) {
-                alert("목표가 수정되었습니다.");
+                notifySuccessMessage("목표가 수정되었습니다.");
                 navigate("/category/list");
             } else {
                 throw new Error("목표 수정에 실패했습니다.");
             }
         } catch (error) {
-            alert("목표 수정에 실패했습니다. 다시 시도해 주세요.");
-            console.error("Failed to fetch categories:", error);
+            notifyApiError(error, "목표 수정에 실패했습니다. 다시 시도해 주세요.");
         }
     };
 
     const checkCategory = (category: string) => {
         if (!category.trim()) {
-            alert("목표를 입력해 주세요.");
+            notifyErrorMessage("목표를 입력해 주세요.");
             return false;
         }
         return true;
