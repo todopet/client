@@ -2,6 +2,7 @@ import { useEffect, useState, createContext } from "react";
 import { PetArea } from "@/components/pages/Pet/PetArea";
 import { axiosRequest } from "@/api";
 import { res, myPet } from "@/@types";
+import { notifyApiError } from "@/libs/utils/notifyApiError";
 
 export const MyContext = createContext<() => Promise<void>>(async () => {});
 
@@ -52,10 +53,10 @@ const Pet = () => {
                 petName: petInfo.petName
             });
         } catch (error) {
-            alert(
+            notifyApiError(
+                error,
                 "펫 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요."
             );
-            console.error("Error fetching pet data: ", error);
         }
     }
 

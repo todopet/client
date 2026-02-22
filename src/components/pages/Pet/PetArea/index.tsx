@@ -27,6 +27,7 @@ import { InventoryModal } from "@/components/pages/Pet/Inventory";
 import { ModalBg } from "@/components/pages/Pet/Inventory/Inventory.styles";
 import { itemsCount, res } from "@/@types";
 import { axiosRequest } from "@/api";
+import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { maxVolume } from "@/libs/constants";
 
 interface petAreaProps {
@@ -242,8 +243,10 @@ export const PetArea = ({
       );
       setIsFull(response.data.count >= maxVolume);
     } catch (error) {
-      alert("아이템 개수 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요.");
-      console.error("Error fetching pet data: ", error);
+      notifyApiError(
+        error,
+        "아이템 개수 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요."
+      );
     }
   };
 

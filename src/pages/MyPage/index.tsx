@@ -9,6 +9,7 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "@/libs/hooks/useModal";
 import { Confirm } from "@/components/Confirm";
+import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
 
 interface ConfirmContentProps {
   message: React.ReactNode;
@@ -68,28 +69,26 @@ const MyPage = () => {
       const response = await axiosRequest.requestAxios<res<{}>>("post", "logout");
       console.log(response);
       if (response.status === 200) {
-        alert("로그아웃 처리되었습니다. ");
+        notifySuccessMessage("로그아웃 처리되었습니다.");
         navigate("/");
       } else {
         throw new Error();
       }
     } catch (error) {
-      console.error("Error logging out:", error);
-      alert("로그아웃에 실패하였습니다 :(");
+      notifyApiError(error, "로그아웃에 실패하였습니다 :(");
     }
   };
   const handleConfirmWithdraw = async () => {
     try {
       const response = await axiosRequest.requestAxios<res<{}>>("post", "withdraw");
       if (response.status === 200) {
-        alert("회원 탈퇴 처리되었습니다. ");
+        notifySuccessMessage("회원 탈퇴 처리되었습니다.");
         navigate("/");
       } else {
         throw new Error();
       }
     } catch (error) {
-      console.error("Error withdrawing user:", error);
-      alert("회원 탈퇴 처리 실패");
+      notifyApiError(error, "회원 탈퇴 처리 실패");
     }
   };
 
@@ -102,8 +101,7 @@ const MyPage = () => {
       );
       setUserInfo(response.data);
     } catch (error) {
-      alert("데이터를 가져오던 중 에러가 발생했습니다. 다시 시도해 주세요.");
-      console.error("Error fetching userInfo data: ", error);
+      notifyApiError(error, "데이터를 가져오던 중 에러가 발생했습니다. 다시 시도해 주세요.");
     }
   };
 

@@ -6,9 +6,12 @@ export const Toast = () => {
 
     if (!toast) return null;
     const { Component, props } = toast;
+    const portalTarget = document.getElementsByClassName("toast-wrapper")[0];
+
+    if (!portalTarget) return null;
 
     return ReactDom.createPortal(
         <div>{isShow && <Component {...props} />}</div>,
-        document.getElementsByClassName("toast-wrapper")[0]
+        portalTarget
     );
 };

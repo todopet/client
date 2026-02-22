@@ -3,6 +3,7 @@ import { res, todo, todoCategory } from "@/@types";
 import { axiosRequest } from "@/api";
 import { Message, ToastTypes } from "@/@types/todo";
 import { formatDateToString } from "@/libs/utils/global";
+import { notifyApiError } from "@/libs/utils/notifyApiError";
 import useToastsStore from "@/store/toastStore";
 import { MiniPetToast } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 
@@ -65,8 +66,8 @@ export const useTodosStore = create<Todos>((set) => ({
             }
             return response.data;
         } catch (error) {
-            console.error(error);
-            alert(
+            notifyApiError(
+                error,
                 "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
             );
         }
@@ -81,8 +82,8 @@ export const useTodosStore = create<Todos>((set) => ({
             useTodosStore.getState().setTodos(selectedDate, selectedDate);
             useTodosStore.getState().setTodos(startDate, endDate);
         } catch (error) {
-            console.error(error);
-            alert(
+            notifyApiError(
+                error,
                 "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
             );
         }
@@ -138,8 +139,8 @@ export const useTodosStore = create<Todos>((set) => ({
                 useTodosStore.getState().setTodos(startDate, endDate);
             }
         } catch (error) {
-            console.error(error);
-            alert(
+            notifyApiError(
+                error,
                 "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
             );
         }

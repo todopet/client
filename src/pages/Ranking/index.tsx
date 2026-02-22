@@ -3,6 +3,7 @@ import { axiosRequest } from "@/api";
 import { res, RankInfo } from "@/@types";
 import TopThree from "@/components/pages/Ranking/TopThree";
 import RankInfoList from "@/components/pages/Ranking/RankInfoList";
+import { notifyApiError } from "@/libs/utils/notifyApiError";
 
 const Ranking: React.FC = () => {
     const topThreeOrder = [2, 1, 3];
@@ -18,10 +19,10 @@ const Ranking: React.FC = () => {
             setUserRankList(response.data);
             setUserTopThreeList(setTopThree(response.data));
         } catch (error) {
-            alert(
+            notifyApiError(
+                error,
                 "데이터를 가져오던 중 에러가 발생했습니다. 다시 시도해 주세요."
             );
-            console.error("Error fetching pet data: ", error);
         }
     };
 
