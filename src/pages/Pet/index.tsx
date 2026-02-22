@@ -3,19 +3,22 @@ import { PetArea } from "@/components/pages/Pet/PetArea";
 import { axiosRequest } from "@/api";
 import { res, myPet } from "@/@types";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
+import { PetAreaProps } from "@/components/pages/Pet/PetArea/types";
 
 export const MyContext = createContext<() => Promise<void>>(async () => {});
 
+const initialPetData: PetAreaProps = {
+    hungerInfo: { curHunger: 0, maxHunger: 1 },
+    affectionInfo: { curAffection: 0, maxAffection: 1 },
+    conditionInfo: { curCondition: 0, maxCondition: 1 },
+    cleanlinessInfo: { curCleanliness: 0, maxCleanliness: 1 },
+    expInfo: { curExperience: 0, maxExperience: 1 },
+    levelInfo: null,
+    petName: ""
+};
+
 const Pet = () => {
-    const [petData, setPetData] = useState({
-        hungerInfo: {},
-        affectionInfo: {},
-        conditionInfo: {},
-        cleanlinessInfo: {},
-        expInfo: {},
-        levelInfo: null as number | null, //levelInfo에 초기값을 숫자로 지정해주면 펫 정보가 받아와지기 전 딜레이 타이밍때 해당 레벨의 펫이미지, 레벨 정보 등이 나와서 초기값 null로 해줌
-        petName: ""
-    });
+    const [petData, setPetData] = useState<PetAreaProps>(initialPetData);
 
     const receivePetData = async () => {
         try {
@@ -24,30 +27,31 @@ const Pet = () => {
             >("get", "myPets", {});
             const petInfo = response.data.pet;
             const petLevel: number | null = petInfo.level;
+            const safeLevel = petLevel ?? 0;
             // const petLevel: number = 5;
 
             // 데이터를 객체로 업데이트
             setPetData({
                 hungerInfo: {
                     curHunger: petInfo.hunger,
-                    maxHunger: 100 + petLevel * 20
+                    maxHunger: 100 + safeLevel * 20
                 },
                 affectionInfo: {
                     curAffection: petInfo.affection,
-                    maxAffection: 100 + petLevel * 20
+                    maxAffection: 100 + safeLevel * 20
                 },
                 conditionInfo: {
                     curCondition: petInfo.condition,
-                    maxCondition: 100 + petLevel * 20
+                    maxCondition: 100 + safeLevel * 20
                 },
                 cleanlinessInfo: {
                     curCleanliness: petInfo.cleanliness,
-                    maxCleanliness: 100 + petLevel * 20
+                    maxCleanliness: 100 + safeLevel * 20
                 },
                 expInfo: {
-                    curExperience: petLevel < 5 ? petInfo.experience : 1,
+                    curExperience: safeLevel < 5 ? petInfo.experience : 1,
                     maxExperience:
-                        petLevel < 5 ? 100 * 2 ** (petLevel + 1) - 100 : 1
+                        safeLevel < 5 ? 100 * 2 ** (safeLevel + 1) - 100 : 1
                 },
                 levelInfo: petLevel,
                 petName: petInfo.petName

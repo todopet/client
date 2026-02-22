@@ -3,6 +3,7 @@ import { FooterButton, MainModalBackdrop } from "@/components/pages/Pet/PetArea"
 import joyEmotion from "@/assets/images/joyEmotion.png";
 import sadEmotion from "@/assets/images/sadEmotion.png";
 import { petRoom, exclamationMark, levelStar } from "@/modules/icons";
+import type { PetEmotion } from "@/components/pages/Pet/PetArea/types";
 
 type DivProps = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 
@@ -60,7 +61,7 @@ const EmotionImg = ({
   className = "",
   style,
   ...props
-}: DivProps & { status: string; width: number; height: number; top: number; left: number }) => (
+}: DivProps & { status: PetEmotion; width: number; height: number; top: number; left: number }) => (
   <div
     className={["bg-no-repeat bg-center bg-contain absolute", className].join(" ")}
     style={{
