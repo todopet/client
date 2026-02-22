@@ -24,10 +24,9 @@ const App: React.FC = () => {
     setIsLoading(true);
     try {
       const response: res<auth> = await axiosRequest.requestAxios<res<auth>>("get", `users/auth`);
-      if (response.data.status === 200) {
-        setIsAuth(true);
-      } else {
-        setIsAuth(false);
+      const isAuthorized = response?.data?.status === 200;
+      setIsAuth(isAuthorized);
+      if (!isAuthorized) {
         navigate("/");
       }
     } catch (error) {
