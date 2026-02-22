@@ -60,6 +60,14 @@ PR 본문은 반드시 아래 구조를 사용하고 한국어로 작성해:
 
 마지막 줄에 반드시:
 Closes #$ISSUE_NUMBER
+
+9) PR 생성이 완료되면:
+
+   - 작업 시작 시 확인했던 기준 브랜치로 복귀해:
+     git checkout <original-branch>
+
+   - 최신 상태로 동기화해:
+     git pull
 "
 
 # auto-edit: 파일 수정은 자동, 위험한 명령(git push, gh pr create 등)은 보통 승인 요청이 뜸
