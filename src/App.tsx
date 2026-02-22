@@ -6,6 +6,8 @@ import { res } from "@/@types";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Toast } from "@/components/Toast";
 import { MainLayout } from "@/layout/MainLayout";
+import { ProtectedRoute } from "@/routers/ProtectedRoute";
+import { PublicRoute } from "@/routers/PublicRoute";
 // import NotFound from "@/pages/NotFound";
 import { routeLogin, routePaths } from "@/routers";
 
@@ -50,35 +52,36 @@ const App: React.FC = () => {
           {/* {isLoading && <Loading />} */}
           <Suspense fallback={isLoading && <Loading />}>
             <Routes>
-              {!isAuth && (
-                <Route
-                  path={routeLogin.path}
-                  element={
+              <Route
+                path={routeLogin.path}
+                element={
+                  <PublicRoute isAuth={isAuth} isLoading={isLoading}>
                     <MainLayout
                       withHeader={routeLogin.withHeader}
                       withFooter={routeLogin.withFooter}
                     >
                       {routeLogin.element}
                     </MainLayout>
-                  }
-                />
-              )}
+                  </PublicRoute>
+                }
+              />
 
-              {isAuth &&
-                routePaths.map((data) => (
-                  <Route
-                    key={data.path}
-                    path={data.path}
-                    element={
+              {routePaths.map((data) => (
+                <Route
+                  key={data.path}
+                  path={data.path}
+                  element={
+                    <ProtectedRoute isAuth={isAuth} isLoading={isLoading}>
                       <MainLayout
                         withHeader={data.withHeader}
                         withFooter={data.withFooter}
                       >
                         {data.element}
                       </MainLayout>
-                    }
-                  />
-                ))}
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
             </Routes>
           </Suspense>
         </div>
