@@ -37,8 +37,29 @@ GitHub Issue #$ISSUE_NUMBER를 end-to-end로 처리해.
 7) 브랜치를 push 해
 
 8) PR을 생성해:
-   - 제목: {type}: <한국어 요약> (#$ISSUE_NUMBER)
-   - 본문: 한국어로 요약/주요 변경점/검증 방법 + Closes #$ISSUE_NUMBER
+
+PR 제목:
+{type}: <한국어 요약> (#$ISSUE_NUMBER)
+
+PR 본문은 반드시 아래 구조를 사용하고 한국어로 작성해:
+
+### 📝 작업 개요
+(이 PR에서 수행한 작업 요약)
+
+### 🔧 주요 변경 사항
+(수정된 기능 및 파일/컴포넌트)
+
+### 🎯 변경 목적
+(왜 이 변경이 필요한지)
+
+### 🧪 검증 방법
+(실행한 명령어: npm run lint, npm run build 등)
+
+### 📌 참고 사항
+(필요 시)
+
+마지막 줄에 반드시:
+Closes #$ISSUE_NUMBER
 "
 
 # auto-edit: 파일 수정은 자동, 위험한 명령(git push, gh pr create 등)은 보통 승인 요청이 뜸
