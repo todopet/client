@@ -29,41 +29,12 @@ import { itemsCount, res } from "@/@types";
 import { axiosRequest } from "@/api";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { maxVolume } from "@/libs/constants";
-
-interface petAreaProps {
-  hungerInfo: object;
-  affectionInfo: object;
-  conditionInfo: object;
-  cleanlinessInfo: object;
-  expInfo: object;
-  levelInfo: number | null;
-  petName: string;
-}
-
-interface PetHungerProps {
-  curHunger?: number;
-  maxHunger?: number;
-}
-
-interface PetAffectionProps {
-  curAffection?: number;
-  maxAffection?: number;
-}
-
-interface PetConditionProps {
-  curCondition?: number;
-  maxCondition?: number;
-}
-
-interface PetCleanlinessProps {
-  curCleanliness?: number;
-  maxCleanliness?: number;
-}
-
-interface PetExperienceProps {
-  curExperience?: number;
-  maxExperience?: number;
-}
+import {
+  PET_EMOTION_POSITION_CONFIG,
+  PET_IMAGE_SIZE_CONFIG,
+} from "@/libs/constants/petConfig";
+import { usePetEmotion } from "@/components/pages/Pet/PetArea/hooks/usePetEmotion";
+import { PetAreaProps } from "@/components/pages/Pet/PetArea/types";
 
 export const PetArea = ({
   hungerInfo,
@@ -73,9 +44,11 @@ export const PetArea = ({
   expInfo,
   levelInfo,
   petName,
-}: petAreaProps) => {
+}: PetAreaProps) => {
   const [achState, setAchState] = useState(false);
   const [invState, setInvState] = useState(false);
+  const [isFull, setIsFull] = useState(false);
+
   const toggleAchState = () => {
     setAchState(!achState);
   };
@@ -83,156 +56,33 @@ export const PetArea = ({
     setInvState(!invState);
   };
 
-  const { curHunger, maxHunger }: PetHungerProps = hungerInfo;
-  const { curAffection, maxAffection }: PetAffectionProps = affectionInfo;
-  const { curCondition, maxCondition }: PetConditionProps = conditionInfo;
-  const { curCleanliness, maxCleanliness }: PetCleanlinessProps = cleanlinessInfo;
-  const { curExperience, maxExperience }: PetExperienceProps = expInfo;
-  const level: number | null = levelInfo;
-  // const level: number = 4;
+  const { curHunger, maxHunger } = hungerInfo;
+  const { curAffection, maxAffection } = affectionInfo;
+  const { curCondition, maxCondition } = conditionInfo;
+  const { curCleanliness, maxCleanliness } = cleanlinessInfo;
+  const { curExperience, maxExperience } = expInfo;
 
-  const [isFull, setIsFull] = useState(false);
+  const level = levelInfo ?? 0;
+  const petImgSize = PET_IMAGE_SIZE_CONFIG[level] ?? PET_IMAGE_SIZE_CONFIG[0];
+  const emotionPosition = PET_EMOTION_POSITION_CONFIG[level] ?? PET_EMOTION_POSITION_CONFIG[0];
 
-  let petImgSize = {};
-  let emotionPosition = {};
-
-  // 펫이 레벨별로 사이즈가 달라서 이미지 영역 크기와 위치를 레벨별로 지정해줘야 할듯.. 감정표현 이미지도
-  switch (level) {
-    case 0:
-      petImgSize = {
-        petImgWidth: 25,
-        petImgHeight: 15,
-        petImgLeft: 36.5,
-        petImgBottom: 9,
-      };
-      emotionPosition = {
-        emotionPositionWidth: 50,
-        emotionPositionHeight: 60,
-        emotionPositionTop: -50,
-        emotionPositionLeft: 75,
-      };
-      break;
-    case 1:
-      petImgSize = {
-        petImgWidth: 43,
-        petImgHeight: 20,
-        petImgLeft: 27.2,
-        petImgBottom: 7.7,
-      };
-      emotionPosition = {
-        emotionPositionWidth: 35,
-        emotionPositionHeight: 45,
-        emotionPositionTop: -3,
-        emotionPositionLeft: 65,
-      };
-      break;
-    case 2:
-      petImgSize = {
-        petImgWidth: 50,
-        petImgHeight: 25,
-        petImgLeft: 22,
-        petImgBottom: 4.7,
-      };
-      emotionPosition = {
-        emotionPositionWidth: 30,
-        emotionPositionHeight: 40,
-        emotionPositionTop: 2,
-        emotionPositionLeft: 70,
-      };
-      break;
-    case 3:
-      petImgSize = {
-        petImgWidth: 42,
-        petImgHeight: 20,
-        petImgLeft: 18,
-        petImgBottom: 25,
-      };
-      emotionPosition = {
-        emotionPositionWidth: 35,
-        emotionPositionHeight: 48,
-        emotionPositionTop: -26,
-        emotionPositionLeft: 73,
-      };
-      break;
-    case 4:
-      petImgSize = {
-        petImgWidth: 53,
-        petImgHeight: 30,
-        petImgLeft: 26,
-        petImgBottom: 6,
-      };
-      emotionPosition = {
-        emotionPositionWidth: 38,
-        emotionPositionHeight: 30,
-        emotionPositionTop: -9,
-        emotionPositionLeft: 53,
-      };
-      break;
-    case 5:
-      petImgSize = {
-        petImgWidth: 65,
-        petImgHeight: 45,
-        petImgLeft: 23,
-        petImgBottom: 25,
-      };
-      emotionPosition = {
-        emotionPositionWidth: 30,
-        emotionPositionHeight: 20,
-        emotionPositionTop: 9,
-        emotionPositionLeft: 49,
-      };
-      break;
-  }
-
-  const { petImgWidth, petImgHeight, petImgLeft, petImgBottom } = petImgSize as {
-    petImgWidth: number;
-    petImgHeight: number;
-    petImgLeft: number;
-    petImgBottom: number;
+  const calculatePercent = (current: number, max: number) => {
+    if (max <= 0) {
+      return 0;
+    }
+    return Math.round((current / max) * 100);
   };
 
-  const { emotionPositionWidth, emotionPositionHeight, emotionPositionTop, emotionPositionLeft } =
-    emotionPosition as {
-      emotionPositionWidth: number;
-      emotionPositionHeight: number;
-      emotionPositionTop: number;
-      emotionPositionLeft: number;
-    };
-
-  const hungerPercent =
-    curHunger !== undefined && maxHunger !== undefined
-      ? Math.round((curHunger / maxHunger) * 100)
-      : 0;
-  const affectionPercent =
-    curAffection !== undefined && maxAffection !== undefined
-      ? Math.round((curAffection / maxAffection) * 100)
-      : 0;
-  const conditionPercent =
-    curCondition !== undefined && maxCondition !== undefined
-      ? Math.round((curCondition / maxCondition) * 100)
-      : 0;
-  const cleanlinessPercent =
-    curCleanliness !== undefined && maxCleanliness !== undefined
-      ? Math.round((curCleanliness / maxCleanliness) * 100)
-      : 0;
-
-  const findPetEmotion = () => {
-    if (
-      hungerPercent >= 80 &&
-      affectionPercent >= 80 &&
-      conditionPercent >= 80 &&
-      cleanlinessPercent >= 80
-    )
-      return "joy";
-    else if (
-      hungerPercent < 30 ||
-      affectionPercent < 30 ||
-      conditionPercent < 30 ||
-      cleanlinessPercent < 30
-    )
-      return "sad";
-    else return "normal";
-  };
+  const hungerPercent = calculatePercent(curHunger, maxHunger);
+  const affectionPercent = calculatePercent(curAffection, maxAffection);
+  const conditionPercent = calculatePercent(curCondition, maxCondition);
+  const cleanlinessPercent = calculatePercent(curCleanliness, maxCleanliness);
+  const petEmotion = usePetEmotion(
+    hungerPercent,
+    affectionPercent,
+    conditionPercent,
+    cleanlinessPercent
+  );
 
   const isInventoryFull = async () => {
     try {
@@ -303,18 +153,18 @@ export const PetArea = ({
       <MainBody>
         <PetImg
           level={level}
-          width={petImgWidth}
-          height={petImgHeight}
-          left={petImgLeft}
-          bottom={petImgBottom}
+          width={petImgSize.petImgWidth}
+          height={petImgSize.petImgHeight}
+          left={petImgSize.petImgLeft}
+          bottom={petImgSize.petImgBottom}
         >
-          {findPetEmotion() !== "normal" && (
+          {petEmotion !== "normal" && (
             <EmotionImg
-              status={findPetEmotion()}
-              width={emotionPositionWidth}
-              height={emotionPositionHeight}
-              top={emotionPositionTop}
-              left={emotionPositionLeft}
+              status={petEmotion}
+              width={emotionPosition.emotionPositionWidth}
+              height={emotionPosition.emotionPositionHeight}
+              top={emotionPosition.emotionPositionTop}
+              left={emotionPosition.emotionPositionLeft}
             />
           )}
         </PetImg>
