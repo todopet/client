@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { res, todo, todoCategory, TodoStatus } from "@/@types";
+import { res, todo, todoCategory, TodoStatus, ToastType } from "@/@types";
 import { axiosRequest } from "@/api";
-import { Message, ToastTypes } from "@/@types/todo";
+import { Message } from "@/@types/todo";
 import { formatDateToString } from "@/libs/utils/global";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import useToastsStore from "@/store/toastStore";
@@ -37,7 +37,7 @@ const initialState = {
     dateTodos: [],
     periodTodos: [],
     message: {
-        type: ToastTypes.NORMAL,
+        type: ToastType.NORMAL,
         reward: null,
         inventoryCount: 0
     },
@@ -74,9 +74,7 @@ export const useTodosStore = create<Todos>((set) => ({
     },
     deleteTodo: async (contentId) => {
         try {
-            const response: res<todo[]> = await axiosRequest.requestAxios<
-                res<todo[]>
-            >("delete", `todoContents/${contentId}`);
+            await axiosRequest.requestAxios<res<todo[]>>("delete", `todoContents/${contentId}`);
             const { selectedDate, startDate, endDate } =
                 useTodosStore.getState();
             useTodosStore.getState().setTodos(selectedDate, selectedDate);
@@ -122,9 +120,7 @@ export const useTodosStore = create<Todos>((set) => ({
                 useTodosStore.getState().setTodos(selectedDate, selectedDate);
                 useTodosStore.getState().setTodos(startDate, endDate);
             } else {
-                const response: res<todo> = await axiosRequest.requestAxios<
-                    res<todo>
-                >(
+                await axiosRequest.requestAxios<res<todo>>(
                     "patch",
                     `todoContents/${contentId}?_=${Date.now()}`,
                     {
