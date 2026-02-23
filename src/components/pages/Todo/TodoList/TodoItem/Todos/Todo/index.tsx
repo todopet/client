@@ -1,6 +1,8 @@
 //react hook
 import { useState, useEffect } from "react";
 import { useTodosStore } from "@/store/todoStore";
+import { TodoStatus } from "@/@types";
+import { STATUS_TRANSITIONS, isTodoStatus } from "@/@types/todo";
 
 //icons
 import { MenuIcon, CheckIcon } from "@/modules/icons";
@@ -17,7 +19,7 @@ import { formatDateToString } from "@/libs/utils/global";
 
 interface TodoProps {
   content: string;
-  status: string;
+  status: TodoStatus;
   contentId: string;
 }
 
@@ -26,20 +28,15 @@ export const Todo = ({
 }: TodoProps) => {
   const { selectedDate, deleteTodo, setStatus } = useTodosStore((state) => state);
 
-  const [newCheckStatus, setNewCheckStatus] = useState<string>(status);
+  const [newCheckStatus, setNewCheckStatus] = useState<TodoStatus>(status);
   useEffect(() => {
-    setNewCheckStatus(status);
+    setNewCheckStatus(isTodoStatus(status) ? status : TodoStatus.UNCHECKED);
   }, [status]);
 
-  const handleCheckClick = async () => {
-    let checkStatus = "";
-    if (status === "unchecked") {
-      checkStatus = "completed";
-    } else if (status === "completed") {
-      checkStatus = "reverted";
-    } else if (status === "reverted") {
-      checkStatus = "completed";
-    }
+  const handleCheckClick = () => {
+    const currentStatus = isTodoStatus(newCheckStatus) ? newCheckStatus : TodoStatus.UNCHECKED;
+    const checkStatus = STATUS_TRANSITIONS[currentStatus];
+
     //상태 업데이트
     setNewCheckStatus(checkStatus);
     //patch요청
@@ -53,7 +50,7 @@ export const Todo = ({
     {
       content: "수정",
       handleClick: () => {
-        setIsEditig(true);
+        setIsEditing(true);
       },
     },
     {
@@ -63,7 +60,7 @@ export const Todo = ({
       },
     },
   ];
-  if (status !== "completed") {
+  if (newCheckStatus !== TodoStatus.COMPLETED) {
     listItems.push({
       content: isSelectedDate ? "내일하기" : "오늘하기",
       handleClick: () => {
@@ -79,7 +76,7 @@ export const Todo = ({
     });
   }
   //input 상태
-  const [isEditing, setIsEditig] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   return (
     <StyledTodo>
@@ -88,13 +85,13 @@ export const Todo = ({
           <TodoForm
             contentId={contentId}
             existingContent={content}
-            status={status}
-            finishEdit={() => setIsEditig(false)}
+            status={newCheckStatus}
+            finishEdit={() => setIsEditing(false)}
           />
         ) : (
           <TodoDiv>
             <StyledCheckbox onClick={handleCheckClick} newCheckStatus={newCheckStatus}>
-              {newCheckStatus === "completed" && <img src={CheckIcon} alt="checked" />}
+              {newCheckStatus === TodoStatus.COMPLETED && <img src={CheckIcon} alt="checked" />}
             </StyledCheckbox>
             <Text newCheckStatus={newCheckStatus}>{content}</Text>
           </TodoDiv>
