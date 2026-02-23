@@ -4,8 +4,6 @@ import { axiosRequest } from "@/api";
 import { Message } from "@/@types/todo";
 import { formatDateToString } from "@/libs/utils/global";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
-import useToastsStore from "@/store/toastStore";
-import { MiniPetToast } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 
 const today = new Date();
 
@@ -20,14 +18,14 @@ export interface Todos {
     timer: NodeJS.Timeout | null;
     setSelectedDate: (date: string) => void;
     setStartEndDate: (start: string, end: string) => void;
-    setTodos: (startDate: string, endDate: string) => void;
-    deleteTodo: (contentId: string) => void;
+    setTodos: (startDate: string, endDate: string) => Promise<todoCategory[] | undefined>;
+    deleteTodo: (contentId: string) => Promise<void>;
     setStatus: (
         contentId: string,
         content: string,
         checkStatus: TodoStatus,
         date: string
-    ) => void;
+    ) => Promise<Message | null | undefined>;
 }
 
 const initialState = {
@@ -45,60 +43,68 @@ const initialState = {
     timer: null
 };
 
-export const useTodosStore = create<Todos>((set) => ({
-    ...initialState,
-    setSelectedDate: (date) => set({ selectedDate: date }),
-    setStartEndDate: (start, end) => {
-        set({ startDate: start });
-        set({ endDate: end });
-    },
-    setTodos: async (startDate, endDate) => {
-        try {
-            const response: res<todoCategory[]> =
-                await axiosRequest.requestAxios<res<todoCategory[]>>(
-                    "get",
-                    `todoContents?start=${startDate}&end=${endDate}`
+export const useTodosStore = create<Todos>((set, get) => {
+    const refreshTodos = async () => {
+        const { selectedDate, startDate, endDate, setTodos } = get();
+        const hasPeriodRange = Boolean(startDate && endDate);
+        const isSameRange = selectedDate === startDate && selectedDate === endDate;
+
+        if (!hasPeriodRange || isSameRange) {
+            await setTodos(selectedDate, selectedDate);
+            return;
+        }
+
+        await Promise.all([
+            setTodos(selectedDate, selectedDate),
+            setTodos(startDate, endDate)
+        ]);
+    };
+
+    return {
+        ...initialState,
+        setSelectedDate: (date) => set({ selectedDate: date }),
+        setStartEndDate: (start, end) => {
+            set({ startDate: start, endDate: end });
+        },
+        setTodos: async (startDate, endDate) => {
+            try {
+                const response: res<todoCategory[]> =
+                    await axiosRequest.requestAxios<res<todoCategory[]>>(
+                        "get",
+                        `todoContents?start=${startDate}&end=${endDate}`
+                    );
+                if (startDate === endDate) {
+                    set({ dateTodos: response.data });
+                } else {
+                    set({ periodTodos: response.data });
+                }
+                return response.data;
+            } catch (error) {
+                notifyApiError(
+                    error,
+                    "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
                 );
-            if (startDate === endDate) {
-                set({ dateTodos: response.data });
-            } else {
-                set({ periodTodos: response.data });
             }
-            return response.data;
-        } catch (error) {
-            notifyApiError(
-                error,
-                "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
-            );
-        }
-    },
-    deleteTodo: async (contentId) => {
-        try {
-            await axiosRequest.requestAxios<res<todo[]>>("delete", `todoContents/${contentId}`);
-            const { selectedDate, startDate, endDate } =
-                useTodosStore.getState();
-            useTodosStore.getState().setTodos(selectedDate, selectedDate);
-            useTodosStore.getState().setTodos(startDate, endDate);
-        } catch (error) {
-            notifyApiError(
-                error,
-                "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
-            );
-        }
-    },
+        },
+        deleteTodo: async (contentId) => {
+            try {
+                await axiosRequest.requestAxios<res<todo[]>>("delete", `todoContents/${contentId}`);
+                await refreshTodos();
+            } catch (error) {
+                notifyApiError(
+                    error,
+                    "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
+                );
+            }
+        },
 
-    setStatus: async (
-        contentId: string,
-        content: string,
-        checkStatus: TodoStatus,
-        date: string
-    ) => {
-        try {
-            if (checkStatus === TodoStatus.COMPLETED) {
-                const { closeToast, showToast } = useToastsStore.getState();
-                //이전 토스트를 꺼줍니다.
-                closeToast();
-
+        setStatus: async (
+            contentId: string,
+            content: string,
+            checkStatus: TodoStatus,
+            date: string
+        ) => {
+            try {
                 const response: res<todo> = await axiosRequest.requestAxios<
                     res<todo>
                 >(
@@ -111,34 +117,15 @@ export const useTodosStore = create<Todos>((set) => ({
                     }
                 );
 
-                showToast(MiniPetToast, {
-                    message: response.data.message
-                });
+                await refreshTodos();
 
-                const { selectedDate, startDate, endDate } =
-                    useTodosStore.getState();
-                useTodosStore.getState().setTodos(selectedDate, selectedDate);
-                useTodosStore.getState().setTodos(startDate, endDate);
-            } else {
-                await axiosRequest.requestAxios<res<todo>>(
-                    "patch",
-                    `todoContents/${contentId}?_=${Date.now()}`,
-                    {
-                        todo: content,
-                        status: checkStatus,
-                        date: date
-                    }
+                return response.data.message;
+            } catch (error) {
+                notifyApiError(
+                    error,
+                    "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
                 );
-                const { selectedDate, startDate, endDate } =
-                    useTodosStore.getState();
-                useTodosStore.getState().setTodos(selectedDate, selectedDate);
-                useTodosStore.getState().setTodos(startDate, endDate);
             }
-        } catch (error) {
-            notifyApiError(
-                error,
-                "데이터를 가져오던 중 오류가 발생했습니다. 다시 시도해주세요."
-            );
         }
-    }
-}));
+    };
+});
