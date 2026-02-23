@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 //api, interface
 import { axiosRequest } from "@/api";
-import { res, todo } from "@/@types";
+import { res, todo, TodoStatus } from "@/@types";
 //icons
 //components
 import { useTodosStore } from "@/store/todoStore";
@@ -14,7 +14,7 @@ interface TodoFormProps {
   categoryId?: string;
   contentId?: string;
   existingContent?: string;
-  status?: string;
+  status?: TodoStatus;
   finishEdit?: () => void;
 }
 export const TodoForm = ({

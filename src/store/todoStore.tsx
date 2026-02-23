@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { res, todo, todoCategory } from "@/@types";
+import { res, todo, todoCategory, TodoStatus } from "@/@types";
 import { axiosRequest } from "@/api";
 import { Message, ToastTypes } from "@/@types/todo";
 import { formatDateToString } from "@/libs/utils/global";
@@ -25,7 +25,7 @@ export interface Todos {
     setStatus: (
         contentId: string,
         content: string,
-        checkStatus: string,
+        checkStatus: TodoStatus,
         date: string
     ) => void;
 }
@@ -92,11 +92,11 @@ export const useTodosStore = create<Todos>((set) => ({
     setStatus: async (
         contentId: string,
         content: string,
-        checkStatus: string,
+        checkStatus: TodoStatus,
         date: string
     ) => {
         try {
-            if (checkStatus === "completed") {
+            if (checkStatus === TodoStatus.COMPLETED) {
                 const { closeToast, showToast } = useToastsStore.getState();
                 //이전 토스트를 꺼줍니다.
                 closeToast();

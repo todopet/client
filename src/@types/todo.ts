@@ -18,6 +18,16 @@ export interface Message {
     inventoryCount: number;
 }
 
+export const STATUS_TRANSITIONS: Record<TodoStatus, TodoStatus> = {
+    [TodoStatus.UNCHECKED]: TodoStatus.COMPLETED,
+    [TodoStatus.COMPLETED]: TodoStatus.REVERTED,
+    [TodoStatus.REVERTED]: TodoStatus.COMPLETED,
+};
+
+export const isTodoStatus = (value: string): value is TodoStatus => {
+    return Object.values(TodoStatus).includes(value as TodoStatus);
+};
+
 // 하위 호환성을 위한 타입 별칭 (추후 제거 예정)
 /** @deprecated Use Todo instead */
 export type todo = Todo;

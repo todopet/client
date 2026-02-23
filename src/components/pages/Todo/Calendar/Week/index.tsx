@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import * as Styles from "@/components/pages/Todo/Calendar/Week/Week.styles";
 import { useTodosStore } from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
+import { TodoStatus } from "@/@types";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
 const today = new Date();
@@ -90,7 +91,7 @@ export const Week = ({ onHeaderChange }: WeekProps) => {
     periodTodos?.forEach((category: any) =>
       category.todos.forEach((todo: any) => {
         const newDate = new Date(todo.todoDate);
-        if (todo.status === "completed") todoDates.push(newDate.getDay());
+        if (todo.status === TodoStatus.COMPLETED) todoDates.push(newDate.getDay());
       })
     );
     return todoDates?.reduce(

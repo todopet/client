@@ -2,6 +2,7 @@ import * as Styles from "@/components/pages/Todo/Calendar/Month/Month.styles";
 import { useState, useEffect, useMemo } from "react";
 import { useTodosStore } from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
+import { TodoStatus } from "@/@types";
 
 // 오늘의 연,월,일,요일 구하기. day=요일 date=날짜
 const today = new Date();
@@ -50,7 +51,7 @@ export const Month = ({ onHeaderChange }: MonthProps) => {
     periodTodos?.forEach((category: any) =>
       category.todos.forEach((todo: any) => {
         const newDate = new Date(todo.todoDate);
-        if (todo.status === "completed") todoDates.push(newDate.getDate());
+        if (todo.status === TodoStatus.COMPLETED) todoDates.push(newDate.getDate());
       })
     );
     return todoDates.reduce(
