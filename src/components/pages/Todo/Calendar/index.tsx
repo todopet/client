@@ -4,38 +4,30 @@ import { Month } from "@/components/pages/Todo/Calendar/Month";
 import { ToggleButton } from "@/components/ToggleButton";
 import { ArrowButton } from "@/components/pages/Todo/Calendar/Button/ArrowButton";
 import { LeftArrowIcon, RightArrowIcon } from "@/modules/icons";
-
-export interface CalendarProps {
-  defaultMode?: "week" | "month";
-}
+import { CalendarMode, type CalendarHeader, type CalendarProps } from "@/components/pages/Todo/Calendar/types";
 
 interface CalendarBodyProps {
-  mode?: CalendarProps["defaultMode"];
+  mode?: CalendarMode;
   onHeaderChange?: (header: CalendarHeader) => void;
 }
-
-type CalendarHeader = {
-  title: string;
-  onPrev?: () => void;
-  onNext?: () => void;
-};
 
 const CalendarBody: FC<CalendarBodyProps> = ({ mode, onHeaderChange }) => {
   return (
     <>
-      {mode === "week" && <Week onHeaderChange={onHeaderChange} />}
-      {mode === "month" && <Month onHeaderChange={onHeaderChange} />}
+      {mode === CalendarMode.WEEK && <Week onHeaderChange={onHeaderChange} />}
+      {mode === CalendarMode.MONTH && <Month onHeaderChange={onHeaderChange} />}
     </>
   );
 };
 
 export const Calendar: FC<CalendarProps> = (props) => {
-  const { defaultMode = "week" } = props;
-  const [mode, setMode] = useState(defaultMode);
+  const { defaultMode = CalendarMode.WEEK } = props;
+  const [mode, setMode] = useState<CalendarMode>(defaultMode);
   const [header, setHeader] = useState<CalendarHeader>({ title: "" });
 
   const handleToggle = useCallback(
-    (isToggled: boolean) => setMode(isToggled ? "month" : "week"), // newToggle이 isToggled로 들어옴
+    (isToggled: boolean) =>
+      setMode(isToggled ? CalendarMode.MONTH : CalendarMode.WEEK), // newToggle이 isToggled로 들어옴
     []
   );
 
@@ -55,7 +47,10 @@ export const Calendar: FC<CalendarProps> = (props) => {
             <img src={RightArrowIcon} alt="right" />
           </ArrowButton>
         </div>
-        <ToggleButton onToggle={handleToggle} />
+        <ToggleButton
+          defaultChecked={defaultMode === CalendarMode.MONTH}
+          onToggle={handleToggle}
+        />
       </div>
       <CalendarBody mode={mode} onHeaderChange={handleHeaderChange} />
     </div>

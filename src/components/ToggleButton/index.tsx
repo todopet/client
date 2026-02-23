@@ -1,15 +1,19 @@
-import { FC, SyntheticEvent, useState } from "react";
+import { FC, useState } from "react";
 
 interface ToggleButtonProps {
   onToggle?: (isToggled: boolean) => void;
-  active?: boolean;
+  defaultChecked?: boolean;
   className?: string;
 }
 
-export const ToggleButton: FC<ToggleButtonProps> = ({ onToggle, className = "" }) => {
-  const [isToggled, setIsToggled] = useState(false);
+export const ToggleButton: FC<ToggleButtonProps> = ({
+  onToggle,
+  defaultChecked = false,
+  className = "",
+}) => {
+  const [isToggled, setIsToggled] = useState(defaultChecked);
 
-  const handleChangeToggle = (e: SyntheticEvent) => {
+  const handleChangeToggle = () => {
     const newToggled = !isToggled;
     setIsToggled(newToggled);
     onToggle?.(newToggled); // 콜백프롭스 형식으로 자식의 상태 변경을 부모에게 알림
