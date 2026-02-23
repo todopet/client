@@ -1,5 +1,4 @@
 import React from "react";
-import { ConfirmModal } from "@/components/ConfirmModal";
 import { UserInfo } from "@/components/pages/MyPage/UserInfo";
 import { Activity } from "@/components/pages/MyPage/Activity";
 import { res, myUser } from "@/@types";
@@ -54,16 +53,6 @@ const MyPage = () => {
     historyCount: 0,
   });
 
-  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
-
-  const handleConfirmWithdrawModal = () => {
-    setIsWithdrawModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsWithdrawModalOpen(false);
-  };
-
   const handleConfirmLogout = async () => {
     try {
       const response = await axiosRequest.requestAxios<res<{}>>("post", "logout");
@@ -109,6 +98,34 @@ const MyPage = () => {
     getUserInfo();
   }, []);
 
+  const openWithdrawModal = () => {
+    openModal(
+      <ConfirmContent
+        message={
+          <>
+            <span className="mb-[5px] text-black">
+              {userInfo.nickname}님의 펫이 기다리고 있어요!
+            </span>
+            <span className="mb-[5px] text-red-500">회원 탈퇴시 해당 계정으로</span>
+            <span className="mb-[5px] text-red-500">영원히 서비스를 이용할 수 없어요 😥</span>
+            <span className="mb-[5px] text-black">그래도 탈퇴하시겠어요?</span>
+          </>
+        }
+        onConfirm={async () => {
+          closeModal();
+          await handleConfirmWithdraw();
+        }}
+        onCancel={closeModal}
+      />,
+      null,
+      "회원탈퇴 안내",
+      {
+        isNotTitle: true,
+        size: 297,
+      }
+    );
+  };
+
   const navigate = useNavigate();
   return (
     <div className="w-full h-full min-h-[700px] relative flex flex-col gap-8 justify-center items-center">
@@ -143,46 +160,13 @@ const MyPage = () => {
         <button
           className="w-1/2 h-12 rounded-[10px] text-[16px] font-medium"
           style={{ backgroundColor: "#F5F5F5" }}
-          onClick={handleConfirmWithdrawModal}
+          onClick={openWithdrawModal}
         >
           회원탈퇴
         </button>
       </div>
-      {isWithdrawModalOpen && (
-        <ConfirmModal>
-          <ConfirmContent
-            message={
-              <>
-                <span className="mb-[5px] text-black">
-                  {userInfo.nickname}님의 펫이 기다리고 있어요!
-                </span>
-                <span className="mb-[5px] text-red-500">회원 탈퇴시 해당 계정으로</span>
-                <span className="mb-[5px] text-red-500">영원히 서비스를 이용할 수 없어요 😥</span>
-                <span className="mb-[5px] text-black">그래도 탈퇴하시겠어요?</span>
-              </>
-            }
-            onConfirm={handleConfirmWithdraw}
-            onCancel={handleCloseModal}
-          />
-        </ConfirmModal>
-      )}
     </div>
   );
 };
 
 export default MyPage;
-
-interface classType {
-  className: string;
-  onClick(): void;
-  color: string;
-  text: string;
-}
-
-export const MyButton = ({ className, onClick, color, text }: classType) => {
-  return (
-    <button className={className} onClick={onClick} style={{ backgroundColor: color }}>
-      {text}
-    </button>
-  );
-};

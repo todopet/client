@@ -4,3 +4,4 @@
 const maxVolume: number = 50;
 
 export { maxVolume };
+export { RANKING_CONFIG } from "./ranking";

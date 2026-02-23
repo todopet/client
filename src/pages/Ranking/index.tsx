@@ -4,10 +4,10 @@ import { res, RankInfo } from "@/@types";
 import TopThree from "@/components/pages/Ranking/TopThree";
 import RankInfoList from "@/components/pages/Ranking/RankInfoList";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
+import { RANKING_CONFIG } from "@/libs/constants";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 const Ranking: React.FC = () => {
-    const topThreeOrder = [2, 1, 3];
-
     const [userRankList, setUserRankList] = useState<RankInfo[]>([]);
     const [userTopThreeList, setUserTopThreeList] = useState<RankInfo[]>([]);
 
@@ -15,7 +15,7 @@ const Ranking: React.FC = () => {
         try {
             const response: res<RankInfo[]> = await axiosRequest.requestAxios<
                 res<RankInfo[]>
-            >("get", `users/rank/${count}`, {});
+            >("get", API_ENDPOINTS.USER.RANK(count), {});
             setUserRankList(response.data);
             setUserTopThreeList(setTopThree(response.data));
         } catch (error) {
@@ -28,16 +28,16 @@ const Ranking: React.FC = () => {
 
     const setTopThree = (rankList: RankInfo[]) => {
         return rankList
-            .slice(0, 3)
+            .slice(0, RANKING_CONFIG.TOP_THREE_COUNT)
             .sort(
                 (a, b) =>
-                    topThreeOrder.indexOf(a.rank) -
-                    topThreeOrder.indexOf(b.rank)
+                    RANKING_CONFIG.TOP_THREE_ORDER.indexOf(a.rank) -
+                    RANKING_CONFIG.TOP_THREE_ORDER.indexOf(b.rank)
             );
     };
 
     useEffect(() => {
-        getUserRankList(2);
+        getUserRankList(RANKING_CONFIG.INITIAL_FETCH_COUNT);
     }, []);
 
     return (
