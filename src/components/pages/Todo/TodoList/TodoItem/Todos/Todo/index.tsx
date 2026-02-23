@@ -10,6 +10,8 @@ import { MenuIcon, CheckIcon } from "@/modules/icons";
 //components
 import { DropDown } from "@/components/DropDown";
 import { TodoForm } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm";
+import useToastsStore from "@/store/toastStore";
+import { MiniPetToast } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast";
 
 //styles
 import { StyledTodo, TodoDiv, StyledCheckbox, Text, TodoWrap, DropDownWrap } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/Todo.styles";
@@ -27,20 +29,26 @@ export const Todo = ({
   content, status, contentId
 }: TodoProps) => {
   const { selectedDate, deleteTodo, setStatus } = useTodosStore((state) => state);
+  const { showToast, closeToast } = useToastsStore((state) => state);
 
   const [newCheckStatus, setNewCheckStatus] = useState<TodoStatus>(status);
   useEffect(() => {
     setNewCheckStatus(isTodoStatus(status) ? status : TodoStatus.UNCHECKED);
   }, [status]);
 
-  const handleCheckClick = () => {
+  const handleCheckClick = async () => {
     const currentStatus = isTodoStatus(newCheckStatus) ? newCheckStatus : TodoStatus.UNCHECKED;
     const checkStatus = STATUS_TRANSITIONS[currentStatus];
 
     //상태 업데이트
     setNewCheckStatus(checkStatus);
     //patch요청
-    setStatus(contentId, content, checkStatus, selectedDate);
+    const message = await setStatus(contentId, content, checkStatus, selectedDate);
+
+    if (checkStatus === TodoStatus.COMPLETED && message) {
+      closeToast();
+      showToast(MiniPetToast, { message });
+    }
   };
   const isSelectedDate: boolean =
     new Date(selectedDate).toString() === new Date(formatDateToString(new Date())).toString();
