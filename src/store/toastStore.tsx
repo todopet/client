@@ -1,42 +1,45 @@
 import { create } from "zustand";
-import { Message } from "@/@types/todo";
 
-interface MiniPetToastProps {
-    message?: Message;
-}
-interface Toast {
-    Component: React.ComponentType<MiniPetToastProps>;
-    props: { message?: Message };
-}
 export interface ToastState {
-    toast: Toast | null;
+    toast: React.ReactNode | null;
     isShow: boolean;
-    showToast: (Component: any, props: {}) => void;
+    showToast: <P extends object>(
+        Component: React.ComponentType<P>,
+        props: P,
+        duration?: number
+    ) => void;
     closeToast: () => void;
-    timer: NodeJS.Timeout | null;
+    timer: ReturnType<typeof setTimeout> | null;
 }
 
-const useToastsStore = create<ToastState>((set) => ({
+const useToastsStore = create<ToastState>((set, get) => ({
     toast: null,
     isShow: false,
     timer: null,
-    showToast: (Component, props) => {
+    showToast: (Component, props, duration = 5500) => {
+        const { timer } = get();
+        if (timer) {
+            clearTimeout(timer);
+        }
+
         set({
-            toast: {
-                Component,
-                props
-            },
+            toast: <Component {...props} />,
             isShow: true,
-            timer: setTimeout(() => {
-                const { closeToast } = useToastsStore.getState();
-                closeToast();
-            }, 5500)
+            timer: null
         });
+
+        const newTimer = setTimeout(() => {
+            set({ toast: null, isShow: false, timer: null });
+        }, duration);
+
+        set({ timer: newTimer });
     },
     closeToast: () => {
-        set({ toast: null, isShow: false });
-        const { timer } = useToastsStore.getState();
-        timer && clearTimeout(timer);
+        const { timer } = get();
+        if (timer) {
+            clearTimeout(timer);
+        }
+        set({ toast: null, isShow: false, timer: null });
     }
 }));
 export default useToastsStore;

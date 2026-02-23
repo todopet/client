@@ -4,7 +4,7 @@ import { ToastWrap } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast.st
 import useToastsStore from "@/store/toastStore";
 
 interface ToastProps {
-    message: Message;
+    message?: Message;
 }
 export const MiniPetToast = ({ message }: ToastProps) => {
     const { isShow } = useToastsStore();
