@@ -3,6 +3,7 @@ import { PetArea } from "@/components/pages/Pet/PetArea";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { PetAreaProps } from "@/components/pages/Pet/PetArea/types";
 import { usePetQuery } from "@/hooks/queries/usePetQuery";
+import { preloadPetImages } from "@/libs/utils/imagePreloader";
 
 export const MyContext = createContext<() => Promise<void>>(async () => {});
 
@@ -19,6 +20,10 @@ const initialPetData: PetAreaProps = {
 const Pet = () => {
   const [petData, setPetData] = useState<PetAreaProps>(initialPetData);
   const { data: petInfo, error, refetch } = usePetQuery();
+
+  useEffect(() => {
+    void preloadPetImages();
+  }, []);
 
   useEffect(() => {
     if (!petInfo) {
