@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { axiosRequest } from "@/api";
 import { res, myUser } from "@/@types";
 import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 interface userinfoType {
   picture: string;
@@ -21,7 +22,7 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
     try {
       const response: res<myUser> = await axiosRequest.requestAxios<res<myUser>>(
         "get",
-        "users/user"
+        API_ENDPOINTS.USER.PROFILE
       );
       setNickname(response.data.nickname);
     } catch (error) {
@@ -73,7 +74,7 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
     try {
       const response: res<myUser> = await axiosRequest.requestAxios<res<myUser>>(
         "patch",
-        "users/myInfo",
+        API_ENDPOINTS.USER.MY_INFO,
         { nickname }
       );
       if (response.data) {

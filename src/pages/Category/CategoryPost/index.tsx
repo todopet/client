@@ -11,6 +11,7 @@ import {
     notifyErrorMessage,
     notifySuccessMessage
 } from "@/libs/utils/notifyApiError";
+import { API_ENDPOINTS } from "@/api/endpoints";
 const CategoryPost = () => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("categoryId");
@@ -26,7 +27,7 @@ const CategoryPost = () => {
         try {
             const response: res<category> = await axiosRequest.requestAxios<
                 res<category>
-            >("post", "todoCategories", { category });
+            >("post", API_ENDPOINTS.CATEGORY.LIST, { category });
 
             if (!response.error) {
                 notifySuccessMessage("목표가 등록되었습니다.");
@@ -46,7 +47,7 @@ const CategoryPost = () => {
         try {
             const response: res<category> = await axiosRequest.requestAxios<
                 res<category>
-            >("patch", `todoCategories/${id}`, { category });
+            >("patch", API_ENDPOINTS.CATEGORY.ITEM(id!), { category });
 
             if (!response.error) {
                 notifySuccessMessage("목표가 수정되었습니다.");

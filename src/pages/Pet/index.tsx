@@ -4,6 +4,7 @@ import { axiosRequest } from "@/api";
 import { res, myPet } from "@/@types";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { PetAreaProps } from "@/components/pages/Pet/PetArea/types";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 export const MyContext = createContext<() => Promise<void>>(async () => {});
 
@@ -24,7 +25,7 @@ const Pet = () => {
         try {
             const response: res<myPet> = await axiosRequest.requestAxios<
                 res<myPet>
-            >("get", "myPets", {});
+            >("get", API_ENDPOINTS.PET.INFO, {});
             const petInfo = response.data.pet;
             const petLevel: number | null = petInfo.level;
             const safeLevel = petLevel ?? 0;

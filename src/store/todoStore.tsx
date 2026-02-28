@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { res, todo, todoCategory, TodoStatus, ToastType } from "@/@types";
 import { axiosRequest } from "@/api";
+import { API_ENDPOINTS } from "@/api/endpoints";
 import { Message } from "@/@types/todo";
 import { formatDateToString } from "@/libs/utils/global";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
@@ -71,7 +72,7 @@ export const useTodosStore = create<Todos>((set, get) => {
                 const response: res<todoCategory[]> =
                     await axiosRequest.requestAxios<res<todoCategory[]>>(
                         "get",
-                        `todoContents?start=${startDate}&end=${endDate}`
+                        API_ENDPOINTS.TODO.CONTENTS_BY_DATE(startDate, endDate)
                     );
                 if (startDate === endDate) {
                     set({ dateTodos: response.data });
@@ -88,7 +89,10 @@ export const useTodosStore = create<Todos>((set, get) => {
         },
         deleteTodo: async (contentId) => {
             try {
-                await axiosRequest.requestAxios<res<todo[]>>("delete", `todoContents/${contentId}`);
+                await axiosRequest.requestAxios<res<todo[]>>(
+                    "delete",
+                    API_ENDPOINTS.TODO.CONTENT(contentId)
+                );
                 await refreshTodos();
             } catch (error) {
                 notifyApiError(
@@ -109,7 +113,7 @@ export const useTodosStore = create<Todos>((set, get) => {
                     res<todo>
                 >(
                     "patch",
-                    `todoContents/${contentId}?_=${Date.now()}`,
+                    API_ENDPOINTS.TODO.CONTENT_WITH_CACHE_BUSTER(contentId),
                     {
                         todo: content,
                         status: checkStatus,

@@ -15,6 +15,7 @@ import {
 import { axiosRequest } from "@/api";
 import { category, res } from "@/@types";
 import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 interface CategoryPostProps {
     subject: string;
@@ -63,7 +64,7 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
             try {
                 const response: res<category> = await axiosRequest.requestAxios<
                     res<category>
-                >("get", `todoCategories/${id}`);
+                >("get", API_ENDPOINTS.CATEGORY.ITEM(id));
                 setInputValue(response.data.category);
                 onTextSend(response.data.category);
             } catch (error) {
@@ -94,7 +95,7 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 // PATCH 요청으로 목표를 종료
                 const response: res<category> = await axiosRequest.requestAxios<
                     res<category>
-                >("patch", `todoCategories/endCategory/${id}`);
+                >("patch", API_ENDPOINTS.CATEGORY.END_ITEM(id));
                 if (!response.error) {
                     notifySuccessMessage("목표가 종료되었습니다.");
                     navigate("/category/list");
@@ -114,7 +115,7 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
                 // PATCH 요청으로 목표를 종료
                 const response: res<category> = await axiosRequest.requestAxios<
                     res<category>
-                >("delete", `todoCategories/${id}`);
+                >("delete", API_ENDPOINTS.CATEGORY.ITEM(id));
                 if (!response.error) {
                     notifySuccessMessage("목표가 삭제되었습니다.");
                     navigate("/category/list");

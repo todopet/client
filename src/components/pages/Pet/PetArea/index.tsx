@@ -35,6 +35,7 @@ import {
 } from "@/libs/constants/petConfig";
 import { usePetEmotion } from "@/components/pages/Pet/PetArea/hooks/usePetEmotion";
 import { PetAreaProps } from "@/components/pages/Pet/PetArea/types";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 export const PetArea = ({
   hungerInfo,
@@ -88,7 +89,7 @@ export const PetArea = ({
     try {
       const response: res<itemsCount> = await axiosRequest.requestAxios<res<itemsCount>>(
         "get",
-        "inventories/itemsCount",
+        API_ENDPOINTS.INVENTORY.ITEMS_COUNT,
         {}
       );
       setIsFull(response.data.count >= maxVolume);
