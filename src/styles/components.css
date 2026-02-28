@@ -1,0 +1,23 @@
+@tailwind components;
+
+@layer components {
+  .btn-base {
+    @apply inline-flex items-center justify-center rounded-[0.8rem] border border-[#c9c9c9] bg-white px-4 py-3 text-base font-medium transition-opacity;
+  }
+
+  .btn-base:hover {
+    @apply opacity-90;
+  }
+
+  .card-base {
+    @apply rounded-[1rem] border border-[#e5e7eb] bg-white shadow-sm;
+  }
+
+  .input-base {
+    @apply h-11 w-full rounded-[0.7rem] border border-[#d1d5db] px-4 text-base outline-none;
+  }
+
+  .modal-backdrop {
+    @apply fixed inset-0 z-[1000] flex h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.58)] backdrop-blur-sm;
+  }
+}

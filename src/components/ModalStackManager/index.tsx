@@ -33,7 +33,7 @@ const getSizeValue = (size?: string | number) => {
   return "auto";
 };
 
-const ModalStackManager: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ModalStackManager: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [modalStack, setModalStack] = useState<ModalProps[]>([]);
 
   const hasModal = modalStack.length > 0;
@@ -158,5 +158,3 @@ const ModalStackManager: React.FC<{ children: React.ReactNode }> = ({ children }
     </ModalContext.Provider>
   );
 };
-
-export default ModalStackManager;

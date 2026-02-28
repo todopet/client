@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { RankInfo } from "@/@types";
-import TopThree from "@/components/pages/Ranking/TopThree";
-import RankInfoList from "@/components/pages/Ranking/RankInfoList";
+import { TopThree } from "@/components/pages/Ranking/TopThree";
+import { RankInfoList } from "@/components/pages/Ranking/RankInfoList";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { RANKING_CONFIG } from "@/libs/constants";
 import { useRankingQuery } from "@/hooks/queries/useUserQuery";

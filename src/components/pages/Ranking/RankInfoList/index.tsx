@@ -11,7 +11,7 @@ interface RankInfoProps {
 //     [key: number]: () => JSX.Element | number;
 // }
 
-const RankInfoList = ({ userRankList }: RankInfoProps) => {
+export const RankInfoList = ({ userRankList }: RankInfoProps) => {
   // const medal: Medals = {
   //     1: () => (
   //         <Rank>
@@ -59,5 +59,3 @@ const RankInfoList = ({ userRankList }: RankInfoProps) => {
     </div>
   );
 };
-
-export default RankInfoList;

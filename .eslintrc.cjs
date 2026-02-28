@@ -10,11 +10,12 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "import"],
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
     "prettier", // prettier와 충돌 방지
   ],
   settings: {
@@ -33,5 +34,16 @@ module.exports = {
     "@typescript-eslint/no-empty-object-type": "off",
     "@typescript-eslint/no-unused-expressions": "off",
     "no-useless-catch": "off",
+    "import/no-default-export": "warn",
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "off",
   },
+  overrides: [
+    {
+      files: ["src/App.tsx", "src/pages/**/*.tsx"],
+      rules: {
+        "import/no-default-export": "off",
+      },
+    },
+  ],
 };

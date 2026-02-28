@@ -28,7 +28,7 @@ export const FooterItem: React.FC<FooterItemProps> = ({ to, icon, label }) => {
   );
 };
 
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
   return (
     <footer className="fixed bottom-0 z-10 w-full left-1/2 -translate-x-1/2 h-[70px] bg-white flex justify-around items-center">
       <FooterItem to="/todo" icon={HomeIcon} label="피드" />
@@ -38,5 +38,3 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-export default Footer;

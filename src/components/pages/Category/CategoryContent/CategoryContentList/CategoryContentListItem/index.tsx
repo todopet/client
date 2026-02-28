@@ -12,7 +12,7 @@ interface CategoryProps {
     category: Category;
 }
 
-const CategoryContentListItem: React.FC<CategoryProps> = ({ category }) => {
+export const CategoryContentListItem: React.FC<CategoryProps> = ({ category }) => {
     return (
         <>
             {
@@ -28,5 +28,3 @@ const CategoryContentListItem: React.FC<CategoryProps> = ({ category }) => {
         </>
     );
 };
-
-export default CategoryContentListItem;
