@@ -5,11 +5,13 @@ import { useTodosStore } from "@/store/todoStore";
 import { TodoItem } from "@/components/pages/Todo/TodoList/TodoItem";
 
 export const TodoList = () => {
-  const { selectedDate, setTodos, dateTodos } = useTodosStore((state) => state);
+  const selectedDate = useTodosStore((state) => state.selectedDate);
+  const setTodos = useTodosStore((state) => state.setTodos);
+  const dateTodos = useTodosStore((state) => state.dateTodos);
 
   useEffect(() => {
-    setTodos(selectedDate, selectedDate);
-  }, [selectedDate]);
+    void setTodos(selectedDate, selectedDate);
+  }, [selectedDate, setTodos]);
 
   return (
     <div className="w-full">

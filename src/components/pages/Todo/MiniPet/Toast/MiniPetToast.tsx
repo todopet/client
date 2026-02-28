@@ -7,7 +7,7 @@ interface ToastProps {
     message?: Message;
 }
 export const MiniPetToast = ({ message }: ToastProps) => {
-    const { isShow } = useToastsStore();
+    const isShow = useToastsStore((state) => state.isShow);
     const { content, bgColor } = getToastContent(message);
 
     return (

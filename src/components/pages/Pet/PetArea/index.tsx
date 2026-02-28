@@ -22,7 +22,7 @@ import { CircleButton } from "@/components/CircleButton";
 import { Exp } from "@/components/pages/Pet/Exp";
 import { Status } from "@/components/pages/Pet/Status";
 import { Stars } from "@/components/pages/Pet/Stars";
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { InventoryModal } from "@/components/pages/Pet/Inventory";
 import { ModalBg } from "@/components/pages/Pet/Inventory/Inventory.styles";
 import { ApiResponse, ItemsCount } from "@/@types";
@@ -50,12 +50,12 @@ export const PetArea = ({
   const [invState, setInvState] = useState(false);
   const [isFull, setIsFull] = useState(false);
 
-  const toggleAchState = () => {
-    setAchState(!achState);
-  };
-  const toggleInvState = () => {
-    setInvState(!invState);
-  };
+  const toggleAchState = useCallback(() => {
+    setAchState((prev) => !prev);
+  }, []);
+  const toggleInvState = useCallback(() => {
+    setInvState((prev) => !prev);
+  }, []);
 
   const { curHunger, maxHunger } = hungerInfo;
   const { curAffection, maxAffection } = affectionInfo;
@@ -63,9 +63,15 @@ export const PetArea = ({
   const { curCleanliness, maxCleanliness } = cleanlinessInfo;
   const { curExperience, maxExperience } = expInfo;
 
-  const level = levelInfo ?? 0;
-  const petImgSize = PET_IMAGE_SIZE_CONFIG[level] ?? PET_IMAGE_SIZE_CONFIG[0];
-  const emotionPosition = PET_EMOTION_POSITION_CONFIG[level] ?? PET_EMOTION_POSITION_CONFIG[0];
+  const level = useMemo(() => levelInfo ?? 0, [levelInfo]);
+  const petImgSize = useMemo(
+    () => PET_IMAGE_SIZE_CONFIG[level] ?? PET_IMAGE_SIZE_CONFIG[0],
+    [level]
+  );
+  const emotionPosition = useMemo(
+    () => PET_EMOTION_POSITION_CONFIG[level] ?? PET_EMOTION_POSITION_CONFIG[0],
+    [level]
+  );
 
   const calculatePercent = (current: number, max: number) => {
     if (max <= 0) {
@@ -74,10 +80,19 @@ export const PetArea = ({
     return Math.round((current / max) * 100);
   };
 
-  const hungerPercent = calculatePercent(curHunger, maxHunger);
-  const affectionPercent = calculatePercent(curAffection, maxAffection);
-  const conditionPercent = calculatePercent(curCondition, maxCondition);
-  const cleanlinessPercent = calculatePercent(curCleanliness, maxCleanliness);
+  const hungerPercent = useMemo(() => calculatePercent(curHunger, maxHunger), [curHunger, maxHunger]);
+  const affectionPercent = useMemo(
+    () => calculatePercent(curAffection, maxAffection),
+    [curAffection, maxAffection]
+  );
+  const conditionPercent = useMemo(
+    () => calculatePercent(curCondition, maxCondition),
+    [curCondition, maxCondition]
+  );
+  const cleanlinessPercent = useMemo(
+    () => calculatePercent(curCleanliness, maxCleanliness),
+    [curCleanliness, maxCleanliness]
+  );
   const petEmotion = usePetEmotion(
     hungerPercent,
     affectionPercent,
@@ -85,7 +100,7 @@ export const PetArea = ({
     cleanlinessPercent
   );
 
-  const isInventoryFull = async () => {
+  const isInventoryFull = useCallback(async () => {
     try {
       const response: ApiResponse<ItemsCount> = await axiosRequest.requestAxios<ApiResponse<ItemsCount>>(
         "get",
@@ -99,13 +114,15 @@ export const PetArea = ({
         "아이템 개수 정보를 가져오는중 에러가 발생했습니다. 다시 시도해주세요."
       );
     }
-  };
+  }, []);
 
   // 펫화면 처음 들어갔을때 뿐만 아니라 인벤토리창을 닫았을 때에도 아이템 개수가 50개 이상인지 아닌지 체크해야되니까 invState가 변할때를 기준으로 isInventoryFull 함수 실행.
   // deps에 invState하면 인벤토리를 열었을때도 실행되는데 인벤토리 열때는 실행할 필요 없으므로 invState가 바뀌었을때 얘가 false일때(=> 인벤토리창을 닫았을때)만 함수 실행
   useEffect(() => {
-    if (!invState) isInventoryFull();
-  }, [invState]);
+    if (!invState) {
+      void isInventoryFull();
+    }
+  }, [invState, isInventoryFull]);
 
   return (
     <MainArea>

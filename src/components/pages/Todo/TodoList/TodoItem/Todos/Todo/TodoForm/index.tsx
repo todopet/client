@@ -1,5 +1,5 @@
 //react hook
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 //api, interface
 import { axiosRequest } from "@/api";
 import { ApiResponse, Todo, TodoStatus } from "@/@types";
@@ -25,7 +25,8 @@ export const TodoForm = ({
   status,
   finishEdit,
 }: TodoFormProps) => {
-  const { selectedDate, setTodos } = useTodosStore((state) => state);
+  const selectedDate = useTodosStore((state) => state.selectedDate);
+  const setTodos = useTodosStore((state) => state.setTodos);
   //체크 가능여부
   const [disabledChecked, setDisabledChecked] = useState<boolean>(true);
 
@@ -33,7 +34,7 @@ export const TodoForm = ({
   const [value, setValue] = useState<string>(existingContent ? existingContent : "");
 
   //투두 post요청(투두 생성)
-  const postTodo = async () => {
+  const postTodo = useCallback(async () => {
     try {
       const response = await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
         "post",
@@ -48,9 +49,9 @@ export const TodoForm = ({
     } catch (error) {
       notifyApiError(error, "할 일 생성 중 에러가 발생했습니다. 다시 시도해 주세요.");
     }
-  }
+  }, [categoryId, selectedDate, value]);
   //투두 patch요청(투두내용수정)
-  const changeTodoContent = async () => {
+  const changeTodoContent = useCallback(async () => {
     try {
       await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
         "patch",
@@ -64,10 +65,10 @@ export const TodoForm = ({
     } catch (error) {
       notifyApiError(error, "데이터 수정 중 에러가 발생했습니다. 다시 시도해 주세요.");
     }
-  }
+  }, [contentId, status, value]);
 
   //투두 생성 or 수정
-  const submitForm = async () => {
+  const submitForm = useCallback(async () => {
     if (existingContent) {
       setDisabledChecked(true); //체크박스 지우기
       await changeTodoContent();
@@ -78,30 +79,31 @@ export const TodoForm = ({
     }
     setTodos(selectedDate, selectedDate);
     setValue("");
-  };
+  }, [changeTodoContent, existingContent, finishEdit, postTodo, selectedDate, setTodos, value]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    submitForm();
-  };
+    await submitForm();
+  }, [submitForm]);
 
   //input form 참조
   const formRef = useRef<HTMLFormElement>(null);
 
   //input form 외부 클릭시 제출
-  const handleClickOutside = (e: MouseEvent) => {
+  const handleClickOutside = useCallback((e: MouseEvent) => {
     if (formRef.current && !formRef.current.contains(e.target as Node)) {
-      submitForm();
+      void submitForm();
       finishEdit && finishEdit();
     }
-  }
+  }, [finishEdit, submitForm]);
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       // 클릭 이벤트 리스너 제거
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [value]); //value의 최신값을 반영
+  }, [handleClickOutside]);
 
   //input value 변경시 업데이트
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

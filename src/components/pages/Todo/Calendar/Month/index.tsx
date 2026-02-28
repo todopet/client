@@ -20,9 +20,10 @@ export const Month = ({ onHeaderChange }: MonthProps) => {
   const [clicked, setClicked] = useState(-1);
   const [datesOfMonth, setDatesOfMonth] = useState<Date[]>([]);
 
-  const { setSelectedDate, setStartEndDate, periodTodos, setTodos } = useTodosStore(
-    (state) => state
-  );
+  const setSelectedDate = useTodosStore((state) => state.setSelectedDate);
+  const setStartEndDate = useTodosStore((state) => state.setStartEndDate);
+  const periodTodos = useTodosStore((state) => state.periodTodos);
+  const setTodos = useTodosStore((state) => state.setTodos);
 
   const getMonthDates = (firstDate: Date) => {
     const newDates = [];
