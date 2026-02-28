@@ -15,11 +15,12 @@ axios.interceptors.request.use(
   (config) => {
     // 로딩 시작
     useLoadingStore.getState().startLoading();
+    const method = (config.method ?? "get").toLowerCase();
 
     // FormData인 경우 Content-Type 자동 설정
     if (config.data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
-    } else {
+    } else if (["post", "put", "patch", "delete"].includes(method)) {
       config.headers["Content-Type"] = "application/json";
     }
 
@@ -122,11 +123,24 @@ export const axiosRequest: AxiosRequest = {
     if (!allowMethod.includes(method.toLowerCase()))
       throw new Error("허용되지 않은 호출 method입니다.");
     try {
+      const normalizedMethod = method.toLowerCase();
+      const requestConfig =
+        normalizedMethod === "get"
+          ? {
+              method,
+              url: `${axios.defaults.baseURL}${url}`,
+              params: data,
+              headers,
+            }
+          : {
+              method,
+              url: `${axios.defaults.baseURL}${url}`,
+              data,
+              headers,
+            };
+
       const response = await axios({
-        method,
-        url: `${axios.defaults.baseURL}${url}`,
-        data,
-        headers, // 아이템, 인벤토리 호출할때만 넣기. 주요 기능에만 제한하는 것은 어떨지
+        ...requestConfig, // 아이템, 인벤토리 호출할때만 넣기. 주요 기능에만 제한하는 것은 어떨지
       });
 
       return response.data as T;
