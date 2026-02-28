@@ -1,4 +1,4 @@
-import { category } from "@/@types";
+import { Category } from "@/@types";
 import {
     CircleButton,
     StyledLink,
@@ -9,7 +9,7 @@ import {
 import { UpdateIcon } from "@/modules/icons";
 
 interface CategoryProps {
-    category: category;
+    category: Category;
 }
 
 const CategoryContentListItem: React.FC<CategoryProps> = ({ category }) => {

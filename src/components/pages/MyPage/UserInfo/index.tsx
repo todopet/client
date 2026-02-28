@@ -3,7 +3,7 @@ import { NickName } from "@/components/pages/MyPage/NickName";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosRequest } from "@/api";
-import { res, myUser } from "@/@types";
+import { ApiResponse, MyUser } from "@/@types";
 import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
 import { API_ENDPOINTS } from "@/api/endpoints";
 
@@ -20,7 +20,7 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
   const navigate = useNavigate();
   const getUserName = async () => {
     try {
-      const response: res<myUser> = await axiosRequest.requestAxios<res<myUser>>(
+      const response: ApiResponse<MyUser> = await axiosRequest.requestAxios<ApiResponse<MyUser>>(
         "get",
         API_ENDPOINTS.USER.PROFILE
       );
@@ -72,7 +72,7 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
 
   const handleNicknameChange = async () => {
     try {
-      const response: res<myUser> = await axiosRequest.requestAxios<res<myUser>>(
+      const response: ApiResponse<MyUser> = await axiosRequest.requestAxios<ApiResponse<MyUser>>(
         "patch",
         API_ENDPOINTS.USER.MY_INFO,
         { nickname }

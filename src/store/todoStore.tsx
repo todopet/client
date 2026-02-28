@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { res, todo, todoCategory, TodoStatus, ToastType } from "@/@types";
+import { ApiResponse, Todo, TodoCategory, TodoStatus, ToastType } from "@/@types";
 import { axiosRequest } from "@/api";
 import { API_ENDPOINTS } from "@/api/endpoints";
 import { Message } from "@/@types/todo";
@@ -12,14 +12,14 @@ export interface Todos {
     selectedDate: string;
     startDate: string;
     endDate: string;
-    dateTodos?: todoCategory[];
-    periodTodos?: todoCategory[];
+    dateTodos?: TodoCategory[];
+    periodTodos?: TodoCategory[];
     message: Message;
     isActiveToast: boolean;
     timer: NodeJS.Timeout | null;
     setSelectedDate: (date: string) => void;
     setStartEndDate: (start: string, end: string) => void;
-    setTodos: (startDate: string, endDate: string) => Promise<todoCategory[] | undefined>;
+    setTodos: (startDate: string, endDate: string) => Promise<TodoCategory[] | undefined>;
     deleteTodo: (contentId: string) => Promise<void>;
     setStatus: (
         contentId: string,
@@ -69,8 +69,8 @@ export const useTodosStore = create<Todos>((set, get) => {
         },
         setTodos: async (startDate, endDate) => {
             try {
-                const response: res<todoCategory[]> =
-                    await axiosRequest.requestAxios<res<todoCategory[]>>(
+                const response: ApiResponse<TodoCategory[]> =
+                    await axiosRequest.requestAxios<ApiResponse<TodoCategory[]>>(
                         "get",
                         API_ENDPOINTS.TODO.CONTENTS_BY_DATE(startDate, endDate)
                     );
@@ -89,7 +89,7 @@ export const useTodosStore = create<Todos>((set, get) => {
         },
         deleteTodo: async (contentId) => {
             try {
-                await axiosRequest.requestAxios<res<todo[]>>(
+                await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
                     "delete",
                     API_ENDPOINTS.TODO.CONTENT(contentId)
                 );
@@ -109,8 +109,8 @@ export const useTodosStore = create<Todos>((set, get) => {
             date: string
         ) => {
             try {
-                const response: res<todo> = await axiosRequest.requestAxios<
-                    res<todo>
+                const response: ApiResponse<Todo> = await axiosRequest.requestAxios<
+                    ApiResponse<Todo>
                 >(
                     "patch",
                     API_ENDPOINTS.TODO.CONTENT_WITH_CACHE_BUSTER(contentId),

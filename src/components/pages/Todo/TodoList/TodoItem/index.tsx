@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 //api, interface
-import { todoCategory } from "@/@types";
+import { TodoCategory } from "@/@types";
 
 //components
 import { Category } from "@/components/pages/Todo/TodoList/TodoItem/Category";
@@ -12,7 +12,7 @@ import { useTodosStore } from "@/store/todoStore";
 import { TodoItemStyles } from "@/components/pages/Todo/TodoList/TodoItem/TodoItem.styles";
 
 interface TodoItemProps {
-    todos: todoCategory;
+    todos: TodoCategory;
 }
 export const TodoItem = ({ todos }: TodoItemProps) => {
     const [openInputForm, setOpenInputForm] = useState<boolean>(false);

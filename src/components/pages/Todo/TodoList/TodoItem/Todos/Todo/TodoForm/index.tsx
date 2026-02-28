@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 //api, interface
 import { axiosRequest } from "@/api";
-import { res, todo, TodoStatus } from "@/@types";
+import { ApiResponse, Todo, TodoStatus } from "@/@types";
 //icons
 //components
 import { useTodosStore } from "@/store/todoStore";
@@ -35,7 +35,7 @@ export const TodoForm = ({
   //투두 post요청(투두 생성)
   const postTodo = async () => {
     try {
-      const response = await axiosRequest.requestAxios<res<todo[]>>(
+      const response = await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
         "post",
         API_ENDPOINTS.TODO.CONTENTS_WITH_CACHE_BUSTER(),
         {
@@ -52,7 +52,7 @@ export const TodoForm = ({
   //투두 patch요청(투두내용수정)
   const changeTodoContent = async () => {
     try {
-      await axiosRequest.requestAxios<res<todo[]>>(
+      await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
         "patch",
         API_ENDPOINTS.TODO.CONTENT_WITH_CACHE_BUSTER(contentId!),
         {

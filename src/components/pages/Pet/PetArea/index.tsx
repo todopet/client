@@ -25,7 +25,7 @@ import { Stars } from "@/components/pages/Pet/Stars";
 import { useState, useEffect } from "react";
 import { InventoryModal } from "@/components/pages/Pet/Inventory";
 import { ModalBg } from "@/components/pages/Pet/Inventory/Inventory.styles";
-import { itemsCount, res } from "@/@types";
+import { ApiResponse, ItemsCount } from "@/@types";
 import { axiosRequest } from "@/api";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { maxVolume } from "@/libs/constants";
@@ -87,7 +87,7 @@ export const PetArea = ({
 
   const isInventoryFull = async () => {
     try {
-      const response: res<itemsCount> = await axiosRequest.requestAxios<res<itemsCount>>(
+      const response: ApiResponse<ItemsCount> = await axiosRequest.requestAxios<ApiResponse<ItemsCount>>(
         "get",
         API_ENDPOINTS.INVENTORY.ITEMS_COUNT,
         {}

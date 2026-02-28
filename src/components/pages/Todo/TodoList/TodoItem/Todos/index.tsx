@@ -1,9 +1,9 @@
 import { Todo } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo";
-import { todo } from "@/@types";
+import { Todo as TodoType } from "@/@types";
 import { TodosWrap } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todos.styles";
 
 interface TodosProps {
-    todos: todo[];
+    todos: TodoType[];
 }
 export const Todos = ({ todos }: TodosProps) => {
     return (

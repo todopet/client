@@ -13,7 +13,7 @@ import {
     SpanText
 } from "@/components/pages/Category/CategoryContent/CategoryContentPost/CategoryContentPost.styles";
 import { axiosRequest } from "@/api";
-import { category, res } from "@/@types";
+import { ApiResponse, Category } from "@/@types";
 import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
 import { API_ENDPOINTS } from "@/api/endpoints";
 
@@ -62,8 +62,8 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
     const getCategory = async () => {
         if (id) {
             try {
-                const response: res<category> = await axiosRequest.requestAxios<
-                    res<category>
+                const response: ApiResponse<Category> = await axiosRequest.requestAxios<
+                    ApiResponse<Category>
                 >("get", API_ENDPOINTS.CATEGORY.ITEM(id));
                 setInputValue(response.data.category);
                 onTextSend(response.data.category);
@@ -93,8 +93,8 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
         if (id) {
             try {
                 // PATCH 요청으로 목표를 종료
-                const response: res<category> = await axiosRequest.requestAxios<
-                    res<category>
+                const response: ApiResponse<Category> = await axiosRequest.requestAxios<
+                    ApiResponse<Category>
                 >("patch", API_ENDPOINTS.CATEGORY.END_ITEM(id));
                 if (!response.error) {
                     notifySuccessMessage("목표가 종료되었습니다.");
@@ -113,8 +113,8 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
         if (id) {
             try {
                 // PATCH 요청으로 목표를 종료
-                const response: res<category> = await axiosRequest.requestAxios<
-                    res<category>
+                const response: ApiResponse<Category> = await axiosRequest.requestAxios<
+                    ApiResponse<Category>
                 >("delete", API_ENDPOINTS.CATEGORY.ITEM(id));
                 if (!response.error) {
                     notifySuccessMessage("목표가 삭제되었습니다.");

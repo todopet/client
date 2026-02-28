@@ -3,7 +3,7 @@ import { EditBtn } from "@/components/pages/Pet/Inventory/Item/Action/EditBtn";
 import { ChangeQtyBtn } from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn";
 // import { items, myItems } from "@/@types/myItems";
 import { axiosRequest } from "@/api";
-import { res, useItemRes } from "@/@types";
+import { ApiResponse, UseItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";
 import { ItemDataContext } from "@/components/pages/Pet/Inventory";
 import { MyContext } from "@/pages/Pet";
@@ -36,7 +36,7 @@ export const ActionModal = ({
   const handleUseItem = async (itemId: string) => {
     try {
       const data = { quantity: itemCount };
-      await axiosRequest.requestAxios<res<useItemRes>>(
+      await axiosRequest.requestAxios<ApiResponse<UseItemRes>>(
         "post",
         API_ENDPOINTS.INVENTORY.USE_ITEM(itemId),
         data
@@ -51,7 +51,7 @@ export const ActionModal = ({
   const handleDumpItem = async (itemId: string) => {
     try {
       const data = { quantity: itemCount * -1 };
-      await axiosRequest.requestAxios<res<dumpItemRes>>(
+      await axiosRequest.requestAxios<ApiResponse<dumpItemRes>>(
         "patch",
         API_ENDPOINTS.INVENTORY.DUMP_ITEM(itemId),
         data
