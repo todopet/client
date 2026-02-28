@@ -2,15 +2,32 @@ import Spinner from "@/assets/images/spinner.gif";
 import { googleIcon } from "@/modules/icons";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { notifyErrorMessage } from "@/libs/utils/notifyApiError";
+import { useAuthStore } from "@/store/authStore";
 
 const Login = () => {
+    const login = useAuthStore((state) => state.login);
+    const error = useAuthStore((state) => state.error);
+    const clearError = useAuthStore((state) => state.clearError);
+    const setError = useAuthStore((state) => state.setError);
+
     const handleLoginClick = async () => {
+        clearError();
         // 백엔드에서 리다이렉트
         const base = import.meta.env.VITE_API_URL || "http://localhost:3001/api/v1";
         document.location.href = base + "/login";
     };
+
     const location = useLocation();
+
+    useEffect(() => {
+        clearError();
+        void login("", "");
+
+        return () => {
+            clearError();
+        };
+    }, [clearError, login]);
+
     useEffect(() => {
         const hash = location.hash.split("#")[1];
         if (hash) {
@@ -18,9 +35,9 @@ const Login = () => {
             const queries = uri.split("&");
             const queryParams = queries.map((el) => el.split("="));
             const reason = queryParams[2][1];
-            notifyErrorMessage(reason);
+            setError(reason);
         }
-    }, [location.hash]);
+    }, [location.hash, setError]);
 
     return (
         <div className="flex flex-col items-center justify-center h-full">
@@ -43,6 +60,7 @@ const Login = () => {
                     구글 계정으로 로그인
                 </div>
             </button>
+            {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
         </div>
     );
 };

@@ -2,9 +2,11 @@ import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/layout/Logo";
 import { DropDown } from "@/components/DropDown";
 import { HeaderMenuIcon, BluePlusIcon } from "@/modules/icons";
+import { useAuthStore } from "@/store/authStore";
 
 export const Header = () => {
   const location = useLocation();
+  const nickname = useAuthStore((state) => state.user?.nickname);
   //DropDown의 props
   const listItems = [
     {
@@ -27,7 +29,8 @@ export const Header = () => {
           <Logo />
         </Link>
       </div>
-      <div className="mr-4">
+      <div className="mr-4 flex items-center gap-2">
+        {nickname && <span className="text-sm text-[#5e5e5e]">{nickname}</span>}
         {isDropDown && (
           <DropDown list={listItems}>
             <img src={HeaderMenuIcon} alt="menu" />
