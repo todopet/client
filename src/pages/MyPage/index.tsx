@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "@/libs/hooks/useModal";
 import { Confirm } from "@/components/Confirm";
 import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
+import { useAuthStore } from "@/store/authStore";
 
 interface ConfirmContentProps {
   message: React.ReactNode;
@@ -42,6 +43,9 @@ const ConfirmContent: React.FC<ConfirmContentProps> = ({ message, onCancel, onCo
 
 const MyPage = () => {
   const { openModal, closeModal } = useModal();
+  const logout = useAuthStore((state) => state.logout);
+  const logoutError = useAuthStore((state) => state.error);
+  const clearAuthError = useAuthStore((state) => state.clearError);
 
   const [userInfo, setUserInfo] = useState<myUser>({
     _id: "",
@@ -55,16 +59,12 @@ const MyPage = () => {
 
   const handleConfirmLogout = async () => {
     try {
-      const response = await axiosRequest.requestAxios<res<{}>>("post", "logout");
-      console.log(response);
-      if (response.status === 200) {
-        notifySuccessMessage("로그아웃 처리되었습니다.");
-        navigate("/");
-      } else {
-        throw new Error();
-      }
+      clearAuthError();
+      await logout();
+      notifySuccessMessage("로그아웃 처리되었습니다.");
+      navigate("/", { replace: true });
     } catch (error) {
-      notifyApiError(error, "로그아웃에 실패하였습니다 :(");
+      notifyApiError(error, logoutError || "로그아웃에 실패하였습니다 :(");
     }
   };
   const handleConfirmWithdraw = async () => {
