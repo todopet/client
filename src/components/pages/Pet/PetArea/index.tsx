@@ -16,7 +16,6 @@ import {
   PetName,
   MainFooterButton,
   InventoryFullImg,
-  AchModalBackdrop,
 } from "@/components/pages/Pet/PetArea/PetArea.styles";
 import { CircleButton } from "@/components/CircleButton";
 import { Exp } from "@/components/pages/Pet/Exp";
@@ -46,13 +45,9 @@ export const PetArea = ({
   levelInfo,
   petName,
 }: PetAreaProps) => {
-  const [achState, setAchState] = useState(false);
   const [invState, setInvState] = useState(false);
   const [isFull, setIsFull] = useState(false);
 
-  const toggleAchState = useCallback(() => {
-    setAchState((prev) => !prev);
-  }, []);
   const toggleInvState = useCallback(() => {
     setInvState((prev) => !prev);
   }, []);
@@ -188,7 +183,6 @@ export const PetArea = ({
         </PetImg>
       </MainBody>
       <MainFooter>
-        {/* <MainFooterButton className="" url={ranking} color="#56ABF9" border="1px" onClick={toggleAchState} /> */}
         <MainFooterButton
           className=""
           url={inventory}
@@ -197,22 +191,6 @@ export const PetArea = ({
           onClick={toggleInvState}
         />
         {isFull && <InventoryFullImg />}
-        {/* <AchModal on={achState}>
-					{ achState && <AchModalTitle>업적</AchModalTitle> }  모달창 크기가 0인 상태에서도 '업적' 텍스트가 화면에 나와서 모달창 꺼져있을땐 아예 안나오게 처리
-					<AchArea>
-						<AchWrapper>
-							<Achievement achName="첫 Todo 완료하기" isRewarded={false} achDone={false} totalCount={3} currentCount={2} />
-							<Achievement achName="첫 Todo 완료하기" isRewarded={false} achDone={true} totalCount={1} currentCount={1} />
-							<Achievement achName="첫 Todo 완료하기" isRewarded={true} achDone={true} totalCount={2} currentCount={2} />
-							<Achievement achName="첫 Todo 완료하기" isRewarded={false} achDone={true} totalCount={2} currentCount={2} />
-							<Achievement achName="첫 Todo 완료하기" isRewarded={true} achDone={true} totalCount={2} currentCount={2} />
-							<Achievement achName="첫 Todo 완료하기" isRewarded={true} achDone={true} totalCount={5} currentCount={5} />
-							<Achievement achName="첫 Todo 완료하기" isRewarded={false} achDone={true} totalCount={3} currentCount={3} />
-							<Achievement achName="첫 Todo 완료하기" isRewarded={false} achDone={false} totalCount={5} currentCount={2} />
-						</AchWrapper>
-					</AchArea>
-				</AchModal> */}
-        {achState && <AchModalBackdrop className="" onClick={toggleAchState} />}
 
         <InventoryModal on={invState} />
         {invState && <ModalBg onClick={toggleInvState} />}

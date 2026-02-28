@@ -37,6 +37,9 @@ module.exports = {
     "import/no-default-export": "warn",
     "import/prefer-default-export": "off",
     "import/no-unresolved": "off",
+    "no-console": ["warn", { allow: ["warn", "error"] }],
+    "no-alert": "error",
+    "no-debugger": "error",
   },
   overrides: [
     {

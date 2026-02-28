@@ -24,13 +24,6 @@ axios.interceptors.request.use(
       config.headers["Content-Type"] = "application/json";
     }
 
-    if (import.meta.env.DEV) {
-      console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`, {
-        params: config.params,
-        data: config.data,
-      });
-    }
-
     return config;
   },
   (error) => {
@@ -45,10 +38,6 @@ axios.interceptors.response.use(
   (response) => {
     // 로딩 종료
     useLoadingStore.getState().stopLoading();
-
-    if (import.meta.env.DEV) {
-      console.log(`[API Response] ${response.config.url}`, response.data);
-    }
 
     return response;
   },

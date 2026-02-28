@@ -36,7 +36,7 @@ export const TodoForm = ({
   //투두 post요청(투두 생성)
   const postTodo = useCallback(async () => {
     try {
-      const response = await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
+      await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
         "post",
         API_ENDPOINTS.TODO.CONTENTS_WITH_CACHE_BUSTER(),
         {
@@ -45,7 +45,6 @@ export const TodoForm = ({
           date: selectedDate,
         }
       );
-      console.log(response); // "유효하지 않은 토큰입니다" 에러 발생
     } catch (error) {
       notifyApiError(error, "할 일 생성 중 에러가 발생했습니다. 다시 시도해 주세요.");
     }

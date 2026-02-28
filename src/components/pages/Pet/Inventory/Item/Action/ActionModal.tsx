@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { EditBtn } from "@/components/pages/Pet/Inventory/Item/Action/EditBtn";
 import { ChangeQtyBtn } from "@/components/pages/Pet/Inventory/Item/Action/ChangeQtyBtn";
-// import { items, myItems } from "@/@types/myItems";
 import { axiosRequest } from "@/api";
 import { ApiResponse, UseItemRes } from "@/@types";
 import { dumpItemRes } from "@/@types/dumpItemRes";

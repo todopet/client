@@ -10,7 +10,6 @@ import { MainLayout } from "@/layout/MainLayout";
 import { queryClient } from "@/libs/queryClient";
 import { ProtectedRoute } from "@/routers/ProtectedRoute";
 import { PublicRoute } from "@/routers/PublicRoute";
-// import NotFound from "@/pages/NotFound";
 import { routeLogin, routePaths } from "@/routers";
 import { useAuthStore } from "@/store/authStore";
 
