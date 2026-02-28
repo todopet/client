@@ -3,7 +3,7 @@ import {
   CategoryContentPost,
 } from "@/components/pages/Category/CategoryContent/CategoryContentPost";
 import { useState } from "react";
-import { category, res } from "@/@types";
+import { ApiResponse, Category } from "@/@types";
 import { axiosRequest } from "@/api";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import {
@@ -25,8 +25,8 @@ const CategoryPost = () => {
         }
 
         try {
-            const response: res<category> = await axiosRequest.requestAxios<
-                res<category>
+            const response: ApiResponse<Category> = await axiosRequest.requestAxios<
+                ApiResponse<Category>
             >("post", API_ENDPOINTS.CATEGORY.LIST, { category });
 
             if (!response.error) {
@@ -45,8 +45,8 @@ const CategoryPost = () => {
             return;
         }
         try {
-            const response: res<category> = await axiosRequest.requestAxios<
-                res<category>
+            const response: ApiResponse<Category> = await axiosRequest.requestAxios<
+                ApiResponse<Category>
             >("patch", API_ENDPOINTS.CATEGORY.ITEM(id!), { category });
 
             if (!response.error) {

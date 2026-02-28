@@ -1,4 +1,4 @@
-import { MyUser, res } from "@/@types";
+import { ApiResponse, MyUser } from "@/@types";
 import { axiosRequest } from "@/api";
 import { API_ENDPOINTS } from "@/api/endpoints";
 import { create } from "zustand";
@@ -23,12 +23,12 @@ interface AuthState {
   clearError: () => void;
 }
 
-const isAuthorized = (response: res<AuthCheckResponse>) =>
+const isAuthorized = (response: ApiResponse<AuthCheckResponse>) =>
   response.status === 200 || response.data?.status === 200;
 
 const fetchUser = async () => {
   try {
-    const userResponse = await axiosRequest.requestAxios<res<MyUser>>(
+    const userResponse = await axiosRequest.requestAxios<ApiResponse<MyUser>>(
       "get",
       API_ENDPOINTS.USER.INFO
     );
@@ -49,7 +49,7 @@ export const useAuthStore = create<AuthState>()(
       checkAuth: async () => {
         set({ isLoading: true });
         try {
-          const response = await axiosRequest.requestAxios<res<AuthCheckResponse>>(
+          const response = await axiosRequest.requestAxios<ApiResponse<AuthCheckResponse>>(
             "get",
             API_ENDPOINTS.AUTH.CHECK
           );
@@ -72,7 +72,7 @@ export const useAuthStore = create<AuthState>()(
         set({ error: null });
         try {
           if (email && password) {
-            await axiosRequest.requestAxios<res<{}>>("post", API_ENDPOINTS.AUTH.LOGIN, {
+            await axiosRequest.requestAxios<ApiResponse<{}>>("post", API_ENDPOINTS.AUTH.LOGIN, {
               email,
               password,
             });
@@ -89,7 +89,7 @@ export const useAuthStore = create<AuthState>()(
       logout: async () => {
         set({ isLoading: true, error: null });
         try {
-          await axiosRequest.requestAxios<res<{}>>("post", API_ENDPOINTS.AUTH.LOGOUT);
+          await axiosRequest.requestAxios<ApiResponse<{}>>("post", API_ENDPOINTS.AUTH.LOGOUT);
           set({ isAuth: false, user: null });
         } catch (error) {
           set({ error: "로그아웃에 실패했습니다." });

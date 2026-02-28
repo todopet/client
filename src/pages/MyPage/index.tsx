@@ -1,7 +1,7 @@
 import React from "react";
 import { UserInfo } from "@/components/pages/MyPage/UserInfo";
 import { Activity } from "@/components/pages/MyPage/Activity";
-import { res, myUser } from "@/@types";
+import { ApiResponse, MyUser } from "@/@types";
 import { axiosRequest } from "@/api";
 import { formatDateToString } from "@/libs/utils/global";
 import { MouseEventHandler, useEffect, useState } from "react";
@@ -48,7 +48,7 @@ const MyPage = () => {
   const logoutError = useAuthStore((state) => state.error);
   const clearAuthError = useAuthStore((state) => state.clearError);
 
-  const [userInfo, setUserInfo] = useState<myUser>({
+  const [userInfo, setUserInfo] = useState<MyUser>({
     _id: "",
     nickname: "",
     picture: "",
@@ -70,7 +70,7 @@ const MyPage = () => {
   };
   const handleConfirmWithdraw = async () => {
     try {
-      const response = await axiosRequest.requestAxios<res<{}>>(
+      const response = await axiosRequest.requestAxios<ApiResponse<{}>>(
         "post",
         API_ENDPOINTS.AUTH.WITHDRAW
       );
@@ -87,7 +87,7 @@ const MyPage = () => {
 
   const getUserInfo = async () => {
     try {
-      const response: res<myUser> = await axiosRequest.requestAxios<res<myUser>>(
+      const response: ApiResponse<MyUser> = await axiosRequest.requestAxios<ApiResponse<MyUser>>(
         "get",
         API_ENDPOINTS.USER.INFO,
         {}

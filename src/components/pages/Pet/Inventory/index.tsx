@@ -4,8 +4,7 @@ import { Divider } from "@/components/Divider";
 import { Nav } from "@/components/pages/Pet/Inventory/Nav";
 import { useState, useEffect, createContext } from "react";
 import { axiosRequest } from "@/api";
-import { myItems, res } from "@/@types";
-import { items } from "@/@types/myItems";
+import { ApiResponse, Items, MyItems } from "@/@types";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { API_ENDPOINTS } from "@/api/endpoints";
 
@@ -19,13 +18,13 @@ export const ItemDataContext = createContext<() => Promise<void>>(
 
 export const InventoryModal = ({ on }: parameterType) => {
     const [activeCategory, setActiveCategory] = useState("feed");
-    const [itemData, setItemData] = useState<items[]>([]);
+    const [itemData, setItemData] = useState<Items[]>([]);
     let totalItemAmount = 0;
 
     const receiveItemData = async () => {
         try {
-            const response: res<myItems> = await axiosRequest.requestAxios<
-                res<myItems>
+            const response: ApiResponse<MyItems> = await axiosRequest.requestAxios<
+                ApiResponse<MyItems>
             >("get", API_ENDPOINTS.INVENTORY.ITEMS, {});
             const itemArray = response.data.items;
             setItemData(itemArray);

@@ -1,4 +1,4 @@
-import { category } from "@/@types";
+import { Category } from "@/@types";
 import {
   CategoryContentList,
 } from "@/components/pages/Category/CategoryContent/CategoryContentList";
@@ -33,7 +33,7 @@ const CategoryList = () => {
                 handleClick={handlePlusButtonClick}
             ></CategoryHeader>
             <CategoryContentList
-                categoryList={categoryList as category[]}
+                categoryList={categoryList as Category[]}
             ></CategoryContentList>
         </>
     );

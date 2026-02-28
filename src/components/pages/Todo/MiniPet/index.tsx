@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 //api, interface
 import { axiosRequest } from "@/api";
-import { res } from "@/@types";
+import { ApiResponse } from "@/@types";
 //img
 import background from "@/assets/images/miniPetBackground.png";
 //components
@@ -21,8 +21,8 @@ interface PetLevel {
 export const MiniPet = () => {
   const getPetLevel = async () => {
         try {
-            const response: res<PetLevel> = await axiosRequest.requestAxios<
-                res<PetLevel>
+            const response: ApiResponse<PetLevel> = await axiosRequest.requestAxios<
+                ApiResponse<PetLevel>
             >("get", API_ENDPOINTS.PET.LEVEL);
             setPetLevel(response.data.level);
         } catch (error) {
@@ -46,8 +46,8 @@ export const MiniPet = () => {
     //인벤토리 아이템 수량 조회
    const getItemsCount = async () => {
         try {
-            const response: res<ItemsCount> = await axiosRequest.requestAxios<
-                res<ItemsCount>
+            const response: ApiResponse<ItemsCount> = await axiosRequest.requestAxios<
+                ApiResponse<ItemsCount>
             >("get", API_ENDPOINTS.INVENTORY.ITEMS_COUNT);
             setItemsCount(response.data.count);
         } catch (error) {

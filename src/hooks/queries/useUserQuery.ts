@@ -1,4 +1,4 @@
-import { RankInfo, category, res } from "@/@types";
+import { ApiResponse, Category, RankInfo } from "@/@types";
 import { axiosRequest } from "@/api";
 import { API_ENDPOINTS } from "@/api/endpoints";
 import { useQuery } from "@tanstack/react-query";
@@ -7,7 +7,7 @@ export const useRankingQuery = (count: number) => {
   return useQuery({
     queryKey: ["ranking", count],
     queryFn: async () => {
-      const response = await axiosRequest.requestAxios<res<RankInfo[]>>(
+      const response = await axiosRequest.requestAxios<ApiResponse<RankInfo[]>>(
         "get",
         API_ENDPOINTS.USER.RANK(count)
       );
@@ -22,7 +22,7 @@ export const useCategoryQuery = () => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const response = await axiosRequest.requestAxios<res<category[]>>(
+      const response = await axiosRequest.requestAxios<ApiResponse<Category[]>>(
         "get",
         API_ENDPOINTS.CATEGORY.LIST
       );

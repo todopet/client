@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, ButtonWrap, Wrap } from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentList.styles";
-import { category } from "@/@types";
+import { Category } from "@/@types";
 import CategoryContentListItem from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentListItem";
 
 interface CategoryListProps {
-    categoryList: category[];
+    categoryList: Category[];
 }
 
 export const CategoryContentList: React.FC<CategoryListProps> = ({ categoryList }) => {
