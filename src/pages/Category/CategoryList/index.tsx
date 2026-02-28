@@ -7,6 +7,7 @@ import { CategoryHeader } from "@/components/pages/Category/CategoryHeader";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 const CategoryList = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const CategoryList = () => {
         try {
             const response: res<category[]> = await axiosRequest.requestAxios<
                 res<category[]>
-            >("get", "todoCategories");
+            >("get", API_ENDPOINTS.CATEGORY.LIST);
             setCategoryList(response.data);
         } catch (error) {
             notifyApiError(

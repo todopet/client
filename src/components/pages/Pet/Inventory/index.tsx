@@ -7,6 +7,7 @@ import { axiosRequest } from "@/api";
 import { myItems, res } from "@/@types";
 import { items } from "@/@types/myItems";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 interface parameterType {
     on: boolean;
@@ -25,7 +26,7 @@ export const InventoryModal = ({ on }: parameterType) => {
         try {
             const response: res<myItems> = await axiosRequest.requestAxios<
                 res<myItems>
-            >("get", "inventories", {});
+            >("get", API_ENDPOINTS.INVENTORY.ITEMS, {});
             const itemArray = response.data.items;
             setItemData(itemArray);
         } catch (error) {

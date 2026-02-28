@@ -13,6 +13,7 @@ import { MiniPetWrap, Bg, MyPet, MyPetWrap } from "@/components/pages/Todo/MiniP
 import getPetSize from "@/libs/utils/getPetSize";
 import useToastsStore from "@/store/toastStore";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 interface PetLevel {
     level: number | null;
@@ -22,7 +23,7 @@ export const MiniPet = () => {
         try {
             const response: res<PetLevel> = await axiosRequest.requestAxios<
                 res<PetLevel>
-            >("get", `myPets/myPet/level`);
+            >("get", API_ENDPOINTS.PET.LEVEL);
             setPetLevel(response.data.level);
         } catch (error) {
             notifyApiError(
@@ -47,7 +48,7 @@ export const MiniPet = () => {
         try {
             const response: res<ItemsCount> = await axiosRequest.requestAxios<
                 res<ItemsCount>
-            >("get", `inventories/itemsCount`);
+            >("get", API_ENDPOINTS.INVENTORY.ITEMS_COUNT);
             setItemsCount(response.data.count);
         } catch (error) {
             notifyApiError(

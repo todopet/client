@@ -7,6 +7,7 @@ import { res, todo, TodoStatus } from "@/@types";
 //components
 import { useTodosStore } from "@/store/todoStore";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
+import { API_ENDPOINTS } from "@/api/endpoints";
 //styles
 import { Form, StyledCheckbox, Input } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm.styles";
 
@@ -36,7 +37,7 @@ export const TodoForm = ({
     try {
       const response = await axiosRequest.requestAxios<res<todo[]>>(
         "post",
-        `todoContents?_=${Date.now()}`,
+        API_ENDPOINTS.TODO.CONTENTS_WITH_CACHE_BUSTER(),
         {
           categoryId: categoryId,
           todo: value,
@@ -53,7 +54,7 @@ export const TodoForm = ({
     try {
       await axiosRequest.requestAxios<res<todo[]>>(
         "patch",
-        `todoContents/${contentId}?_=${Date.now()}`,
+        API_ENDPOINTS.TODO.CONTENT_WITH_CACHE_BUSTER(contentId!),
         {
           contentId: contentId,
           todo: value,

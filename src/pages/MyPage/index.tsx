@@ -10,6 +10,7 @@ import { useModal } from "@/libs/hooks/useModal";
 import { Confirm } from "@/components/Confirm";
 import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
 import { useAuthStore } from "@/store/authStore";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 interface ConfirmContentProps {
   message: React.ReactNode;
@@ -69,7 +70,10 @@ const MyPage = () => {
   };
   const handleConfirmWithdraw = async () => {
     try {
-      const response = await axiosRequest.requestAxios<res<{}>>("post", "withdraw");
+      const response = await axiosRequest.requestAxios<res<{}>>(
+        "post",
+        API_ENDPOINTS.AUTH.WITHDRAW
+      );
       if (response.status === 200) {
         notifySuccessMessage("회원 탈퇴 처리되었습니다.");
         navigate("/");
@@ -85,7 +89,7 @@ const MyPage = () => {
     try {
       const response: res<myUser> = await axiosRequest.requestAxios<res<myUser>>(
         "get",
-        "users",
+        API_ENDPOINTS.USER.INFO,
         {}
       );
       setUserInfo(response.data);

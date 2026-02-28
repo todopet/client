@@ -8,6 +8,7 @@ import { dumpItemRes } from "@/@types/dumpItemRes";
 import { ItemDataContext } from "@/components/pages/Pet/Inventory";
 import { MyContext } from "@/pages/Pet";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 interface modalTypeProps {
   modalType: "useModal" | "discardModal";
@@ -37,7 +38,7 @@ export const ActionModal = ({
       const data = { quantity: itemCount };
       await axiosRequest.requestAxios<res<useItemRes>>(
         "post",
-        `inventories/${itemId}/put?_=${Date.now()}`,
+        API_ENDPOINTS.INVENTORY.USE_ITEM(itemId),
         data
       );
       await receiveItemData();
@@ -52,7 +53,7 @@ export const ActionModal = ({
       const data = { quantity: itemCount * -1 };
       await axiosRequest.requestAxios<res<dumpItemRes>>(
         "patch",
-        `inventories/items/${itemId}?_=${Date.now()}`,
+        API_ENDPOINTS.INVENTORY.DUMP_ITEM(itemId),
         data
       );
       await receiveItemData();

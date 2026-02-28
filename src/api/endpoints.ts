@@ -17,12 +17,16 @@ export const API_ENDPOINTS = {
   USER: {
     INFO: 'users',
     RANK: (count: number) => `users/rank/${count}`,
+    PROFILE: 'users/user',
+    MY_INFO: 'users/myInfo',
   },
 
   // Todo 관련
   TODO: {
     CONTENTS: 'todoContents',
     CONTENT: (id: string) => `todoContents/${id}`,
+    CONTENT_WITH_CACHE_BUSTER: (id: string) => `todoContents/${id}?_=${Date.now()}`,
+    CONTENTS_WITH_CACHE_BUSTER: () => `todoContents?_=${Date.now()}`,
     CONTENTS_BY_DATE: (start: string, end: string) =>
       `todoContents?start=${start}&end=${end}`,
   },
@@ -31,17 +35,21 @@ export const API_ENDPOINTS = {
   CATEGORY: {
     LIST: 'todoCategories',
     ITEM: (id: string) => `todoCategories/${id}`,
+    END_ITEM: (id: string) => `todoCategories/endCategory/${id}`,
   },
 
   // 펫 관련
   PET: {
     INFO: 'myPets',
+    LEVEL: 'myPets/myPet/level',
   },
 
   // 인벤토리 관련
   INVENTORY: {
     ITEMS_COUNT: 'inventories/itemsCount',
     ITEMS: 'inventories',
+    USE_ITEM: (itemId: string) => `inventories/${itemId}/put?_=${Date.now()}`,
+    DUMP_ITEM: (itemId: string) => `inventories/items/${itemId}?_=${Date.now()}`,
   },
 } as const;
 
