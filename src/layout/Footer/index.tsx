@@ -21,7 +21,7 @@ export const FooterItem: React.FC<FooterItemProps> = ({ to, icon, label }) => {
           isActive ? "text-black" : "text-[#ADADAD]",
         ].join(" ")}
       >
-        <img src={icon} alt={label} />
+        <img src={icon} alt={label} loading="lazy" decoding="async" />
         <span className="mt-1 text-[10px] font-normal">{label}</span>
       </div>
     </Link>

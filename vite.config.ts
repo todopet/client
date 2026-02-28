@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
+import { visualizer } from "rollup-plugin-visualizer";
 import path from "path";
 
 export default defineConfig({
@@ -10,6 +11,16 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
     svgr({ include: "**/*.svg?react" }), // "?react"로 import한 SVG만 React 컴포넌트로 변환하고, 나머지는 <img src>용 파일 URL로 유지
+    ...(process.env.ANALYZE === "true"
+      ? [
+          visualizer({
+            filename: "build/stats.html",
+            gzipSize: true,
+            brotliSize: true,
+            open: false,
+          }),
+        ]
+      : []),
   ],
   resolve: {
     alias: {
@@ -29,6 +40,16 @@ export default defineConfig({
   },
   build: {
     outDir: "build",
+    chunkSizeWarningLimit: 500,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "state-vendor": ["zustand", "@tanstack/react-query"],
+          "http-vendor": ["axios"],
+        },
+      },
+    },
   },
   server: {
     host: true,
