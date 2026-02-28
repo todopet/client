@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import Footer from "@/layout/Footer";
+import { Footer } from "@/layout/Footer";
 import { Header } from "@/layout/Header";
 import { cn } from "@/libs/utils/classnames";
 

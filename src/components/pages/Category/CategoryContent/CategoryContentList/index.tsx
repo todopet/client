@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, ButtonWrap, Wrap } from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentList.styles";
 import { Category } from "@/@types";
-import CategoryContentListItem from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentListItem";
+import { CategoryContentListItem } from "@/components/pages/Category/CategoryContent/CategoryContentList/CategoryContentListItem";
 
 interface CategoryListProps {
     categoryList: Category[];

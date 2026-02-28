@@ -1,8 +1,9 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import "@/index.css";
+import "@/styles/components.css";
 import App from "@/App";
-import ModalStackManager from "@/components/ModalStackManager";
+import { ModalStackManager } from "@/components/ModalStackManager";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(

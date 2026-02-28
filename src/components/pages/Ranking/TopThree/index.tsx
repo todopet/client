@@ -9,7 +9,7 @@ interface RankInfoProps {
     userTopThreeList: RankInfo[];
 }
 
-const TopThree = ({ userTopThreeList }: RankInfoProps) => {
+export const TopThree = ({ userTopThreeList }: RankInfoProps) => {
   return (
     <div className="flex justify-around min-h-[11rem]">
       {userTopThreeList.map((list) => {
@@ -48,5 +48,3 @@ const TopThree = ({ userTopThreeList }: RankInfoProps) => {
     </div>
   );
 };
-
-export default TopThree;
