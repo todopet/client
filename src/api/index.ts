@@ -1,4 +1,6 @@
 import axios from "axios";
+import { notifyErrorMessage } from "@/libs/utils/notifyApiError";
+import { useAuthStore } from "@/store/authStore";
 import { useLoadingStore } from "@/store/loadingStore";
 
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
@@ -17,6 +19,15 @@ axios.interceptors.request.use(
     // FormData인 경우 Content-Type 자동 설정
     if (config.data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
+    } else {
+      config.headers["Content-Type"] = "application/json";
+    }
+
+    if (import.meta.env.DEV) {
+      console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`, {
+        params: config.params,
+        data: config.data,
+      });
     }
 
     return config;
@@ -33,16 +44,57 @@ axios.interceptors.response.use(
   (response) => {
     // 로딩 종료
     useLoadingStore.getState().stopLoading();
+
+    if (import.meta.env.DEV) {
+      console.log(`[API Response] ${response.config.url}`, response.data);
+    }
+
     return response;
   },
   (error) => {
     // 로딩 종료
     useLoadingStore.getState().stopLoading();
 
-    // 401 인증 에러 처리
-    if (error.response?.status === 401) {
-      // 로그인 페이지로 리다이렉트 (인터셉터에서는 경고만 출력)
-      console.warn('[Auth Error] 인증이 만료되었습니다.');
+    if (import.meta.env.DEV) {
+      console.error("[API Response Error]", {
+        url: error.config?.url,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+    }
+
+    if (error.response) {
+      const { status } = error.response;
+
+      switch (status) {
+        case 401: {
+          useAuthStore.getState().setAuth(false, null);
+          useAuthStore.getState().clearError();
+          console.warn("[Auth Error] 인증이 만료되었습니다.");
+          if (window.location.pathname !== "/") {
+            notifyErrorMessage("인증이 만료되었습니다. 다시 로그인해주세요.");
+            window.location.replace("/");
+          }
+          break;
+        }
+        case 403:
+          console.warn("[API Error] 접근 권한이 없습니다.");
+          break;
+        case 404:
+          console.warn("[API Error] 요청한 리소스를 찾을 수 없습니다.");
+          break;
+        case 500:
+        case 502:
+        case 503:
+          console.error("[API Error] 서버 오류가 발생했습니다.");
+          break;
+        default:
+          console.error(`[API Error] 처리되지 않은 상태코드: ${status}`);
+      }
+    } else if (error.request) {
+      console.error("[Network Error] 응답이 도착하지 않았습니다.");
+    } else {
+      console.error("[API Config Error] 요청 설정 중 오류가 발생했습니다.", error.message);
     }
 
     return Promise.reject(error);

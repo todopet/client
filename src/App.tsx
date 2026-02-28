@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Loading } from "@/components/Loading";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Toast } from "@/components/Toast";
+import { GlobalLoading } from "@/components/GlobalLoading";
 import { MainLayout } from "@/layout/MainLayout";
 import { ProtectedRoute } from "@/routers/ProtectedRoute";
 import { PublicRoute } from "@/routers/PublicRoute";
@@ -19,6 +20,7 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
+      <GlobalLoading />
       <div className="flex min-h-screen items-center justify-center">
         <div className="h-screen w-full min-w-[320px] max-w-[640px]">
           <Suspense fallback={<Loading />}>
