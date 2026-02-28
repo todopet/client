@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 
 const Login = () => {
-    const login = useAuthStore((state) => state.login);
     const error = useAuthStore((state) => state.error);
     const clearError = useAuthStore((state) => state.clearError);
     const setError = useAuthStore((state) => state.setError);
@@ -21,12 +20,11 @@ const Login = () => {
 
     useEffect(() => {
         clearError();
-        void login("", "");
 
         return () => {
             clearError();
         };
-    }, [clearError, login]);
+    }, [clearError]);
 
     useEffect(() => {
         const hash = location.hash.split("#")[1];
@@ -34,8 +32,10 @@ const Login = () => {
             const uri = decodeURIComponent(hash);
             const queries = uri.split("&");
             const queryParams = queries.map((el) => el.split("="));
-            const reason = queryParams[2][1];
-            setError(reason);
+            const reason = queryParams[2]?.[1];
+            if (reason) {
+                setError(reason);
+            }
         }
     }, [location.hash, setError]);
 
