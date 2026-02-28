@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 //api, interface
 import { TodoCategory } from "@/@types";
 
@@ -6,7 +6,6 @@ import { TodoCategory } from "@/@types";
 import { Category } from "@/components/pages/Todo/TodoList/TodoItem/Category";
 import { Todos } from "@/components/pages/Todo/TodoList/TodoItem/Todos";
 import { TodoForm } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm";
-import { useTodosStore } from "@/store/todoStore";
 
 //styles
 import { TodoItemStyles } from "@/components/pages/Todo/TodoList/TodoItem/TodoItem.styles";
@@ -14,13 +13,12 @@ import { TodoItemStyles } from "@/components/pages/Todo/TodoList/TodoItem/TodoIt
 interface TodoItemProps {
     todos: TodoCategory;
 }
-export const TodoItem = ({ todos }: TodoItemProps) => {
+const TodoItemComponent = ({ todos }: TodoItemProps) => {
     const [openInputForm, setOpenInputForm] = useState<boolean>(false);
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         !todos.ended && setOpenInputForm(!openInputForm); //종료되지 않은 투두 클릭시 실행
-    };
+    }, [openInputForm, todos.ended]);
 
-    const { dateTodos } = useTodosStore((state) => state);
     const todoFormRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
         if (todoFormRef.current) {
@@ -30,7 +28,7 @@ export const TodoItem = ({ todos }: TodoItemProps) => {
                 block: "center"
             });
         }
-    }, [dateTodos]);
+    }, [openInputForm]);
     return (
         <TodoItemStyles>
             <>
@@ -51,4 +49,6 @@ export const TodoItem = ({ todos }: TodoItemProps) => {
             </>
         </TodoItemStyles>
     );
-}
+};
+
+export const TodoItem = memo(TodoItemComponent);

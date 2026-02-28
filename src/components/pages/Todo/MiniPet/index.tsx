@@ -58,7 +58,7 @@ export const MiniPet = () => {
         }
     }
 
-    const { showToast } = useToastsStore();
+    const showToast = useToastsStore((state) => state.showToast);
     const [itemsCount, setItemsCount] = useState<number>(0);
 
     useEffect(() => {

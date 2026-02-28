@@ -38,9 +38,10 @@ export const Week = ({ onHeaderChange }: WeekProps) => {
     weekCount: calculateWeekCount(),
   });
 
-  const { setSelectedDate, setStartEndDate, periodTodos, setTodos } = useTodosStore(
-    (state) => state
-  );
+  const setSelectedDate = useTodosStore((state) => state.setSelectedDate);
+  const setStartEndDate = useTodosStore((state) => state.setStartEndDate);
+  const periodTodos = useTodosStore((state) => state.periodTodos);
+  const setTodos = useTodosStore((state) => state.setTodos);
 
   const getWeekDates = (sunday: Date | null = null) => {
     setDates([]);

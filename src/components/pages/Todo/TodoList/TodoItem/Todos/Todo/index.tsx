@@ -1,5 +1,5 @@
 //react hook
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTodosStore } from "@/store/todoStore";
 import { TodoStatus } from "@/@types";
 import { STATUS_TRANSITIONS, isTodoStatus } from "@/@types/todo";
@@ -28,15 +28,18 @@ interface TodoProps {
 export const Todo = ({
   content, status, contentId
 }: TodoProps) => {
-  const { selectedDate, deleteTodo, setStatus } = useTodosStore((state) => state);
-  const { showToast, closeToast } = useToastsStore((state) => state);
+  const selectedDate = useTodosStore((state) => state.selectedDate);
+  const deleteTodo = useTodosStore((state) => state.deleteTodo);
+  const setStatus = useTodosStore((state) => state.setStatus);
+  const showToast = useToastsStore((state) => state.showToast);
+  const closeToast = useToastsStore((state) => state.closeToast);
 
   const [newCheckStatus, setNewCheckStatus] = useState<TodoStatus>(status);
   useEffect(() => {
     setNewCheckStatus(isTodoStatus(status) ? status : TodoStatus.UNCHECKED);
   }, [status]);
 
-  const handleCheckClick = async () => {
+  const handleCheckClick = useCallback(async () => {
     const currentStatus = isTodoStatus(newCheckStatus) ? newCheckStatus : TodoStatus.UNCHECKED;
     const checkStatus = STATUS_TRANSITIONS[currentStatus];
 
@@ -49,42 +52,47 @@ export const Todo = ({
       closeToast();
       showToast(MiniPetToast, { message });
     }
-  };
+  }, [closeToast, content, contentId, newCheckStatus, selectedDate, setStatus, showToast]);
   const isSelectedDate: boolean =
     new Date(selectedDate).toString() === new Date(formatDateToString(new Date())).toString();
 
   //DropDown의 props
-  const listItems = [
-    {
-      content: "수정",
-      handleClick: () => {
-        setIsEditing(true);
-      },
-    },
-    {
-      content: "삭제",
-      handleClick: () => {
-        deleteTodo(contentId);
-      },
-    },
-  ];
-  if (newCheckStatus !== TodoStatus.COMPLETED) {
-    listItems.push({
-      content: isSelectedDate ? "내일하기" : "오늘하기",
-      handleClick: () => {
-        setStatus(
-          contentId,
-          content,
-          newCheckStatus,
-          isSelectedDate
-            ? formatDateToString(new Date(Date.now() + 24 * 60 * 60 * 1000))
-            : formatDateToString(new Date())
-        );
-      },
-    });
-  }
   //input 상태
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const listItems = useMemo(() => {
+    const items = [
+      {
+        content: "수정",
+        handleClick: () => {
+          setIsEditing(true);
+        },
+      },
+      {
+        content: "삭제",
+        handleClick: () => {
+          void deleteTodo(contentId);
+        },
+      },
+    ];
+
+    if (newCheckStatus !== TodoStatus.COMPLETED) {
+      items.push({
+        content: isSelectedDate ? "내일하기" : "오늘하기",
+        handleClick: () => {
+          void setStatus(
+            contentId,
+            content,
+            newCheckStatus,
+            isSelectedDate
+              ? formatDateToString(new Date(Date.now() + 24 * 60 * 60 * 1000))
+              : formatDateToString(new Date())
+          );
+        },
+      });
+    }
+
+    return items;
+  }, [content, contentId, deleteTodo, isSelectedDate, newCheckStatus, setStatus]);
 
   return (
     <StyledTodo>
