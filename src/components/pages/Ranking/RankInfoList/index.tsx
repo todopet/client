@@ -7,28 +7,7 @@ interface RankInfoProps {
   userRankList: RankInfo[];
 }
 
-// interface Medals {
-//     [key: number]: () => JSX.Element | number;
-// }
-
 export const RankInfoList = ({ userRankList }: RankInfoProps) => {
-  // const medal: Medals = {
-  //     1: () => (
-  //         <Rank>
-  //             <GoldMedal />
-  //         </Rank>
-  //     ),
-  //     2: () => (
-  //         <Rank>
-  //             <SilverMedal />
-  //         </Rank>
-  //     ),
-  //     3: () => (
-  //         <Rank>
-  //             <BronzeMedal />
-  //         </Rank>
-  //     )
-  // };
   return (
     <div className="px-6">
       <Divider key={0} category={() => ""} />

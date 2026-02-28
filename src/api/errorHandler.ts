@@ -72,7 +72,7 @@ export const getErrorMessage = (error: unknown): string => {
  *   await axiosRequest.requestAxios("get", "users");
  * } catch (error) {
  *   const message = handleApiError(error);
- *   alert(message); // 또는 toast 시스템 사용
+ *   // toast(message) 등 사용자 알림 시스템 사용
  * }
  * ```
  */
