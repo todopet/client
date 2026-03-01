@@ -4,12 +4,17 @@ import { useAuthStore } from "@/store/authStore";
 import { useLoadingStore } from "@/store/loadingStore";
 import { env } from "@/config/env";
 import { getCsrfToken, refreshCsrfToken } from "@/api/csrf";
+import { API_ENDPOINTS } from "@/api/endpoints";
 
 type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 type AxiosError = import("axios").AxiosError;
 
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
 const csrfSafeMethods = new Set(["get", "head", "options"]);
+const isAuthCheckEndpoint = (url: string | undefined) => {
+  if (!url) return false;
+  return url.includes(API_ENDPOINTS.AUTH.CHECK);
+};
 const isCsrfEndpoint = (url: string | undefined) => {
   if (!url) return false;
   return url.includes(env.csrfEndpoint);
@@ -67,16 +72,22 @@ axios.interceptors.response.use(
     // 로딩 종료
     useLoadingStore.getState().stopLoading();
 
-    if (import.meta.env.DEV) {
-      console.error("[API Response Error]", {
-        url: error.config?.url,
-        status: error.response?.status,
-        data: error.response?.data,
-      });
-    }
-
     if (error.response) {
       const { status } = error.response;
+      const isExpectedPublicAuthCheck =
+        status === 401 &&
+        isAuthCheckEndpoint(error.config?.url) &&
+        typeof window !== "undefined" &&
+        window.location.pathname === "/";
+
+      if (!isExpectedPublicAuthCheck && import.meta.env.DEV) {
+        console.error("[API Response Error]", {
+          url: error.config?.url,
+          status: error.response?.status,
+          data: error.response?.data,
+        });
+      }
+
       const originalRequest = error.config as (AxiosRequestConfig & {
         _csrfRetried?: boolean;
       }) | undefined;
@@ -103,6 +114,10 @@ axios.interceptors.response.use(
         case 401: {
           useAuthStore.getState().setAuth(false, null);
           useAuthStore.getState().clearError();
+          if (isExpectedPublicAuthCheck) {
+            break;
+          }
+
           console.warn("[Auth Error] 인증이 만료되었습니다.");
           if (window.location.pathname !== "/") {
             notifyErrorMessage("인증이 만료되었습니다. 다시 로그인해주세요.");

@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Loading } from "@/components/Loading";
@@ -17,10 +17,16 @@ const App: React.FC = () => {
   const checkAuth = useAuthStore((state) => state.checkAuth);
   const isAuthLoading = useAuthStore((state) => state.isLoading);
   const isGlobalLoading = useLoadingStore((state) => state.isLoading);
+  const location = useLocation();
 
   useEffect(() => {
+    if (location.pathname === "/") {
+      useAuthStore.setState({ isLoading: false });
+      return;
+    }
+
     void checkAuth();
-  }, [checkAuth]);
+  }, [checkAuth, location.pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
