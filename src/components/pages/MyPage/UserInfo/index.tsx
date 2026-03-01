@@ -1,11 +1,14 @@
 import { updateIcon } from "@/modules/icons";
 import { NickName } from "@/components/pages/MyPage/NickName";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosRequest } from "@/api";
 import { ApiResponse, MyUser } from "@/@types";
 import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
 import { API_ENDPOINTS } from "@/api/endpoints";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { nicknameSchema, type NicknameFormValues } from "@/schemas/user.schema";
 
 interface userinfoType {
   picture: string;
@@ -15,49 +18,48 @@ interface userinfoType {
 
 export const UserInfo = ({ picture, name, date }: userinfoType) => {
   const [isNicknameModal, setIsNicknameModal] = useState(false);
-  const [nickname, setNickname] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isValid, isSubmitting },
+  } = useForm<NicknameFormValues>({
+    resolver: zodResolver(nicknameSchema),
+    mode: "onChange",
+    defaultValues: {
+      nickname: "",
+    },
+  });
+
   const getUserName = async () => {
     try {
       const response: ApiResponse<MyUser> = await axiosRequest.requestAxios<ApiResponse<MyUser>>(
         "get",
         API_ENDPOINTS.USER.PROFILE
       );
-      setNickname(response.data.nickname);
+      reset({ nickname: response.data.nickname });
     } catch (error) {
       notifyApiError(error, "회원 정보를 가져오는중 에러가 발생했습니다. 다시 시도해 주세요.");
     }
   };
 
-  useEffect(() => {
-    // 상태가 변경될 때마다 실행되는 코드
-    const hasWhitespace = /\s/.test(nickname);
-
-    if (hasWhitespace) {
-      setError("공백은 포함될수 없습니다.");
-      return;
-    }
-    if (nickname.length > 8) {
-      setError("닉네임은 8글자 이하여야 합니다.");
-      return;
-    }
-    if (nickname.length > 0) {
-      setError("올바른 닉네임입니다.");
-    } else {
-      setError("닉네임을 입력하세요.");
-    }
-  }, [nickname]);
+  const nickname = watch("nickname");
+  const helperText = errors.nickname?.message ??
+    (nickname.length > 0 ? "올바른 닉네임입니다." : "닉네임을 입력하세요.");
+  const isDefaultState = nickname.length === 0;
+  const isSuccessState = !errors.nickname && nickname.length > 0;
 
   const inputColor = () => {
-    if (error === "올바른 닉네임입니다.") return "#bff2bd";
-    if (error === "닉네임을 입력하세요.") return "#d1d1d1";
+    if (isSuccessState) return "#bff2bd";
+    if (isDefaultState) return "#d1d1d1";
     return "#FF5656";
   };
 
   const textColor = () => {
-    if (error === "올바른 닉네임입니다.") return "#5bd756";
-    if (error === "닉네임을 입력하세요.") return "#ababab";
+    if (isSuccessState) return "#5bd756";
+    if (isDefaultState) return "#ababab";
     return "#ff1919";
   };
 
@@ -70,12 +72,12 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
     setIsNicknameModal(false);
   };
 
-  const handleNicknameChange = async () => {
+  const handleNicknameChange = async ({ nickname }: NicknameFormValues) => {
     try {
       const response: ApiResponse<MyUser> = await axiosRequest.requestAxios<ApiResponse<MyUser>>(
         "patch",
         API_ENDPOINTS.USER.MY_INFO,
-        { nickname }
+        { nickname: nickname.trim() }
       );
       if (response.data) {
         // 닉네임이 제대로 변경이 되었을 때
@@ -109,18 +111,28 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
               <div className="w-[80%] h-[190px] rounded-[25px] bg-white mb-[60px] flex flex-col justify-between">
                 <p className="font-bold text-[1.1rem] pl-[10%] mb-0">닉네임 변경하기</p>
                 <div className="w-full h-1/2 flex flex-col justify-center items-center gap-1">
-                  <input
-                    type="text"
-                    value={nickname}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setNickname(e.target.value)}
-                    className="w-[70%] h-[45%] rounded-[20px] mt-2 px-4 text-[16px] outline-none border-2"
-                    style={{ borderColor: inputColor() }}
+                  <Controller
+                    name="nickname"
+                    control={control}
+                    render={({ field }) => (
+                      <input
+                        type="text"
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        className="w-[70%] h-[45%] rounded-[20px] mt-2 px-4 text-[16px] outline-none border-2"
+                        style={{ borderColor: inputColor() }}
+                      />
+                    )}
                   />
                   <span
                     className="h-[14px] w-full text-[10.5px] pl-20"
                     style={{ color: textColor(), opacity: textColor() ? 1 : 0 }}
                   >
-                    {error}
+                    {helperText}
+                  </span>
+                  <span className="h-[14px] w-full text-[10.5px] pl-20 text-[#ababab]">
+                    {nickname.length}/8
                   </span>
                 </div>
                 <div className="flex justify-end items-center gap-[0.7rem] px-[30px] pb-5">
@@ -132,7 +144,8 @@ export const UserInfo = ({ picture, name, date }: userinfoType) => {
                   </button>
                   <button
                     className="w-[100px] h-[35px] rounded-[15px] bg-[#e7e8ea] border-0 cursor-pointer"
-                    onClick={handleNicknameChange}
+                    onClick={() => void handleSubmit(handleNicknameChange)()}
+                    disabled={!isValid || isSubmitting}
                   >
                     닉네임 변경
                   </button>
