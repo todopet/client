@@ -7,6 +7,7 @@ import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCategoryQuery } from "@/hooks/queries/useUserQuery";
+import { SEO } from "@/components/SEO";
 
 const CategoryList = () => {
     const navigate = useNavigate();
@@ -28,6 +29,12 @@ const CategoryList = () => {
 
     return (
         <>
+            <SEO
+                title="목표 관리"
+                description="등록한 목표를 관리하고 진행 상태를 확인하세요."
+                url="/category/list"
+                noIndex
+            />
             <CategoryHeader
                 subject={"관리"}
                 handleClick={handlePlusButtonClick}

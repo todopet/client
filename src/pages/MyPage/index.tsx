@@ -10,6 +10,7 @@ import { Confirm } from "@/components/Confirm";
 import { notifyApiError, notifySuccessMessage } from "@/libs/utils/notifyApiError";
 import { useAuthStore } from "@/store/authStore";
 import { API_ENDPOINTS } from "@/api/endpoints";
+import { SEO } from "@/components/SEO";
 
 interface ConfirmContentProps {
   message: React.ReactNode;
@@ -134,6 +135,12 @@ const MyPage = () => {
   const navigate = useNavigate();
   return (
     <main className="w-full h-full min-h-[700px] relative flex flex-col gap-8 justify-center items-center" aria-label="마이페이지">
+      <SEO
+        title="마이페이지"
+        description="활동 통계와 계정 설정을 확인하는 Todo Pet 마이페이지입니다."
+        url="/mypage"
+        noIndex
+      />
       <UserInfo
         picture={userInfo.picture}
         name={userInfo.nickname}

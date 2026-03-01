@@ -5,6 +5,7 @@ import { RankInfoList } from "@/components/pages/Ranking/RankInfoList";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { RANKING_CONFIG } from "@/libs/constants";
 import { useRankingQuery } from "@/hooks/queries/useUserQuery";
+import { SEO } from "@/components/SEO";
 
 const Ranking: React.FC = () => {
   const { data: userRankList = [], error } = useRankingQuery(
@@ -29,6 +30,11 @@ const Ranking: React.FC = () => {
 
   return (
     <main aria-label="랭킹 페이지">
+      <SEO
+        title="랭킹"
+        description="주간 랭킹을 확인하고 다른 유저와 함께 성장해보세요."
+        url="/rank"
+      />
       <h1 className="text-center text-[1.3rem] font-bold mt-4 mb-5">Top Week&apos;s Ranking</h1>
       <section aria-label="상위 3위">
         <TopThree userTopThreeList={setTopThree(userRankList)} />
