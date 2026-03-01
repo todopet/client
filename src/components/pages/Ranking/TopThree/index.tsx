@@ -11,7 +11,7 @@ interface RankInfoProps {
 
 export const TopThree = ({ userTopThreeList }: RankInfoProps) => {
   return (
-    <div className="flex justify-around min-h-[11rem]">
+    <ol className="flex justify-around min-h-[11rem] list-none p-0 m-0">
       {userTopThreeList.map((list) => {
         let borderColor = "black";
         if (list.rank === 1) borderColor = GOLD_COLOR;
@@ -20,7 +20,11 @@ export const TopThree = ({ userTopThreeList }: RankInfoProps) => {
 
         const isFirst = list.rank === 1;
         return (
-          <div key={list.userInfo._id} className="flex flex-col text-center w-1/3 h-auto items-center">
+          <li
+            key={list.userInfo._id}
+            className="flex flex-col text-center w-1/3 h-auto items-center"
+            aria-label={`${list.rank}위 ${list.userInfo.nickname}`}
+          >
             <span className="text-[18px] font-bold mb-8">{list.rank}</span>
             <div
               className={[
@@ -33,6 +37,7 @@ export const TopThree = ({ userTopThreeList }: RankInfoProps) => {
                 <div
                   className="bg-no-repeat bg-center bg-cover w-6 h-5 absolute -top-4"
                   style={{ backgroundImage: `url(${crown})` }}
+                  aria-hidden="true"
                 />
               )}
               <img
@@ -42,9 +47,9 @@ export const TopThree = ({ userTopThreeList }: RankInfoProps) => {
               />
             </div>
             <span className="block text-[14px] font-semibold mt-5">{list.userInfo.nickname}</span>
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ol>
   );
 };

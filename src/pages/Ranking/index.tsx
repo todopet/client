@@ -28,14 +28,18 @@ const Ranking: React.FC = () => {
   }, [error]);
 
   return (
-    <div>
-      <div className="text-center text-[1.3rem] font-bold mt-4 mb-5">Top Week's Ranking</div>
-      <TopThree userTopThreeList={setTopThree(userRankList)} />
-      <span className="flex justify-end text-[#b1aeae] mb-1 mr-6 text-xs">
+    <main aria-label="랭킹 페이지">
+      <h1 className="text-center text-[1.3rem] font-bold mt-4 mb-5">Top Week&apos;s Ranking</h1>
+      <section aria-label="상위 3위">
+        <TopThree userTopThreeList={setTopThree(userRankList)} />
+      </section>
+      <span className="flex justify-end text-[#b1aeae] mb-1 mr-6 text-xs" aria-label="랭킹 안내">
         ※ 매주 일요일 초기화
       </span>
-      <RankInfoList userRankList={userRankList} />
-    </div>
+      <section aria-label="전체 랭킹 목록">
+        <RankInfoList userRankList={userRankList} />
+      </section>
+    </main>
   );
 };
 

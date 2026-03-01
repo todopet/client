@@ -17,7 +17,8 @@ export const MainLayout = ({
   return (
     <>
       {withHeader && <Header />}
-      <div
+      <main
+        id="main-content"
         className={cn(
           "overflow-y-scroll overflow-x-hidden [scrollbar-width:none]",
           withHeader && "mt-[60px]",
@@ -32,7 +33,7 @@ export const MainLayout = ({
         )}
       >
         {children}
-      </div>
+      </main>
       {withFooter && <Footer />}
     </>
   );

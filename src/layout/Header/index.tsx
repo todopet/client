@@ -12,7 +12,7 @@ export const Header = () => {
     {
       content: "목표등록",
       href: "/category/post", // 경로 설정
-      svg: <img src={BluePlusIcon} alt="add" />,
+      svg: <img src={BluePlusIcon} alt="" aria-hidden="true" />,
     },
     {
       content: "목표관리",
@@ -25,18 +25,18 @@ export const Header = () => {
   return (
     <header className="fixed top-0 z-10 w-full left-1/2 -translate-x-1/2 h-[60px] bg-white flex items-center justify-between px-0 box-border">
       <div>
-        <Link to="/todo" className="no-underline">
+        <Link to="/todo" className="no-underline" aria-label="투두 홈으로 이동">
           <Logo />
         </Link>
       </div>
-      <div className="mr-4 flex items-center gap-2">
+      <nav className="mr-4 flex items-center gap-2" aria-label="헤더 메뉴">
         {nickname && <span className="text-sm text-[#5e5e5e]">{nickname}</span>}
         {isDropDown && (
           <DropDown list={listItems}>
-            <img src={HeaderMenuIcon} alt="menu" />
+            <img src={HeaderMenuIcon} alt="" aria-hidden="true" />
           </DropDown>
         )}
-      </div>
+      </nav>
     </header>
   );
 };

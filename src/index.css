@@ -16,6 +16,24 @@ code {
         monospace;
 }
 
+*:focus-visible {
+  outline: 2px solid #4a90e2;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Keyframes migrated from styled-components */
 @keyframes miniPetJump {
   0% { transform: translateY(0px); }

@@ -1,5 +1,5 @@
 import * as Styles from "@/components/pages/Todo/Calendar/Month/Month.styles";
-import { useState, useEffect, useMemo } from "react";
+import { KeyboardEvent, useState, useEffect, useMemo } from "react";
 import { useTodosStore } from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
 import { TodoStatus } from "@/@types";
@@ -93,19 +93,33 @@ export const Month = ({ onHeaderChange }: MonthProps) => {
     setSelectedDate(formatDateToString(datesOfMonth[idx]));
   };
 
+  const handleDateCellKeyDown = (e: KeyboardEvent<HTMLDivElement>, idx: number) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleDateCellClick(idx);
+    }
+  };
+
   return (
-    <Styles.MonthStyle>
-      <Styles.DayWrap>
+    <Styles.MonthStyle role="grid" aria-label="월간 달력">
+      <Styles.DayWrap role="row">
         {dayText.map((day, i) => (
-          <Styles.Day key={i}>{day}</Styles.Day>
+          <Styles.Day key={i} role="columnheader">{day}</Styles.Day>
         ))}
       </Styles.DayWrap>
       <Styles.DateCellWrap>
         {datesOfMonth.map((date, i) =>
           date.getFullYear() === 9999 ? (
-            <Styles.DateCell key={i}></Styles.DateCell>
+            <Styles.DateCell key={i} aria-hidden="true"></Styles.DateCell>
           ) : (
-            <Styles.DateCell key={i} onClick={() => handleDateCellClick(i)}>
+            <Styles.DateCell
+              key={i}
+              onClick={() => handleDateCellClick(i)}
+              onKeyDown={(e) => handleDateCellKeyDown(e, i)}
+              role="button"
+              tabIndex={0}
+              aria-label={`${date.getMonth() + 1}월 ${date.getDate()}일 선택`}
+            >
               <Styles.Cell
                 completed={Array.isArray(completedTodosByDay) ? completedTodosByDay[i] : 0}
               />

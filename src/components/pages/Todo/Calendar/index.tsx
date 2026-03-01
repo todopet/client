@@ -36,23 +36,24 @@ export const Calendar: FC<CalendarProps> = (props) => {
   }, []);
 
   return (
-    <div className="pt-4">
+    <section className="pt-4" aria-label="캘린더">
       <div className="flex w-full items-center gap-2">
         <div className="flex flex-1 items-center justify-center">
-          <ArrowButton onClick={() => header.onPrev?.()}>
-            <img src={LeftArrowIcon} alt="left" />
+          <ArrowButton onClick={() => header.onPrev?.()} aria-label="이전 기간 보기">
+            <img src={LeftArrowIcon} alt="" aria-hidden="true" />
           </ArrowButton>
           <span className="mx-[30px] font-[Pretendard]">{header.title}</span>
-          <ArrowButton onClick={() => header.onNext?.()}>
-            <img src={RightArrowIcon} alt="right" />
+          <ArrowButton onClick={() => header.onNext?.()} aria-label="다음 기간 보기">
+            <img src={RightArrowIcon} alt="" aria-hidden="true" />
           </ArrowButton>
         </div>
         <ToggleButton
           defaultChecked={defaultMode === CalendarMode.MONTH}
           onToggle={handleToggle}
+          ariaLabel="주간/월간 달력 전환"
         />
       </div>
       <CalendarBody mode={mode} onHeaderChange={handleHeaderChange} />
-    </div>
+    </section>
   );
 };

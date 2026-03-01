@@ -1,5 +1,5 @@
 import useDetectClose from "@/libs/hooks/useDetectClose";
-import { PropsWithChildren } from "react";
+import { KeyboardEvent, PropsWithChildren } from "react";
 
 interface ListItem {
     content: string;
@@ -15,16 +15,30 @@ interface ListProps extends PropsWithChildren {
 export const DropDown = ({ list, children }: ListProps) => {
     const [categoryIsOpen, categoryRef, categoryHandler] = useDetectClose(false);
     const hasAnySvg = list.some((item) => !!item.svg);
+    const handleTriggerKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            categoryHandler();
+        }
+    };
+
     return (
         <div className="flex justify-around text-base font-medium items-center">
             <div className="text-center">
                 <div
                     onClick={categoryHandler}
+                    onKeyDown={handleTriggerKeyDown}
                     ref={categoryRef}
                     className="flex items-center justify-center relative cursor-pointer"
+                    role="button"
+                    tabIndex={0}
+                    aria-haspopup="menu"
+                    aria-expanded={categoryIsOpen}
+                    aria-label="메뉴 열기"
                 >
                     {children}
                     <div
+                        id="dropdown-menu"
                         className={[
                             "absolute top-[-10px] left-[-106px] w-[100px] text-center shadow-[2px_2px_8px_2px_rgba(0,0,0,0.2)] rounded-[14px] bg-white z-[9] transition-all duration-300",
                             categoryIsOpen
@@ -32,11 +46,12 @@ export const DropDown = ({ list, children }: ListProps) => {
                                 : "opacity-0 invisible -translate-y-5"
                         ].join(" ")}
                     >
-                        <ul className="list-none p-0 m-0 flex flex-col items-center">
+                        <ul className="list-none p-0 m-0 flex flex-col items-center" role="menu">
                             {list.map((item, index) => (
                                 <li
                                     key={index}
                                     onClick={item.handleClick}
+                                    role="none"
                                     className={[
                                         "box-border border-b border-[#d9d9d9] w-full",
                                         hasAnySvg
@@ -48,8 +63,9 @@ export const DropDown = ({ list, children }: ListProps) => {
                                     <a
                                         href={item.href}
                                         className="flex justify-inherit no-underline text-black py-[6px] px-[12px] w-full"
+                                        role="menuitem"
                                     >
-                                        <label className="cursor-pointer">{item.content}</label>
+                                        <span className="cursor-pointer">{item.content}</span>
                                         {item.svg && item.svg}
                                     </a>
                                 </li>

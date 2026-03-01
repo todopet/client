@@ -4,12 +4,14 @@ interface ToggleButtonProps {
   onToggle?: (isToggled: boolean) => void;
   defaultChecked?: boolean;
   className?: string;
+  ariaLabel?: string;
 }
 
 export const ToggleButton: FC<ToggleButtonProps> = ({
   onToggle,
   defaultChecked = false,
   className = "",
+  ariaLabel = "달력 보기 전환",
 }) => {
   const [isToggled, setIsToggled] = useState(defaultChecked);
 
@@ -21,10 +23,13 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
 
   return (
     <div className={["relative pr-4", className].join(" ")}>
-      <div
+      <button
+        type="button"
         onClick={handleChangeToggle}
+        aria-label={ariaLabel}
+        aria-pressed={isToggled}
         className={[
-          "relative flex h-[22px] w-11 items-center rounded-[15px] transition-colors duration-300",
+          "relative flex h-[22px] w-11 items-center rounded-[15px] transition-colors duration-300 border-0 p-0 cursor-pointer",
           isToggled ? "bg-[#EBEBEB] justify-end" : "bg-[#CBCACA] justify-start",
         ].join(" ")}
       >
@@ -36,7 +41,7 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
         >
           {isToggled ? "월" : "주"}
         </div>
-      </div>
+      </button>
     </div>
   );
 };

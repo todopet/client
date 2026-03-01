@@ -40,28 +40,29 @@ const Login = () => {
     }, [location.hash, setError]);
 
     return (
-        <div className="flex flex-col items-center justify-center h-full">
-            <div className="flex flex-col items-center justify-center mb-[30%]">
+        <main className="flex flex-col items-center justify-center h-full" aria-label="로그인 페이지">
+            <section className="flex flex-col items-center justify-center mb-[30%]">
                 <div className="flex flex-col items-center justify-center">
-                    <div className="font-extrabold text-[2.5rem]">Todo Pet</div>
-                    <img src={Spinner} alt="Login" className="w-[280px] mt-2 mb-6" />
-                    <div className="text-[#8d8d8d] text-lg font-medium mt-[10px]">
+                    <h1 className="font-extrabold text-[2.5rem] m-0">Todo Pet</h1>
+                    <img src={Spinner} alt="" aria-hidden="true" className="w-[280px] mt-2 mb-6" />
+                    <p className="text-[#8d8d8d] text-lg font-medium mt-[10px]">
                         할 일을 완료하며, 펫과 함께 성장하세요.
-                    </div>
+                    </p>
                 </div>
-            </div>
+            </section>
             <button
                 type="button"
                 onClick={handleLoginClick}
+                aria-label="구글 계정으로 로그인"
                 className="flex w-[19rem] h-14 rounded-[0.8rem] border border-[#c9c9c9] bg-white items-center justify-center cursor-pointer"
             >
-                <img src={googleIcon} alt="Google" className="w-[45px] h-[45px] mt-0.5 ml-[10px]" />
-                <div className="flex w-[13rem] text-lg font-medium tracking-[0.03375rem] text-[#5e5e5e] text-center items-center justify-center">
+                <img src={googleIcon} alt="" aria-hidden="true" className="w-[45px] h-[45px] mt-0.5 ml-[10px]" />
+                <span className="flex w-[13rem] text-lg font-medium tracking-[0.03375rem] text-[#5e5e5e] text-center items-center justify-center">
                     구글 계정으로 로그인
-                </div>
+                </span>
             </button>
-            {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
-        </div>
+            {error && <p className="mt-4 text-sm text-red-500" role="alert">{error}</p>}
+        </main>
     );
 };
 
