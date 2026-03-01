@@ -4,6 +4,7 @@ import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { PetAreaProps } from "@/components/pages/Pet/PetArea/types";
 import { usePetQuery } from "@/hooks/queries/usePetQuery";
 import { preloadPetImages } from "@/libs/utils/imagePreloader";
+import { SEO } from "@/components/SEO";
 
 export const MyContext = createContext<() => Promise<void>>(async () => {});
 
@@ -72,6 +73,11 @@ const Pet = () => {
     // 데이터를 모두 받은 후에 PetArea 컴포넌트를 렌더링
   return (
     <MyContext.Provider value={receivePetData}>
+      <SEO
+        title="내 펫"
+        description="펫 상태를 확인하고 아이템을 사용해 함께 성장해보세요."
+        url="/pet"
+      />
       <PetArea
         hungerInfo={petData.hungerInfo}
         affectionInfo={petData.affectionInfo}

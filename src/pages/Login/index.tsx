@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import { env } from "@/config/env";
 import { parseHashParams, validateEnum } from "@/utils/urlValidator";
+import { SEO } from "@/components/SEO";
 
 const AUTH_ERROR_REASONS = ["auth_failed", "session_expired", "invalid_token"] as const;
 type AuthErrorReason = (typeof AUTH_ERROR_REASONS)[number];
@@ -48,6 +49,12 @@ const Login = () => {
 
     return (
         <main className="flex flex-col items-center justify-center h-full" aria-label="로그인 페이지">
+            <SEO
+                title="로그인"
+                description="Todo Pet에 로그인하고 할 일과 펫 성장 기록을 관리해보세요."
+                url="/"
+                noIndex
+            />
             <section className="flex flex-col items-center justify-center mb-[30%]">
                 <div className="flex flex-col items-center justify-center">
                     <h1 className="font-extrabold text-[2.5rem] m-0">Todo Pet</h1>
