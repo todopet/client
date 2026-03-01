@@ -3,6 +3,7 @@ import { googleIcon } from "@/modules/icons";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
+import { env } from "@/config/env";
 
 const Login = () => {
     const error = useAuthStore((state) => state.error);
@@ -12,7 +13,7 @@ const Login = () => {
     const handleLoginClick = async () => {
         clearError();
         // 백엔드에서 리다이렉트
-        const base = import.meta.env.VITE_API_URL || "http://localhost:3001/api/v1";
+        const base = env.apiUrl.endsWith("/") ? env.apiUrl.slice(0, -1) : env.apiUrl;
         document.location.href = base + "/login";
     };
 

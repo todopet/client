@@ -2,13 +2,14 @@ import axios from "axios";
 import { notifyErrorMessage } from "@/libs/utils/notifyApiError";
 import { useAuthStore } from "@/store/authStore";
 import { useLoadingStore } from "@/store/loadingStore";
+import { env } from "@/config/env";
 
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001/api/v1/";
+axios.defaults.baseURL = env.apiUrl;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = env.apiTimeout;
 
 // 요청 인터셉터
 axios.interceptors.request.use(
