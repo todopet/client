@@ -5,16 +5,18 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Loading } from "@/components/Loading";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Toast } from "@/components/Toast";
-import { GlobalLoading } from "@/components/GlobalLoading";
 import { MainLayout } from "@/layout/MainLayout";
 import { queryClient } from "@/libs/queryClient";
 import { ProtectedRoute } from "@/routers/ProtectedRoute";
 import { PublicRoute } from "@/routers/PublicRoute";
 import { routeLogin, routePaths } from "@/routers";
 import { useAuthStore } from "@/store/authStore";
+import { useLoadingStore } from "@/store/loadingStore";
 
 const App: React.FC = () => {
   const checkAuth = useAuthStore((state) => state.checkAuth);
+  const isAuthLoading = useAuthStore((state) => state.isLoading);
+  const isGlobalLoading = useLoadingStore((state) => state.isLoading);
 
   useEffect(() => {
     void checkAuth();
@@ -23,7 +25,7 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
-        <GlobalLoading />
+        {(isAuthLoading || isGlobalLoading) && <Loading />}
         <div className="flex min-h-screen items-center justify-center">
           <div className="h-screen w-full min-w-[320px] max-w-[640px]">
             <Suspense fallback={<Loading />}>
