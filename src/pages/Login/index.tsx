@@ -4,6 +4,16 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import { env } from "@/config/env";
+import { parseHashParams, validateEnum } from "@/utils/urlValidator";
+
+const AUTH_ERROR_REASONS = ["auth_failed", "session_expired", "invalid_token"] as const;
+type AuthErrorReason = (typeof AUTH_ERROR_REASONS)[number];
+
+const AUTH_ERROR_MESSAGES: Record<AuthErrorReason, string> = {
+    auth_failed: "로그인에 실패했습니다. 다시 시도해 주세요.",
+    session_expired: "세션이 만료되었습니다. 다시 로그인해 주세요.",
+    invalid_token: "유효하지 않은 인증 토큰입니다. 다시 로그인해 주세요.",
+};
 
 const Login = () => {
     const error = useAuthStore((state) => state.error);
@@ -28,15 +38,11 @@ const Login = () => {
     }, [clearError]);
 
     useEffect(() => {
-        const hash = location.hash.split("#")[1];
-        if (hash) {
-            const uri = decodeURIComponent(hash);
-            const queries = uri.split("&");
-            const queryParams = queries.map((el) => el.split("="));
-            const reason = queryParams[2]?.[1];
-            if (reason) {
-                setError(reason);
-            }
+        const hashParams = parseHashParams(location.hash);
+        const reason = hashParams.reason;
+
+        if (validateEnum(reason, AUTH_ERROR_REASONS)) {
+            setError(AUTH_ERROR_MESSAGES[reason]);
         }
     }, [location.hash, setError]);
 
