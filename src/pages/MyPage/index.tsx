@@ -3,7 +3,7 @@ import { UserInfo } from "@/components/pages/MyPage/UserInfo";
 import { Activity } from "@/components/pages/MyPage/Activity";
 import { ApiResponse, MyUser } from "@/@types";
 import { axiosRequest } from "@/api";
-import { formatDateToString } from "@/libs/utils/global";
+import { formatDate } from "@/libs/utils/dateUtils";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "@/libs/hooks/useModal";
 import { Confirm } from "@/components/Confirm";
@@ -137,7 +137,7 @@ const MyPage = () => {
       <UserInfo
         picture={userInfo.picture}
         name={userInfo.nickname}
-        date={formatDateToString(userInfo.createdAt)}
+        date={formatDate(userInfo.createdAt)}
       ></UserInfo>
       <section className="flex flex-col w-[85%] h-1/2 justify-center gap-8" aria-label="활동 내역">
         <Activity activityType="heart" data={userInfo.withPetDate.toString()}></Activity>
