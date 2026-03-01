@@ -20,8 +20,12 @@
     "zustand": "^4.5.2"
   },
   "scripts": {
-    "start": "vite",
-    "build": "vite build",
+    "start": "vite --mode development",
+    "start:staging": "vite --mode staging",
+    "start:prod": "vite --mode production",
+    "build": "vite build --mode production",
+    "build:staging": "vite build --mode staging",
+    "build:dev": "vite build --mode development",
     "build:analyze": "ANALYZE=true vite build",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts,.tsx",
     "test": "vitest",
