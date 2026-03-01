@@ -1,10 +1,9 @@
-import React from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { UserInfo } from "@/components/pages/MyPage/UserInfo";
 import { Activity } from "@/components/pages/MyPage/Activity";
 import { ApiResponse, MyUser } from "@/@types";
 import { axiosRequest } from "@/api";
 import { formatDateToString } from "@/libs/utils/global";
-import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "@/libs/hooks/useModal";
 import { Confirm } from "@/components/Confirm";
@@ -26,12 +25,14 @@ const ConfirmContent: React.FC<ConfirmContentProps> = ({ message, onCancel, onCo
       </div>
       <div className="flex flex-row justify-evenly">
         <button
+          type="button"
           onClick={onCancel}
           className="w-[7.07894rem] h-8 shrink-0 rounded-[0.5rem] bg-[#e7e8ea] border-0"
         >
           <p className="text-[15px] m-0">취소</p>
         </button>
         <button
+          type="button"
           onClick={onConfirm}
           className="w-[7.07894rem] h-8 shrink-0 rounded-[0.5rem] bg-[#e7e8ea] border-0"
         >
@@ -132,19 +133,21 @@ const MyPage = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="w-full h-full min-h-[700px] relative flex flex-col gap-8 justify-center items-center">
+    <main className="w-full h-full min-h-[700px] relative flex flex-col gap-8 justify-center items-center" aria-label="마이페이지">
       <UserInfo
         picture={userInfo.picture}
         name={userInfo.nickname}
         date={formatDateToString(userInfo.createdAt)}
       ></UserInfo>
-      <div className="flex flex-col w-[85%] h-1/2 justify-center gap-8">
+      <section className="flex flex-col w-[85%] h-1/2 justify-center gap-8" aria-label="활동 내역">
         <Activity activityType="heart" data={userInfo.withPetDate.toString()}></Activity>
         <Activity activityType="calendar" data={userInfo.historyCount.toString()}></Activity>
         <Activity activityType="check" data={userInfo.todoCount.toString()}></Activity>
-      </div>
-      <div className="flex justify-center items-center gap-4 w-[85%] mt-[30px]">
+      </section>
+      <section className="flex justify-center items-center gap-4 w-[85%] mt-[30px]" aria-label="계정 설정">
         <button
+          type="button"
+          aria-label="로그아웃"
           className="w-1/2 h-12 rounded-[10px] text-[16px] font-medium"
           style={{ backgroundColor: "#F5F5F5" }}
           onClick={() => {
@@ -162,14 +165,16 @@ const MyPage = () => {
           로그아웃
         </button>
         <button
+          type="button"
+          aria-label="회원탈퇴"
           className="w-1/2 h-12 rounded-[10px] text-[16px] font-medium"
           style={{ backgroundColor: "#F5F5F5" }}
           onClick={openWithdrawModal}
         >
           회원탈퇴
         </button>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

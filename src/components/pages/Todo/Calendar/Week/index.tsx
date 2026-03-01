@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { KeyboardEvent, useState, useEffect, useMemo, useCallback } from "react";
 import * as Styles from "@/components/pages/Todo/Calendar/Week/Week.styles";
 import { useTodosStore } from "@/store/todoStore";
 import { formatDateToString } from "@/libs/utils/global";
@@ -162,17 +162,31 @@ export const Week = ({ onHeaderChange }: WeekProps) => {
     setSelectedDate(formatDateToString(dates[idx]));
   };
 
+  const handleDateCellKeyDown = (e: KeyboardEvent<HTMLDivElement>, idx: number) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleDateCellClick(idx);
+    }
+  };
+
   return (
-    <Styles.WeekStyle>
-      <div>
-        <Styles.DayWrap>
+    <Styles.WeekStyle role="grid" aria-label="주간 달력">
+      <div role="presentation">
+        <Styles.DayWrap role="row">
           {dayText.map((day, i) => (
-            <Styles.Day key={i}>{day}</Styles.Day>
+            <Styles.Day key={i} role="columnheader">{day}</Styles.Day>
           ))}
         </Styles.DayWrap>
         <Styles.DateCellWrap>
           {dates.map((date, i) => (
-            <Styles.DateCell key={i} onClick={() => handleDateCellClick(i)}>
+            <Styles.DateCell
+              key={i}
+              onClick={() => handleDateCellClick(i)}
+              onKeyDown={(e) => handleDateCellKeyDown(e, i)}
+              role="button"
+              tabIndex={0}
+              aria-label={`${date.getMonth() + 1}월 ${date.getDate()}일 선택`}
+            >
               <Styles.Cell
                 completed={Array.isArray(completedTodosByDay) ? completedTodosByDay[i] : 0}
               />

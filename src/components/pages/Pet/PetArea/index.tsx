@@ -120,10 +120,10 @@ export const PetArea = ({
   }, [invState, isInventoryFull]);
 
   return (
-    <MainArea>
+    <MainArea aria-label="펫 상태 페이지">
       <Exp totalCount={maxExperience} currentCount={curExperience}></Exp>
       <MainHeader>
-        <StatusInfo>
+        <StatusInfo aria-label="펫 상태 정보">
           <Status
             name="포만감"
             color="#FF5156"
@@ -189,8 +189,12 @@ export const PetArea = ({
           color="#F7CF68"
           border="1px"
           onClick={toggleInvState}
+          aria-label={invState ? "인벤토리 닫기" : "인벤토리 열기"}
         />
-        {isFull && <InventoryFullImg />}
+        {isFull && <InventoryFullImg aria-hidden="true" />}
+        <span className="sr-only" aria-live="polite">
+          {isFull ? "인벤토리가 가득 찼습니다." : ""}
+        </span>
 
         <InventoryModal on={invState} />
         {invState && <ModalBg onClick={toggleInvState} />}
