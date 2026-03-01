@@ -16,14 +16,19 @@ interface Navigations {
 interface CategoryHeaderProps {
   subject: string;
   handleClick: () => void;
+  isSubmitting?: boolean;
 }
 
-export const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleClick }) => {
+export const CategoryHeader: React.FC<CategoryHeaderProps> = ({
+  subject,
+  handleClick,
+  isSubmitting = false,
+}) => {
   const navigate = useNavigate();
 
   const subjects: Subjects = {
     등록: () => {
-      return <Button onClick={handleClick}>확인</Button>;
+      return <Button onClick={handleClick} disabled={isSubmitting}>{isSubmitting ? "저장 중..." : "확인"}</Button>;
     },
     관리: () => {
       return (
@@ -33,7 +38,7 @@ export const CategoryHeader: React.FC<CategoryHeaderProps> = ({ subject, handleC
       );
     },
     수정: () => {
-      return <Button onClick={handleClick}>확인</Button>;
+      return <Button onClick={handleClick} disabled={isSubmitting}>{isSubmitting ? "저장 중..." : "확인"}</Button>;
     },
   };
   const navigation: Navigations = {

@@ -21,6 +21,9 @@ interface CategoryPostProps {
     subject: string;
     onTextSend: (text: string) => void;
     id: string | null;
+    value: string;
+    errorMessage?: string;
+    onInputBlur?: () => void;
 }
 
 interface ConfirmContentProps {
@@ -52,20 +55,20 @@ const ConfirmContent: React.FC<ConfirmContentProps> = ({
 export const CategoryContentPost: React.FC<CategoryPostProps> = ({
     subject,
     onTextSend,
-    id
+    id,
+    value,
+    errorMessage,
+    onInputBlur,
 }) => {
     const [isEndModalOpen, setIsEndModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const navigate = useNavigate();
-    const [inputValue, setInputValue] = useState<string>("");
-
     const getCategory = async () => {
         if (id) {
             try {
                 const response: ApiResponse<Category> = await axiosRequest.requestAxios<
                     ApiResponse<Category>
                 >("get", API_ENDPOINTS.CATEGORY.ITEM(id));
-                setInputValue(response.data.category);
                 onTextSend(response.data.category);
             } catch (error) {
                 notifyApiError(
@@ -133,7 +136,6 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
     }, []);
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
         onTextSend(e.target.value);
     };
 
@@ -201,12 +203,16 @@ export const CategoryContentPost: React.FC<CategoryPostProps> = ({
             <InputContainer>
                 <StyledInput
                     type="text"
-                    value={inputValue}
+                    value={value}
                     onChange={handleInput}
+                    onBlur={onInputBlur}
                     placeholder="목표를 입력하세요!"
                     autoFocus
                 />
             </InputContainer>
+            <div className="w-full text-center text-xs text-red-500 h-[14px]">
+                {errorMessage}
+            </div>
             {SettingButton(subject)}
         </>
     );

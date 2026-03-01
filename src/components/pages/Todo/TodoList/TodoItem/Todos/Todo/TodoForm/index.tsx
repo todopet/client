@@ -1,5 +1,5 @@
 //react hook
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 //api, interface
 import { axiosRequest } from "@/api";
 import { ApiResponse, Todo, TodoStatus } from "@/@types";
@@ -9,7 +9,10 @@ import { useTodosStore } from "@/store/todoStore";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 import { API_ENDPOINTS } from "@/api/endpoints";
 //styles
-import { Form, StyledCheckbox, Input } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm.styles";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, Input } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/TodoForm/TodoForm.styles";
+import { todoSchema, type TodoFormValues } from "@/schemas/todo.schema";
 
 interface TodoFormProps {
   categoryId?: string;
@@ -27,63 +30,83 @@ export const TodoForm = ({
 }: TodoFormProps) => {
   const selectedDate = useTodosStore((state) => state.selectedDate);
   const setTodos = useTodosStore((state) => state.setTodos);
-  //체크 가능여부
-  const [disabledChecked, setDisabledChecked] = useState<boolean>(true);
-
-  //input value 관리
-  const [value, setValue] = useState<string>(existingContent ? existingContent : "");
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TodoFormValues>({
+    resolver: zodResolver(todoSchema),
+    mode: "onBlur",
+    defaultValues: {
+      content: existingContent ?? "",
+    },
+  });
 
   //투두 post요청(투두 생성)
-  const postTodo = useCallback(async () => {
+  const postTodo = useCallback(async (content: string) => {
     try {
       await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
         "post",
         API_ENDPOINTS.TODO.CONTENTS_WITH_CACHE_BUSTER(),
         {
           categoryId: categoryId,
-          todo: value,
+          todo: content,
           date: selectedDate,
         }
       );
+      return true;
     } catch (error) {
       notifyApiError(error, "할 일 생성 중 에러가 발생했습니다. 다시 시도해 주세요.");
+      return false;
     }
-  }, [categoryId, selectedDate, value]);
+  }, [categoryId, selectedDate]);
   //투두 patch요청(투두내용수정)
-  const changeTodoContent = useCallback(async () => {
+  const changeTodoContent = useCallback(async (content: string) => {
     try {
       await axiosRequest.requestAxios<ApiResponse<Todo[]>>(
         "patch",
         API_ENDPOINTS.TODO.CONTENT_WITH_CACHE_BUSTER(contentId!),
         {
           contentId: contentId,
-          todo: value,
+          todo: content,
           status: status,
         }
       );
+      return true;
     } catch (error) {
       notifyApiError(error, "데이터 수정 중 에러가 발생했습니다. 다시 시도해 주세요.");
+      return false;
     }
-  }, [contentId, status, value]);
+  }, [contentId, status]);
 
   //투두 생성 or 수정
-  const submitForm = useCallback(async () => {
-    if (existingContent) {
-      setDisabledChecked(true); //체크박스 지우기
-      await changeTodoContent();
-      finishEdit && finishEdit(); //수정이 끝나면 form 닫힘
-    } else if (value) {
-      setDisabledChecked(true); //체크박스 지우기
-      await postTodo();
+  const submitForm = useCallback(async (content: string) => {
+    const normalizedContent = content.trim();
+    if (!normalizedContent) {
+      return;
     }
-    setTodos(selectedDate, selectedDate);
-    setValue("");
-  }, [changeTodoContent, existingContent, finishEdit, postTodo, selectedDate, setTodos, value]);
 
-  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await submitForm();
-  }, [submitForm]);
+    if (existingContent) {
+      const isSuccess = await changeTodoContent(normalizedContent);
+      if (isSuccess) {
+        finishEdit?.(); //수정이 끝나면 form 닫힘
+      } else {
+        return;
+      }
+    } else {
+      const isSuccess = await postTodo(normalizedContent);
+      if (!isSuccess) {
+        return;
+      }
+    }
+    await setTodos(selectedDate, selectedDate);
+    reset({ content: "" });
+  }, [changeTodoContent, existingContent, finishEdit, postTodo, reset, selectedDate, setTodos]);
+
+  const handleFormSubmit = handleSubmit(async ({ content }) => {
+    await submitForm(content);
+  });
 
   //input form 참조
   const formRef = useRef<HTMLFormElement>(null);
@@ -91,10 +114,11 @@ export const TodoForm = ({
   //input form 외부 클릭시 제출
   const handleClickOutside = useCallback((e: MouseEvent) => {
     if (formRef.current && !formRef.current.contains(e.target as Node)) {
-      void submitForm();
-      finishEdit && finishEdit();
+      void handleSubmit(async ({ content }) => {
+        await submitForm(content);
+      })();
     }
-  }, [finishEdit, submitForm]);
+  }, [handleSubmit, submitForm]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -104,15 +128,30 @@ export const TodoForm = ({
     };
   }, [handleClickOutside]);
 
-  //input value 변경시 업데이트
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+  useEffect(() => {
+    reset({ content: existingContent ?? "" });
+  }, [existingContent, reset]);
 
   return (
-    <Form ref={formRef} onSubmit={handleSubmit}>
-      {!disabledChecked && <StyledCheckbox />}
-      <Input placeholder="할 일 입력" onChange={handleChange} value={value} autoFocus />
-    </Form>
+    <div>
+      <Form ref={formRef} onSubmit={handleFormSubmit}>
+        <Controller
+          name="content"
+          control={control}
+          render={({ field }) => (
+            <Input
+              placeholder="할 일 입력"
+              autoFocus
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+            />
+          )}
+        />
+      </Form>
+      <p className="m-0 min-h-[14px] text-[10.5px] text-red-500">
+        {errors.content?.message}
+      </p>
+    </div>
   );
 }
