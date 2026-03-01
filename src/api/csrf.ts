@@ -10,6 +10,7 @@ type CsrfResponse = {
 };
 
 let csrfTokenCache = "";
+let isCsrfEndpointUnavailable = false;
 
 const readCsrfTokenFromCookie = (): string => {
   if (typeof document === "undefined") return "";
@@ -39,18 +40,27 @@ export const getCsrfToken = (): string => {
 };
 
 export const refreshCsrfToken = async (): Promise<string> => {
+  if (isCsrfEndpointUnavailable) {
+    return "";
+  }
+
   try {
     const response = await axios.get<CsrfResponse>(env.csrfEndpoint, {
       withCredentials: true,
     });
     const token = getTokenFromResponse(response.data);
     csrfTokenCache = token;
+    isCsrfEndpointUnavailable = false;
     return token;
-  } catch {
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      isCsrfEndpointUnavailable = true;
+    }
     return "";
   }
 };
 
 export const clearCsrfToken = () => {
   csrfTokenCache = "";
+  isCsrfEndpointUnavailable = false;
 };

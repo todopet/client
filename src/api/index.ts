@@ -17,6 +17,7 @@ const isAuthCheckEndpoint = (url: string | undefined) => {
 };
 const isCsrfEndpoint = (url: string | undefined) => {
   if (!url) return false;
+  if (!env.enableCsrfProtection) return false;
   return url.includes(env.csrfEndpoint);
 };
 
@@ -40,7 +41,7 @@ axios.interceptors.request.use(
       config.headers["Content-Type"] = "application/json";
     }
 
-    if (!csrfSafeMethods.has(method) && !isCsrfEndpoint(config.url)) {
+    if (env.enableCsrfProtection && !csrfSafeMethods.has(method) && !isCsrfEndpoint(config.url)) {
       let csrfToken = getCsrfToken();
       if (!csrfToken) {
         csrfToken = await refreshCsrfToken();
@@ -93,6 +94,7 @@ axios.interceptors.response.use(
       }) | undefined;
 
       if (
+        env.enableCsrfProtection &&
         status === 403 &&
         originalRequest &&
         !originalRequest._csrfRetried &&

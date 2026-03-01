@@ -8,6 +8,7 @@ interface EnvConfig {
   logLevel: LogLevel;
   enableDebugTools: boolean;
   enableCsp: boolean;
+  enableCsrfProtection: boolean;
   csrfEndpoint: string;
   sentryDsn?: string;
 }
@@ -55,6 +56,7 @@ export const env: EnvConfig = {
   logLevel: getLogLevel(),
   enableDebugTools: getBooleanEnv("VITE_ENABLE_DEBUG_TOOLS", true),
   enableCsp: getBooleanEnv("VITE_ENABLE_CSP", true),
+  enableCsrfProtection: getBooleanEnv("VITE_ENABLE_CSRF_PROTECTION", false),
   csrfEndpoint: getStringEnv("VITE_CSRF_ENDPOINT", "csrf-token"),
   sentryDsn: import.meta.env.VITE_SENTRY_DSN,
 };
