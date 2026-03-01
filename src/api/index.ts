@@ -3,8 +3,17 @@ import { notifyErrorMessage } from "@/libs/utils/notifyApiError";
 import { useAuthStore } from "@/store/authStore";
 import { useLoadingStore } from "@/store/loadingStore";
 import { env } from "@/config/env";
+import { getCsrfToken, refreshCsrfToken } from "@/api/csrf";
+
+type AxiosRequestConfig = import("axios").AxiosRequestConfig;
+type AxiosError = import("axios").AxiosError;
 
 const allowMethod: string[] = ["get", "post", "put", "patch", "delete"];
+const csrfSafeMethods = new Set(["get", "head", "options"]);
+const isCsrfEndpoint = (url: string | undefined) => {
+  if (!url) return false;
+  return url.includes(env.csrfEndpoint);
+};
 
 axios.defaults.baseURL = env.apiUrl;
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -13,16 +22,28 @@ axios.defaults.timeout = env.apiTimeout;
 
 // 요청 인터셉터
 axios.interceptors.request.use(
-  (config) => {
+  async (config: AxiosRequestConfig) => {
     // 로딩 시작
     useLoadingStore.getState().startLoading();
     const method = (config.method ?? "get").toLowerCase();
+    config.headers = config.headers ?? {};
 
     // FormData인 경우 Content-Type 자동 설정
     if (config.data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
     } else if (["post", "put", "patch", "delete"].includes(method)) {
       config.headers["Content-Type"] = "application/json";
+    }
+
+    if (!csrfSafeMethods.has(method) && !isCsrfEndpoint(config.url)) {
+      let csrfToken = getCsrfToken();
+      if (!csrfToken) {
+        csrfToken = await refreshCsrfToken();
+      }
+
+      if (csrfToken) {
+        config.headers["X-CSRF-Token"] = csrfToken;
+      }
     }
 
     return config;
@@ -42,7 +63,7 @@ axios.interceptors.response.use(
 
     return response;
   },
-  (error) => {
+  async (error: AxiosError) => {
     // 로딩 종료
     useLoadingStore.getState().stopLoading();
 
@@ -56,6 +77,27 @@ axios.interceptors.response.use(
 
     if (error.response) {
       const { status } = error.response;
+      const originalRequest = error.config as (AxiosRequestConfig & {
+        _csrfRetried?: boolean;
+      }) | undefined;
+
+      if (
+        status === 403 &&
+        originalRequest &&
+        !originalRequest._csrfRetried &&
+        !isCsrfEndpoint(originalRequest.url)
+      ) {
+        originalRequest._csrfRetried = true;
+        const refreshedToken = await refreshCsrfToken();
+
+        if (refreshedToken) {
+          originalRequest.headers = {
+            ...(originalRequest.headers ?? {}),
+            "X-CSRF-Token": refreshedToken,
+          };
+          return axios(originalRequest);
+        }
+      }
 
       switch (status) {
         case 401: {

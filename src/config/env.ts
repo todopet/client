@@ -7,6 +7,8 @@ interface EnvConfig {
   env: AppEnv;
   logLevel: LogLevel;
   enableDebugTools: boolean;
+  enableCsp: boolean;
+  csrfEndpoint: string;
   sentryDsn?: string;
 }
 
@@ -52,5 +54,11 @@ export const env: EnvConfig = {
   env: getAppEnv(),
   logLevel: getLogLevel(),
   enableDebugTools: getBooleanEnv("VITE_ENABLE_DEBUG_TOOLS", true),
+  enableCsp: getBooleanEnv("VITE_ENABLE_CSP", true),
+  csrfEndpoint: getStringEnv("VITE_CSRF_ENDPOINT", "csrf-token"),
   sentryDsn: import.meta.env.VITE_SENTRY_DSN,
 };
+
+if (env.env === "production" && !env.apiUrl.startsWith("https://")) {
+  throw new Error("프로덕션 환경에서는 HTTPS API URL이 필요합니다.");
+}
