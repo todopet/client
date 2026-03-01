@@ -3,7 +3,7 @@ import { ApiResponse, Todo, TodoCategory, TodoStatus, ToastType } from "@/@types
 import { axiosRequest } from "@/api";
 import { API_ENDPOINTS } from "@/api/endpoints";
 import { Message } from "@/@types/todo";
-import { formatDateToString } from "@/libs/utils/global";
+import { formatDate } from "@/libs/utils/dateUtils";
 import { notifyApiError } from "@/libs/utils/notifyApiError";
 
 const today = new Date();
@@ -30,7 +30,7 @@ export interface Todos {
 }
 
 const initialState = {
-    selectedDate: formatDateToString(today),
+    selectedDate: formatDate(today),
     startDate: "",
     endDate: "",
     dateTodos: [],

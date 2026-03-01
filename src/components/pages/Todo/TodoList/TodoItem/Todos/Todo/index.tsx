@@ -17,7 +17,7 @@ import { MiniPetToast } from "@/components/pages/Todo/MiniPet/Toast/MiniPetToast
 import { StyledTodo, TodoDiv, StyledCheckbox, Text, TodoWrap, DropDownWrap } from "@/components/pages/Todo/TodoList/TodoItem/Todos/Todo/Todo.styles";
 
 // common scripts
-import { formatDateToString } from "@/libs/utils/global";
+import { addDays, formatDate, isToday } from "@/libs/utils/dateUtils";
 
 interface TodoProps {
   content: string;
@@ -53,8 +53,7 @@ export const Todo = ({
       showToast(MiniPetToast, { message });
     }
   }, [closeToast, content, contentId, newCheckStatus, selectedDate, setStatus, showToast]);
-  const isSelectedDate: boolean =
-    new Date(selectedDate).toString() === new Date(formatDateToString(new Date())).toString();
+  const isSelectedDate = isToday(selectedDate);
 
   //DropDown의 props
   //input 상태
@@ -84,8 +83,8 @@ export const Todo = ({
             content,
             newCheckStatus,
             isSelectedDate
-              ? formatDateToString(new Date(Date.now() + 24 * 60 * 60 * 1000))
-              : formatDateToString(new Date())
+              ? addDays(new Date(), 1)
+              : formatDate(new Date())
           );
         },
       });
