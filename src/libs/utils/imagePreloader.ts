@@ -1,6 +1,7 @@
 import joyEmotion from "@/assets/images/joyEmotion.png";
 import sadEmotion from "@/assets/images/sadEmotion.png";
 import spinner from "@/assets/images/spinner.gif";
+import { logger } from "@/utils/logger";
 
 export const preloadImage = (src: string): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -15,7 +16,10 @@ export const preloadImages = async (sources: string[]): Promise<void> => {
   try {
     await Promise.all(sources.map((src) => preloadImage(src)));
   } catch (error) {
-    console.error("Failed to preload images", error);
+    logger.warn("Failed to preload images", {
+      source: "libs/utils/imagePreloader",
+      data: { error, count: sources.length },
+    });
   }
 };
 

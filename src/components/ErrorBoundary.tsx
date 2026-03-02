@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from "react";
+import { logger } from "@/utils/logger";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -24,7 +25,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("Error caught by boundary:", error, errorInfo);
+    logger.error("Error caught by boundary", {
+      source: "components/ErrorBoundary",
+      data: { error, errorInfo },
+    });
     this.props.onError?.(error, errorInfo);
   }
 

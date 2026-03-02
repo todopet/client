@@ -5,6 +5,7 @@ import { useLoadingStore } from "@/store/loadingStore";
 import { env } from "@/config/env";
 import { getCsrfToken, refreshCsrfToken } from "@/api/csrf";
 import { API_ENDPOINTS } from "@/api/endpoints";
+import { logger } from "@/utils/logger";
 
 type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 type AxiosError = import("axios").AxiosError;
@@ -52,11 +53,23 @@ axios.interceptors.request.use(
       }
     }
 
+    logger.debug("API request", {
+      source: "api/interceptor",
+      data: {
+        method,
+        url: config.url,
+      },
+    });
+
     return config;
   },
   (error) => {
     // 로딩 종료
     useLoadingStore.getState().stopLoading();
+    logger.error("API request interceptor failed", {
+      source: "api/interceptor",
+      data: { error },
+    });
     return Promise.reject(error);
   }
 );
@@ -66,6 +79,14 @@ axios.interceptors.response.use(
   (response) => {
     // 로딩 종료
     useLoadingStore.getState().stopLoading();
+    logger.debug("API response", {
+      source: "api/interceptor",
+      data: {
+        method: response.config.method,
+        url: response.config.url,
+        status: response.status,
+      },
+    });
 
     return response;
   },
@@ -82,10 +103,14 @@ axios.interceptors.response.use(
         window.location.pathname === "/";
 
       if (!isExpectedPublicAuthCheck && import.meta.env.DEV) {
-        console.error("[API Response Error]", {
-          url: error.config?.url,
-          status: error.response?.status,
-          data: error.response?.data,
+        logger.error("API response error", {
+          source: "api/interceptor",
+          data: {
+            method: error.config?.method,
+            url: error.config?.url,
+            status: error.response?.status,
+            responseData: error.response?.data,
+          },
         });
       }
 
@@ -120,31 +145,56 @@ axios.interceptors.response.use(
             break;
           }
 
-          console.warn("[Auth Error] 인증이 만료되었습니다.");
+          logger.warn("인증이 만료되었습니다.", {
+            source: "api/interceptor",
+            data: { status, url: error.config?.url },
+          });
           if (window.location.pathname !== "/") {
             notifyErrorMessage("인증이 만료되었습니다. 다시 로그인해주세요.");
             window.location.replace("/");
           }
           break;
         }
-        case 403:
-          console.warn("[API Error] 접근 권한이 없습니다.");
+        case 403: {
+          logger.warn("접근 권한이 없습니다.", {
+            source: "api/interceptor",
+            data: { status, url: error.config?.url },
+          });
           break;
-        case 404:
-          console.warn("[API Error] 요청한 리소스를 찾을 수 없습니다.");
+        }
+        case 404: {
+          logger.warn("요청한 리소스를 찾을 수 없습니다.", {
+            source: "api/interceptor",
+            data: { status, url: error.config?.url },
+          });
           break;
+        }
         case 500:
         case 502:
-        case 503:
-          console.error("[API Error] 서버 오류가 발생했습니다.");
+        case 503: {
+          logger.error("서버 오류가 발생했습니다.", {
+            source: "api/interceptor",
+            data: { status, url: error.config?.url },
+          });
           break;
-        default:
-          console.error(`[API Error] 처리되지 않은 상태코드: ${status}`);
+        }
+        default: {
+          logger.error("처리되지 않은 상태코드", {
+            source: "api/interceptor",
+            data: { status, url: error.config?.url },
+          });
+        }
       }
     } else if (error.request) {
-      console.error("[Network Error] 응답이 도착하지 않았습니다.");
+      logger.error("응답이 도착하지 않았습니다.", {
+        source: "api/interceptor",
+        data: { url: error.config?.url },
+      });
     } else {
-      console.error("[API Config Error] 요청 설정 중 오류가 발생했습니다.", error.message);
+      logger.error("요청 설정 중 오류가 발생했습니다.", {
+        source: "api/interceptor",
+        data: { message: error.message, url: error.config?.url },
+      });
     }
 
     return Promise.reject(error);
