@@ -12,11 +12,24 @@ type CsrfResponse = {
 let csrfTokenCache = "";
 let isCsrfEndpointUnavailable = false;
 
-const readCsrfTokenFromCookie = (): string => {
+const CSRF_COOKIE_CANDIDATES = ["csrf_token", "XSRF-TOKEN", "csrfToken"] as const;
+
+const readCookieValue = (name: string): string => {
   if (typeof document === "undefined") return "";
 
-  const match = document.cookie.match(/(?:^|;\s*)csrf_token=([^;]+)/i);
+  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = document.cookie.match(
+    new RegExp(`(?:^|;\\s*)${escapedName}=([^;]+)`, "i")
+  );
   return match ? decodeURIComponent(match[1]) : "";
+};
+
+const readCsrfTokenFromCookie = (): string => {
+  for (const cookieName of CSRF_COOKIE_CANDIDATES) {
+    const token = readCookieValue(cookieName);
+    if (token) return token;
+  }
+  return "";
 };
 
 const getTokenFromResponse = (response: CsrfResponse): string => {

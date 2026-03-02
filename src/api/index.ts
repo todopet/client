@@ -16,11 +16,16 @@ const isAuthCheckEndpoint = (url: string | undefined) => {
   if (!url) return false;
   return url.includes(API_ENDPOINTS.AUTH.CHECK);
 };
-const isCsrfEndpoint = (url: string | undefined) => {
+const matchesCsrfEndpoint = (url: string | undefined) => {
   if (!url) return false;
-  if (!env.enableCsrfProtection) return false;
   return url.includes(env.csrfEndpoint);
 };
+const isCsrfEndpoint = (url: string | undefined) => {
+  if (!env.enableCsrfProtection) return false;
+  return matchesCsrfEndpoint(url);
+};
+const shouldAttachCsrfToken = (method: string, url: string | undefined) =>
+  !csrfSafeMethods.has(method) && !matchesCsrfEndpoint(url);
 
 axios.defaults.baseURL = env.apiUrl;
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -30,8 +35,11 @@ axios.defaults.timeout = env.apiTimeout;
 // 요청 인터셉터
 axios.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
+    const isCsrfRequest = matchesCsrfEndpoint(config.url);
     // 로딩 시작
-    useLoadingStore.getState().startLoading();
+    if (!isCsrfRequest) {
+      useLoadingStore.getState().startLoading();
+    }
     const method = (config.method ?? "get").toLowerCase();
     config.headers = config.headers ?? {};
 
@@ -42,9 +50,9 @@ axios.interceptors.request.use(
       config.headers["Content-Type"] = "application/json";
     }
 
-    if (env.enableCsrfProtection && !csrfSafeMethods.has(method) && !isCsrfEndpoint(config.url)) {
+    if (shouldAttachCsrfToken(method, config.url)) {
       let csrfToken = getCsrfToken();
-      if (!csrfToken) {
+      if (!csrfToken && env.enableCsrfProtection) {
         csrfToken = await refreshCsrfToken();
       }
 
@@ -65,7 +73,9 @@ axios.interceptors.request.use(
   },
   (error) => {
     // 로딩 종료
-    useLoadingStore.getState().stopLoading();
+    if (!matchesCsrfEndpoint(error?.config?.url)) {
+      useLoadingStore.getState().stopLoading();
+    }
     logger.error("API request interceptor failed", {
       source: "api/interceptor",
       data: { error },
@@ -77,8 +87,11 @@ axios.interceptors.request.use(
 // 응답 인터셉터
 axios.interceptors.response.use(
   (response) => {
+    const isCsrfRequest = matchesCsrfEndpoint(response.config.url);
     // 로딩 종료
-    useLoadingStore.getState().stopLoading();
+    if (!isCsrfRequest) {
+      useLoadingStore.getState().stopLoading();
+    }
     logger.debug("API response", {
       source: "api/interceptor",
       data: {
@@ -91,11 +104,18 @@ axios.interceptors.response.use(
     return response;
   },
   async (error: AxiosError) => {
+    const isCsrfRequest = matchesCsrfEndpoint(error.config?.url);
     // 로딩 종료
-    useLoadingStore.getState().stopLoading();
+    if (!isCsrfRequest) {
+      useLoadingStore.getState().stopLoading();
+    }
 
     if (error.response) {
       const { status } = error.response;
+      if (isCsrfRequest && status === 404) {
+        // CSRF 엔드포인트 미구현 서버에서는 정상적인 폴백 시나리오다.
+        return Promise.reject(error);
+      }
       const isExpectedPublicAuthCheck =
         status === 401 &&
         isAuthCheckEndpoint(error.config?.url) &&
@@ -123,7 +143,7 @@ axios.interceptors.response.use(
         status === 403 &&
         originalRequest &&
         !originalRequest._csrfRetried &&
-        !isCsrfEndpoint(originalRequest.url)
+        !matchesCsrfEndpoint(originalRequest.url)
       ) {
         originalRequest._csrfRetried = true;
         const refreshedToken = await refreshCsrfToken();
@@ -156,9 +176,17 @@ axios.interceptors.response.use(
           break;
         }
         case 403: {
+          const method = (error.config?.method ?? "").toLowerCase();
+          const csrfToken = getCsrfToken();
           logger.warn("접근 권한이 없습니다.", {
             source: "api/interceptor",
-            data: { status, url: error.config?.url },
+            data: {
+              status,
+              method,
+              url: error.config?.url,
+              responseData: error.response?.data,
+              hasCsrfToken: Boolean(csrfToken),
+            },
           });
           break;
         }
