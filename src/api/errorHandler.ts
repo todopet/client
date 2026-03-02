@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { logger } from "@/utils/logger";
 
 /**
  * API 에러 타입 정의
@@ -80,7 +81,10 @@ export const handleApiError = (
   error: unknown,
   customMessage?: string
 ): string => {
-  console.error('[API Error]:', error);
+  logger.error("API Error", {
+    source: "api/errorHandler",
+    data: { error },
+  });
 
   // 인증 에러 처리 (401)
   if (isAxiosError(error) && error.response?.status === 401) {
@@ -99,7 +103,10 @@ export const handleApiError = (
  */
 export const logError = (error: unknown, context?: string): void => {
   const prefix = context ? `[${context}]` : '[Error]';
-  console.error(prefix, error);
+  logger.error(prefix, {
+    source: "api/errorHandler",
+    data: { error, context },
+  });
 };
 
 /**
