@@ -99,6 +99,8 @@ export const TodoForm = ({
       if (!isSuccess) {
         return;
       }
+      // 신규 입력 완료 후에는 입력 폼을 닫아 UX를 일관되게 유지한다.
+      finishEdit?.();
     }
     await setTodos(selectedDate, selectedDate);
     reset({ content: "" });
