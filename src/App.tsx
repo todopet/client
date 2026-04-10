@@ -4,7 +4,9 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Loading } from "@/components/Loading";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import { Toast } from "@/components/Toast";
+import { UpdatePrompt } from "@/components/UpdatePrompt";
 import { MainLayout } from "@/layout/MainLayout";
 import { queryClient } from "@/libs/queryClient";
 import { ProtectedRoute } from "@/routers/ProtectedRoute";
@@ -88,6 +90,8 @@ const App: React.FC = () => {
             </Suspense>
           </div>
         </div>
+        <InstallPrompt />
+        <UpdatePrompt />
         <div className="toast-wrapper" />
         <Toast />
       </ErrorBoundary>

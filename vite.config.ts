@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
+import { VitePWA } from "vite-plugin-pwa";
 import { visualizer } from "rollup-plugin-visualizer";
 import viteCompression from "vite-plugin-compression";
 import path from "path";
@@ -15,6 +16,24 @@ export default defineConfig(({ mode }) => {
       react(),
       tsconfigPaths(),
       svgr({ include: "**/*.svg?react" }), // "?react"로 import한 SVG만 React 컴포넌트로 변환하고, 나머지는 <img src>용 파일 URL로 유지
+      VitePWA({
+        strategies: "injectManifest",
+        srcDir: "src",
+        filename: "sw.ts",
+        injectRegister: false,
+        registerType: "autoUpdate",
+        manifest: false,
+        includeAssets: [
+          "favicon.ico",
+          "robots.txt",
+          "apple-touch-icon.png",
+          "icons/*.png",
+          "screenshots/*.png",
+        ],
+        devOptions: {
+          enabled: true,
+        },
+      }),
       ...(isProduction
         ? [
             viteCompression({ algorithm: "gzip", ext: ".gz" }),
